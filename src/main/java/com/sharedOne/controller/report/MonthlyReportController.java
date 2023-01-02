@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("report")
-public class MontlyReportController {
+public class MonthlyReportController {
 	
-	@GetMapping("montlyReport")
+	@GetMapping("monthlyReport")
 	public void getMontlyReport() {
 		
 	}
