@@ -17,60 +17,67 @@
 	google.charts.setOnLoadCallback(drawChart2);
 	
 	function drawChart1() {
-		<!-- javaScript forEach 문으로  -->
-/* 		var data = google.visualization.arrayToDataTable([
-		      ['월','전년동월실적', '당월실적', '전년 당월 매출', '당월 매출'],	  
-		      <c:forEach items="${chartList}" var="chart">
-				
-				['금액,${chart.prvProfit},${chart.nowProfit},${chart.prvSales},${chart.nowSales}]
-				<c:if test="${not empty chartList.size() }">
-					,
-				</c:if>	
-			</c:forEach>  
-		    ]); */
-		    
-		    var data = google.visualization.arrayToDataTable([
-		    	['월','전년동월실적', '당월실적', '전년 당월 매출', '당월 매출'],
-		    	['금액', 750, 1000, 400, 600]
-		        ]);
-	
-	  var options = {
-	    chart: {
-	      title: '월 별 실적',
-	      subtitle: '월별 요약 차트',
-	    }
-	  };
-	  var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));
-	  chart.draw(data, google.charts.Bar.convertOptions(options));
-	}
-	
-	function drawChart2() {
-		<!-- javaScript forEach 문으로  -->
-/* 		var data = google.visualization.arrayToDataTable([
-		      ['월', ${month-5}', '${month-4}', '${month-3}', '${month-2}', '${month-1}', '${month}'],	  
-		      <c:forEach items="${SalesList}" var="chart">
-				
-				['금액',${chart.nowSales-5},${chart.nowSales-4},${chart.nowSales-3},${chart.nowSales-2},${chart.nowSales-1},${chart.nowSales}]
-				<c:if test="${not empty chartList.size() }">
-					,
-				</c:if>	
-			</c:forEach>  
-		    ]);
-	 */
-	    var data = google.visualization.arrayToDataTable([
-	    	['월','2022.6', '2022.7', '2022.8', '2022.9', '2022.10', '2022.11', '2022.12'],
-	    	['금액', 780, 850, 580,750, 1000, 400, 600]
+		/* 		var data = google.visualization.arrayToDataTable([
+	      ['월','전년동월실적', '당월실적', '전년 당월 매출', '당월 매출'],	  
+	      <c:forEach items="${chartList}" var="chart">
+			
+			['금액,${chart.prvProfit},${chart.nowProfit},${chart.prvSales},${chart.nowSales}]
+			<c:if test="${not empty chartList.size() }">
+				,
+			</c:if>	
+		</c:forEach>  
+	    ]); */
+	    
+		var data = google.visualization.arrayToDataTable([
+	          ['월','전년12월매출', '12월매출', '전년 12월 순이익', '12월 순이익'],
+	          ['ㅤ', 1000, 1030, 540, 350]
 	        ]);
-	 
-	  var options = {
-	    chart: {
-	      title: '6개월 간 매출',
-	      subtitle: '6개월 간 매출 차트',
-	    }
-	  };
-	  var chart = new google.charts.Bar(document.getElementById('columnchart_material2'));
-	  chart.draw(data, google.charts.Bar.convertOptions(options));
+
+	        var options = {
+	          chart: {
+	            title: '작년 대비 매출, 순이익',
+	            subtitle: '조회 달 기준 매출&순이익',
+	          }
+	        };
+
+	        var chart = new google.charts.Bar(document.getElementById('columnchart_material1'));
+
+	        chart.draw(data, google.charts.Bar.convertOptions(options));
+		
 	}
+	
+	function drawChart2(){
+		<!-- javaScript forEach 문으로  -->
+		/* 		var data = google.visualization.arrayToDataTable([
+				      ['월', ${month-5}', '${month-4}', '${month-3}', '${month-2}', '${month-1}', '${month}'],	  
+				      <c:forEach items="${SalesList}" var="chart">
+						
+						['금액',${chart.nowSales-5},${chart.nowSales-4},${chart.nowSales-3},${chart.nowSales-2},${chart.nowSales-1},${chart.nowSales}]
+						<c:if test="${not empty chartList.size() }">
+							,
+						</c:if>	
+					</c:forEach>  
+				    ]);
+			 */
+
+		var data = google.visualization.arrayToDataTable([
+	          ['기간','2022.6', '2022.7', '2022.8', '2022.9', '2022.10', '2022.11', '2022.12'],
+	          ['ㅤ',  780, 850, 580,750, 1000, 400, 600]
+	        ]);
+
+	        var options = {
+	          chart: {
+	            title: '6개월간 매출',
+	            subtitle: '조회 달 6개월 이전 매출',
+	          }
+	        };
+
+	        var chart = new google.charts.Bar(document.getElementById('columnchart_material2'));
+
+	        chart.draw(data, google.charts.Bar.convertOptions(options));
+		
+	}
+
 </script>
 <style>
 .yearSelect {
@@ -98,7 +105,7 @@
 div.mainBoard {
 	margin-top: 20px;
 	width: 100%;
-	height: :1150px;
+	height: :1050px;
 	
 }
 /* div.top{
@@ -112,7 +119,7 @@ div.left {
 	float: left;
 	box-sizing: border-box;
 	
-	overflow: scroll;
+/* 	overflow: scroll; */
 }
 div.right {
 
@@ -121,7 +128,7 @@ div.right {
 	float: right;
 	box-sizing: border-box;
 	
-	overflow: scroll;
+/* 	overflow: scroll; */
 }
 .mr10px{
 	margin-right:10px;
@@ -132,6 +139,16 @@ div.right {
 }
 .btn-m5{
 	margin : 5px;
+}
+
+.table {
+	margin-top: 10px;
+
+}
+
+#navbar-example1 {
+	margin-top: 20px !important;
+	margin-bottom: 20px !important;
 }
 
 </style>
@@ -172,10 +189,10 @@ div.right {
 	<div class="mainBoard">
 		<!-- 막대그래프 -->
         <div class="left p-2">
-        	<div id="columnchart_material1" style="width: 500px; height: 450px;"></div>
+        	<div id="columnchart_material1" style="width: 500px; height: 550px;"></div>
         </div>
 		<div class="right p-2">
-			<div id="columnchart_material2" style="width: 500px; height: 450px;"></div>
+			<div id="columnchart_material2" style="width: 500px; height: 550px;"></div>
 		</div>
 		<!-- 테이블 -->
 		<div class="left p-2">
@@ -238,7 +255,7 @@ div.right {
 		</div>
 		<div class="right p-2">
 			<nav id="navbar-example1" class="navbar bg-light px-3 mb-2">
-				<a class="navbar-brand" href="#">월별 매출</a>
+				<a class="navbar-brand" href="#">월 별 매출</a>
 			</nav>
 			<div data-bs-spy="scroll" data-bs-target="#navbar-example1"
 				data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true"
