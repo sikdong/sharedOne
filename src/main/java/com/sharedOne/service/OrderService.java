@@ -15,9 +15,15 @@ public class OrderService {
 	@Autowired(required = true)
 	private OrderMapper mapper;
 
-	public List<Buyer> searchBuyer() {
+	public List<Buyer> searchBuyer(String buyerInfo) {
 		// TODO Auto-generated method stub
-		return mapper.searchBuyer();
+		buyerInfo = "%" + buyerInfo + "%";
+		return mapper.searchBuyer(buyerInfo);
+	}
+
+	public List<Buyer> getBuyerNames() {
+		// TODO Auto-generated method stub
+		return mapper.getBuyerNames();
 	}
 	
 	

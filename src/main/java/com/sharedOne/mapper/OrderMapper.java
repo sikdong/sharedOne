@@ -9,6 +9,8 @@ import com.sharedOne.domain.Buyer;
 @Component
 public interface OrderMapper {
 
-	List<Buyer> searchBuyer();
+	List<Buyer> searchBuyer(String buyerInfo);
+
+	List<Buyer> getBuyerNames();
 	
 }

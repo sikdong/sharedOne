@@ -13,4 +13,5 @@ public class Buyer {
 	private String deliveryCompany;
 	private String manager;
 	private String buyerCode;
+	private String buyerInfo;
 }

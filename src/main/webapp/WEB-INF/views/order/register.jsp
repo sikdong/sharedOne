@@ -12,8 +12,8 @@
 	margin: 3% 3% 0 20%;
 }
 
-.mt-5 {
-	margin-top: 5px;
+.mt5 {
+	margin-top: 5px !important;
 }
 .ml-3 {
 	margin-left : 3%;
@@ -55,35 +55,150 @@
 <body>
 
 	<my:sidebar></my:sidebar>
-	<div class="root">
+<div class="root">
 		<div style="font-size: 30px;">
 			<strong>주문서 등록</strong>
 		</div>
+		
+		
 		<div style="margin-top: 5%; font-size: 22px; color: blue;">
 			주문서정보
 		</div>
 		<hr style="width: 10%" />
 		<br />
-		<div class="root-width" style="display : flex;">
-			<div class="mb-3">
-	  			<label for="exampleFormControlInput1" class="form-label">바이어 코드</label>
-	  			<input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-			</div>
-			<div class="mb-3 ml-3">
-	  			<label for="exampleFormControlInput1" class="form-label">바이어명</label>
-	  			<input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-			</div>
-			<div class="mb-3 ml-3">
-	  			<label for="exampleFormControlInput1" class="form-label">납기요청일</label>
-	  			<input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-			</div>
-			<div class="mb-3 ml-3">
-	  			<label for="exampleFormControlInput1" class="form-label">담당자</label>
-	  			<input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-			</div>
-			<div class="mb-2 ml-3" style="margin-top : 2rem !important">
-				<button type="button" class="btn btn-primary" >수정</button>
-			</div>
+		<div class="container-sm mt-4">
+			<div class="row d-flex">
+				<!-- *우측* 검색 필터 -->
+				<div class="col-sm-10 mt-1">
+					<form action="" method=""><!-- form get? post?  -->		
+						<!-- 검색필터 1st row : 전체 검색. -->
+						<!-- 검색필터 2nd row : 조건 검색 ( 각자 페이지의 따라 변경  ) -->
+						<div class="row d-flex">
+							<div class="col-sm-3 mb-4">
+								<div>바이어명</div>
+								<div class="input-group mt5">
+									<input name="" value="" type="text" id="" class="form-control" list="datalistOptions1" placeholder="">
+									<button data-bs-toggle="modal" data-bs-target="#buyerModal" class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div>바이어코드</div>
+								<div class="input-group mt5">
+									<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="">
+								</div>	
+							</div>
+							<div class="col-sm-3">
+								<div>국가</div>
+								<div class="input-group mt5">
+									<input name="" value="" type="text" id="" class="form-control" list="datalistOptions3" placeholder="">
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div>납기 요청일</div>
+								<div class="input-group mt5">
+									<input name="" value="" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="">
+								</div>
+							</div>
+						</div><!-- 2nd row 끝 -->
+						<!-- 검색필터 3rd row : 기간 선택 -->
+					</form>	
+				</div><!-- 우측 검색 조건 div 끝 -->
+			</div><!-- 좌측 + 우측 전체를 감싸는 d-flex 끝-->
+		</div><!-- container-sm div 끝-->
+		
+		<!-- 바이어 모달 -->
+		<div class="modal fade" id="buyerModal" tabindex="-1" aria-labelledby="buyerModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-xl">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h1 class="modal-title fs-5" id="buyerModalLabel">바이어 선택</h1>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+				<div class="container-sm mt-4">
+					<div class="row d-flex">
+						
+						<!-- *좌측* 검색 조건 설명란 -->
+						<div class="col-sm-2 leftFilterDiv mt-2">
+							<div class="mb-5">
+								<p class="filterText ">전체 검색</p>
+							</div>
+							<div class="mb-5">
+								<p class="filterText ">조건 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
+							</div>
+							 <div class="mb-5">
+								<p class="filterText ">납기 요청</p>
+							</div> 
+						</div><!-- 좌측 조건 설명 div 끝 -->
+						
+						<!-- *우측* 검색 필터 -->
+						<div class="col-sm-10 mt-1">
+							<form action="" method=""><!-- form get? post?  -->		
+								<!-- 검색필터 1st row : 전체 검색. -->
+								<div class="row d-flex">
+									<div class="col-sm-6 mb-4">
+										<div class="input-group">
+											<input name="" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
+							        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+										</div>
+									</div>
+								</div><!-- 1st row 끝 -->
+								<!-- 검색필터 2nd row : 조건 검색 ( 각자 페이지의 따라 변경  ) -->
+								<div class="row d-flex">
+									<div class="col-sm-3 mb-4">
+										<div class="input-group" >
+											<input name="" value="" type="text" id="" class="form-control" list="datalistOptions1" placeholder="바이어명">
+											<datalist id="datalistOptions1">
+												<c:forEach items="${productList }" var="product">
+													<option value="${product.productCode }">
+												</c:forEach>
+											</datalist>
+											<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group">
+											<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="바이어코드">
+											<datalist id="datalistOptions2">
+												<c:forEach items="${productList }" var="product">
+													<option value="${product.productName }">
+												</c:forEach>
+											</datalist>
+											<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+										</div>	
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group">
+											<input name="" value="" type="text" id="" class="form-control" list="datalistOptions3" placeholder="국가">
+											<datalist id="datalistOptions3">
+												<c:forEach items="${types }" var="type">
+													<option value="${type }">
+												</c:forEach>
+											</datalist>
+											<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+										</div>
+									</div>
+								</div><!-- 2nd row 끝 -->
+								<!-- 검색필터 3rd row : 기간 선택 -->
+								<div class="row d-flex">
+									<div class="col-sm-5">
+										<div class="input-group" style="margin-top :15px !important;">
+											<input name="d1" value="${nowDate }" type="date" id="d1Id" class="form-control">
+										</div>
+									</div>
+								</div>	
+							</form>	
+						</div><!-- 우측 검색 조건 div 끝 -->
+					</div><!-- 좌측 + 우측 전체를 감싸는 d-flex 끝-->
+				</div><!-- container-sm div 끝-->
+						      	
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+		        <button type="button" class="btn btn-primary">선택</button>
+		      </div>
+		    </div>
+		  </div>
 		</div>
 		<br />
 		<hr />
@@ -95,11 +210,11 @@
 		
 		<div style="width : 77vw; display : flex;" class="mt-5">
 			<div class="form-width flex">
-				<label for="staticEmail" class="col-form-label">제품명</label>
-				<div class="ml-3" style="display : flex;" >
+				<label for="staticEmail" class="col-form-label" style="min-width : 50px;">제품명</label>
+				<div class="ml-3 input-group" style="width : 250px !important;">
 					<input type="text" class="form-control"
 						id="staticEm77vwail" value="email@example.com">
-						<span class="input-group-text" id="basic-addon2">검색</span>
+						<button data-bs-toggle="modal" data-bs-target="#productModal" class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
 				</div>
 			</div>
 			<div  class="form-width flex">
@@ -131,17 +246,12 @@
 			</div>
 			<div  class="form-width flex">
 				<label for="inputPassword" class=" col-form-label">등록일</label>
-				<div style="margin-left : 15%">
-					<input type="date" class="form-control" id="inputPassword">
+				<div style="margin-left : 3%;">
+					<input type="text" class="form-control" id="inputPassword">
 				</div>
 			</div>
 		</div>
-		<div style="width : 77vw;" class="mt-5">
-			<label for="inputPassword" class=" col-form-label">비고</label>
-			<div class="ml-3">
-				<textarea rows="5" class="form-control" id="inputPassword" ></textarea>
-			</div>
-		</div>
+		
 			<button type="button" style="margin-left : 43%;" class="mt-5 btn btn-primary">등록</button>
 		<br />
 		<br />
@@ -190,6 +300,12 @@
                       </tr>
                     </tbody>
                   </table>
+                  <div style="width : 77vw;" class="mt-5">
+					<label for="inputPassword" class=" col-form-label">주문 시 특이사항</label>
+					<div class="ml-3">
+						<textarea rows="5" class="form-control" id="inputPassword" ></textarea>
+					</div>
+				  </div>
 		        <button style="margin-left: 42%;" type="submit" class="mt-5 btn btn-primary">주문등록</button>
             </div>
             <br />
@@ -209,64 +325,77 @@
 		<div class="modal-dialog modal-xl">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h1 class="modal-title fs-5 me-2" id="productModalLabel">제품 검색</h1>
-					<form class="d-flex" role="search">
-						<input class="form-control" type="search" placeholder=""
-							aria-label="검색">
-						<button style="width: 100px;" class="btn btn-outline-primary"
-							type="submit">검색</button>
-					</form>
-					<div class="dropdown">
-						<a class="btn btn-secondary dropdown-toggle" href="#"
-							role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							</a>
-
-						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="#">제품1</a></li>
-							<li><a class="dropdown-item" href="#">제품2</a></li>
-							<li><a class="dropdown-item" href="#">제품3</a></li>
-						</ul>
-					</div>
+					<h1 class="modal-title fs-5 me-2" id="productModalLabel">제품 선택</h1>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<table class="table">
-						<thead>
-							<tr>
-								<th scope="col">선택</th>
-								<th scope="col">제품코드</th>
-								<th scope="col">제품그룹</th>
-								<th scope="col">제품명</th>
-								<th scope="col">제조사</th>
-								<th scope="col">무게</th>
-								<th scope="col">규격</th>
-								<th scope="col">단위</th>
-								<th scope="col">원가</th>
-								<th scope="col">특이사항</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<th>
-
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value=""
-											id="flexCheckDefault">
+					<div class="container-sm mt-4">
+					<div class="row d-flex">
+						
+						<!-- *좌측* 검색 조건 설명란 -->
+						<div class="col-sm-2 leftFilterDiv mt-2">
+							<div class="mb-5">
+								<p class="filterText ">전체 검색</p>
+							</div>
+							<div class="mb-5">
+								<p class="filterText ">조건 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
+							</div>
+						</div><!-- 좌측 조건 설명 div 끝 -->
+						
+						<!-- *우측* 검색 필터 -->
+						<div class="col-sm-10 mt-1">
+							<form action="" method=""><!-- form get? post?  -->		
+								<!-- 검색필터 1st row : 전체 검색. -->
+								<div class="row d-flex">
+									<div class="col-sm-6 mb-4">
+										<div class="input-group">
+											<input name="" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
+							        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+										</div>
 									</div>
-								</th>
-								<td>Mark</td>
-								<td>Otto</td>
-								<td>@mdo</td>
-								<td>Mark</td>
-								<td>Otto</td>
-								<td>@mdo</td>
-								<td>Mark</td>
-								<td>Otto</td>
-								<td>@mdo</td>
-							</tr>
-						</tbody>
-					</table>
+								</div><!-- 1st row 끝 -->
+								<!-- 검색필터 2nd row : 조건 검색 ( 각자 페이지의 따라 변경  ) -->
+								<div class="row d-flex">
+									<div class="col-sm-3 mb-4">
+										<div class="input-group" >
+											<input name="" value="" type="text" id="" class="form-control" list="datalistOptions1" placeholder="제품명">
+											<datalist id="datalistOptions1">
+												<c:forEach items="${productList }" var="product">
+													<option value="${product.productCode }">
+												</c:forEach>
+											</datalist>
+											<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group">
+											<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품코드">
+											<datalist id="datalistOptions2">
+												<c:forEach items="${productList }" var="product">
+													<option value="${product.productName }">
+												</c:forEach>
+											</datalist>
+											<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+										</div>	
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group">
+											<input name="" value="" type="text" id="" class="form-control" list="datalistOptions3" placeholder="제품그룹">
+											<datalist id="datalistOptions3">
+												<c:forEach items="${types }" var="type">
+													<option value="${type }">
+												</c:forEach>
+											</datalist>
+											<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+										</div>
+									</div>
+								</div><!-- 2nd row 끝 -->
+								<!-- 검색필터 3rd row : 기간 선택 -->
+							</form>	
+						</div><!-- 우측 검색 조건 div 끝 -->
+					</div><!-- 좌측 + 우측 전체를 감싸는 d-flex 끝-->
+				</div><!-- container-sm div 끝-->
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"

@@ -14,8 +14,32 @@
 			phone,
 			deliveryCompany,
 			manager
-		FROM Buyer;
+		FROM Buyer
+		<where>
+		<trim prefixOverrides="OR" prefix="OR">
+			<if test="buyerName != null">
+				OR buyerName Like #{buyerInfo}
+			</if>
+			<if test="buyerCode !=null">
+				OR buyerCode LIKE #{buyerInfo}
+			</if>
+			<if test="address !=null">
+				OR address Like #{buyerInfo}
+			</if>
+			<if test="country !=null">
+				OR country LIKE #{buyerInfo}
+			</if>
+			<if test="manager !=null">
+				OR manager LIKE #{buyerInfo}
+			</if>
+		</trim>
+		</where>
 		
+	</select>
+		<select id="getBuyerNames" resultType="com.sharedOne.domain.Buyer">
+		SELECT 
+			buyerName
+		FROM Buyer
 	</select>
 
 

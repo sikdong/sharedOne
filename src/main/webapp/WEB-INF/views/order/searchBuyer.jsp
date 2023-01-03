@@ -48,7 +48,13 @@
 				
 				<div style="font-size: 30px;">
 					<strong>주문서 등록</strong>
+					<span class="ml-1">
+						<a href="${pageContext.request.contextPath }/order/searchBuyer?buyerInfo=">
+							<button class="btn-sm btn-outline-primary btn">초기화</button>
+						</a>
+					</span>
 				</div>
+				
 				
 				<div class="mt-5" style="display : flex; justify-content : center;"> 
 					
@@ -56,25 +62,28 @@
 						<strong>바이어 검색</strong>
 					</label>
 					
-					<form class="d-flex ml-1" role="search" >
-						<input class="form-control" type="search" placeholder=""
-							aria-label="검색">
-						<button style="width: 150px;" class="btn btn-outline-primary"
+					<form class="d-flex ml-1" role="search" action="" >
+						<input class="form-control" type="search" placeholder="바이어 관련 정보 입력"
+							name="buyerInfo" aria-label="검색">
+						<button style="width: 80px;" class="btn btn-outline-primary"
 							type="submit">검색</button>
-						<select style="width : 150px !important" class="form-select" aria-label="Default select example">
+						<%-- <select style="width : 150px !important" class="form-select" aria-label="Default select example">
 						  <option selected>선택</option>
-						  <c:forEach items="${buyers }" var="buyer" varStatus="status">
-						  <option value="${status.count }">${buyer.buyerName }</option>
+						  <c:forEach items="${buyerNames }" var="buyerName" varStatus="status">
+						  <option value="${status.count }">${buyerName.buyerName }</option>
 						  </c:forEach>
-						</select>
+						</select> --%>
 					
+					</form>
 					<div style="display : flex; margin-left : 10%">
 						<div class="modal-title fs-5" style="padding-right : 3%; min-width : 120px;" id="buyerModalLabel">
 							<strong>납기 요청일</strong>
-						</div>
-						<input type="date" />
+						</div> 
+						<form action="${pageContext.request.contextPath }/order/register" method="post" id="firstRegisterForm">
+							<input type="date" name="deliveryDate" id="deliveryDateForm"/>
+							<input type="text" id="buyerName" value="" />
+						</form>
 					</div>
-					</form>
 					
 				 </div> 
 				 <br />
@@ -98,14 +107,11 @@
 							</tr>
 						</thead>
 						<tbody>
-						<c:forEach items="${buyers }" var="buyer">
+						<c:forEach items="${buyers }" var="buyer" varStatus="status">
 							<tr>
 								<th>
-
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value=""
-											id="flexCheckDefault">
-									</div>
+									<input class="form-radio-input" type="radio"
+										id="flexCheckDefault" name="buyerName" value="${buyer.buyerName}">
 								</th>
 								<td>${buyer.buyerCode }</td>
 								<td>${buyer.buyerName }</td>
@@ -132,5 +138,8 @@
 	
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script>
+document.querySelector("#buyerName").value = 
+</script>
 </body>
 </html>
