@@ -5,15 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
-@RequestMapping("master")
-public class ProductController {
-
-	@Autowired
-	private ProductService productService;
-	
-	@GetMapping("productList")
-	public void productList(){
-		productService.selectProductsList();
-	}
-}
+//@Controller
+//@RequestMapping("master")
+//public class ProductController {
+//
+//	@Autowired
+//	private ProductService productService;
+//	
+//	@GetMapping("productList")
+//	public void productList(){
+//		productService.selectProductsList();
+//	}
+//}
