@@ -1,4 +1,4 @@
-	
+
 <%@tag import="java.time.LocalDate"%>
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%-- c커스텀 태그 사용하기 위해 --%>
@@ -37,23 +37,13 @@
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-        	<li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle headFont" style="color: black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fa-brands fa-wpforms headFont"></i>&nbsp&nbsp마스터 
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">바이어관리</a></li>
-              <li><a class="dropdown-item" href="#">제품관리</a></li>
-              <li><a class="dropdown-item" href="#">판매가격관리</a></li>
-            </ul>
-          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle headFont" style="color: black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fa-brands fa-wpforms headFont"></i>&nbsp&nbsp주문
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">주문관리</a></li>
-              
+              <li><a class="dropdown-item" href="#">제품관리</a></li>
             </ul>
           </li>
                     <li class="nav-item dropdown">
