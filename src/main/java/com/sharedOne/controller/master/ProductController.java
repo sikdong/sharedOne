@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("master")
 public class ProductController {
 
-	/*
-	 * @Autowired private ProductService productService;
-	 * 
-	 * @GetMapping("productList") public void productList(){
-	 * productService.selectProductsList(); }
-	 */
+	@Autowired
+	private ProductService productService;
+	
+	@GetMapping("productList")
+	public void productList(){
+		productService.selectProductsList();
+	}
 }
