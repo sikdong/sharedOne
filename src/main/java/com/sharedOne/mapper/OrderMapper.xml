@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.sharedOne.mapper.OrderMapper">
+	<select id="searchBuyer" resultType="com.sharedOne.domain.Buyer">
+		SELECT 
+			buyerCode,
+			buyerName,
+			address,
+			country,
+			businessNumber,
+			phone,
+			deliveryCompany,
+			manager
+		FROM Buyer
+		<where>
+		<trim prefixOverrides="OR" prefix="OR">
+			<if test="buyerName != null">
+				OR buyerName Like #{buyerInfo}
+			</if>
+			<if test="buyerCode !=null">
+				OR buyerCode LIKE #{buyerInfo}
+			</if>
+			<if test="address !=null">
+				OR address Like #{buyerInfo}
+			</if>
+			<if test="country !=null">
+				OR country LIKE #{buyerInfo}
+			</if>
+			<if test="manager !=null">
+				OR manager LIKE #{buyerInfo}
+			</if>
+		</trim>
+		</where>
+		
+	</select>
+		<select id="getBuyerNames" resultType="com.sharedOne.domain.Buyer">
+		SELECT 
+			buyerName
+		FROM Buyer
+	</select>
+
+
+</mapper>
