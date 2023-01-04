@@ -162,7 +162,7 @@
 		</thead>
 		<tbody>
 			<c:forEach items="${buyerList }" var="buyer">
-			<c:url value="/buyer/get" var="getLink">
+			<c:url value="/master/buyerGet" var="getLink">
 					<c:param name="code" value="${buyer.buyerCode }"></c:param>
 				</c:url>
 				<tr onclick="location.href='${getLink}'" class="trtr">

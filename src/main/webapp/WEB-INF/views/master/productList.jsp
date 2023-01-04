@@ -50,6 +50,10 @@
 		background-color: #D3D3D3;
 		cursor: pointer;
 	}
+	
+	.table .trtr:hover {
+ 	font-weight: bold;
+ }
 </style>
 
 
@@ -204,7 +208,10 @@
 				 </thead>
 				<tbody>			
 					<c:forEach items="${productList }" var="product">
-						<tr class="listHover">
+						<c:url value="/master/productGet" var="getLink">
+							<c:param name="code" value="${product.productCode }"></c:param>
+						</c:url>
+					<tr onclick="location.href='${getLink}'" class="trtr">
 							<td>${product.productCode }</td>
 							<td>${product.productName }</td>
 							<td>${product.productType }</td>

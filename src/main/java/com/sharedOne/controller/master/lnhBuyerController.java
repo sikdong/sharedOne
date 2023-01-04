@@ -17,14 +17,14 @@ import com.sharedOne.domain.master.BuyerDto;
 import com.sharedOne.service.master.lnhBuyerService;
 
 @Controller
-@RequestMapping("buyer")
+@RequestMapping("master")
 public class lnhBuyerController {
 	
 	@Autowired
 	private lnhBuyerService buyerService;
 	
 	
-	@GetMapping("list")
+	@GetMapping("buyerList")
 	public void buyerList(Model model){
 		List <BuyerDto> buyerList = buyerService.selectBuyerList();
 		
@@ -44,21 +44,21 @@ public class lnhBuyerController {
 	}
 	
 	
-	@GetMapping("register")
+	@GetMapping("buyerRegister")
 	public void register() {
 		
 	}
 	
-	@PostMapping("register")
+	@PostMapping("buyerRegister")
 	public String register(BuyerDto buyer, RedirectAttributes rttr) {
 		
 		buyerService.register(buyer);
 		
-		return "redirect:/buyer/list";
+		return "redirect:/master/buyerList";
 	}
 	
 	//새 창으로 띄우는 경우 
-	@GetMapping("get")
+	@GetMapping("buyerGet")
 	public void get(
 			@RequestParam(name = "code") String buyerCode,
 /*			Authentication auth,*/
@@ -69,7 +69,7 @@ public class lnhBuyerController {
 	}
 	
 	
-	@GetMapping("modify") // @은 외부 빈, #은 메소드의 파라미터
+	@GetMapping("buyerModify") // @은 외부 빈, #은 메소드의 파라미터
 	/* @PreAuthorize("@Security.checkWriter(authentication.name, #buyerCode)") */
 	public void modify(
 			@RequestParam(name = "code") String buyerCode,
@@ -80,21 +80,21 @@ public class lnhBuyerController {
 		
 	}
 	
-	@PostMapping("modify")
+	@PostMapping("buyerModify")
 	/* @PreAuthorize("@Security.checkWriter(authentication.name, #buyerCode)") */
 	public String modify(BuyerDto buyer) {
 		buyerService.update(buyer);
 		String code = buyer.getBuyerCode();
 		
-		return "redirect:/buyer/list/get?code=" + code;
+		return "redirect:/master/buyerList/buyerGet?code=" + code;
 	}
 	
-	@PostMapping("remove")
+	@PostMapping("buyerRemove")
 	/* @PreAuthorize("@Security.checkWriter(authentication.name, #buyerCode)") */
 	public String remove(
 			@RequestParam(name = "code") String buyerCode) {
 		buyerService.remove(buyerCode);
 		
-		return "redirect:/buyer/list";
+		return "redirect:/master/buyerList";
 	}
 }
