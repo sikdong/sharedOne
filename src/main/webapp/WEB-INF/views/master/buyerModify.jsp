@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-<title>Insert title here</title>
+<title>바이어 수정</title>
 </head>
 <style>
     .container{
@@ -44,16 +46,30 @@
         justify-content: space-around;
     }
     .col-form-label{
-        font-weight: 600;
+        font-weight: 400;
+        text-align: left;
+    }
+    
+    .modifyBtn {
+    float: right; 
+    font-size: 15px; 
+    font-weight: 600; 
+    width: 60px; 
+    height: 30px; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    background: #c7c9c2;
     }
 </style>
 <body>   
     <div class="insert-body mt-5 ">
         <div class="container-md">
             <div class="row">
+            <form action="/master/buyerModify" method="post">
                 <div class="col mt-1">
                     <div class="mb-4">
-                        <h1 style="font-size: 24px; font-weight:600">바이어 등록</h1>
+                        <h1 style="font-size: 24px; font-weight:600">바이어 수정</h1>
                     </div>					
                     <hr class="line" style="border: solid 1px #000" />
                     </div>
@@ -61,56 +77,69 @@
                         <div class="mb-2 row mt-2 rowdiv">
                             <label for="inputCode" class="col-form-label">바이어 코드</label>
                             <div class="col-sm-5">
-                                <input id="buyerCode" type="text" class="form-control" placeholder="바이어코드를 입력하세요."/>
+                                <input id="buyerCode" type="text" class="form-control" placeholder="${buyer.buyerCode }" readonly/>
                             </div>
                         </div>
                         <div class="mb-2 row mt-2 rowdiv">
                             <label for="inputName" class="col-form-label">바이어명</label>
                             <div class="col-sm-5">
-                                <input id="buyerName" type="text" class="form-control" placeholder="바이어명을 입력하세요."/>
+                                <input id="buyerName" type="text" class="form-control" placeholder="${buyer.buyerName }"/>
                             </div>
                         </div>
                         <div class="mb-2 row mt-2 rowdiv">
                             <label for="inputAddress" class="col-form-label">주소</label>
                             <div class="col-sm-5">
-                                <input id="buyerAddress" type="text" class="form-control" placeholder="주소를 입력하세요."/>
+                                <input id="buyerAddress" type="text" class="form-control" placeholder="${buyer.address }"/>
                             </div>
                         </div>
                         <div class="mb-2 row mt-2 rowdiv">
                             <label for="inputCountry" class="col-form-label">국가</label>
                             <div class="col-sm-5">
-                                <input id="buyerCountry" type="text" class="form-control" placeholder="국가를 입력하세요."/>
+                                <input id="buyerCountry" type="text" class="form-control" placeholder="${buyer.country }"/>
                             </div>
                         </div> 
                         <div class="mb-2 row mt-2 rowdiv">
                             <label for="inputBusinessNum" class="col-form-label">사업자번호</label>
                             <div class="col-sm-5">
-                                <input id="businessNum" type="text" class="form-control" placeholder="사업자번호를 입력하세요."/>
+                                <input id="businessNum" type="text" class="form-control" placeholder="${buyer.businessNumber }"/>
                             </div>
                         </div>
                         <div class="mb-2 row mt-2 rowdiv">
                             <label for="inputPhone" class="col-form-label">연락처</label>
                             <div class="col-sm-5">
-                                <input id="buyerPhone" type="text" class="form-control" placeholder="연락처를 입력하세요."/>
+                                <input id="buyerPhone" type="text" class="form-control" placeholder="${buyer.phone }"/>
+                            </div>
+                        </div>
+                        <div class="mb-2 row mt-2 rowdiv">
+                            <label for="inputPhone" class="col-form-label">선적비용부담회사(셀렉트로 바꿔보기)</label>
+                            <div class="col-sm-5">
+                                <input id="buyerPhone" type="text" class="form-control" placeholder="${buyer.deliveryCompany }"/>
                             </div>
                         </div>
                          <div class="mb-2 row mt-2 rowdiv">
                             <label for="inputPhone" class="col-form-label">담당자</label>
                             <div class="col-sm-5">
-                                <input id="buyerPhone" type="text" class="form-control" placeholder="담당자를 입력하세요."/>
+                                <input id="buyerPhone" type="text" class="form-control" placeholder="${buyer.manager }"/>
                             </div>
                         </div>                      
                     </div>
                 <hr />
-                <div>
-                    <button class="btn" style="float: right; font-size: 15px; font-weight: 600; width: 60px; height: 30px; color: white; border: none; border-radius: 5px; background: #c7c9c2;"> 등록 </button>
+                    <!-- 수정버튼 -->
+					<input class="btn modifyBtn" type="submit" value="수정">
+					</form>
+					<form action="/master/buyerRemove" method="post">
+                    	<input class="btn" style="float: right; font-size: 15px; font-weight: 600; width: 60px; height: 30px; color: white; border: none; border-radius: 5px; background: #c7c9c2;" value="삭제">
+					</form>
                 </div>
-              
-            </div>
-        </div>
-      </div>
+           	</div>
+      	</div>
+               
+                
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <script>
+    
+    
         function comma(str) {
         str = String(str);
         return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');

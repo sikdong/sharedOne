@@ -42,7 +42,7 @@
 		border-right-style: groove;
 	}
 	.scrollBox {
-		border : solid; color:red;
+/* 		border : solid; color:red; */
 		width : 100%;
 		height: 30%;
 	}
@@ -185,7 +185,8 @@
 	<div class="d-flex">
 		<h4>제품목록</h4>
 		<div class="col-sm-10"></div>
-		<button id="" class="btn btn-primary" >제품등록</button>
+		<c:url value="/master/productRegister" var="registerLink"></c:url>
+		<button id="registerBtn" class="btn btn-primary" onclick="window.open('${registerLink}','제품등록','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');">제품등록</button>
 	</div>
 	<!-- 리스트 -->
 	<div class="scrollBox">

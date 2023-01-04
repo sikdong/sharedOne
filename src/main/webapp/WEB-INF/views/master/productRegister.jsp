@@ -59,19 +59,19 @@
                     </div>
                     <div class="container-sm content-size">
                     	<div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputCode" class="col-3 col-form-label">제품 코드</label>
+                            <label for="inputCode" class="col-form-label">제품 코드</label>
                             <div class="col-sm-5">
                                 <input id="productCode" type="text" class="form-control" placeholder="제품코드를 입력하세요."/>
                             </div>
                         </div>
                         <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputName" class="col-3 col-form-label">제품명</label>
+                            <label for="inputName" class="col-form-label">제품명</label>
                             <div class="col-sm-5">
                                 <input id="productName" type="text" class="form-control" placeholder="제품명을 입력하세요."/>
                             </div>
                         </div>
                         <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputProductType" class="col-3 col-form-label">제품 종류</label>
+                            <label for="inputProductType" class="col-form-label">제품 종류</label>
                             <div class="col-sm-5">
                                 <form>
                                     <select id="productType" name="type" class="form-control" style="padding-left: 8px;" >
@@ -86,31 +86,31 @@
                             </div>
                         </div>
                         <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputName" class="col-3 col-form-label">무게</label>
+                            <label for="inputName" class="col-form-label">무게</label>
                             <div class="col-sm-5">
                                 <input id="productName" type="text" class="form-control" placeholder="제품명을 입력하세요."/>
                             </div>
                         </div>
                         <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputName" class="col-3 col-form-label">규격</label>
+                            <label for="inputName" class="col-form-label">규격</label>
                             <div class="col-sm-5">
                                 <input id="productName" type="text" class="form-control" placeholder="제품명을 입력하세요."/>
                             </div>
                         </div>
                         <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputProductPrice" class="col-3 col-form-label">원가</label>
+                            <label for="inputProductPrice" class="col-form-label">원가</label>
                             <div class="col-sm-5">
                                 <input id="productPrice" onkeyup="inputNumberFormat(this);" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"type="text" class="form-control" placeholder="판매가격을 입력하세요."/>
                             </div>
                         </div>
                         <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputName" class="col-3 col-form-label">단위</label>
+                            <label for="inputName" class="col-form-label">단위</label>
                             <div class="col-sm-5">
                                 <input id="productName" type="text" class="form-control" placeholder="제품명을 입력하세요."/>
                             </div>
                         </div>
                         <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputName" class="col-3 col-form-label">제품 설명</label>
+                            <label for="inputName" class="col-form-label">제품 설명</label>
                             <div class="col-sm-5">
                                 <input id="productName" type="text" class="form-control" placeholder="제품명을 입력하세요."/>
                             </div>
