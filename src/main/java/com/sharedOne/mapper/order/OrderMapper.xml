@@ -33,7 +33,7 @@
  		<result column="name" property="name"/>
  		<result column="status" property="status"/>
  		<result column="message" property="message"/>
- 		<collection property="buyer" ofType="com.sharedOne.domain.Buyer">
+ 		<collection property="buyer" ofType="com.sharedOne.domain.master.BuyerDto">
  			<result column="buyerCode" property="buyerCode"/>
  			<result column="buyerName" property="buyerName"/>
  		</collection>
@@ -45,33 +45,36 @@
 			i.itemId,
 			i.quantity,
 			i.sum,
+			i.orderCode,
+			
 			pd.productCode,
 			pd.productName,
 			pd.unit,
 			pd.price,	
-			pr.salePrice,
-			pr.discountRate,
-			pr.fromDate,
-			pr.endDate
+			
+			sp.salePrice,
+			sp.discountRate,
+			sp.fromDate,
+			sp.endDate
  		FROM
  			Order_item i
  		LEFT JOIN Product pd ON pd.productCode = i.productCode
- 		LEFT JOIN Price pr ON pr.priceId = i.priceId
+ 		LEFT JOIN SalePrice sp ON sp.priceId = i.priceId
  		
  		WHERE
- 			pd.productCode = #{productCode }
+ 			i.orderCode = #{orderCode }
  	</select>
  	<resultMap type="com.sharedOne.domain.order.OrderItemDto" id="itemMap">
  		<id column="itemId" property="itemId"/>
  		<result column="quantity" property="quantity"/>
  		<result column="sum" property="sum"/>
- 		<collection property="product" ofType="com.sharedOne.domain.product.ProductDto">
+ 		<collection property="product" ofType="com.sharedOne.domain.master.ProductDto">
  			<result column="productCode" property="productCode"/>
  			<result column="productName" property="productName"/>
  			<result column="unit" property="unit"/>
  			<result column="price" property="price"/>
  		</collection>
- 		<collection property="price" ofType="com.sharedOne.domain.order.PriceDto">
+ 		<collection property="price" ofType="com.sharedOne.domain.master.SalePriceDto">
  			<result column="salePrice" property="salePrice"/>
  			<result column="discountRate" property="discountRate"/>
  			<result column="fromDate" property="fromDate"/>

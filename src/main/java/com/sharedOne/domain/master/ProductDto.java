@@ -1,4 +1,4 @@
-package com.sharedOne.domain.product;
+package com.sharedOne.domain.master;
 
 import java.time.LocalDate;
 

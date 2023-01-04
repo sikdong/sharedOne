@@ -3,7 +3,7 @@ package com.sharedOne.domain.order;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.sharedOne.domain.Buyer;
+import com.sharedOne.domain.master.BuyerDto;
 
 import lombok.Data;
 
@@ -20,7 +20,7 @@ public class OrderHeaderDto {
 	private String status;
 	private String message;
 	
-	private List <Buyer> buyer;
+	private List <BuyerDto> buyer;
 //	private String buyerCode;
 //	private String buyerName;
 	

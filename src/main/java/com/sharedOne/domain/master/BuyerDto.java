@@ -1,9 +1,9 @@
-package com.sharedOne.domain;
+package com.sharedOne.domain.master;
 
 import lombok.Data;
 
 @Data
-public class Buyer {
+public class BuyerDto {
 	
    private String buyerName;
    private String address;

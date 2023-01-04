@@ -12,6 +12,6 @@ public interface OrderMapper {
 
 	List<OrderHeaderDto> selectOrderHeaderList();
 
-	List<OrderItemDto> selectOrderItemListByOrderCode(String productCode);
+	List<OrderItemDto> selectOrderItemListByOrderCode(String orderCode);
 
 }

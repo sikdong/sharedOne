@@ -20,8 +20,8 @@ public class OrderService {
 		
 	}
 
-	public List<OrderItemDto> selectOrderItemListByOrderCode(String productCode) {
-		return orderMapper.selectOrderItemListByOrderCode(productCode);
+	public List<OrderItemDto> selectOrderItemListByOrderCode(String orderCode) {
+		return orderMapper.selectOrderItemListByOrderCode(orderCode);
 	}
 	
 	
