@@ -53,7 +53,7 @@
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-
+<c:set value="${pageContext.request.contextPath }" var="path"></c:set>
 	<my:sidebar></my:sidebar>
 <div class="root">
 		<div style="font-size: 30px;">
@@ -64,15 +64,85 @@
 		<div style="margin-top: 5%; font-size: 22px; color: blue;">
 			주문서정보
 		</div>
+		
 		<hr style="width: 10%" />
 		<br />
+		<div><strong>바이어 선택</strong></div>
 		<div class="container-sm mt-4">
+					<div class="row d-flex">
+						<!-- *좌측* 검색 조건 설명란 -->
+						<div class="col-sm-2 leftFilterDiv mt-2">
+							<div class="mb-5">
+								<p class="filterText ">전체 검색</p>
+							</div>
+							<div class="mb-5">
+								<p class="filterText ">조건 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
+							</div>
+							 <div class="mb-5">
+								<p class="filterText ">납기 요청</p>
+							</div> 
+						</div><!-- 좌측 조건 설명 div 끝 -->
+						
+						<!-- *우측* 검색 필터 -->
+						<div class="col-sm-10 mt-1">
+								<!-- 검색필터 1st row : 전체 검색. -->
+								<div class="row d-flex">
+									<div class="col-sm-6 mb-4">
+										<div class="input-group">
+											<input name="buyerInfo" id="allBuyerInfoInput" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
+							        		<button class="btn btn-outline-secondary" type="submit" id="allBuyerInfoBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+										</div>
+									</div>
+								</div><!-- 1st row 끝 -->
+								<!-- 검색필터 2nd row : 조건 검색 ( 각자 페이지의 따라 변경  ) -->
+								<div class="row d-flex">
+									<div class="col-sm-3 mb-4">
+										<div class="input-group" >
+											<input name="" type="search" id="buyerName" class="form-control" list="datalistOptions1" placeholder="바이어명">
+											<button class="btn btn-outline-secondary" id="buyerNameBtn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group">
+											<input name="" value="" type="text" id="buyerCode" class="form-control" list="datalistOptions2" placeholder="바이어코드">
+											<button class="btn btn-outline-secondary" id="buyerCodeBtn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+										</div>	
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group">
+											<input name="" value="" type="text" id="country" class="form-control" list="datalistOptions3" placeholder="국가">
+											<datalist id="datalistOptions3">
+												<c:forEach items="${types }" var="type">
+													<option value="${type }">
+												</c:forEach>
+											</datalist>
+											<button class="btn btn-outline-secondary" id="countryBtn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+										</div>
+									</div>
+								</div><!-- 2nd row 끝 -->
+								<!-- 검색필터 3rd row : 기간 선택 -->
+								<div class="row d-flex">
+									<div class="col-sm-5">
+										<div class="input-group" style="margin-top :15px !important;">
+											<input name="d1" type="date" id="d1Id" class="form-control">
+										</div>
+									</div>
+								</div>	
+							</div><!-- 우측 검색 조건 div 끝 -->
+						</div><!-- 좌측 + 우측 전체를 감싸는 d-flex 끝-->
+						
+					</div><!-- container-sm div 끝-->
+					
+					<div class="mt-5" id="buyerTable">
+				</div>
+		
+		<!-- <div class="container-sm mt-4">
 			<div class="row d-flex">
-				<!-- *우측* 검색 필터 -->
+				*우측* 검색 필터
 				<div class="col-sm-10 mt-1">
-					<form action="" method=""><!-- form get? post?  -->		
-						<!-- 검색필터 1st row : 전체 검색. -->
-						<!-- 검색필터 2nd row : 조건 검색 ( 각자 페이지의 따라 변경  ) -->
+					<form action="" method="">form get? post? 		
+						검색필터 1st row : 전체 검색.
+						검색필터 2nd row : 조건 검색 ( 각자 페이지의 따라 변경  )
 						<div class="row d-flex">
 							<div class="col-sm-3 mb-4">
 								<div>바이어명</div>
@@ -99,25 +169,19 @@
 									<input name="" value="" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="">
 								</div>
 							</div>
-						</div><!-- 2nd row 끝 -->
-						<!-- 검색필터 3rd row : 기간 선택 -->
+						</div>2nd row 끝
+						검색필터 3rd row : 기간 선택
 					</form>	
-				</div><!-- 우측 검색 조건 div 끝 -->
-			</div><!-- 좌측 + 우측 전체를 감싸는 d-flex 끝-->
-		</div><!-- container-sm div 끝-->
+				</div>우측 검색 조건 div 끝
+			</div>좌측 + 우측 전체를 감싸는 d-flex 끝
+		</div>container-sm div 끝 -->
 		
-		<!-- 바이어 모달 -->
-		<div class="modal fade" id="buyerModal" tabindex="-1" aria-labelledby="buyerModalLabel" aria-hidden="true">
-		  <div class="modal-dialog modal-xl">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h1 class="modal-title fs-5" id="buyerModalLabel">바이어 선택</h1>
-		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		      </div>
-		      <div class="modal-body">
-				<div class="container-sm mt-4">
+		<br />
+		<hr />
+		<br />
+		<div><strong>제품 선택</strong></div>
+		<div class="container-sm mt-4">
 					<div class="row d-flex">
-						
 						<!-- *좌측* 검색 조건 설명란 -->
 						<div class="col-sm-2 leftFilterDiv mt-2">
 							<div class="mb-5">
@@ -126,39 +190,37 @@
 							<div class="mb-5">
 								<p class="filterText ">조건 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
 							</div>
-							 <div class="mb-5">
-								<p class="filterText ">납기 요청</p>
-							</div> 
 						</div><!-- 좌측 조건 설명 div 끝 -->
 						
 						<!-- *우측* 검색 필터 -->
 						<div class="col-sm-10 mt-1">
-							<form action="" method=""><!-- form get? post?  -->		
 								<!-- 검색필터 1st row : 전체 검색. -->
 								<div class="row d-flex">
 									<div class="col-sm-6 mb-4">
 										<div class="input-group">
-											<input name="" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
-							        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+											<input name="buyerInfo" id="allBuyerInfoInput" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
+							        		<button class="btn btn-outline-secondary" style="cursor : pointer" id="allBuyerInfoBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
 										</div>
 									</div>
 								</div><!-- 1st row 끝 -->
 								<!-- 검색필터 2nd row : 조건 검색 ( 각자 페이지의 따라 변경  ) -->
 								<div class="row d-flex">
 									<div class="col-sm-3 mb-4">
+										<form action="">
 										<div class="input-group" >
-											<input name="" value="" type="text" id="" class="form-control" list="datalistOptions1" placeholder="바이어명">
+											<input type="text" id="allProductInfo" class="form-control" list="datalistOptions1" placeholder="제품명">
 											<datalist id="datalistOptions1">
 												<c:forEach items="${productList }" var="product">
 													<option value="${product.productCode }">
 												</c:forEach>
 											</datalist>
-											<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+											<button id="allProductInfoBtn"class="btn btn-outline-secondary"><i class="fa-solid fa-magnifying-glass"></i></button>
 										</div>
+										</form>
 									</div>
 									<div class="col-sm-3">
 										<div class="input-group">
-											<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="바이어코드">
+											<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품코드">
 											<datalist id="datalistOptions2">
 												<c:forEach items="${productList }" var="product">
 													<option value="${product.productName }">
@@ -169,7 +231,7 @@
 									</div>
 									<div class="col-sm-3">
 										<div class="input-group">
-											<input name="" value="" type="text" id="" class="form-control" list="datalistOptions3" placeholder="국가">
+											<input name="" value="" type="text" id="" class="form-control" list="datalistOptions3" placeholder="제품그룹">
 											<datalist id="datalistOptions3">
 												<c:forEach items="${types }" var="type">
 													<option value="${type }">
@@ -180,29 +242,11 @@
 									</div>
 								</div><!-- 2nd row 끝 -->
 								<!-- 검색필터 3rd row : 기간 선택 -->
-								<div class="row d-flex">
-									<div class="col-sm-5">
-										<div class="input-group" style="margin-top :15px !important;">
-											<input name="d1" value="${nowDate }" type="date" id="d1Id" class="form-control">
-										</div>
-									</div>
-								</div>	
-							</form>	
-						</div><!-- 우측 검색 조건 div 끝 -->
-					</div><!-- 좌측 + 우측 전체를 감싸는 d-flex 끝-->
-				</div><!-- container-sm div 끝-->
-						      	
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-		        <button type="button" class="btn btn-primary">선택</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-		<br />
-		<hr />
-		<br />
+							</div><!-- 우측 검색 조건 div 끝 -->
+						</div><!-- 좌측 + 우측 전체를 감싸는 d-flex 끝-->
+						
+					</div><!-- container-sm div 끝-->
+		
 		<button type="button" class="btn btn-primary">임시저장</button>
 		<button type="button" class="btn btn-primary">닫기</button>
 			
@@ -262,19 +306,19 @@
                     <thead>
                       <tr>
                         <th scope="col">번호</th>
-                        <th style="text-align: center;" scope="col" colspan="2">제품정보</th>
-                        <th style="text-align: center; vertical-align: middle;" scope="col" rowspan="2">바이어명</th>
-                        <th style="text-align: center; vertical-align: middle;" scope="col" rowspan="2">등록일</th>
-                        <th style="text-align: center; vertical-align: middle;" scope="col" rowspan="2">납기요청일</th>
+                        <th style="text-align: center;" scope="col" colspan="5">제품정보</th>
                         <th style="text-align: center;" scope="col" colspan="5">금액정보</th>
                         <th style="text-align: center; vertical-align: middle;" scope="col" rowspan="2">삭제여부</th>
                       </tr>
                       <tr>
                         <th>#</th>
+                        <th>제품코드</th>
+                        <th>제품그룹</th>
                         <th>제품명</th>
+                        <th>규격</th>
                         <th>단위</th>
+                        <th>원가</th>
                         <th>단가</th>
-                        <th>공급가액</th>
                         <th>부가세</th>
                         <th>수량</th>
                         <th>합계액</th>
@@ -410,5 +454,244 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
 		crossorigin="anonymous"></script>
+	<script>
+	const path = "${pageContext.request.contextPath}"
+	
+	<%-- 전체 검색 --%>
+	document.querySelector("#allBuyerInfoBtn").addEventListener("click", function(){
+		const allBuyerInfoInput = document.querySelector("#allBuyerInfoInput").value;
+		fetch(path+"/order/searchAllBuyerInfo/"+allBuyerInfoInput)
+		.then(res => res.json())
+		.then(list => {
+			document.querySelector("#buyerTable").innerHTML = "";
+			const table = 
+				`<table class="table">
+			<thead>
+			<tr>
+				<th scope="col">선택</th>
+				<th scope="col">바이어코드</th>
+				<th scope="col">바이어명</th>
+				<th scope="col">국가</th>
+				<th scope="col">주소</th>
+				<th scope="col">사업자번호</th>
+				<th scope="col">담당자</th>
+				<th scope="col">선적비용회사</th>
+				<th scope="col">연락처</th>
+			</tr>
+		</thead>
+		<tbody id="buyerBody">
+		</tbody>
+	</table>`
+		document.querySelector("#buyerTable").insertAdjacentHTML("afterbegin", table)
+		for(const item of list){
+			const buyerTableItem =
+			
+			`<tr>
+				<th>
+					<input class="form-radio-input" type="radio"
+						id="flexCheckDefault" name="buyerName">
+				</th>
+				<td>\${item.buyerCode }</td>
+				<td>\${item.buyerName }</td>
+				<td>\${item.country }</td>
+				<td>\${item.address }</td>
+				<td>\${item.businessNumber }</td>
+				<td>\${item.manager }</td>
+				<td>\${item.deliveryCompany }</td>
+				<td>\${item.phone}</td>
+			</tr>`
+			document.querySelector("#buyerBody").insertAdjacentHTML("beforeend", buyerTableItem)
+			}
+		})
+	})
+	
+	<%-- 바이어명 검색 --%>
+		document.querySelector("#buyerNameBtn").addEventListener("click", function(){
+		const buyerName = document.querySelector("#buyerName").value;
+		fetch(path+"/order/searchbuyerName/"+buyerName)
+		.then(res => res.json())
+		.then(list => {
+			document.querySelector("#buyerTable").innerHTML = "";
+			const table = 
+				`<table class="table">
+			<thead>
+			<tr>
+				<th scope="col">선택</th>
+				<th scope="col">바이어코드</th>
+				<th scope="col">바이어명</th>
+				<th scope="col">국가</th>
+				<th scope="col">주소</th>
+				<th scope="col">사업자번호</th>
+				<th scope="col">담당자</th>
+				<th scope="col">선적비용회사</th>
+				<th scope="col">연락처</th>
+			</tr>
+		</thead>
+		<tbody id="buyerBody">
+		</tbody>
+	</table>`
+		document.querySelector("#buyerTable").insertAdjacentHTML("afterbegin", table)
+		for(const item of list){
+			const buyerTableItem =
+			
+			`<tr>
+				<th>
+					<input class="form-radio-input" type="radio"
+						id="flexCheckDefault" name="buyerName">
+				</th>
+				<td>\${item.buyerCode }</td>
+				<td>\${item.buyerName }</td>
+				<td>\${item.country }</td>
+				<td>\${item.address }</td>
+				<td>\${item.businessNumber }</td>
+				<td>\${item.manager }</td>
+				<td>\${item.deliveryCompany }</td>
+				<td>\${item.phone}</td>
+			</tr>`
+			document.querySelector("#buyerBody").insertAdjacentHTML("beforeend", buyerTableItem)
+			}
+		})
+	})
+	
+	<%-- 국가 검색 --%>
+	document.querySelector("#countryBtn").addEventListener("click", function(){
+		const country = document.querySelector("#country").value;
+		fetch(path+"/order/searchcountry/"+country)
+		.then(res => res.json())
+		.then(list => {
+			document.querySelector("#buyerTable").innerHTML = "";
+			const table = 
+				`<table class="table">
+			<thead>
+			<tr>
+				<th scope="col">선택</th>
+				<th scope="col">바이어코드</th>
+				<th scope="col">바이어명</th>
+				<th scope="col">국가</th>
+				<th scope="col">주소</th>
+				<th scope="col">사업자번호</th>
+				<th scope="col">담당자</th>
+				<th scope="col">선적비용회사</th>
+				<th scope="col">연락처</th>
+			</tr>
+		</thead>
+		<tbody id="buyerBody">
+		</tbody>
+	</table>`
+		document.querySelector("#buyerTable").insertAdjacentHTML("afterbegin", table)
+		for(const item of list){
+			const buyerTableItem =
+			
+			`<tr>
+				<th>
+					<input class="form-radio-input" type="radio"
+						id="flexCheckDefault" name="buyerName">
+				</th>
+				<td>\${item.buyerCode }</td>
+				<td>\${item.buyerName }</td>
+				<td>\${item.country }</td>
+				<td>\${item.address }</td>
+				<td>\${item.businessNumber }</td>
+				<td>\${item.manager }</td>
+				<td>\${item.deliveryCompany }</td>
+				<td>\${item.phone}</td>
+			</tr>`
+			document.querySelector("#buyerBody").insertAdjacentHTML("beforeend", buyerTableItem)
+			}
+		})
+	})
+	<%-- 바이어 코드 검색 --%>
+	document.querySelector("#buyerCodeBtn").addEventListener("click", function(){
+		const buyerCode = document.querySelector("#buyerCode").value;
+		fetch(path+"/order/searchbuyerCode/"+buyerCode)
+		.then(res => res.json())
+		.then(list => {
+			document.querySelector("#buyerTable").innerHTML = "";
+			const table = 
+				`<table class="table">
+			<thead>
+			<tr>
+				<th scope="col">선택</th>
+				<th scope="col">바이어코드</th>
+				<th scope="col">바이어명</th>
+				<th scope="col">국가</th>
+				<th scope="col">주소</th>
+				<th scope="col">사업자번호</th>
+				<th scope="col">담당자</th>
+				<th scope="col">선적비용회사</th>
+				<th scope="col">연락처</th>
+			</tr>
+		</thead>
+		<tbody id="buyerBody">
+		</tbody>
+	</table>`
+		document.querySelector("#buyerTable").insertAdjacentHTML("afterbegin", table)
+		for(const item of list){
+			const buyerTableItem =
+			
+			`<tr>
+				<th>
+					<input class="form-radio-input" type="radio"
+						id="flexCheckDefault" name="buyerName">
+				</th>
+				<td>\${item.buyerCode }</td>
+				<td>\${item.buyerName }</td>
+				<td>\${item.country }</td>
+				<td>\${item.address }</td>
+				<td>\${item.businessNumber }</td>
+				<td>\${item.manager }</td>
+				<td>\${item.deliveryCompany }</td>
+				<td>\${item.phone}</td>
+			</tr>`
+			document.querySelector("#buyerBody").insertAdjacentHTML("beforeend", buyerTableItem)
+			}
+		})
+	})
+	
+	document.querySelector("#allProductInfoBtn").addEventListener("click", function(){
+		const allProductInfo = document.querySelector("#allProductInfo").value;
+		fetch(path+"/order/searchAllProductInfo/"+allProductInfo)
+		.then(res => res.json())
+		.then(list => {
+			document.querySelector("#productTable").innerHTML = "";
+			const table = 
+				`<table class="table">
+			<thead>
+			<tr>
+				<th scope="col">선택</th>
+				<th scope="col">제품코드</th>
+				<th scope="col">제품그룹</th>
+				<th scope="col">제품명</th>
+				<th scope="col">규격</th>
+				<th scope="col">무게</th>
+				<th scope="col">단위</th>
+				<th scope="col">원가</th>
+			</tr>
+		</thead>
+		<tbody id="productBody">
+		</tbody>
+	</table>`
+		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
+		for(const item of list){
+			const productTableItem =
+			
+			`<tr>
+				<th>
+					<input class="form-radio-input" type="radio"
+						id="flexCheckDefault" name="buyerName">
+				</th>
+				<td>\${item.productCode }</td>
+				<td>\${item.productType }</td>
+				<td>\${item.productName }</td>
+				<td>\${item.size }</td>
+				<td>\${item.weight }</td>
+				<td>\${item.unit }</td>
+				<td>\${item.price }</td>
+			</tr>`
+			document.querySelector("#productBody").insertAdjacentHTML("beforeend", buyerTableItem)
+			}
+		})
+	})
+	</script>
 </body>
 </html>

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sharedOne.domain.Buyer;
+import com.sharedOne.domain.product.ProductDto;
 import com.sharedOne.mapper.OrderMapper;
 
 
@@ -24,6 +25,11 @@ public class OrderService {
 	public List<Buyer> getBuyerNames() {
 		// TODO Auto-generated method stub
 		return mapper.getBuyerNames();
+	}
+
+	public List<ProductDto> searchProduct(String ProductInfo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
