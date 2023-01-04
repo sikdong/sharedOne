@@ -3,9 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
- <mapper namespace="com.sharedOne.mapper.order.OrderMapper">
+ <mapper namespace="com.sharedOne.mapper.order.AsjOrderMapper">
  	<!-- headerList -->
- 	<select id="selectOrderHeaderList" resultMap="headerMap">
+ 	<select id="selectOrderHeaderList" resultType="com.sharedOne.domain.order.OrderHeaderDto">
  		SELECT
  			h.orderId,
  			h.orderCode,
@@ -23,21 +23,7 @@
  		LEFT JOIN Member m ON m.id = h.writer
  		LEFT JOIN Buyer b ON b.buyerCode = h.buyerCode
  	</select>
- 	<resultMap type="com.sharedOne.domain.order.OrderHeaderDto" id="headerMap">
- 		<id column="orderId" property="orderId"/>
- 		<result column="orderCode" property="orderCode"/>
- 		<result column="inserted" property="inserted"/>
- 		<result column="modified" property="modified"/>
- 		<result column="deliveryDate" property="deliveryDate"/>
- 		<result column="writer" property="writer"/>
- 		<result column="name" property="name"/>
- 		<result column="status" property="status"/>
- 		<result column="message" property="message"/>
- 		<collection property="buyer" ofType="com.sharedOne.domain.master.BuyerDto">
- 			<result column="buyerCode" property="buyerCode"/>
- 			<result column="buyerName" property="buyerName"/>
- 		</collection>
- 	</resultMap>
+ 
  	
  	<!-- itemList ByOrderCode !!! -->
  	<select id="selectOrderItemListByOrderCode" resultMap="itemMap">

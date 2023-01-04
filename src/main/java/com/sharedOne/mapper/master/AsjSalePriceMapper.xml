@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
- <mapper namespace="com.sharedOne.mapper.master.SalePriceMapper">
+ <mapper namespace="com.sharedOne.mapper.master.AsjSalePriceMapper">
  
 	<!-- 해더 : 바이어코드 바이버명 국가 매니저 전화번호 비고   -->
  	<select id="selectSalePriceHeaderList" resultType="com.sharedOne.domain.master.BuyerDto" >

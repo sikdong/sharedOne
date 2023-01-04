@@ -10,20 +10,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sharedOne.domain.master.BuyerDto;
 import com.sharedOne.domain.master.SalePriceDto;
-import com.sharedOne.service.master.SalePriceService;
+import com.sharedOne.service.master.AsjSalePriceService;
 
 @Controller
 @RequestMapping("master")
-public class SalePriceController {
+public class AsjSalePriceController {
 	
 	@Autowired
-	private SalePriceService salePriceService;
+	private AsjSalePriceService asjSalePriceService;
 	
 	@GetMapping("salePriceList")
 	public void salePriceList(Model model, String buyerCode) {
 		
-		List <BuyerDto> headerList = salePriceService.selectSalePriceHeaderList();
-		List <SalePriceDto> itemList = salePriceService.selectSalePriceItemList(buyerCode);
+		List <BuyerDto> headerList = asjSalePriceService.selectSalePriceHeaderList();
+		List <SalePriceDto> itemList = asjSalePriceService.selectSalePriceItemList(buyerCode);
 		
 		model.addAttribute("headerList", headerList);
 		model.addAttribute("itemList", itemList);

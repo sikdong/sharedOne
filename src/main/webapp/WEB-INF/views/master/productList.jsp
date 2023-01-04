@@ -42,7 +42,6 @@
 		border-right-style: groove;
 	}
 	.scrollBox {
-		border : solid; color:red;
 		width : 100%;
 		height: 30%;
 	}

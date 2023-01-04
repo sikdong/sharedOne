@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.order.OrderItemDto;
-import com.sharedOne.service.order.OrderService;
+import com.sharedOne.service.order.AsjOrderService;
 import com.sharedOne.service.order.YdsOrderService;
 
 @Controller
@@ -30,7 +30,7 @@ public class YdsOrderController {
 	private YdsOrderService service;
 	
 	@Autowired
-	private OrderService orderService;
+	private AsjOrderService asjOrderService;
 
 	
 	@GetMapping("register")
@@ -74,14 +74,6 @@ public class YdsOrderController {
 		
 	}
 	
-	
-	  @GetMapping("list") public void orderList(Model model, String orderCode ) {
-	  List <OrderHeaderDto> headerList = orderService.selectOrderHeaderList(); List
-	 <OrderItemDto> itemListByOrderCode =
-	 orderService.selectOrderItemListByOrderCode(orderCode);
-	 
-	 model.addAttribute("headerList", headerList); model.addAttribute("itemList",
-	 itemListByOrderCode); }
 	 
 	
 }

@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.sharedOne.domain.master.ProductDto;
 
 @Mapper
-public interface ProductMapper {
+public interface AsjProductMapper {
 
 	List <ProductDto> selectProductList();
 
