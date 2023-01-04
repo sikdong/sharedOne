@@ -9,12 +9,14 @@ import com.sharedOne.domain.master.BuyerDto;
 import com.sharedOne.domain.master.ProductDto;
 import com.sharedOne.mapper.order.YdsOrderMapper;
 
+import lombok.RequiredArgsConstructor;
+
 
 @Service
+@RequiredArgsConstructor
 public class YdsOrderService {
 	
-	@Autowired(required = true)
-	private YdsOrderMapper mapper;
+	private final YdsOrderMapper mapper;
 
 	public List<BuyerDto> searchBuyer(String buyerInfo) {
 		// TODO Auto-generated method stub
@@ -27,9 +29,10 @@ public class YdsOrderService {
 		return mapper.getBuyerNames();
 	}
 
-	public List<ProductDto> searchProduct(String ProductInfo) {
+	public List<ProductDto> searchProduct(String allproductInfo) {
 		// TODO Auto-generated method stub
-		return null;
+		allproductInfo = "%" + allproductInfo + "%";
+		return mapper.searchProduct(allproductInfo);
 	}
 	
 	

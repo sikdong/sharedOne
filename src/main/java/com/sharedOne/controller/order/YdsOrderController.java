@@ -24,10 +24,11 @@ import com.sharedOne.service.order.YdsOrderService;
 
 @Controller
 @RequestMapping("order")
+@RequiredArgsConstructor
 public class YdsOrderController {
 	
-	@Autowired
-	private YdsOrderService service;
+	
+	private final YdsOrderService service;
 	
 	@Autowired
 	private OrderService orderService;
@@ -75,13 +76,19 @@ public class YdsOrderController {
 	}
 	
 	
-	  @GetMapping("list") public void orderList(Model model, String orderCode ) {
+	  @GetMapping("list") 
+	  public void orderList(Model model, String orderCode ) {
 	  List <OrderHeaderDto> headerList = orderService.selectOrderHeaderList(); List
 	 <OrderItemDto> itemListByOrderCode =
 	 orderService.selectOrderItemListByOrderCode(orderCode);
 	 
 	 model.addAttribute("headerList", headerList); model.addAttribute("itemList",
 	 itemListByOrderCode); }
+	  
+	  @GetMapping("modifyOrder")
+	  public void modifyOrder() {
+		  
+	  }
 	 
 	
 }

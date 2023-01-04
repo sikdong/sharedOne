@@ -6,9 +6,15 @@
 <html>
 <head>
 <style>
+
+.form-style {
+	border : 1px solid #ced4da; 
+	width : 100%;
+}
 .leftFilterDiv {
 	border-right-style: groove;
 }
+
 
 .btn-form {
 	background : #1d5c83; 
@@ -66,7 +72,7 @@
 	<my:side_bar></my:side_bar>
 <div class="root">
 		<div style="font-size: 30px;">
-			<strong>주문서 등록</strong>
+			<strong>주문서 수정</strong>
 		</div>
 		
 		
@@ -76,7 +82,9 @@
 		
 		<hr style="width: 10%" />
 		<br />
-		<div><strong>바이어 선택</strong></div>
+		<br />
+		<div><strong>바이어 수정</strong></div>
+		<br />
 		<div class="container-sm mt-4">
 					<div class="row d-flex">
 						<!-- *좌측* 검색 조건 설명란 -->
@@ -87,9 +95,6 @@
 							<div class="mb-5">
 								<p class="filterText ">조건 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
 							</div>
-							 <div class="mb-5">
-								<p class="filterText ">납기 요청</p>
-							</div> 
 						</div><!-- 좌측 조건 설명 div 끝 -->
 						
 						<!-- *우측* 검색 필터 -->
@@ -130,21 +135,14 @@
 									</div>
 								</div><!-- 2nd row 끝 -->
 								<!-- 검색필터 3rd row : 기간 선택 -->
-								<div class="row d-flex">
-									<div class="col-sm-5">
-										<div class="input-group" style="margin-top :15px !important;">
-											<input name="d1" type="date" id="d1Id" class="form-control">
-										</div>
-									</div>
-								</div>	
 							</div><!-- 우측 검색 조건 div 끝 -->
 						</div><!-- 좌측 + 우측 전체를 감싸는 d-flex 끝-->
 						
 					</div><!-- container-sm div 끝-->
 					<hr />
-					
 					<div class="mt-5" id="buyerTable">
 				</div>
+		
 		<!-- <div class="container-sm mt-4">
 			<div class="row d-flex">
 				*우측* 검색 필터
@@ -184,11 +182,36 @@
 				</div>우측 검색 조건 div 끝
 			</div>좌측 + 우측 전체를 감싸는 d-flex 끝
 		</div>container-sm div 끝 -->
+		<div style="width : 77vw; display : flex;" class="mt-5">
+			<div class="form-width">
+				<label for="staticEmail" class="col-form-label" style="min-width : 50px; margin-left : 3%">바이어명</label>
+				<div class="ml-3">
+					<input type="text" class="form-control"
+						id="staticEm77vwail">
+				</div>
+			</div>
+			<div  class="form-width" style="margin-left : 10%">
+				<label for="inputPassword" class="col-form-label" style="min-width : 50px; margin-left : 3%">납기요청일</label>
+				<div class="ml-3">
+					<input type="date" class="form-control" id="inputPassword">
+				</div>
+			</div>
+			<div  class="form-width" style="margin-left : 10%">
+				<label for="inputPassword" class="col-form-label" style="min-width : 50px; margin-left : 3%">등록일</label>
+				<div class="ml-3">
+					<input type="date" class="form-control" id="inputPassword">
+				</div>
+			</div>
+		</div>
 		
+		<br />
 		<br />
 		<hr />
 		<br />
-		<div><strong>제품 선택</strong></div>
+		<br />
+		
+		<div><strong>주문 추가</strong></div>
+		<br />
 		<div class="container-sm mt-4">
 					<div class="row d-flex">
 						<!-- *좌측* 검색 조건 설명란 -->
@@ -253,43 +276,44 @@
 								<!-- 검색필터 3rd row : 기간 선택 -->
 							</div><!-- 우측 검색 조건 div 끝 -->
 						</div><!-- 좌측 + 우측 전체를 감싸는 d-flex 끝-->
-						
+						<hr />
 					</div><!-- container-sm div 끝-->
-					<hr />
 					<div id="productTable">
 					</div>
+					
 			
 		
 		
 		<div style="width : 77vw; display : flex;" class="mt-5">
-			<div class="form-width flex">
-				<label for="staticEmail" class="col-form-label" style="min-width : 50px;">단가</label>
+			<div class="form-width">
+				<label for="staticEmail" class="col-form-label" style="min-width : 50px; margin-left : 3%">단가</label>
 				<div class="ml-3">
-					<input type="number" class="form-control"
+					<input type="text" class="form-control"
 						id="staticEm77vwail">
 				</div>
 			</div>
-			<div  class="form-width flex">
-				<label for="inputPassword" class="col-form-label" style="min-width : 50px;">수량(EA)</label>
+			<div  class="form-width" style="margin-left : 10%">
+				<label for="inputPassword" class="col-form-label" style="min-width : 50px; margin-left : 3%">수량</label>
 				<div class="ml-3">
 					<input type="number" class="form-control" id="inputPassword">
 				</div>
 			</div>
 		</div>
-			<button type="button" style="background : #1d5c83; color : white; margin-left : 40%; " class="mt-5 btn">임시저장</button>
-			<button type="button" class="mt-5 btn btn-form" style="background : #1d5c83; color : white;">등록</button>
-			<button type="button" class="mt-5 btn" style="background : #1d5c83; color : white;">닫기</button>
+			<button type="button" style="background : #1d5c83; color : white; margin-left : 45%; " class="mt-5 btn">추가</button>
+			<button type="button" class="mt-5 btn" style="background : #1d5c83; color : white;">취소</button>
 		<br />
 		<br />
 		<br />
 		<hr style="width : 77vw;"/>
-                <table class="table table-hover table-bordered table-sm caption-top">
-                    <caption style="font-weight: bold; font-size: large;">상세정보</caption>
+		<br /><br />
+                <div><strong>주문 수정</strong></div>
+		<br /><br />
+		<table class="table table-hover table-bordered table-sm caption-top">
                     <thead>
                       <tr>
                         <th scope="col">번호</th>
                         <th style="text-align: center;" scope="col" colspan="5">제품정보</th>
-                        <th style="text-align: center;" scope="col" colspan="5">금액정보</th>
+                        <th style="text-align: center;" scope="col" colspan="4	">금액정보</th>
                         <th style="text-align: center; vertical-align: middle;" scope="col" rowspan="2">삭제여부</th>
                       </tr>
                       <tr>
@@ -301,7 +325,6 @@
                         <th>단위</th>
                         <th>원가</th>
                         <th>단가</th>
-                        <th>부가세</th>
                         <th>수량</th>
                         <th>합계액</th>
                       </tr>
@@ -309,18 +332,17 @@
                     <tbody class="table-group-divider">
                       <tr>
                         <th scope="row">1</th>
-                        <td>ㅑㅜ</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>
-                            <button class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
+                        <td>GA0001</td>
+                        <td>GATE밸브</td>
+                        <td>2-100 GATE RF</td>
+                        <td>3</td>
+                        <td>EA</td>
+                        <td>10000</td>
+                        <td style="width : 150px;"><input type="number" style="border : 1px solid #ced4da; width:100%" value="8000"/></td>
+                        <td style="width : 100px;"><input type="number" class="form-style" value="3"/></td>
+                        <td>24000</td>
+                        <td style="display : flex; justify-content : center;">
+                        	<button class="btn button btn-sm" style="margin-left : 2px; background : #1d5c83; color : white;">삭제</button>
                         </td>
                       </tr>
                     </tbody>
@@ -331,7 +353,8 @@
 						<textarea rows="5" class="form-control" id="inputPassword" ></textarea>
 					</div>
 				  </div>
-		        <button style="margin-left: 46%; background : #1d5c83; color : white;" type="submit" class="mt-5 btn" >주문등록</button>
+		        <button style="margin-left: 46%; background : #1d5c83; 
+		        color : white;" type="submit" class="mt-5 btn" >주문수정</button>
             </div>
             <br />
             <br />
@@ -572,7 +595,7 @@
 				<td>\${item.productCode }</td>
 				<td>\${item.productType }</td>
 				<td>\${item.productName }</td>
-				<td>\${item.size }inch</td>
+				<td>\${item.size }</td>
 				<td>\${item.weight }kg</td>
 				<td>\${item.unit }</td>
 				<td>\${item.price }</td>
