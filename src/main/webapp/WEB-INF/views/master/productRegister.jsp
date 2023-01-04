@@ -106,13 +106,13 @@
                         <div class="mb-2 row mt-2 rowdiv">
                             <label for="inputName" class="col-form-label">단위</label>
                             <div class="col-sm-5">
-                                <input id="productName" type="text" class="form-control" placeholder="제품명을 입력하세요."/>
+                                <input id="productName" type="text" class="form-control" placeholder="제품단위를 입력하세요."/>
                             </div>
                         </div>
                         <div class="mb-2 row mt-2 rowdiv">
                             <label for="inputName" class="col-form-label">제품 설명</label>
                             <div class="col-sm-5">
-                                <input id="productName" type="text" class="form-control" placeholder="제품명을 입력하세요."/>
+                                <input id="productName" type="text" class="form-control" placeholder="제품설명을 입력하세요."/>
                             </div>
                         </div>                   
                     </div>

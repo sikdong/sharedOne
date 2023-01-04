@@ -65,8 +65,8 @@
 </head>
 <body>
 
-
-<div class="container-sm mt-4">
+<my:side_bar active=""></my:side_bar>
+<div class="container-sm mt-4" style="width: 77vw; margin-left: 20%;">
 	<div class="row d-flex">
 		
 		<!-- *좌측* 검색 조건 설명란 -->
@@ -158,13 +158,13 @@
 					</div>
 					<div class="col-sm-5 d-flex">
 					
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">오늘</button>		
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1주 </button>	
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">15일</button>		
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">3개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">6개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1년</button>	
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">오늘</button>		
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">1주 </button>	
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">15일</button>		
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">1개월</button>
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">3개월</button>
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">6개월</button>
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">1년</button>	
 						
 					</div>
 				</div><!-- 3rd row 끝 -->
@@ -172,7 +172,7 @@
 					<div class="col-sm-4"></div>
 					<div class="col-sm-4">
 						<div style="text-align: justify;">
-							<button class="btn btn-outline-primary" type="submit">선택 조건 검색</i></button>
+							<button class="btn btn-outline-primary" type="submit">선택 조건 검색</button>
 						</div>
 					</div>
 				</div>
@@ -222,7 +222,6 @@
 	</table>
 </div>
 
-<my:sidebar active=""></my:sidebar>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script type="text/javascript">
 
