@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 
@@ -28,7 +27,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>제품목록</title>
+<title>판매가관리</title>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -75,7 +74,7 @@
 				<p class="filterText ">조건 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
 			</div>
 			<div class="mb-5">
-				<p class="filterText ">기간 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex. 주문일 / 납기일 등등... ) -->
+				<p class="filterText ">단가 기간</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex. 주문일 / 납기일 등등... ) -->
 			</div>
 		</div><!-- 좌측 조건 설명 div 끝 -->
 		
@@ -95,7 +94,7 @@
 				<div class="row d-flex">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions1" placeholder="제품코드">
+							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions1" placeholder="바이어코드">
 							<datalist id="datalistOptions1">
 								<c:forEach items="${productList }" var="product">
 									<option value="${product.productCode }">
@@ -106,7 +105,7 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품명">
+							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="바이어명">
 							<datalist id="datalistOptions2">
 								<c:forEach items="${productList }" var="product">
 									<option value="${product.productName }">
@@ -117,7 +116,7 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions3" placeholder="제품타입">
+							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions3" placeholder="국가">
 							<datalist id="datalistOptions3">
 								<c:forEach items="${types }" var="type">
 									<option value="${type }">
@@ -128,7 +127,7 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="제품규격 Inch">
+							<input name="" value="" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="바이어담당자">
 							<datalist id="datalistOptions4">
 								<c:forEach items="${sizes }" var="size">
 									<option value="${size }">
@@ -138,7 +137,7 @@
 						</div>
 					</div>
 				</div><!-- 2nd row 끝 -->
-				<!-- 검색필터 3rd row : 기간 선택 -->
+				<!-- 검색필터 3rd row : 기간 선택 : 등록일 -->
 				<div class="row d-flex">
 					<div class="col-sm-2">
 						<div class="form-check"  style="margin-top: 10px;">
@@ -148,21 +147,10 @@
 					</div>
 					<div class="col-sm-5">
 						<div class="input-group">
-							<input name="d1" value="${nowDate }" type="date" id="d1Id" class="form-control">
+							<input name="inserted1" value="" type="date" id="insertedId1" class="form-control">
 							<span class="input-group-text">~</span>
-			        		<input name="d2" value="${nowDate }" type="date" id="d2Id" class="form-control">
+			        		<input name="inserted2" value="" type="date" id="insertedId2" class="form-control">
 						</div>
-					</div>
-					<div class="col-sm-5 d-flex">
-						
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">오늘</button>		
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1주 </button>	
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">15일</button>		
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">3개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">6개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1년</button>	
-						
 					</div>
 				</div><!-- 3rd row 끝 -->
 				<div class="row mt-4">
@@ -178,40 +166,41 @@
 	</div><!-- 좌측 + 우측 전체를 감싸는 d-flex 끝-->
 	
 	<hr>
+	
 	<div class="d-flex">
-		<h4>제품목록</h4>
+		<h4>단가관리</h4>
 		<div class="col-sm-10"></div>
-		<button id="" class="btn btn-primary" >제품등록</button>
+		<button id="" class="btn btn-primary" >단가등록</button>
+
 	</div>
-	<!-- 리스트 -->
+	<!-- header -->
 	<div class="scrollBox">
-		<nav id="navbar-example" class="navbar bg-body-tertiary px-3 mb-3">
+		<nav id="navbar-example1" class="navbar bg-body-tertiary px-3 mb-3">
 
 		</nav>
-		<div data-bs-spy="scroll" data-bs-target="#navbar-example" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+		<div data-bs-spy="scroll" data-bs-target="#navbar-example1" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
 			<table class="table">
-			   	 <thead>
+		  		<thead>
 					 <tr>
-						<th>제품코드</th>
-						<th>제품명</th>
-						<th>타입</th>
-						<th>무게(g)</th>
-						<th>규격(Inch)</th>
-						<th>단위(EA)</th>
-						<th>원가</th>
+						<th>선택</th>
+						<th>바이어번호</th>
+						<th>바이어명</th>
+						<th>국가</th>
+						<th>담당자</th>
+						<th>전화번호</th>
 						<th>비고</th>
 					 </tr>
-				 </thead>
-				<tbody>			
-					<c:forEach items="${productList }" var="product">
+				</thead>
+				<tbody>
+					<!-- header -->
+					<c:forEach items="${headerList }" var="header">
 						<tr class="listHover">
-							<td>${product.productCode }</td>
-							<td>${product.productName }</td>
-							<td>${product.productType }</td>
-							<td>${product.weight }</td>
-							<td>${product.size }</td>
-							<td>${product.unit }</td>
-							<td>${product.price }</td>
+							<td><input type="checkbox" name=""></td>
+							<td>${header.buyerCode }</td>
+							<td>${header.buyerName }</td>
+							<td>${header.country }</td>
+							<td>${header.manager }</td>
+							<td>${header.phone }</td>
 							<td>수정/ 삭제</td>
 						</tr>
 					</c:forEach>
@@ -220,37 +209,46 @@
 		</div>
 	</div>
 	
+	<hr>
 	
-<%-- 	<table class="table">
-		<thead>
-			<!-- productCode, productName, productType, weight, size, price, unit, content -->
-			<tr>
-				<th>제품코드</th>
-				<th>제품명</th>
-				<th>타입</th>
-				<th>무게(g)</th>
-				<th>규격(Inch)</th>
-				<th>단위(EA)</th>
-				<th>원가</th>
-			</tr>
-		</thead>
-		<tbody>
-		<!-- //productCode, productName, productType, weight, size, price, unit, content, inserted -->
-			<c:forEach items="${productList }" var="product">
-				<tr>
-					<td>${product.productCode }</td>
-					<td>${product.productName }</td>
-					<td>${product.productType }</td>
-					<td>${product.weight }</td>
-					<td>${product.size }</td>
-					<td>${product.unit }</td>
-					<td>${product.price }</td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table> --%>
-	
-</div>
+	<h4>단가상세</h4>
+	<p>바이어 : "$[ item.buyerName } " </p>	
+	<div class="scrollBox">	
+		<nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
+			
+		</nav>
+		<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+		  <table class="table">
+				<thead>
+					<tr>
+						<th>No.</th>
+						<th>제품번호</th>
+						<th>제품명</th>
+						<th>원가</th>
+						<th>단가</th>
+						<th>할인율</th>
+						<th>단가기간</th>
+						<th>비고</th>
+					</tr>
+				</thead>		
+				<tbody>
+					<c:forEach items="${itemList }" var="item" varStatus="st">
+						<tr class="listHover">
+							<td>${st.count }</td>
+							<td>${item.producCode }</td>
+							<td>${item.productName }</td>
+							<td>${item.price }</td>
+							<td>${item.salePrice }</td>
+							<td>${item.discountRate }</td>
+							<td>${item.fromDate } ~ ${item.endDate }</td>
+							<td>수정/ 삭제 </td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+	</div><!-- scrollBox 끝 -->
+</div><!-- container 끝  -->
 
 
 

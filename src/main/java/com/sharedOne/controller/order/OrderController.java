@@ -18,13 +18,17 @@ import com.sharedOne.service.OrderService;
 
 import lombok.RequiredArgsConstructor;
 
+import com.sharedOne.domain.order.OrderHeaderDto;
+import com.sharedOne.domain.order.OrderItemDto;
+import com.sharedOne.service.order.OrderService;
+
 @Controller
 @RequestMapping("order")
 public class OrderController {
 	
 	@Autowired
 	private OrderService service;
-	
+
 	
 	@GetMapping("register")
 	public void searchBuyer(Model model, @RequestParam(required = false) String buyerInfo ){
@@ -65,6 +69,15 @@ public class OrderController {
 	public List<ProductDto> searchAllProductInfo(@PathVariable String allProductInfo){
 		return service.searchProduct(allProductInfo);
 		
+	}
+	
+	@GetMapping("list")
+	public void orderList(Model model, String orderCode ) {
+		List <OrderHeaderDto> headerList = orderService.selectOrderHeaderList();
+		List <OrderItemDto> itemListByOrderCode = orderService.selectOrderItemListByOrderCode(orderCode);
+		
+		model.addAttribute("headerList", headerList);
+		model.addAttribute("itemList", itemListByOrderCode);
 	}
 	
 }

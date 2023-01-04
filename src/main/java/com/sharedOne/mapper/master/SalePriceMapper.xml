@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.sharedOne.mapper.master.SalePriceMapper">
+ 
+	<!-- 해더 : 바이어코드 바이버명 국가 매니저 전화번호 비고   -->
+ 	<select id="selectSalePriceHeaderList" resultType="com.sharedOne.domain.master.BuyerDto" >
+	 	SELECT 
+	 		b.buyerCode,
+	 		b.buyerName,
+	 		b.country,
+	 		b.manager,
+	 		b.phone
+	 	FROM
+	 		Buyer b
+	</select> 	
+ 
+ 	<!-- 아이템 : 제품코드, 제품명, 원가, 단가, 할인율, 단가기간  -->
+	<select id="selectSalePriceItemList" resultMap="itemMap">
+	 	SELECT 
+	 		sp.priceId,
+	 		sp.salePrice,
+	 		sp.discountRate,
+	 		sp.fromDate,
+	 		sp.endDate,
+	 		
+	 		b.buyerCode,
+	 		
+	 		p.productCode,
+	 		p.productName,
+	 		p.price
+	 	FROM
+	 		SalePrice sp
+	 	LEFT JOIN Buyer b ON b.buyerCode = sp.buyerCode
+	 	LEFT JOIN Product p ON p.productCode = sp.productCode
+	 	WHERE
+	 		sp.buyerCode = #{buyerCode }
+	</select> 		
+	<resultMap type="com.sharedOne.domain.master.SalePriceDto" id="itemMap">
+		<id column="priceId" property="priceId"/>
+		<result column="salePrice" property="salePrice"/>
+		<result column="discountRate" property="discountRate"/>
+		<result column="fromDate" property="fromDate"/>
+		<result column="endDate" property="endDate"/>
+		<result column="buyerCode" property="buyerCode"/>
+		<collection property="product" ofType="com.sharedOne.domain.master.ProductDto">
+			<result column="productCode" property="productCode"/>
+			<result column="productName" property="productName"/>
+			<result column="price" property="price"/>
+		</collection>
+	</resultMap>
+	
+	
+ 
+ </mapper>
