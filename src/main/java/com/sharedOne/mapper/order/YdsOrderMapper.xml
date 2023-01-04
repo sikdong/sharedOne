@@ -3,8 +3,8 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.sharedOne.mapper.OrderMapper">
-	<select id="searchBuyer" resultType="com.sharedOne.domain.Buyer">
+<mapper namespace="com.sharedOne.mapper.order.YdsOrderMapper">
+	<select id="searchBuyer" resultType="com.sharedOne.domain.master.BuyerDto">
 		SELECT 
 			buyerCode,
 			buyerName,
@@ -36,11 +36,32 @@
 		</where>
 		
 	</select>
-		<select id="getBuyerNames" resultType="com.sharedOne.domain.Buyer">
+		<select id="getBuyerNames" resultType="com.sharedOne.domain.master.BuyerDto">
 		SELECT 
 			buyerName
 		FROM Buyer
 	</select>
+	
+	<select id="searchProduct" resultType="com.sharedOne.domain.master.ProductDto">
+		SELECT 
+			productCode,
+			productType,
+			productName,
+			weight,
+			size,
+			price,
+			unit,
+			content,
+			inserted
+		FROM
+			Product
+		<where>
+			<trim></trim>
+		</where>
+	
+	
+	</select>
+	
 
 
 </mapper>
