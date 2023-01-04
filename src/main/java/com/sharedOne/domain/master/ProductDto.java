@@ -1,6 +1,6 @@
-package com.sharedOne.domain.product;
+package com.sharedOne.domain.master;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import lombok.Data;
 
@@ -16,5 +16,5 @@ public class ProductDto {
 	private int price;
 	private String unit;
 	private String content;
-	private LocalDateTime inserted;
+	private LocalDate inserted;
 }

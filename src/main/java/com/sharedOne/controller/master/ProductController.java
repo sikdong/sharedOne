@@ -1,4 +1,4 @@
-package com.sharedOne.controller.product;
+package com.sharedOne.controller.master;
 
 import java.util.HashSet;
 import java.util.List;
@@ -10,17 +10,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.sharedOne.domain.product.ProductDto;
-import com.sharedOne.service.product.ProductService;
+import com.sharedOne.domain.master.ProductDto;
+import com.sharedOne.service.master.ProductService;
 
 @Controller
-@RequestMapping("product")
+@RequestMapping("master")
 public class ProductController {
 
 	@Autowired
 	private ProductService productService;
 	
-	@GetMapping("list")
+	@GetMapping("productList")
 	public void productList(Model model){
 		List <ProductDto> productList = productService.selectProductList();
 		

@@ -1,10 +1,10 @@
-package com.sharedOne.mapper.product;
+package com.sharedOne.mapper.master;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.sharedOne.domain.product.ProductDto;
+import com.sharedOne.domain.master.ProductDto;
 
 @Mapper
 public interface ProductMapper {
