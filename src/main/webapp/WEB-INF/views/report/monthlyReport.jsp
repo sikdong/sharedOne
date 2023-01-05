@@ -95,14 +95,21 @@ div.right {
 	
 /* 	overflow: scroll; */
 }
-.searchBtn{
- background-color: #1d5c83;
- margin-bottom: 10px;
-}
 
 .tableContainer {
 
 }
+
+ 	.primaryBtn {
+		background-color: white !important;
+		border-color: #1d5c83 !important;
+		color: #1d5c83 !important;
+ 	}
+ 	
+ 	.primaryBtn:hover {
+ 		background-color: #1d5c83 !important;
+ 		color: white !important;
+ 	}
 
 </style>
 
@@ -216,7 +223,7 @@ div.right {
 					<div class="col-sm-4"></div>
 					<div class="col-sm-4">
 						<div style="text-align: justify;">
-							<button class="btn btn-outline-primary searchBtn" type="submit">선택 조건 검색</button>
+							<button class="btn btn-outline-primary primaryBtn" type="submit">선택 조건 검색</button>
 						</div>
 					</div>
 				</div>
@@ -244,7 +251,7 @@ div.right {
 
 			<div style="float: right;">
 				<form action="/excel/download" method="get">
-					<button class="btn btn-primary searchBtn" type="submit">
+					<button class="btn btn-primary primaryBtn" type="submit" style="margin-bottom: 10px;">
 						엑셀 다운로드
 					</button>
 				</form>

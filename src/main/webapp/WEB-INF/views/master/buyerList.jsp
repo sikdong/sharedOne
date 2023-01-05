@@ -53,12 +53,30 @@
 	}
 	
 	.table .trtr:hover {
- 	font-weight: bold;
- }
+	 	font-weight: bold;
+	 	background-color: #c7c9c2;
+ 	}
+ 	
+ 	th, td {
+ 		padding: 10px;
+ 	}
+ 	
  
- #registerBtn {
- 	margin-left: 80px;
- }
+ 	#registerBtn {
+ 		margin-left: 80px;
+ 	}
+ 	
+ 	.primaryBtn {
+		background-color: white !important;
+		border-color: #1d5c83 !important;
+		color: #1d5c83 !important;
+ 	}
+ 	
+ 	.primaryBtn:hover {
+ 		background-color: #1d5c83 !important;
+ 		color: white !important;
+ 	}
+ 	
 </style>
 
 
@@ -172,7 +190,7 @@
 					<div class="col-sm-4"></div>
 					<div class="col-sm-4">
 						<div style="text-align: justify;">
-							<button class="btn btn-outline-primary" type="submit">선택 조건 검색</button>
+							<button class="btn btn-outline-primary primaryBtn" type="submit">선택 조건 검색</button>
 						</div>
 					</div>
 				</div>
@@ -185,7 +203,7 @@
 	<h4>바이어목록</h4>
 	<div class="col-sm-9"></div>
 	<c:url value="/master/buyerRegister" var="registerLink"></c:url>
-		<button id="registerBtn" class="btn btn-primary" onclick="window.open('${registerLink}','바이어정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');">바이어등록</button>
+		<button id="registerBtn" class="btn btn-outline-primary primaryBtn" onclick="window.open('${registerLink}','바이어정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');">바이어등록</button>
 	</div>
 	<!-- 리스트 -->
 	<table class="table table-hover container">

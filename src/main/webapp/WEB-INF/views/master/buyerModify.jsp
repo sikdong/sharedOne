@@ -39,34 +39,44 @@
         float: left;
         text-align: left;
     }
-    #productType{
+    #deliveryCompany{
         -webkit-appearance: button;
     }
     .rowdiv{
         justify-content: space-around;
     }
     .col-form-label{
-        font-weight: 400;
+        font-weight: 600;
         text-align: left;
     }
     
-    .modifyBtn {
-    float: right; 
-    font-size: 15px; 
-    font-weight: 600; 
-    width: 60px; 
-    height: 30px; 
-    color: white; 
-    border: none; 
-    border-radius: 5px; 
-    background: #c7c9c2;
+    .btnBox {
+    	position: relative;
+    	margin-bottom: 25px;
     }
+    
+    #modifyBtn {
+    
+	    float: right !important; 
+	    text-align: center !important;
+	    font-size: 15px; 
+	    font-weight: 600; 
+	    width: 60px; 
+	    height: 30px; 
+	    color: white; 
+	    border: none; 
+	    border-radius: 5px; 
+	    background: #1d5c83;
+	    position: absolute;
+	    top: 0;
+	    right: 80px;
+    }
+    
 </style>
 <body>   
     <div class="insert-body mt-5 ">
         <div class="container-md">
             <div class="row">
-            <form action="/master/productModify" method="post">
                 <div class="col mt-1">
                     <div class="mb-4">
                         <h1 style="font-size: 24px; font-weight:600">바이어 수정</h1>
@@ -111,28 +121,38 @@
                             </div>
                         </div>
                         <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputPhone" class="col-form-label">선적비용부담회사(셀렉트로 바꿔보기)</label>
+                            <label for="inputPhone" class="col-form-label">선적비용부담회사</label>
+                            
                             <div class="col-sm-5">
-                                <input id="buyerPhone" type="text" class="form-control" placeholder="${buyer.deliveryCompany }"/>
+                                <form>
+                                    <select id="deliveryCompany" name="type" class="form-control" style="padding-left: 8px;" >
+                                      <option value="${buyer.deliveryCompany}">${buyer.deliveryCompany }</option>
+                                      <option value="자사">자사</option>
+                                      <option value="거래처">거래처</option>
+                                    </select>
+                                </form>
                             </div>
                         </div>
                          <div class="mb-2 row mt-2 rowdiv">
                             <label for="inputPhone" class="col-form-label">담당자</label>
                             <div class="col-sm-5">
-                                <input id="buyerPhone" type="text" class="form-control" placeholder="${buyer.manager }"/>
+                                <input id="manager" type="text" class="form-control" placeholder="${buyer.manager }"/>
                             </div>
                         </div>                      
                     </div>
                 <hr />
-                    <!-- 수정버튼 -->
-					<input class="btn modifyBtn" type="submit" value="수정">
-					</form>
+                <div class="btnBox">
 					<form action="/master/buyerRemove" method="post">
-                    	<input class="btn" style="float: right; font-size: 15px; font-weight: 600; width: 60px; height: 30px; color: white; border: none; border-radius: 5px; background: #c7c9c2;" value="삭제">
+                    	<input class="btn" style="float: right; font-size: 15px; font-weight: 600; width: 60px; height: 30px; color: white; border: none; border-radius: 5px; background: #1d5c83;" value="삭제">
 					</form>
-                </div>
-           	</div>
-      	</div>
+                	<form action="/master/productModify" method="post">
+	                    <!-- 수정버튼 -->
+						<input id="modifyBtn" class="btn" type="submit" value="수정">
+					</form>
+				</div>
+            </div>
+       	</div>
+  	</div>
                
                 
 
