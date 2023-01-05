@@ -50,10 +50,35 @@
 		background-color: #D3D3D3;
 		cursor: pointer;
 	}
+	th, td {
+ 		padding: 10px;
+ 	}
 	
 	.table .trtr:hover {
- 	font-weight: bold;
- }
+ 		font-weight: bold;
+ 		background-color: #c7c9c2;
+ 	}
+ 	
+ 	.primaryBtn {
+ 		background-color: white !important;
+ 		border-color: #1d5c83 !important;
+ 		color: #1d5c83 !important;
+ 	}
+ 	
+ 	.primaryBtn:hover {
+ 		background-color: #1d5c83 !important;
+ 		color: white !important;
+ 	}
+ 
+ 	
+	.table{border-collapse:collapse; width:100%}
+	.table thead{float:left; width:1300px;}
+	.table thead th{display:auto; width:1300px;}
+	.table tbody{overflow-y:auto; overflow-x:hidden; float:left; width:1300px; height:550px;}
+	.table tbody tr{display:table; width:1300px;}
+	.table td{text-align:inherit; width:1300px;}
+ 	
+ 	
 </style>
 
 
@@ -173,7 +198,7 @@
 					<div class="col-sm-4"></div>
 					<div class="col-sm-4">
 						<div style="text-align: justify;">
-							<button class="btn btn-outline-primary" type="submit">선택 조건 검색</button>
+							<button class="btn btn-outline-primary primaryBtn" type="submit">선택 조건 검색</button>
 						</div>
 					</div>
 				</div>
@@ -186,14 +211,10 @@
 		<h4>제품목록</h4>
 		<div class="col-sm-10"></div>
 		<c:url value="/master/productRegister" var="registerLink"></c:url>
-		<button id="registerBtn" class="btn btn-primary" onclick="window.open('${registerLink}','제품등록','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');">제품등록</button>
+		<button id="registerBtn" class="btn btn-outline-primary primaryBtn" onclick="window.open('${registerLink}','제품등록','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');">제품등록</button>
 	</div>
 	<!-- 리스트 -->
-	<div class="scrollBox">
-		<nav id="navbar-example" class="navbar bg-body-tertiary px-3 mb-3">
-
-		</nav>
-		<div data-bs-spy="scroll" data-bs-target="#navbar-example" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+	<div class="listBox">
 			<table class="table">
 			   	 <thead>
 					 <tr>
@@ -206,14 +227,14 @@
 						<th>원가</th>
 					 </tr>
 				 </thead>
-				<tbody>			
+				<tbody class = "scorllBox">			
 					<c:forEach items="${productList }" var="product">
 						<c:url value="/master/productModify" var="getLink">
 							<c:param name="code" value="${product.productCode }"></c:param>
 						</c:url>
 					<tr onclick="window.open('${getLink}','제품정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
-							<td>${product.productCode }</td>
-							<td>${product.productName }</td>
+							<td style="width: 800px">${product.productCode }</td>
+							<td style="margin-right: 50px">${product.productName }</td>
 							<td>${product.productType }</td>
 							<td>${product.weight }</td>
 							<td>${product.size }</td>
