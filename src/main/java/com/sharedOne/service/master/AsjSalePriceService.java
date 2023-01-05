@@ -19,8 +19,8 @@ public class AsjSalePriceService {
 		return asjSalePriceMapper.selectSalePriceHeaderList();
 	}
 
-	public List<SalePriceDto> selectSalePriceItemList(String buyerCode) {
-		return asjSalePriceMapper.selectSalePriceItemList(buyerCode);
+	public List<SalePriceDto> selectSalePriceItemListByBuyerCode(String buyerCode) {
+		return asjSalePriceMapper.selectSalePriceItemListByBuyerCode(buyerCode);
 	}
 
 }

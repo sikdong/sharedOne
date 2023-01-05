@@ -21,12 +21,13 @@ public class AsjSalePriceController {
 	
 	@GetMapping("salePriceList")
 	public void salePriceList(Model model, String buyerCode) {
-		
+		System.out.println("@@@ buyerCode  : "+ buyerCode);
 		List <BuyerDto> headerList = asjSalePriceService.selectSalePriceHeaderList();
-		List <SalePriceDto> itemList = asjSalePriceService.selectSalePriceItemList(buyerCode);
+		List <SalePriceDto> itemList = asjSalePriceService.selectSalePriceItemListByBuyerCode(buyerCode);
 		
 		model.addAttribute("headerList", headerList);
 		model.addAttribute("itemList", itemList);
+		System.out.println("### : " + itemList);
 		
 	}
 }

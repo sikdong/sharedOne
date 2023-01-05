@@ -26,7 +26,7 @@
  
  	
  	<!-- itemList ByOrderCode !!! -->
- 	<select id="selectOrderItemListByOrderCode" resultMap="itemMap">
+ 	<select id="selectOrderItemListByOrderCode" resultType="com.sharedOne.domain.order.OrderItemDto">
  		SELECT
 			i.itemId,
 			i.quantity,
@@ -50,10 +50,11 @@
  		WHERE
  			i.orderCode = #{orderCode }
  	</select>
- 	<resultMap type="com.sharedOne.domain.order.OrderItemDto" id="itemMap">
+ <!-- 	<resultMap type="com.sharedOne.domain.order.OrderItemDto" id="itemMap">
  		<id column="itemId" property="itemId"/>
  		<result column="quantity" property="quantity"/>
  		<result column="sum" property="sum"/>
+ 		
  		<collection property="product" ofType="com.sharedOne.domain.master.ProductDto">
  			<result column="productCode" property="productCode"/>
  			<result column="productName" property="productName"/>
@@ -65,7 +66,9 @@
  			<result column="discountRate" property="discountRate"/>
  			<result column="fromDate" property="fromDate"/>
  			<result column="endDate" property="endDate"/>
- 		</collection>
+ 		</collection> 
  	</resultMap>
+ -->
+ 		
  
  </mapper>

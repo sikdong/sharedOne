@@ -16,11 +16,12 @@ public class AsjOrderService {
 	private AsjOrderMapper asjOrderMapper;
 
 	public List <OrderHeaderDto> selectOrderHeaderList() {
-		return asjOrderMapper.selectOrderHeaderList();
 		
+		return asjOrderMapper.selectOrderHeaderList();
 	}
 
 	public List<OrderItemDto> selectOrderItemListByOrderCode(String orderCode) {
+		System.out.println("$$$orderCode :" + orderCode);
 		return asjOrderMapper.selectOrderItemListByOrderCode(orderCode);
 	}
 	

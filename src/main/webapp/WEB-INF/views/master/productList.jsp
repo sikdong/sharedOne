@@ -1,10 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
-
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
-
 
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
@@ -49,12 +46,17 @@
 		background-color: #D3D3D3;
 		cursor: pointer;
 	}
+	.scrollBox {
+		width: 100%;
+		height: 1000px;
+		box-sizing: border-box;
+		overflow: scroll;
+	}
 </style>
 
 
 </head>
 <body>
-
 <!-- 현재 날짜 설정  -->
 <c:set value="<%=sf.format(nowDate)%>" var="nowDate"/>
 <!-- ${nowDate}  -->
@@ -62,6 +64,7 @@
 <!-- 한달후 날짜 설정 -->
 <c:set value='<%=sf.format(addMonth)%>' var="addMonth" /> 
 <!-- ${addMonth}  -->
+<my:side_bar></my:side_bar>
 <div class="container-sm mt-4">
 	<div class="row d-flex">
 		
@@ -154,13 +157,13 @@
 					</div>
 					<div class="col-sm-5 d-flex">
 						
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">오늘</button>		
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1주 </button>	
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">15일</button>		
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">3개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">6개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1년</button>	
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">오늘</button>		
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">1주 </button>	
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">15일</button>		
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">1개월</button>
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">3개월</button>
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">6개월</button>
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">1년</button>	
 						
 					</div>
 				</div><!-- 3rd row 끝 -->
@@ -184,39 +187,42 @@
 	</div>
 	<!-- 리스트 -->
 	<div class="scrollBox">
-		<nav id="navbar-example" class="navbar bg-body-tertiary px-3 mb-3">
-
-		</nav>
-		<div data-bs-spy="scroll" data-bs-target="#navbar-example" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
-			<table class="table">
-			   	 <thead>
-					 <tr>
-						<th>제품코드</th>
-						<th>제품명</th>
-						<th>타입</th>
-						<th>무게(g)</th>
-						<th>규격(Inch)</th>
-						<th>단위(EA)</th>
-						<th>원가</th>
-						<th>비고</th>
-					 </tr>
-				 </thead>
-				<tbody>			
-					<c:forEach items="${productList }" var="product">
-						<tr class="listHover">
-							<td>${product.productCode }</td>
-							<td>${product.productName }</td>
-							<td>${product.productType }</td>
-							<td>${product.weight }</td>
-							<td>${product.size }</td>
-							<td>${product.unit }</td>
-							<td>${product.price }</td>
-							<td>수정/ 삭제</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-		    </table>
-		</div>
+		<table class="table">
+		   	 <thead>
+				 <tr>
+				 	<th>No.</th>
+					<th>제품코드</th>
+					<th>제품명</th>
+					<th>타입</th>
+					<th>무게(g)</th>
+					<th>규격(Inch)</th>
+					<th>단위(EA)</th>
+					<th>원가</th>
+					<th></th>
+				 </tr>
+			 </thead>
+			<tbody>			
+				<c:forEach items="${productList }" var="product" varStatus="st">
+					<tr class="listHover" >
+						<td>${st.count }</td>
+						<td>${product.productCode }</td>
+						<td>${product.productName }</td>
+						<td>${product.productType }</td>
+						<td>${product.weight }</td>
+						<td>${product.size }</td>
+						<td>${product.unit }</td>
+						<td>${product.price }</td>
+						<td>
+							<form action="${pageContext.request.contextPath}/product/modify" method="post">
+								<button name="productCode" value="${product.productCode }" type="submit" class="btn btn-outline-secondary">
+									<i class="fa-regular fa-pen-to-square"></i>
+								</button>
+							</form>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+	    </table>
 	</div>
 	
 	

@@ -18,4 +18,8 @@ public class SalePriceDto {
 	private String buyerCode; 
 	
 	List<ProductDto> product; 
+	private String productCode;
+	private String productName;
+	private int price;
+	
 }

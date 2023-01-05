@@ -27,7 +27,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>판매가관리</title>
+<title>가격관리</title>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -48,12 +48,17 @@
 		background-color: #D3D3D3;
 		cursor: pointer;
 	}
+	.scrollBox {
+		width: 100%;
+		height: 400px;
+		box-sizing: border-box;
+		overflow: scroll;
+	}
 </style>
 
 
 </head>
 <body>
-
 <!-- 현재 날짜 설정  -->
 <c:set value="<%=sf.format(nowDate)%>" var="nowDate"/>
 <!-- ${nowDate}  -->
@@ -61,6 +66,7 @@
 <!-- 한달후 날짜 설정 -->
 <c:set value='<%=sf.format(addMonth)%>' var="addMonth" /> 
 <!-- ${addMonth}  -->
+<my:side_bar></my:side_bar>
 <div class="container-sm mt-4">
 	<div class="row d-flex">
 		
@@ -73,7 +79,7 @@
 				<p class="filterText ">조건 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
 			</div>
 			<div class="mb-5">
-				<p class="filterText ">단가 기간</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex. 주문일 / 납기일 등등... ) -->
+				<p class="filterText ">가격 기간</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex. 주문일 / 납기일 등등... ) -->
 			</div>
 		</div><!-- 좌측 조건 설명 div 끝 -->
 		
@@ -156,7 +162,7 @@
 					<div class="col-sm-4"></div>
 					<div class="col-sm-4">
 						<div style="text-align: justify;">
-							<button class="btn btn-outline-primary" type="submit">선택 조건 검색</button>
+							<button class="btn btn-primary" type="submit">선택 조건 검색</button>
 						</div>
 					</div>
 				</div>
@@ -167,56 +173,59 @@
 	<hr>
 	
 	<div class="d-flex">
-		<h4>단가관리</h4>
+		<h4>가격관리</h4>
 		<div class="col-sm-10"></div>
-		<button id="" class="btn btn-primary" >단가등록</button>
-
+		<form action="${pageContext.request.contextPath }/master/salePriceRegister" method="post">
+			<button name="" value="" id="" class="btn btn-primary" >가격등록</button>
+		</form>
 	</div>
 	<!-- header -->
 	<div class="scrollBox">
-		<nav id="navbar-example1" class="navbar bg-body-tertiary px-3 mb-3">
-
-		</nav>
-		<div data-bs-spy="scroll" data-bs-target="#navbar-example1" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
-			<table class="table">
-		  		<thead>
-					 <tr>
-						<th>선택</th>
-						<th>바이어번호</th>
-						<th>바이어명</th>
-						<th>국가</th>
-						<th>담당자</th>
-						<th>전화번호</th>
-						<th>비고</th>
-					 </tr>
-				</thead>
-				<tbody>
-					<!-- header -->
-					<c:forEach items="${headerList }" var="header">
-						<tr class="listHover">
-							<td><input type="checkbox" name=""></td>
-							<td>${header.buyerCode }</td>
-							<td>${header.buyerName }</td>
-							<td>${header.country }</td>
-							<td>${header.manager }</td>
-							<td>${header.phone }</td>
-							<td>수정/ 삭제</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-		    </table>
-		</div>
+		<table class="table">
+	  		<thead>
+				 <tr>
+					<th>선택</th>
+					<th>바이어코드</th>
+					<th>바이어명</th>
+					<th>국가</th>
+					<th>바이어담당자</th>
+					<th>전화번호</th>
+					<th>바이어선택</th>
+				 </tr>
+			</thead>
+			<tbody>
+				<!-- header -->
+				<c:forEach items="${headerList }" var="h">
+					<tr class="listHover">
+						<td><input type="checkbox" name=""></td>
+						<td>${h.buyerCode }</td>
+						<td>${h.buyerName }</td>
+						<td>${h.country }</td>
+						<td>${h.manager }</td>
+						<td>${h.phone }</td>
+						<td>
+							<form action="" method="get">
+								<button name="buyerCode" value="${h.buyerCode }" type="submit" class="btn btn-outline-secondary">선택</button>
+							</form>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+	    </table>
 	</div>
 	
 	<hr>
-	
-	<h4>단가상세</h4>
-	<p>바이어 : "$[ item.buyerName } " </p>	
-	<div class="scrollBox">	
-		<nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
-			
-		</nav>
-		<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+	<c:if test="${not empty param.buyerCode }">
+		<div class="d-flex">
+			<div class="col-sm-4">
+				<h4>가격상세 <span style="font-size: 15pt;">바이어코드 : ${param.buyerCode }</span></h4>
+			</div>
+			<div class="col-sm-7"></div>
+			<div class="col-sm-1">
+				<button id="" class="btn btn-secondary">가격수정</button>			
+			</div>
+		</div>	
+		<div class="scrollBox">	
 		  <table class="table">
 				<thead>
 					<tr>
@@ -227,26 +236,26 @@
 						<th>단가</th>
 						<th>할인율</th>
 						<th>단가기간</th>
-						<th>비고</th>
+				
 					</tr>
 				</thead>		
 				<tbody>
 					<c:forEach items="${itemList }" var="item" varStatus="st">
 						<tr class="listHover">
 							<td>${st.count }</td>
-							<td>${item.producCode }</td>
+							<td>${item.productCode }</td>
 							<td>${item.productName }</td>
 							<td>${item.price }</td>
 							<td>${item.salePrice }</td>
 							<td>${item.discountRate }</td>
 							<td>${item.fromDate } ~ ${item.endDate }</td>
-							<td>수정/ 삭제 </td>
+						
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
-		</div>
-	</div><!-- scrollBox 끝 -->
+		</div><!-- scrollBox 끝 -->
+	</c:if>
 </div><!-- container 끝  -->
 
 
