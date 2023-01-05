@@ -122,7 +122,7 @@
                         <div class="mb-2 row mt-2 rowdiv">
                             <label for="inputProductPrice" class="col-form-label">원가</label>
                             <div class="col-sm-5">
-                                <input id="productPrice" onkeyup="inputNumberFormat(this);" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"type="text" class="form-control" placeholder="${product.unit }"/>
+                                <input id="productPrice" onkeyup="inputNumberFormat(this);" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"type="text" class="form-control" placeholder="${product.price }"/>
                             </div>
                         </div>
                         <div class="mb-2 row mt-2 rowdiv">

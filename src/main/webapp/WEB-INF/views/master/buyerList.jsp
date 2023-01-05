@@ -215,7 +215,7 @@
 				<th>국가</th>
 				<th>사업자번호</th>
 				<th>연락처</th>
-				<th>선적비용부담회사</th>
+				<th>선적비용부담</th>
 				<th>담당자</th>
 			</tr>
 		</thead>
@@ -226,13 +226,13 @@
 				</c:url>
 				<tr onclick="window.open('${getLink}','바이어정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
 <%-- 				<tr onclick="location.href='${getLink}'" class="trtr"> --%>
-					<td>${buyer.buyerCode }</td>
-					<td>${buyer.buyerName }</td>
-					<td>${buyer.address }</td>
+					<td style="width: 100px;">${buyer.buyerCode }</td>
+					<td style="width: 150px;">${buyer.buyerName }</td>
+					<td style="width: 400px;">${buyer.address }</td>
 					<td>${buyer.country }</td>
-					<td>${buyer.businessNumber }</td>
-					<td>${buyer.phone }</td>
-					<td>${buyer.deliveryCompany }</td>
+					<td style="width: 150px;">${buyer.businessNumber }</td>
+					<td style="width: 150px;">${buyer.phone }</td>
+					<td style="width: 150px;">${buyer.deliveryCompany }</td>
 					<td>${buyer.manager }</td>
 				</tr>
 			</c:forEach>
