@@ -41,7 +41,6 @@
 		border-right-style: groove;
 	}
 	.scrollBox {
-		border : solid; color:red;
 		width : 100%;
 		height: 30%;
 	}
@@ -69,6 +68,12 @@
 		background: #f4eed9cb;
 		color: black;
 	}
+	.scrollBox {
+		width: 100%;
+		height: 400px;
+		box-sizing: border-box;
+		overflow: scroll;
+	}
 </style>
 
 
@@ -82,11 +87,12 @@
 <!-- 한달후 날짜 설정 -->
 <c:set value='<%=sf.format(addMonth)%>' var="addMonth" /> 
 <!-- ${addMonth}  -->
-<div class="container-sm mt-4">
+<my:side_bar></my:side_bar>
+<div class="container-sm mt-4" style=" width: 77vw; margin-left: auto; ">
 	<div class="row d-flex">
 		
 		<!-- *좌측* 검색 조건 설명란 -->
-		<div class="col-sm-2 leftFilterDiv mt-2">
+		<div class="col-sm-2 leftFilterDiv mt-2" >
 			<div class="mb-5">
 				<p class="filterText ">전체 검색</p>
 			</div>
@@ -131,7 +137,7 @@
 									<option value="${product.productName }">
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-s btn-s:hover" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>	
 					</div>
 					<div class="col-sm-3">
@@ -209,7 +215,7 @@
 					<div class="col-sm-4"></div>
 					<div class="col-sm-4">
 						<div style="text-align: justify;">
-							<button class="btn btn-p btn-p:hover" type="submit">선택 조건 검색</button>
+							<button class="btn btn-primary" type="submit">선택 조건 검색</button>
 						</div>
 					</div>
 				</div>
@@ -222,96 +228,200 @@
 	<div class="d-flex">
 		<h4>주문관리</h4>
 		<div class="col-sm-10"></div>
-		<button id="" class="btn btn-p btn-p:hover" >주문등록</button>
-	</div>
+		<button id="" class="btn btn-primary" >주문등록</button>
+	</div>		
 	<!-- Order_header -->
 	<div class="scrollBox">
-		<nav id="navbar-example1" class="navbar bg-body-tertiary px-3 mb-3">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>선택</th>
+					<th>주문코드</th>
+					<th>바이어코드</th>
+					<th>바이어명</th>
+					<th>납기요청일</th>
+					<th>담당자</th>
+					<th>등록일</th>
+					<th>수정일</th>
+					<th>처리상태</th>				
+					<th>주문선택</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${headerList }" var="h">
+					<tr class="listHover" id="header${h.orderId }" >
+						<td><input type="checkbox" id="checkbox${h.orderId }"></td>
+						<td>${h.orderCode }</td>	
+						<td>${h.buyerCode }</td>					
+						<td>${h.buyerName }</td>
+						<td>${h.deliveryDate }</td>
+						<td>${h.name }</td>
+						<td>${h.inserted }</td>
+						<td>${h.modified }</td>
+						<td>
+							<c:choose>
+								<c:when test="${h.status == '임시저장'}">
+									<button type="button" class="btn btn-secondary" disabled>${h.status }</button>
+								</c:when>
+								<c:when test="${h.status == '승인요청'}">
+									<button type="button" class="btn btn-primary" disabled>${h.status }</button>
+								</c:when>
+								<c:when test="${h.status == '승인완료'}">
+									<button type="button" class="btn btn-success" disabled>${h.status }</button>
+								</c:when>
+								<c:when test="${h.status == '요청반려'}">
+									<button type="button" class="btn btn-danger" disabled>${h.status }</button>
+								</c:when>
+								<c:when test="${h.status == '승인취소'}">
+									<button type="button" class="btn btn-secondary" disabled>${h.status }</button>
+								</c:when>
+								<c:when test="${h.status == '거래종결'}">
+									<button type="button" class="btn btn-secondary" disabled>${h.status }</button>
+								</c:when>
+							</c:choose>
+							
+							
+						</td>
+						
+						<td>
+							<form action="" method="get">
+								<button name="orderCode" value="${h.orderCode }" type="submit" class="btn btn-outline-secondary">선택</button>
+							</form>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>  
+	</div>
+	
+	<hr>
+	<c:if test="${not empty param.orderCode }">
+		<div class="d-flex">
+			<div class="col-sm-4">
+				<h4>주문상세
+					<span style="font-size: 15pt;">주문코드 : ${param.orderCode }</span>
+				</h4>
+			</div>
+			<div class="col-sm-6"></div>
+			<div class="col-sm-1">
+				<button id="" class="btn btn-secondary">주문수정</button>			
+			</div>
+			<div class="col-sm-1">
+				<button id="" class="btn btn-primary">승인요청</button>
+			</div>
+		</div>	
 		
-		</nav>
-		<div data-bs-spy="scroll" data-bs-target="#navbar-example1" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+		<div class="scrollBox">
 			<table class="table">
 				<thead>
 					<tr>
-						<th>선택</th>
-						<th>주문번호</th>
-						<th>바이어명</th>
-						<th>납기요청일</th>
-						<th>담당자</th>
-						<th>등록일</th>
-						<th>수정일</th>
-						<th>처리상태</th>
-						<th>비고</th>
+						<th>No.</th>
+						<th>제품명</th>
+					
+						<th>단가</th>
+						<th>공급가액</th>
+						<th>할인율</th>
+						<th>수량</th>
+						<th>합계</th>
+						
 					</tr>
 				</thead>
 				<tbody>
-				<!-- Order_header -->
-					<c:forEach items="${headerList }" var="header">
-						<tr class="listHover">
-							<td><input type="checkbox" name=""></td>
-							<td>${header.orderCode }</td>
-							<td>${header.buyerName }</td>
-							<td>${header.deliveryDate }</td>
-							<td>${header.name }</td>
-							<td>${header.inserted }</td>
-							<td>${header.modified }</td>
-							<td>${header.status }</td>
+					<c:forEach items="${itemList }" var="item" varStatus="st">
+					<tr class="listHover">
+						<td>${st.count }</td>
+					<td>${item.productName }</td>
+				
+					<td>${item.price }</td>
+					<td>${item.salePrice }</td>
+					<td>${item.discountRate }</td>
+					<td>
+						${item.quantity } ${item.unit }
+						<!-- <span><i class="fa-solid fa-pen-to-square"></i></span>  -->
+					</td>
+					<td>${item.sum }</td>
+						<td>
+							<!-- <span><i class="fa-regular fa-trash-can"></i></span> -->
+						</td>
+					</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div><!-- scrollBox 끝 -->
+		<!-- <div id="detailContainerDiv"></div> -->
+	</c:if>
+</div><!-- container 끝  -->
+
+
+<script type="text/javascript">
+	const ctx = "${pageContext.request.contextPath}";
+	const detailContainerDiv = document.querySelector("#detailContainerDiv");
+	
+/* 	detailContainerDiv.innerHTML = "";
+	
+	<c:forEach items="${headerList }" var="h">
+		
+		document.querySelector("#header${h.orderId }").addEventListener("click", function(){
+			document.querySelector("#checkbox${h.orderId }").checked = true;
+			var orderCode = '${h.orderCode}';
+			
+			console.log(orderCode);
+			
+			fetch(`\${ctx}/order/list/\${orderCode} )
+			.then(()=>detailList() );
+				
+			
+			
+			
+		});
+	</c:forEach>
+	
+	function detailList(){
+		const details = `
+			<h4>주문상세</h4>
+			<p>주문번호 : ${h.orderCode }</p>	
+			<div class="scrollBox">	
+			<nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
+			  <table class="table">
+				<thead>
+					<tr class="listHover">
+						<th>No.</th>
+						<th>제품명</th>
+						<th>단위</th>
+						<th>단가</th>
+						<th>공급가액</th>
+						<th>부가세</th>
+						<th>수량</th>
+						<th>합계</th>
+						<th>비고</th>
+					</tr>
+				</thead>
+			  </table>
+			</nav>
+			<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+			  <table>
+				 <tbody>
+					<c:forEach items="${itemList }" var="item" varStatus="st">
+						<tr>
+							<td>${st.count }</td>
+							<td>${item.productName }</td>
+							<td>${item.unit }</td>
+							<td>${item.price }</td>
+							<td>${item.salePrice }</td>
+							<td>10%</td>
+							<td>${item.quantity }</td>
+							<td>${item.sum }</td>
 							<td>수정/ 삭제</td>
 						</tr>
 					</c:forEach>
 				</tbody>
-			</table>  
-		</div>
-	</div>
+			  </table>
+			</div>
+		</div><!-- scrollBox 끝 -->
+		`;
+		detailContainerDiv.insertAdjacentHTML("beforeend", details);
+	} */
 	
-	<hr>
-	
-	<h4>주문상세</h4>
-	<p>주문번호 : "$[ header.orderCode } " </p>	
-	<div class="scrollBox">	
-		<nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
-		  <table class="table">
-			<thead>
-				<tr class="listHover">
-					<th>No.</th>
-					<th>제품명</th>
-					<th>단위</th>
-					<th>단가</th>
-					<th>공급가액</th>
-					<th>부가세</th>
-					<th>수량</th>
-					<th>합계</th>
-					<th>비고</th>
-				</tr>
-			</thead>
-		  </table>
-		</nav>
-		<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
-		  <table>
-			 <tbody>
-				<c:forEach items="${itemList }" var="item">
-					<tr>
-						<td>${item.productName }</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		  </table>
-		</div>
-	</div><!-- scrollBox 끝 -->
-</div><!-- container 끝  -->
-
-
-
-<script type="text/javascript">
-
 </script>
 	
 </body>

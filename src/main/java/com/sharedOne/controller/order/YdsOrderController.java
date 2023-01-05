@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.order.OrderItemDto;
-import com.sharedOne.service.order.OrderService;
+import com.sharedOne.service.order.AsjOrderService;
 import com.sharedOne.service.order.YdsOrderService;
 
 @Controller
@@ -34,7 +34,7 @@ public class YdsOrderController {
 	private final YdsOrderService service;
 	
 	@Autowired
-	private OrderService orderService;
+	private AsjOrderService asjOrderService;
 
 	
 	@GetMapping("register")
@@ -77,7 +77,7 @@ public class YdsOrderController {
 		return service.searchProduct(allProductInfo);
 		
 	}
-	
+
 	
 	  @GetMapping("list") 
 	  public void orderList(Model model, String orderCode ) {

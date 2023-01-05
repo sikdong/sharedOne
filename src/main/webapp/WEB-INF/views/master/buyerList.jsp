@@ -1,7 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
+
 
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
@@ -25,10 +28,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>제품목록</title>
+<title>바이어목록</title>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
 <style type="text/css">
 	.filterText {
@@ -39,9 +43,7 @@
 		border-right-style: groove;
 	}
 	.scrollBox {
-
-/* 		border : solid; color:red; */
-
+		border : solid; color:red;
 		width : 100%;
 		height: 30%;
 	}
@@ -49,41 +51,31 @@
 		background-color: #D3D3D3;
 		cursor: pointer;
 	}
-
-	.scrollBox {
-		width: 100%;
-		height: 1000px;
-		box-sizing: border-box;
-		overflow: scroll;
-	}
-
-	th, td {
- 		padding: 10px;
- 	}
 	
 	.table .trtr:hover {
- 		font-weight: bold;
- 		background-color: #c7c9c2;
+	 	font-weight: bold;
+	 	background-color: #c7c9c2;
+ 	}
+ 	
+ 	th, td {
+ 		padding: 10px;
+ 	}
+ 	
+ 
+ 	#registerBtn {
+ 		margin-left: 80px;
  	}
  	
  	.primaryBtn {
- 		background-color: white !important;
- 		border-color: #1d5c83 !important;
- 		color: #1d5c83 !important;
+		background-color: white !important;
+		border-color: #1d5c83 !important;
+		color: #1d5c83 !important;
  	}
  	
  	.primaryBtn:hover {
  		background-color: #1d5c83 !important;
  		color: white !important;
  	}
- 
- 	
-	.table{border-collapse:collapse; width:100%}
-	.table thead{float:left; width:1300px;}
-	.table thead th{display:auto; width:1300px;}
-	.table tbody{overflow-y:auto; overflow-x:hidden; float:left; width:1300px; height:550px;}
-	.table tbody tr{display:table; width:1300px;}
-	.table td{text-align:inherit; width:1300px;}
  	
 </style>
 
@@ -92,29 +84,19 @@
 <body>
 
 <my:side_bar active=""></my:side_bar>
-
-<!-- 현재 날짜 설정  -->
-<c:set value="<%=sf.format(nowDate)%>" var="nowDate"/>
-<!-- ${nowDate}  -->
-
-<!-- 한달후 날짜 설정 -->
-<c:set value='<%=sf.format(addMonth)%>' var="addMonth" /> 
-<!-- ${addMonth}  -->
-
 <div class="container-sm mt-4" style="width: 77vw; margin-left: 20%;">
-
 	<div class="row d-flex">
 		
 		<!-- *좌측* 검색 조건 설명란 -->
 		<div class="col-sm-2 leftFilterDiv mt-2">
 			<div class="mb-5">
-				<p class="filterText ">전체 검색</p>
+				<p class="filterText">전체 검색</p>
 			</div>
 			<div class="mb-5">
-				<p class="filterText ">조건 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
+				<p class="filterText">조건 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
 			</div>
 			<div class="mb-5">
-				<p class="filterText ">기간 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex. 주문일 / 납기일 등등... ) -->
+				<p class="filterText">기간 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex. 주문일 / 납기일 등등... ) -->
 			</div>
 		</div><!-- 좌측 조건 설명 div 끝 -->
 		
@@ -125,7 +107,7 @@
 				<div class="row d-flex">
 					<div class="col-sm-6 mb-4">
 						<div class="input-group">
-							<input name="" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
+							<input class="form-control" type="search" placeholder="전체검색" aria-label="Search">
 			        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
@@ -134,10 +116,10 @@
 				<div class="row d-flex">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions1" placeholder="제품코드">
+							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions1" placeholder="바이어코드">
 							<datalist id="datalistOptions1">
-								<c:forEach items="${productList }" var="product">
-									<option value="${product.productCode }">
+								<c:forEach items="${buyerList }" var="buyer">
+									<option value="${buyer.buyerCode }">
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -145,10 +127,10 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품명">
+							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="바이어명">
 							<datalist id="datalistOptions2">
-								<c:forEach items="${productList }" var="product">
-									<option value="${product.productName }">
+								<c:forEach items="${buyerList }" var="buyer">
+									<option value="${buyer.buyerName }">
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -156,10 +138,10 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions3" placeholder="제품타입">
+							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions3" placeholder="국가">
 							<datalist id="datalistOptions3">
-								<c:forEach items="${types }" var="type">
-									<option value="${type }">
+								<c:forEach items="${country }" var="country">
+									<option value="${country }">
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -167,10 +149,10 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="제품규격 Inch">
+							<input name="" value="" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="담당자">
 							<datalist id="datalistOptions4">
-								<c:forEach items="${sizes }" var="size">
-									<option value="${size }">
+								<c:forEach items="${manager }" var="manager">
+									<option value="${manager }">
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -193,7 +175,7 @@
 						</div>
 					</div>
 					<div class="col-sm-5 d-flex">
-						
+					
 						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">오늘</button>		
 						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">1주 </button>	
 						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">15일</button>		
@@ -218,82 +200,47 @@
 	
 	<hr>
 	<div class="d-flex">
-		<h4>제품목록</h4>
-		<div class="col-sm-10"></div>
-		<c:url value="/master/productRegister" var="registerLink"></c:url>
-		<button id="registerBtn" class="btn btn-outline-primary primaryBtn" onclick="window.open('${registerLink}','제품등록','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');">제품등록</button>
+	<h4>바이어목록</h4>
+	<div class="col-sm-9"></div>
+	<c:url value="/master/buyerRegister" var="registerLink"></c:url>
+		<button id="registerBtn" class="btn btn-outline-primary primaryBtn" onclick="window.open('${registerLink}','바이어정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');">바이어등록</button>
 	</div>
 	<!-- 리스트 -->
-
-	<div class="listBox">
-			<table class="table">
-			   	 <thead>
-					 <tr>
-            <th>No.</th>
-						<th>제품코드</th>
-						<th>제품명</th>
-						<th>타입</th>
-						<th>무게(g)</th>
-						<th>규격(Inch)</th>
-						<th>단위(EA)</th>
-						<th>원가</th>
-					 </tr>
-				 </thead>
-				<tbody class = "scorllBox">			
-					<c:forEach items="${productList }" var="product" varStatus="st">
-						<c:url value="/master/productModify" var="getLink">
-							<c:param name="code" value="${product.productCode }"></c:param>
-						</c:url>
-					<tr onclick="window.open('${getLink}','제품정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
-              <td>${st.count }</td>
-							<td style="width: 800px">${product.productCode }</td>
-							<td style="margin-right: 50px">${product.productName }</td>
-							<td>${product.productType }</td>
-							<td>${product.weight }</td>
-							<td>${product.size }</td>
-							<td>${product.unit }</td>
-							<td>${product.price }</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-		    </table>
-		</div>
-	</div>
-	
-	
-<%-- 	<table class="table">
+	<table class="table table-hover container">
 		<thead>
-			<!-- productCode, productName, productType, weight, size, price, unit, content -->
 			<tr>
-				<th>제품코드</th>
-				<th>제품명</th>
-				<th>타입</th>
-				<th>무게(g)</th>
-				<th>규격(Inch)</th>
-				<th>단위(EA)</th>
-				<th>원가</th>
+				<th>바이어코드</th>
+				<th>바이어명</th>
+				<th>주소</th>
+				<th>국가</th>
+				<th>사업자번호</th>
+				<th>연락처</th>
+				<th>선적비용부담</th>
+				<th>담당자</th>
 			</tr>
 		</thead>
 		<tbody>
-		<!-- //productCode, productName, productType, weight, size, price, unit, content, inserted -->
-			<c:forEach items="${productList }" var="product">
-				<tr>
-					<td>${product.productCode }</td>
-					<td>${product.productName }</td>
-					<td>${product.productType }</td>
-					<td>${product.weight }</td>
-					<td>${product.size }</td>
-					<td>${product.unit }</td>
-					<td>${product.price }</td>
+			<c:forEach items="${buyerList }" var="buyer">
+			<c:url value="/master/buyerModify" var="getLink">
+					<c:param name="code" value="${buyer.buyerCode }"></c:param>
+				</c:url>
+				<tr onclick="window.open('${getLink}','바이어정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
+<%-- 				<tr onclick="location.href='${getLink}'" class="trtr"> --%>
+					<td style="width: 100px;">${buyer.buyerCode }</td>
+					<td style="width: 150px;">${buyer.buyerName }</td>
+					<td style="width: 400px;">${buyer.address }</td>
+					<td>${buyer.country }</td>
+					<td style="width: 150px;">${buyer.businessNumber }</td>
+					<td style="width: 150px;">${buyer.phone }</td>
+					<td style="width: 150px;">${buyer.deliveryCompany }</td>
+					<td>${buyer.manager }</td>
 				</tr>
 			</c:forEach>
 		</tbody>
-	</table> --%>
-	
+	</table>
 </div>
 
-
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script type="text/javascript">
 
 </script>

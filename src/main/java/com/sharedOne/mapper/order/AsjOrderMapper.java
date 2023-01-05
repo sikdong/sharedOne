@@ -8,7 +8,7 @@ import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.order.OrderItemDto;
 
 @Mapper
-public interface OrderMapper {
+public interface AsjOrderMapper {
 
 	List<OrderHeaderDto> selectOrderHeaderList();
 
