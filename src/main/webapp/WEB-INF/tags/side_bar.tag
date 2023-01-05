@@ -16,8 +16,10 @@
     .sideDiv{
         position: fixed;
         width: 16%;
-        min-width: 10%;
-        
+
+        min-width: 270px;
+        max-width: 270px;
+
         height: 100vh;
         background: #1d5c83;
         color: #e3e3e3;
@@ -29,7 +31,9 @@
     .list-head{
         margin-left: 10px;
         text-align: left;
-        width: 70%;
+
+        width: 150px;
+
     }
     .threeline{
         color: #e3e3e3;
