@@ -1,14 +1,6 @@
 package com.sharedOne.controller.report;
 
 import java.io.IOException;
-import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -52,7 +44,7 @@ public class lnhReportController {
 		model.addAttribute("productList", productList);
 	}
 	
-	//엑셀 파일 css 서식
+/*	//엑셀 파일 css 서식
 	private void setHeaderCS(CellStyle cs, Font font, Cell cell) {
 		  cs.setAlignment(CellStyle.ALIGN_CENTER);
 		  cs.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
@@ -86,8 +78,7 @@ public class lnhReportController {
 	@RequestMapping("excelDown.do")
 	@ResponseBody
 	public void excelDown(HttpServletResponse response,	@RequestParam(name="items")String items) throws IOException {
-
+*/
 	
 	}
 
-}
