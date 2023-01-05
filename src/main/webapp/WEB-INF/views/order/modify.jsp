@@ -274,6 +274,23 @@
 									</div>
 								</div><!-- 2nd row 끝 -->
 								<!-- 검색필터 3rd row : 기간 선택 -->
+								<div class="row d-flex">
+									<div class="col-sm-3 mb-4">
+										<form action="">
+										<div class="" >
+											<label for="">단가</label>
+											<input type="text"  class="form-control" list="datalistOptions1" placeholder="">
+										</div>
+										</form>
+									</div>
+									<div class="col-sm-3">
+										<div class="">
+											<label for="">수량</label>
+											<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="">
+											<button type="button" style="background : #1d5c83; color : white; margin-left : 45%; " class="mt-5 btn">추가</button>
+										</div>	
+									</div>
+								</div>
 							</div><!-- 우측 검색 조건 div 끝 -->
 						</div><!-- 좌측 + 우측 전체를 감싸는 d-flex 끝-->
 						<hr />
@@ -284,7 +301,7 @@
 			
 		
 		
-		<div style="width : 77vw; display : flex;" class="mt-5">
+		<!--  <div style="width : 77vw; display : flex;" class="mt-5">
 			<div class="form-width">
 				<label for="staticEmail" class="col-form-label" style="min-width : 50px; margin-left : 3%">단가</label>
 				<div class="ml-3">
@@ -300,7 +317,7 @@
 			</div>
 		</div>
 			<button type="button" style="background : #1d5c83; color : white; margin-left : 45%; " class="mt-5 btn">추가</button>
-			<button type="button" class="mt-5 btn" style="background : #1d5c83; color : white;">취소</button>
+			<button type="button" class="mt-5 btn" style="background : #1d5c83; color : white;">취소</button>-->
 		<br />
 		<br />
 		<br />
@@ -353,8 +370,9 @@
 						<textarea rows="5" class="form-control" id="inputPassword" ></textarea>
 					</div>
 				  </div>
-		        <button style="margin-left: 46%; background : #1d5c83; 
+		        <button style="margin-left: 43%; background : #1d5c83; 
 		        color : white;" type="submit" class="mt-5 btn" >주문수정</button>
+		        <button type="button" class="mt-5 btn" style="background : #1d5c83; color : white;">취소</button>
             </div>
             <br />
             <br />

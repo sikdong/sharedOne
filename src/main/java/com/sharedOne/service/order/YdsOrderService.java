@@ -44,6 +44,10 @@ public class YdsOrderService {
 		YdsProductDto yds = mapper.addTempProductOrder(ypd);
 		yds.setQuantity(ypd.getQuantity());
 		yds.setSalePrice(ypd.getSalePrice());
+		int vat = ypd.getSalePrice()/10;
+		yds.setVat(vat);
+		int sum = (ypd.getSalePrice()+vat)*ypd.getQuantity();
+		yds.setSum(sum);
 		return yds;
 		
 	}

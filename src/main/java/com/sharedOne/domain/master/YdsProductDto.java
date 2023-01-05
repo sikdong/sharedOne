@@ -18,4 +18,6 @@ public class YdsProductDto {
 	private LocalDate inserted;
 	private int quantity;
 	private int salePrice;
+	private int vat;
+	private int sum;
 }

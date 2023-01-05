@@ -217,11 +217,6 @@
 									<div class="col-sm-3 mb-4">
 										<div class="input-group" >
 											<input type="text"  class="form-control" list="datalistOptions1" placeholder="제품명">
-											<datalist id="datalistOptions1">
-												<c:forEach items="${productList }" var="product">
-													<option value="${product.productCode }">
-												</c:forEach>
-											</datalist>
 											<button class="btn btn-outline-secondary"><i class="fa-solid fa-magnifying-glass"></i></button>
 										</div>
 									</div>
@@ -260,7 +255,7 @@
 			
 		
 		
-		<div style="width : 77vw; display : flex;" class="mt-5">
+		<div style="width : 77vw; display : flex; justify-content : center" class="mt-5">
 			<div class="form-width flex">
 				<label for="staticEmail" class="col-form-label" style="min-width : 50px;">단가</label>
 				<div class="ml-3">
@@ -275,9 +270,7 @@
 				</div>
 			</div>
 		</div>
-			<button type="button" style="background : #1d5c83; color : white; margin-left : 40%; " class="mt-5 btn">임시저장</button>
-			<button type="button" id="addOrder" class="mt-5 btn btn-form" style="background : #1d5c83; color : white;">등록</button>
-			<button type="button" class="mt-5 btn" style="background : #1d5c83; color : white;">닫기</button>
+			<button type="button" id="addOrder" class="mt-5 btn btn-form" style=" margin-left : 48%; background : #1d5c83; color : white;">추가</button>
 		<br />
 		<br />
 		<br />
@@ -288,7 +281,7 @@
                       <tr>
                         <th scope="col">번호</th>
                         <th style="text-align: center;" scope="col" colspan="5">제품정보</th>
-                        <th style="text-align: center;" scope="col" colspan="5">금액정보</th>
+                        <th style="text-align: center;" scope="col" colspan="4">금액정보</th>
                         <th style="text-align: center; vertical-align: middle;" scope="col" rowspan="2">삭제여부</th>
                       </tr>
                       <tr>
@@ -300,7 +293,6 @@
                         <th>단위</th>
                         <th>원가</th>
                         <th>단가</th>
-                        <th>부가세</th>
                         <th>수량</th>
                         <th>합계액</th>
                       </tr>
@@ -314,8 +306,9 @@
 						<textarea rows="5" class="form-control" id="inputPassword" ></textarea>
 					</div>
 				  </div>
-				  
-		        <button style="margin-left: 46%; background : #1d5c83; color : white;" class="mt-5 btn">주문 등록</button>
+				 <button type="button" style="margin-left: 40%; background : #1d5c83; color : white;" class="mt-5 btn">임시저장</button> 
+		        <button style=" background : #1d5c83; color : white;" class="mt-5 btn">주문 등록</button>
+            	<button type="button" class="mt-5 btn" style="background : #1d5c83; color : white;">닫기</button>
             </form>
             </div>
             <br />
@@ -581,7 +574,7 @@
 		}
 		fetch(path+"/order/addTempProductOrder/", {
 			method : "POST",
-			header : {
+			headers : {
 				"Content-Type" : "application/json"
 			},
 			body : JSON.stringify(data)
@@ -598,11 +591,11 @@
               <td>\${data.productName}</td>
               <td>\${data.size}</td>
               <td>\${data.unit}</td>
-              <td>\${data.price}</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Otto</td>
-              <td>@mdo</td>
+              <td>\${data.price}원</td>
+              <td>\${data.salePrice}원<input type="hidden" name="salePrice" value="\${data.salePrice}"></td>
+              <td>\${data.vat}원</td>
+              <td>\${data.quantity}<input type="hidden" name="quantity" value="\${data.quantity}"></td>
+              <td>\${data.sum}원</td>
               <td>
                   <button class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
               </td>

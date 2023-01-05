@@ -32,9 +32,6 @@ public class YdsOrderController {
 	
 	
 	private final YdsOrderService service;
-	
-	@Autowired
-	private AsjOrderService asjOrderService;
 
 	
 	@GetMapping("register")
@@ -79,14 +76,14 @@ public class YdsOrderController {
 	}
 
 	
-	  @GetMapping("list") 
+	  /*@GetMapping("list") 
 	  public void orderList(Model model, String orderCode ) {
 	  List <OrderHeaderDto> headerList = orderService.selectOrderHeaderList(); List
 	 <OrderItemDto> itemListByOrderCode =
 	 orderService.selectOrderItemListByOrderCode(orderCode);
 	 
 	 model.addAttribute("headerList", headerList); model.addAttribute("itemList",
-	 itemListByOrderCode); }
+	 itemListByOrderCode); }*/
 	  
 	  @GetMapping("modify")
 	  public void modifyOrder() {
@@ -94,10 +91,13 @@ public class YdsOrderController {
 	  }
 	  
 	  @PostMapping("list")
-	  public void insertOrder(String deliveryDate, String buyerCode, String productCode) {
+	  public void insertOrder(String deliveryDate, String buyerCode, String productCode
+			  ,int salePrice ,int quantity) {
 		  System.out.println("납기요청일 " + deliveryDate);
 		  System.out.println("바이어코드 " + buyerCode);
 		  System.out.println("제품코드" + productCode);
+		  System.out.println("단가" + salePrice);
+		  System.out.println("수량" + quantity);
 	  }
 	  
 	  /*@PostMapping("addTempProductOrder")
@@ -110,7 +110,6 @@ public class YdsOrderController {
 	 @PostMapping("addTempProductOrder")
 	 @ResponseBody
 	 public YdsProductDto addTempProductOrder(@RequestBody YdsProductDto ypd) {
-		 System.out.println(ypd);
 		 return service.addTempProductOrder(ypd);
 		 
 	 }
