@@ -56,10 +56,31 @@
 		FROM
 			Product
 		<where>
-			<trim></trim>
+			<trim prefixOverrides="OR">
+				<if test="productName != null">
+					OR productName Like #{productInfo}
+				</if>
+				<if test="productType != null">
+					OR productType Like #{productInfo}
+				</if>
+				<if test="productCode != null">
+					OR productCode Like #{productInfo}
+				</if>
+			</trim>
 		</where>
+	</select>
 	
-	
+	<select id="addTempProductOrder" resultType="com.sharedOne.domain.master.YdsProductDto">
+		SELECT
+		 	productCode,
+		 	productName,
+		 	productType,
+		 	size,
+		 	unit,
+		 	price
+		 FROM Product
+		 where productCode = #{productCode}
+		 
 	</select>
 	
 

@@ -42,21 +42,21 @@ public class lnhProductController {
 		model.addAttribute("productList", productList);
 	}
 	
-	@GetMapping("register")
+	@GetMapping("productRegister")
 	public void register() {
 		
 	}
 	
-	@PostMapping("register")
+	@PostMapping("productRegister")
 	public String register(ProductDto product, RedirectAttributes rttr) {
 		
 		productService.register(product);
 		
-		return "redirect:/product/list";
+		return "redirect:/master/productList";
 	}
 	
 	//새 창으로 띄우는 경우 
-	@GetMapping("get")
+	@GetMapping("productGet")
 	public void get(
 			@RequestParam(name = "code") String productCode,
 /*			Authentication auth,*/
@@ -67,7 +67,7 @@ public class lnhProductController {
 	}
 	
 	
-	@GetMapping("modify") // @은 외부 빈, #은 메소드의 파라미터
+	@GetMapping("productModify") // @은 외부 빈, #은 메소드의 파라미터
 	/* @PreAuthorize("@Security.checkWriter(authentication.name, #productCode)") */
 	public void modify(
 			@RequestParam(name = "code") String productCode,
@@ -78,22 +78,22 @@ public class lnhProductController {
 		
 	}
 	
-	@PostMapping("modify")
+	@PostMapping("productModify")
 	/* @PreAuthorize("@Security.checkWriter(authentication.name, #productCode)") */
 	public String modify(ProductDto product) {
 		productService.update(product);
 		String code = product.getProductCode();
 		
-		return "redirect:/product/list/get?code=" + code;
+		return "redirect:/master/productList/productGet?code=" + code;
 	}
 	
-	@PostMapping("remove")
+	@PostMapping("productRemove")
 	/* @PreAuthorize("@Security.checkWriter(authentication.name, #productCode)") */
 	public String remove(
 			@RequestParam(name = "code") String productCode) {
 		productService.remove(productCode);
 		
-		return "redirect:/product/list";
+		return "redirect:/master/productList";
 	}
 	
 }
