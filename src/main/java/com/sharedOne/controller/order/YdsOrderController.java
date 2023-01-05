@@ -1,5 +1,6 @@
 package com.sharedOne.controller.order;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sharedOne.domain.master.BuyerDto;
 import com.sharedOne.domain.master.ProductDto;
+import com.sharedOne.domain.master.YdsProductDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -85,10 +88,31 @@ public class YdsOrderController {
 	 model.addAttribute("headerList", headerList); model.addAttribute("itemList",
 	 itemListByOrderCode); }
 	  
-	  @GetMapping("modifyOrder")
+	  @GetMapping("modify")
 	  public void modifyOrder() {
 		  
 	  }
-	 
+	  
+	  @PostMapping("list")
+	  public void insertOrder(String deliveryDate, String buyerCode, String productCode) {
+		  System.out.println("납기요청일 " + deliveryDate);
+		  System.out.println("바이어코드 " + buyerCode);
+		  System.out.println("제품코드" + productCode);
+	  }
+	  
+	  /*@PostMapping("addTempProductOrder")
+	  @ResponseBody
+	  public YdsProductDto addTempProductOrder(@RequestBody YdsProductDto product){
+		 return service.addTempProductOrder(product);
+		  
+	  }*/
+	  
+	 @PostMapping("addTempProductOrder")
+	 @ResponseBody
+	 public YdsProductDto addTempProductOrder(@RequestBody YdsProductDto ypd) {
+		 System.out.println(ypd);
+		 return service.addTempProductOrder(ypd);
+		 
+	 }
 	
 }

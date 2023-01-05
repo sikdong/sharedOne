@@ -68,8 +68,19 @@
 				</if>
 			</trim>
 		</where>
+	</select>
 	
-	
+	<select id="addTempProductOrder" resultType="com.sharedOne.domain.master.YdsProductDto">
+		SELECT
+		 	productCode,
+		 	productName,
+		 	productType,
+		 	size,
+		 	unit,
+		 	price
+		 FROM Product
+		 where productCode = #{productCode}
+		 
 	</select>
 	
 
