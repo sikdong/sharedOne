@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
- <mapper namespace="com.sharedOne.mapper.master.SalePriceMapper">
+ <mapper namespace="com.sharedOne.mapper.master.AsjSalePriceMapper">
  
 	<!-- 해더 : 바이어코드 바이버명 국가 매니저 전화번호 비고   -->
  	<select id="selectSalePriceHeaderList" resultType="com.sharedOne.domain.master.BuyerDto" >
@@ -18,7 +18,7 @@
 	</select> 	
  
  	<!-- 아이템 : 제품코드, 제품명, 원가, 단가, 할인율, 단가기간  -->
-	<select id="selectSalePriceItemList" resultMap="itemMap">
+	<select id="selectSalePriceItemListByBuyerCode" resultType="com.sharedOne.domain.master.SalePriceDto">
 	 	SELECT 
 	 		sp.priceId,
 	 		sp.salePrice,
@@ -38,7 +38,7 @@
 	 	WHERE
 	 		sp.buyerCode = #{buyerCode }
 	</select> 		
-	<resultMap type="com.sharedOne.domain.master.SalePriceDto" id="itemMap">
+	<!-- <resultMap type="com.sharedOne.domain.master.SalePriceDto" id="itemMap">
 		<id column="priceId" property="priceId"/>
 		<result column="salePrice" property="salePrice"/>
 		<result column="discountRate" property="discountRate"/>
@@ -50,7 +50,7 @@
 			<result column="productName" property="productName"/>
 			<result column="price" property="price"/>
 		</collection>
-	</resultMap>
+	</resultMap> -->
 	
 	
  
