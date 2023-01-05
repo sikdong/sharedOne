@@ -46,8 +46,8 @@
 	 		country = #{country},
 	 		businessNumber = #{businessNumber},
 	 		phone = #{phone},
-	 		unit = #{deliveryCompany},
-	 		content = #{deliveryCompany}
+	 		deliveryCompany = #{deliveryCompany},
+	 		manager = #{manager}
 	 	WHERE
 	 		buyerCode = #{buyerCode}
  	</update>

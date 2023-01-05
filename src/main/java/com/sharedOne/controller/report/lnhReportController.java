@@ -1,14 +1,14 @@
 package com.sharedOne.controller.report;
 
 import java.io.IOException;
-import org.apache.poi.hssf.util.HSSFColor;
+/*import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;*/
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -53,34 +53,29 @@ public class lnhReportController {
 	}
 	
 	//엑셀 파일 css 서식
-	private void setHeaderCS(CellStyle cs, Font font, Cell cell) {
-		  cs.setAlignment(CellStyle.ALIGN_CENTER);
-		  cs.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-		  cs.setBorderTop(CellStyle.BORDER_THIN);
-		  cs.setBorderBottom(CellStyle.BORDER_THIN);
-		  cs.setBorderLeft(CellStyle.BORDER_THIN);
-		  cs.setBorderRight(CellStyle.BORDER_THIN);
-		  cs.setFillForegroundColor(HSSFColor.LIGHT_BLUE.index);
-		  cs.setFillPattern(CellStyle.SOLID_FOREGROUND);
-		  setHeaderFont(font, cell);
-		  cs.setFont(font);
-		  cell.setCellStyle(cs);
-		}
-		 
-		private void setHeaderFont(Font font, Cell cell) {
-		  font.setBoldweight((short) 700);
-		  font.setColor(HSSFColor.WHITE.index);
-		}
-		 
-		private void setCmmnCS2(CellStyle cs, Cell cell) {
-		  cs.setAlignment(CellStyle.ALIGN_LEFT);
-		  cs.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-		  cs.setBorderTop(CellStyle.BORDER_THIN);
-		  cs.setBorderBottom(CellStyle.BORDER_THIN);
-		  cs.setBorderLeft(CellStyle.BORDER_THIN);
-		  cs.setBorderRight(CellStyle.BORDER_THIN);
-		  cell.setCellStyle(cs);
-		}
+	/*
+	 * private void setHeaderCS(CellStyle cs, Font font, Cell cell) {
+	 * cs.setAlignment(CellStyle.ALIGN_CENTER);
+	 * cs.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+	 * cs.setBorderTop(CellStyle.BORDER_THIN);
+	 * cs.setBorderBottom(CellStyle.BORDER_THIN);
+	 * cs.setBorderLeft(CellStyle.BORDER_THIN);
+	 * cs.setBorderRight(CellStyle.BORDER_THIN);
+	 * cs.setFillForegroundColor(HSSFColor.LIGHT_BLUE.index);
+	 * cs.setFillPattern(CellStyle.SOLID_FOREGROUND); setHeaderFont(font, cell);
+	 * cs.setFont(font); cell.setCellStyle(cs); }
+	 * 
+	 * private void setHeaderFont(Font font, Cell cell) { font.setBoldweight((short)
+	 * 700); font.setColor(HSSFColor.WHITE.index); }
+	 * 
+	 * private void setCmmnCS2(CellStyle cs, Cell cell) {
+	 * cs.setAlignment(CellStyle.ALIGN_LEFT);
+	 * cs.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+	 * cs.setBorderTop(CellStyle.BORDER_THIN);
+	 * cs.setBorderBottom(CellStyle.BORDER_THIN);
+	 * cs.setBorderLeft(CellStyle.BORDER_THIN);
+	 * cs.setBorderRight(CellStyle.BORDER_THIN); cell.setCellStyle(cs); }
+	 */
 	
 	//엑셀 다운로드
 	@RequestMapping("excelDown.do")

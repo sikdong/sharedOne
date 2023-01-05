@@ -42,7 +42,7 @@
 		border-right-style: groove;
 	}
 	.scrollBox {
-		border : solid; color:red;
+/* 		border : solid; color:red; */
 		width : 100%;
 		height: 30%;
 	}
@@ -50,12 +50,16 @@
 		background-color: #D3D3D3;
 		cursor: pointer;
 	}
+	
+	.table .trtr:hover {
+ 	font-weight: bold;
+ }
 </style>
 
 
 </head>
 <body>
-
+<my:side_bar active=""></my:side_bar>
 <!-- 현재 날짜 설정  -->
 <c:set value="<%=sf.format(nowDate)%>" var="nowDate"/>
 <!-- ${nowDate}  -->
@@ -63,7 +67,7 @@
 <!-- 한달후 날짜 설정 -->
 <c:set value='<%=sf.format(addMonth)%>' var="addMonth" /> 
 <!-- ${addMonth}  -->
-<div class="container-sm mt-4">
+<div class="container-sm mt-4" style="width: 77vw; margin-left: 20%;">
 	<div class="row d-flex">
 		
 		<!-- *좌측* 검색 조건 설명란 -->
@@ -155,13 +159,13 @@
 					</div>
 					<div class="col-sm-5 d-flex">
 						
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">오늘</button>		
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1주 </button>	
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">15일</button>		
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">3개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">6개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1년</button>	
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">오늘</button>		
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">1주 </button>	
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">15일</button>		
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">1개월</button>
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">3개월</button>
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">6개월</button>
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">1년</button>	
 						
 					</div>
 				</div><!-- 3rd row 끝 -->
@@ -181,7 +185,8 @@
 	<div class="d-flex">
 		<h4>제품목록</h4>
 		<div class="col-sm-10"></div>
-		<button id="" class="btn btn-primary" >제품등록</button>
+		<c:url value="/master/productRegister" var="registerLink"></c:url>
+		<button id="registerBtn" class="btn btn-primary" onclick="window.open('${registerLink}','제품등록','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');">제품등록</button>
 	</div>
 	<!-- 리스트 -->
 	<div class="scrollBox">
@@ -199,12 +204,14 @@
 						<th>규격(Inch)</th>
 						<th>단위(EA)</th>
 						<th>원가</th>
-						<th>비고</th>
 					 </tr>
 				 </thead>
 				<tbody>			
 					<c:forEach items="${productList }" var="product">
-						<tr class="listHover">
+						<c:url value="/master/productModify" var="getLink">
+							<c:param name="code" value="${product.productCode }"></c:param>
+						</c:url>
+					<tr onclick="window.open('${getLink}','제품정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
 							<td>${product.productCode }</td>
 							<td>${product.productName }</td>
 							<td>${product.productType }</td>
@@ -212,7 +219,6 @@
 							<td>${product.size }</td>
 							<td>${product.unit }</td>
 							<td>${product.price }</td>
-							<td>수정/ 삭제</td>
 						</tr>
 					</c:forEach>
 				</tbody>

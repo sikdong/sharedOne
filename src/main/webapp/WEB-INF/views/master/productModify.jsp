@@ -46,14 +46,26 @@
     .col-form-label{
         font-weight: 600;
     }
+    .modifyBtn {
+	    float: right;
+	    font-size: 15px; 
+	    font-weight: 600; 
+	    width: 60px; 
+	    height: 30px; 
+	    color: white; 
+	    border: none; 
+	    border-radius: 5px; 
+	    background: #c7c9c2;
+    }
 </style>
 <body>   
     <div class="insert-body mt-5 ">
         <div class="container-md">
             <div class="row">
+            <form action="/master/buyerModify" method="post">
                 <div class="col mt-1">
                     <div class="mb-4">
-                        <h1 style="font-size: 24px; font-weight:600">제품 등록</h1>
+                        <h1 style="font-size: 24px; font-weight:600">제품 수정</h1>
                     </div>					
                     <hr class="line" style="border: solid 1px #000" />
                     </div>
@@ -61,13 +73,13 @@
                     	<div class="mb-2 row mt-2 rowdiv">
                             <label for="inputCode" class="col-form-label">제품 코드</label>
                             <div class="col-sm-5">
-                                <input id="productCode" type="text" class="form-control" placeholder="제품코드를 입력하세요."/>
+                                <input id="productCode" type="text" class="form-control" placeholder="${product.productCode }" disabled/>
                             </div>
                         </div>
                         <div class="mb-2 row mt-2 rowdiv">
                             <label for="inputName" class="col-form-label">제품명</label>
                             <div class="col-sm-5">
-                                <input id="productName" type="text" class="form-control" placeholder="제품명을 입력하세요."/>
+                                <input id="productName" type="text" class="form-control" placeholder="${product.productName }"/>
                             </div>
                         </div>
                         <div class="mb-2 row mt-2 rowdiv">
@@ -88,38 +100,41 @@
                         <div class="mb-2 row mt-2 rowdiv">
                             <label for="inputName" class="col-form-label">무게</label>
                             <div class="col-sm-5">
-                                <input id="productName" type="text" class="form-control" placeholder="제품명을 입력하세요."/>
+                                <input id="productName" type="text" class="form-control" placeholder="${product.weight }"/>
                             </div>
                         </div>
                         <div class="mb-2 row mt-2 rowdiv">
                             <label for="inputName" class="col-form-label">규격</label>
                             <div class="col-sm-5">
-                                <input id="productName" type="text" class="form-control" placeholder="제품명을 입력하세요."/>
+                                <input id="productName" type="text" class="form-control" placeholder="${product.size }"/>
                             </div>
                         </div>
                         <div class="mb-2 row mt-2 rowdiv">
                             <label for="inputProductPrice" class="col-form-label">원가</label>
                             <div class="col-sm-5">
-                                <input id="productPrice" onkeyup="inputNumberFormat(this);" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"type="text" class="form-control" placeholder="판매가격을 입력하세요."/>
+                                <input id="productPrice" onkeyup="inputNumberFormat(this);" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"type="text" class="form-control" placeholder="${product.unit }"/>
                             </div>
                         </div>
                         <div class="mb-2 row mt-2 rowdiv">
                             <label for="inputName" class="col-form-label">단위</label>
                             <div class="col-sm-5">
-                                <input id="productName" type="text" class="form-control" placeholder="제품단위를 입력하세요."/>
+                                <input id="productName" type="text" class="form-control" placeholder="${product.unit }"/>
                             </div>
                         </div>
                         <div class="mb-2 row mt-2 rowdiv">
                             <label for="inputName" class="col-form-label">제품 설명</label>
                             <div class="col-sm-5">
-                                <input id="productName" type="text" class="form-control" placeholder="제품설명을 입력하세요."/>
+                                <input id="productName" type="text" class="form-control" placeholder="${product.content }"/>
                             </div>
                         </div>                   
                     </div>
                 <hr />
-                <div>
-                    <button class="btn" style="float: right; font-size: 15px; font-weight: 600; width: 60px; height: 30px; color: white; border: none; border-radius: 5px; background: #c7c9c2;"> 등록 </button>
-                </div>
+                    <!-- 수정버튼 -->
+					<input class="btn modifyBtn" type="submit" value="수정">
+					</form>
+					<form action="/master/productRemove" method="post">
+                    	<input class="btn" style="float: right; font-size: 15px; font-weight: 600; width: 60px; height: 30px; color: white; border: none; border-radius: 5px; background: #c7c9c2;" value="삭제">
+					</form>
               
             </div>
         </div>
