@@ -247,7 +247,7 @@ div.right {
 	
 <div class="tableContainer">
 
-		<h4>제품목록</h4>
+		<h4>주문목록</h4>
 
 			<div style="float: right;">
 				<form action="/excel/download" method="get">

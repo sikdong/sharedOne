@@ -55,6 +55,10 @@
     	margin-bottom: 25px;
     }
     
+    .btnBox1 {
+    	position:relative;
+    }
+    
     #modifyBtn {
     
 	    float: right !important; 
@@ -72,91 +76,104 @@
 	    right: 80px;
     }
     
+    #removeBtn {
+	    top: 0;
+	    right: 10px;
+    }
+    
 </style>
-<body>   
-    <div class="insert-body mt-5 ">
-        <div class="container-md">
-            <div class="row">
-                <div class="col mt-1">
-                    <div class="mb-4">
-                        <h1 style="font-size: 24px; font-weight:600">바이어 수정</h1>
-                    </div>					
-                    <hr class="line" style="border: solid 1px #000" />
-                    </div>
-                    <div class="container-sm content-size">
-                        <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputCode" class="col-form-label">바이어 코드</label>
-                            <div class="col-sm-5">
-                                <input id="buyerCode" type="text" class="form-control" placeholder="${buyer.buyerCode }" disabled/>
-                            </div>
-                        </div>
-                        <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputName" class="col-form-label">바이어명</label>
-                            <div class="col-sm-5">
-                                <input id="buyerName" type="text" class="form-control" placeholder="${buyer.buyerName }"/>
-                            </div>
-                        </div>
-                        <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputAddress" class="col-form-label">주소</label>
-                            <div class="col-sm-5">
-                                <input id="buyerAddress" type="text" class="form-control" placeholder="${buyer.address }"/>
-                            </div>
-                        </div>
-                        <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputCountry" class="col-form-label">국가</label>
-                            <div class="col-sm-5">
-                                <input id="buyerCountry" type="text" class="form-control" placeholder="${buyer.country }"/>
-                            </div>
-                        </div> 
-                        <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputBusinessNum" class="col-form-label">사업자번호</label>
-                            <div class="col-sm-5">
-                                <input id="businessNum" type="text" class="form-control" placeholder="${buyer.businessNumber }"/>
-                            </div>
-                        </div>
-                        <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputPhone" class="col-form-label">연락처</label>
-                            <div class="col-sm-5">
-                                <input id="buyerPhone" type="text" class="form-control" placeholder="${buyer.phone }"/>
-                            </div>
-                        </div>
-                        <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputPhone" class="col-form-label">선적비용부담회사</label>
-                            
-                            <div class="col-sm-5">
-                                <form>
-                                    <select id="deliveryCompany" name="type" class="form-control" style="padding-left: 8px;" >
-                                      <option value="${buyer.deliveryCompany}">${buyer.deliveryCompany }</option>
-                                      <option value="자사">자사</option>
-                                      <option value="거래처">거래처</option>
-                                    </select>
-                                </form>
-                            </div>
-                        </div>
-                         <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputPhone" class="col-form-label">담당자</label>
-                            <div class="col-sm-5">
-                                <input id="manager" type="text" class="form-control" placeholder="${buyer.manager }"/>
-                            </div>
-                        </div>                      
-                    </div>
-                <hr />
-                <div class="btnBox">
-					<form action="/master/buyerRemove" method="post">
-                    	<input class="btn" style="float: right; font-size: 15px; font-weight: 600; width: 60px; height: 30px; color: white; border: none; border-radius: 5px; background: #1d5c83;" value="삭제">
-					</form>
-                	<form action="/master/productModify" method="post">
-	                    <!-- 수정버튼 -->
-						<input id="modifyBtn" class="btn" type="submit" value="수정">
-					</form>
-				</div>
-            </div>
-       	</div>
-  	</div>
-               
-                
+<body>
+	<div class="insert-body mt-5 ">
+		<div class="container-md">
+			<form id="modifyForm" action="" method="post">
+				<div class="row">
+					<div class="col mt-1">
+						<div class="mb-4">
+							<h1 style="font-size: 24px; font-weight: 600">바이어 수정</h1>
+						</div>
+						<hr class="line" style="border: solid 1px #000" />
+					</div>
+					<div class="container-sm content-size">
+						<div class="mb-2 row mt-2 rowdiv">
+							<label for="inputCode" class="col-form-label">바이어 코드</label>
+							<div class="col-sm-5">
+								<input id="buyerCode" type="text" class="form-control" value="${buyer.buyerCode }"
+									placeholder="${buyer.buyerCode }" disabled />
+							</div>
+						</div>
+						<div class="mb-2 row mt-2 rowdiv">
+							<label for="inputName" class="col-form-label">바이어명</label>
+							<div class="col-sm-5">
+								<input id="buyerName" type="text" class="form-control" value="${buyer.buyerName }"
+									placeholder="${buyer.buyerName }" />
+							</div>
+						</div>
+						<div class="mb-2 row mt-2 rowdiv">
+							<label for="inputAddress" class="col-form-label">주소</label>
+							<div class="col-sm-5">
+								<input id="buyerAddress" type="text" class="form-control" value="${buyer.address }"
+									placeholder="${buyer.address }" />
+							</div>
+						</div>
+						<div class="mb-2 row mt-2 rowdiv">
+							<label for="inputCountry" class="col-form-label">국가</label>
+							<div class="col-sm-5">
+								<input id="buyerCountry" type="text" class="form-control" value="${buyer.country }"
+									placeholder="${buyer.country }" />
+							</div>
+						</div>
+						<div class="mb-2 row mt-2 rowdiv">
+							<label for="inputBusinessNum" class="col-form-label">사업자번호</label>
+							<div class="col-sm-5">
+								<input id="businessNum" type="text" class="form-control" value="${buyer.businessNumber }"
+									placeholder="${buyer.businessNumber }" />
+							</div>
+						</div>
+						<div class="mb-2 row mt-2 rowdiv">
+							<label for="inputPhone" class="col-form-label">연락처</label>
+							<div class="col-sm-5">
+								<input id="buyerPhone" type="text" class="form-control" value="${buyer.phone }"
+									placeholder="${buyer.phone }" />
+							</div>
+						</div>
+						<div class="mb-2 row mt-2 rowdiv">
+							<label for="inputPhone" class="col-form-label">선적비용부담회사</label>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+							<div class="col-sm-5">
+								<select id="deliveryCompany" name="type" class="form-control"
+									style="padding-left: 8px;">
+									<option value="${buyer.deliveryCompany}">${buyer.deliveryCompany }</option>
+									<option value="자사">자사</option>
+									<option value="거래처">거래처</option>
+								</select>
+							</div>
+						</div>
+						<div class="mb-2 row mt-2 rowdiv">
+							<label for="inputPhone" class="col-form-label">담당자</label> 
+							<div class="col-sm-5">
+								<input id="manager" type="text" class="form-control" value="${buyer.manager }"
+									placeholder="${buyer.manager }" />
+							</div>
+						</div>
+					</div>
+					<hr />
+					<div class="btnBox">
+						<!-- 수정버튼 -->
+						<input id="modifyBtn" class="btn" type="submit" value="수정">
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="btnBox1">
+			<form action="/master/buyerRemove" method="post">
+		    	<input id="removeBtn" class="btn" style="float: right; font-size: 15px; font-weight: 600; width: 60px; height: 30px; color: white; border: none; border-radius: 5px; background: #1d5c83;" value="삭제">
+			</form>
+  		</div>
+	</div>
+
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <script>
     
     
