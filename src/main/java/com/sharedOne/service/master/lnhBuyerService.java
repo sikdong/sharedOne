@@ -30,6 +30,7 @@ public class lnhBuyerService {
 	//수정
 	public void update(BuyerDto buyer) {
 		buyerMapper.update(buyer);
+		System.out.println("서비스: " + buyer);
 	}
 	//삭제
 	public void remove(String buyerCode) {

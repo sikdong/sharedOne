@@ -48,11 +48,9 @@ public class lnhBuyerController {
 	}
 
 	@PostMapping("buyerRegister")
-	public String register(BuyerDto buyer, RedirectAttributes rttr) {
+	public void register(BuyerDto buyer, RedirectAttributes rttr) {
 
 		buyerService.register(buyer);
-
-		return "redirect:/master/buyerList";
 	}
 
 	// 새 창으로 띄우는 경우
@@ -79,6 +77,7 @@ public class lnhBuyerController {
 	/* @PreAuthorize("@Security.checkWriter(authentication.name, #buyerCode)") */
 	public String modify(BuyerDto buyer) {
 		buyerService.update(buyer);
+		
 		String code = buyer.getBuyerCode();
 
 		return "redirect:/master/buyerModify?code=" + code;

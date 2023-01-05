@@ -86,6 +86,7 @@
 	<div class="insert-body mt-5 ">
 		<div class="container-md">
 			<form id="modifyForm" action="" method="post">
+			<input type="hidden" name="buyerCode" value="${buyer.buyerCode}"> 
 				<div class="row">
 					<div class="col mt-1">
 						<div class="mb-4">
@@ -97,61 +98,61 @@
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputCode" class="col-form-label">바이어 코드</label>
 							<div class="col-sm-5">
-								<input id="buyerCode" type="text" class="form-control" value="${buyer.buyerCode }"
+								<input id="buyerCode" type="text" class="form-control" name ="buyerCode" value="${buyer.buyerCode }"
 									placeholder="${buyer.buyerCode }" disabled />
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputName" class="col-form-label">바이어명</label>
 							<div class="col-sm-5">
-								<input id="buyerName" type="text" class="form-control" value="${buyer.buyerName }"
+								<input id="buyerName" type="text" class="form-control" name ="buyerName" value="${buyer.buyerName }"
 									placeholder="${buyer.buyerName }" />
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputAddress" class="col-form-label">주소</label>
 							<div class="col-sm-5">
-								<input id="buyerAddress" type="text" class="form-control" value="${buyer.address }"
+								<input id="buyerAddress" type="text" class="form-control" name ="address" value="${buyer.address }"
 									placeholder="${buyer.address }" />
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputCountry" class="col-form-label">국가</label>
 							<div class="col-sm-5">
-								<input id="buyerCountry" type="text" class="form-control" value="${buyer.country }"
+								<input id="buyerCountry" type="text" class="form-control" name ="country"  value="${buyer.country }"
 									placeholder="${buyer.country }" />
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputBusinessNum" class="col-form-label">사업자번호</label>
 							<div class="col-sm-5">
-								<input id="businessNum" type="text" class="form-control" value="${buyer.businessNumber }"
+								<input id="businessNum" type="text" class="form-control" name ="businessNumber"  value="${buyer.businessNumber }"
 									placeholder="${buyer.businessNumber }" />
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputPhone" class="col-form-label">연락처</label>
 							<div class="col-sm-5">
-								<input id="buyerPhone" type="text" class="form-control" value="${buyer.phone }"
+								<input id="buyerPhone" type="text" class="form-control" name ="phone"  value="${buyer.phone }"
 									placeholder="${buyer.phone }" />
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
-							<label for="inputPhone" class="col-form-label">선적비용부담회사</label>
+							<label for="inputPhone" class="col-form-label" >선적비용부담회사</label>
 
 							<div class="col-sm-5">
-								<select id="deliveryCompany" name="type" class="form-control"
+								<select id="deliveryCompany" name="deliveryCompany" class="form-control"
 									style="padding-left: 8px;">
-									<option value="${buyer.deliveryCompany}">${buyer.deliveryCompany }</option>
-									<option value="자사">자사</option>
-									<option value="거래처">거래처</option>
+									<option selected>${buyer.deliveryCompany }</option>
+									<option name ="자사" >자사</option>
+									<option name ="거래처">거래처</option>
 								</select>
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
-							<label for="inputPhone" class="col-form-label">담당자</label> 
+							<label for="inputPhone" class="col-form-label" >담당자</label> 
 							<div class="col-sm-5">
-								<input id="manager" type="text" class="form-control" value="${buyer.manager }"
+								<input id="manager" type="text" class="form-control" name ="manager" value="${buyer.manager }"
 									placeholder="${buyer.manager }" />
 							</div>
 						</div>

@@ -40,8 +40,8 @@
  	<update id="update">
 	 	UPDATE Product
 	 	SET
-	 		productName = #{productName},
-	 		productType = #{productType},
+	 		<!-- productName = #{productName},
+	 		productType = #{productType}, -->
 	 		weight = #{weight},
 	 		size = #{size},
 	 		price = #{price},
