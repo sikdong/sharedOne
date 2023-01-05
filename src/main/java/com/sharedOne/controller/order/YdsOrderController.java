@@ -79,14 +79,15 @@ public class YdsOrderController {
 	}
 
 	
-	  @GetMapping("list") 
-	  public void orderList(Model model, String orderCode ) {
-	  List <OrderHeaderDto> headerList = orderService.selectOrderHeaderList(); List
-	 <OrderItemDto> itemListByOrderCode =
-	 orderService.selectOrderItemListByOrderCode(orderCode);
-	 
-	 model.addAttribute("headerList", headerList); model.addAttribute("itemList",
-	 itemListByOrderCode); }
+	/*
+	 * @GetMapping("list") public void orderList(Model model, String orderCode ) {
+	 * List <OrderHeaderDto> headerList = asjOrderService.selectOrderHeaderList();
+	 * List <OrderItemDto> itemListByOrderCode =
+	 * asjOrderService.selectOrderItemListByOrderCode(orderCode);
+	 * 
+	 * model.addAttribute("headerList", headerList); model.addAttribute("itemList",
+	 * itemListByOrderCode); }
+	 */
 	  
 	  @GetMapping("modify")
 	  public void modifyOrder() {
