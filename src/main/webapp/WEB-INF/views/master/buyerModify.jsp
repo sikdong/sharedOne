@@ -7,13 +7,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous" />	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap" rel="stylesheet" />
-<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <title>바이어 수정</title>
 </head>
 <style>
@@ -61,6 +61,7 @@
     
     #businessNumberExist {
     	margin-top: 10px;
+    	line-height: 10px;
 	    font-size: 15px; 
 	    font-weight: 600; 
 	    width: 60px; 
@@ -76,11 +77,15 @@
  		background-color: #1d5c83 !important;
  		color: white !important;
  	}
+ 	
+ 	#modifyForm {
+ 		position: relative;
+ 	}
     
     #modifyBtn {
-    
-	    float: right !important; 
-	    text-align: center !important;
+    	display : inline-block !important;
+    	line-height: 10px;
+		text-align : center !important;
 	    font-size: 15px; 
 	    font-weight: 600; 
 	    width: 60px; 
@@ -90,14 +95,23 @@
 	    border-radius: 5px; 
 	    background: #1d5c83;
 	    position: absolute;
-	    top: 0;
-	    right: 80px;
+	    top: 836px;
+	    right: 75px;
     }
     
     
     #removeBtn {
-	    top: 0;
-	    right: 10px;
+	    float: right; 
+	    font-size: 15px; 
+	    font-weight: 600; 
+	    width: 60px; 
+	    height: 30px; 
+	    color: white; 
+	    border: none; 
+	    border-radius: 5px; 
+	    background: #1d5c83; 
+	    margin-bottom: 20px; 
+	    margin-right: 15px;";
     }
     
 </style>
@@ -179,20 +193,16 @@
 						</div>
 					</div>
 					<hr />
-					<div class="btnBox">
-						<!-- 수정버튼 -->
-						<input id="modifyBtn" class="btn" type="submit" value="수정">
-					</div>
+					<!-- 수정버튼 -->
+					<input id="modifyBtn" class="btn" type="submit" value="수정">
 				</div>
 			</form>
 		</div>
-		<div class="btnBox1">
-			<form action="/master/buyerRemove" method="post">
-		    	<input id="removeBtn" class="btn" style="float: right; font-size: 15px; font-weight: 600; width: 60px; height: 30px; color: white; border: none; border-radius: 5px; background: #1d5c83;" value="삭제">
+			<form id="removeForm" name="removefrm" action="/master/buyerRemove" method="post">
+				<input type="hidden" name="code" value="${buyer.buyerCode}">
+		    <input id="removeBtn" class="btn" type="submit" value="삭제" onclick="removeCheck()">
 			</form>
-  		</div>
 	</div>
-
 
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
@@ -236,6 +246,23 @@
     		}); 
     	
     });
+  
+  //삭제확인 버튼 클릭하면 삭제 form 전송
+
+    function removeCheck() {
+	  
+	 	if (confirm("정말 삭제하시겠습니까??") == true) { 
+	 		document.removefrm.submit();
+	 		window.opener.location.reload();    //부모창 reload
+	 		setTimeout(function() {   
+	             window.close();
+	          }, 100);
+	 	} else{
+	     return false;
+	     }
+
+	}
+
     
         function comma(str) {
         str = String(str);
@@ -259,6 +286,9 @@
             str = String(str);
             return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1');
         }
+        
+        
+        
     </script>
 
 </body>

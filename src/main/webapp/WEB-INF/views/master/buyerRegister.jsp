@@ -51,6 +51,7 @@
         font-weight: 600;
     }
     #businessNumberExist, #buyerCodeExist {
+    	line-height: 10px;
     	margin-top: 10px;
     	text-align: inherit;
 	    font-size: 15px; 
@@ -70,6 +71,7 @@
  	}
     
     .registerBtn {
+    	line-height: 10px;
     	float: right !important; 
 	    text-align: center !important;
 	    font-size: 15px; 
@@ -86,7 +88,7 @@
 </style>
 <body>   
     <div class="insert-body mt-5 ">
-    	<form action="" method="post">
+    	<form id="registerForm' action="" method="post">
 	        <div class="container-md">
 	            <div class="row">
 	                <div class="col mt-1">
@@ -166,6 +168,14 @@
       </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <script>
+    
+    //등록버튼 누르면 등록 실행 후 창 닫기
+    document.querySelector("#registerBtn").addEventListener("click", function() {
+    	document.querySelector("#registerForm").submit();
+    	window.opener.location.reload();    //부모창 reload
+    	window.close();    //현재 팝업창 Close
+    	
+    })
     
     const ctx = "${pageContext.request.contextPath}";
     

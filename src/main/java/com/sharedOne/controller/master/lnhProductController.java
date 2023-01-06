@@ -112,11 +112,10 @@ public class lnhProductController {
 	
 	@PostMapping("productRemove")
 	/* @PreAuthorize("@Security.checkWriter(authentication.name, #productCode)") */
-	public String remove(
+	public void remove(
 			@RequestParam(name = "code") String productCode) {
 		productService.remove(productCode);
 		
-		return "redirect:/master/productList";
 	}
 	
 }

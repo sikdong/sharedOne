@@ -48,6 +48,7 @@
     }
     
     #productNameExist {
+    	line-height: 10px;
     	margin-top: 10px;
 	    font-size: 15px; 
 	    font-weight: 600; 
@@ -66,6 +67,7 @@
  	}
     
     .registerBtn {
+    	line-height: 10px;
     	float: right !important; 
 	    text-align: center !important;
 	    font-size: 15px; 

@@ -126,9 +126,7 @@ public class lnhBuyerController {
 
 	@PostMapping("buyerRemove")
 	/* @PreAuthorize("@Security.checkWriter(authentication.name, #buyerCode)") */
-	public String remove(@RequestParam(name = "code") String buyerCode) {
+	public void remove(@RequestParam(name = "code") String buyerCode) {
 		buyerService.remove(buyerCode);
-
-		return "redirect:/master/buyerList";
 	}
 }

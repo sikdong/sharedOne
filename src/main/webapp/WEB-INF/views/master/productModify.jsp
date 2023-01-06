@@ -52,9 +52,13 @@
     	margin-bottom: 25px;
     }
     
-    #modifyBtn {
+    #modifyForm {
+ 		position: relative;
+ 	}
     
-	    float: right !important; 
+    #modifyBtn {
+    	display : inline-block !important;
+    	line-height: 10px;
 	    text-align: center !important;
 	    font-size: 15px; 
 	    font-weight: 600; 
@@ -65,8 +69,21 @@
 	    border-radius: 5px; 
 	    background: #1d5c83;
 	    position: absolute;
-	    top: 0;
-	    right: 80px;
+	    top: 771px;
+	    right: 75px;
+    }
+    
+    #removeBtn {
+	    float: right; 
+	    font-size: 15px; 
+	    font-weight: 600; 
+	    width: 60px; 
+	    height: 30px; 
+	    color: white; 
+	    border: none; 
+	    border-radius: 5px; 
+	    background: #1d5c83; 
+	    margin-bottom: 20px; 
     }
 </style>
 <body>   
@@ -154,17 +171,14 @@
 					<hr />
 				</div>
 
-				<div class="btnBox">
-					<!-- 수정버튼 -->
+				<!-- 수정버튼 -->
 
-					<input id="modifyBtn" class="btn" type="submit" value="수정">
-				</div>
+				<input id="modifyBtn" class="btn" type="submit" value="수정">
 			</form>
 
 			<form action="/master/productRemove" method="post">
-				<input class="btn"
-					style="float: right; font-size: 15px; font-weight: 600; width: 60px; height: 30px; color: white; border: none; border-radius: 5px; background: #1d5c83;"
-					value="삭제">
+				<input type="hidden" name="code" value="${product.productCode}">
+				<input id= "removeBtn" class="btn" name="removefrm" type="submit" value="삭제" onclick="removeCheck()">
 			</form>
 
 		</div>
@@ -172,6 +186,23 @@
 	</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <script>
+    //삭제확인 버튼 클릭하면 삭제 form 전송
+
+    function removeCheck() {
+	  
+	 	if (confirm("정말 삭제하시겠습니까??") == true) { 
+	 		document.removefrm.submit();
+	 		window.opener.location.reload();    //부모창 reload
+	 		setTimeout(function() {   
+	             window.close();
+	          }, 100);
+	 	} else{
+	     return false;
+	     }
+
+	}
+    
+    
         function comma(str) {
         str = String(str);
         return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
