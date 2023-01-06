@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sharedOne.mapper.report.HmsReportMapper">
+
+	<select id="countPage" resultType="int">
+	SELECT COUNT(*) FROM Order_header
+	</select>
+	
+	<select id="orderList" resultType="com.sharedOne.domain.order.OrderHeaderDto">
+	SELECT 
+		orderId,
+		orderCode,
+		inserted,		
+		deliveryDate,
+		modified,
+		writer,
+		buyerCode,
+		status
+	FROM 
+		Order_header 
+	WHERE
+		 	orderCode LIKE #{orderQ} 
+		OR 	writer    LIKE #{orderQ} 
+		OR 	buyerCode LIKE #{orderQ} 
+	ORDER BY orderId DESC 	<!-- orderId 등록이 최신 기준으로 -->
+	LIMIT #{offset}, #{records}
+	</select>
+	<select id="searchOrderCode" resultType="com.sharedOne.domain.order.OrderHeaderDto">
+		SELECT
+			orderId,
+			orderCode,
+			inserted,
+			modified,
+			deliveryDate,
+			writer,
+			buyerCode,
+			status,
+			message
+		FROM
+			Order_Header
+		WHERE 	   orderId LIKE '%orderQ%'
+		   OR    orderCode LIKE '%orderQ%'
+		   OR  	  inserted LIKE '%orderQ%'
+		   OR 	  modified LIKE '%orderQ%'
+		   OR deliveryDate LIKE '%orderQ%'
+		   OR       writer LIKE '%orderQ%'
+		   OR    buyerCode LIKE '%orderQ%'	
+		   OR 		status LIKE '%orderQ%'
+		   OR 	   message LIKE '%orderQ%';
+	</select>
+</mapper>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

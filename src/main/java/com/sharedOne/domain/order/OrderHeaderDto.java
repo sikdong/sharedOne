@@ -16,7 +16,7 @@ public class OrderHeaderDto {
 	private LocalDate modified;
 	private LocalDate deliveryDate;
 	private String writer;
-	private String name;
+	private String buyerCode;
 	private String status;
 	private String message;
 	
