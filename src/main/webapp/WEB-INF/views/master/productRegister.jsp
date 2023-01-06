@@ -47,6 +47,24 @@
         font-weight: 600;
     }
     
+    #productNameExist {
+    	margin-top: 10px;
+	    font-size: 15px; 
+	    font-weight: 600; 
+	    width: 60px; 
+	    height: 30px; 
+	    color: white; 
+	    border-radius: 5px; 
+	    background-color: white !important;
+ 		border-color: #1d5c83 !important;
+ 		color: #1d5c83 !important;
+    }
+    
+    #productNameExist:hover {
+ 		background-color: #1d5c83 !important;
+ 		color: white !important;
+ 	}
+    
     .registerBtn {
     	float: right !important; 
 	    text-align: center !important;
@@ -83,7 +101,9 @@
 	                            <label for="inputName" class="col-form-label">제품명</label>
 	                            <div class="col-sm-5">
 	                                <input id="productName" name="productName"  type="text" class="form-control" placeholder="제품명을 입력하세요."/>
+	                                <button class="btn" type="button" id="productNameExist">확인</button>
 	                            </div>
+	                            <div id="productNameText1" class="form-text">제품명 확인을 해주세요.</div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputProductType" class="col-form-label">제품 종류</label>
@@ -131,7 +151,7 @@
 	                    </div>
 	                <hr />
 	                <div>
-	                    <input class="registerBtn btn" type="submit" value="등록"/>
+	                    <input id="registerBtn" class="btn registerBtn" type="submit" value="등록"/>
 	                </div>
 	              
 	            </div>
@@ -141,6 +161,47 @@
       </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <script>
+    const ctx = "${pageContext.request.contextPath}";
+    
+    var availableProductName = false;
+    
+    function enableSubmitButton() {
+    	const button = document.querySelector("#registerBtn");
+    	if (availableProductName) {
+    		button.removeAttribute("disabled")
+    	} else {
+    		button.setAttribute("disabled", "");
+    	}
+    }
+    
+  //ProductName input 변경시 submit 버튼 비활성화
+    document.querySelector("#productName").addEventListener("keyup", function() {
+    	availableProductName = false;
+    	enableSubmitButton();
+    });    
+
+    //제품명 중복확인
+    document.querySelector("#productNameExist").addEventListener("click", function() {
+    	availableProductName = false;
+    	// 입력된 제품명을
+    	const productName = document.querySelector("#productName").value;
+    	
+    	// fetch 요청 보내고
+    	fetch(ctx + "/master/existproductName/" + productName)
+    		.then(res => res.json())
+    		.then(data => {
+    			// 응답 받아서 메세지 출력
+    			document.querySelector("#productNameText1").innerText = data.message;
+    			
+    			if (data.status == "not exist") {
+    				availableProductName = true;
+    				enableSubmitButton();
+    			}
+    		}); 
+    	
+    });
+    
+    
         function comma(str) {
         str = String(str);
         return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');

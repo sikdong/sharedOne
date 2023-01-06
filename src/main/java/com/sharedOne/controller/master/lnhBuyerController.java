@@ -1,16 +1,20 @@
 package com.sharedOne.controller.master;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sharedOne.domain.master.BuyerDto;
@@ -82,6 +86,43 @@ public class lnhBuyerController {
 
 		return "redirect:/master/buyerModify?code=" + code;
 	}
+	
+	@GetMapping("existbuyerCode/{buyerCode}")
+	@ResponseBody
+	public Map<String, Object> existbuyerCode(@PathVariable String buyerCode) {
+		Map<String, Object> map = new HashMap<>();
+
+		BuyerDto buyer = buyerService.getByBuyerCode(buyerCode);
+
+		if (buyer == null) {
+			map.put("status", "not exist");
+			map.put("message", "사용가능한 바이어코드입니다.");
+		} else {
+			map.put("status", "exist");
+			map.put("message", "이미 존재하는 바이어코드입니다.");
+		}
+
+		return map;
+	}
+	
+	@GetMapping("existbusinessNum/{businessNumber}")
+	@ResponseBody
+	public Map<String, Object> existbusinessNum(@PathVariable String businessNumber) {
+		Map<String, Object> map = new HashMap<>();
+
+		BuyerDto buyer = buyerService.getByBusinessNumber(businessNumber);
+
+		if (buyer == null) {
+			map.put("status", "not exist");
+			map.put("message", "사용가능한 사업자번호입니다.");
+		} else {
+			map.put("status", "exist");
+			map.put("message", "이미 존재하는 사업자번호입니다.");
+		}
+
+		return map;
+	}
+	
 
 	@PostMapping("buyerRemove")
 	/* @PreAuthorize("@Security.checkWriter(authentication.name, #buyerCode)") */

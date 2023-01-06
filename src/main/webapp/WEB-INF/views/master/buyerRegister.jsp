@@ -50,6 +50,25 @@
     .col-form-label{
         font-weight: 600;
     }
+    #businessNumberExist, #buyerCodeExist {
+    	margin-top: 10px;
+    	text-align: inherit;
+	    font-size: 15px; 
+	    font-weight: 600; 
+	    width: 60px; 
+	    height: 30px; 
+	    color: white; 
+	    border-radius: 5px; 
+	    background-color: white !important;
+ 		border-color: #1d5c83 !important;
+ 		color: #1d5c83 !important;
+    }
+    
+    #businessNumberExist:hover, #buyerCodeExist:hover {
+ 		background-color: #1d5c83 !important;
+ 		color: white !important;
+ 	}
+    
     .registerBtn {
     	float: right !important; 
 	    text-align: center !important;
@@ -81,7 +100,9 @@
 	                            <label for="inputCode" class="col-form-label">바이어 코드</label>
 	                            <div class="col-sm-5">
 	                                <input id="buyerCode" name="buyerCode" type="text" class="form-control" placeholder="바이어코드를 입력하세요."/>
+	                                <button class="btn" type="button" id="buyerCodeExist">확인</button>
 	                            </div>
+	                            <div id="buyerCodeText1" class="form-text">바이어코드 확인을 해주세요.</div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputName" class="col-form-label">바이어명</label>
@@ -105,7 +126,9 @@
 	                            <label for="inputBusinessNum" class="col-form-label">사업자번호</label>
 	                            <div class="col-sm-5">
 	                                <input id="businessNum" name="businessNumber" type="text" class="form-control" placeholder="사업자번호를 입력하세요."/>
+	                                <button class="btn" type="button" id="businessNumberExist">확인</button>
 	                            </div>
+	                            <div id="businessNumberText1" class="form-text">사업자번호 확인을 해주세요.</div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputPhone" class="col-form-label">연락처</label>
@@ -134,7 +157,7 @@
 	                    </div>
 	                <hr />
 	                <div>
-	                    <input class="registerBtn btn" type="submit" value="등록"/>
+	                    <input id="registerBtn" class="btn registerBtn" type="submit" value="등록"/>
 	                </div>
 	              
 	            </div>
@@ -143,6 +166,75 @@
       </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <script>
+    
+    const ctx = "${pageContext.request.contextPath}";
+    
+    var availableBuyerCode = false;
+    var availableBusinessNumber = false;
+    
+    function enableSubmitButton() {
+    	const button = document.querySelector("#registerBtn");
+    	if (availableBuyerCode && availableBusinessNumber) {
+    		button.removeAttribute("disabled")
+    	} else {
+    		button.setAttribute("disabled", "");
+    	}
+    }
+    
+  //BuyerCode input 변경시 submit 버튼 비활성화
+    document.querySelector("#buyerCode").addEventListener("keyup", function() {
+    	availableBuyerCode = false;
+    	enableSubmitButton();
+    });
+    
+  //BusinessNumber input 변경시 submit 버튼 비활성화
+    document.querySelector("#businessNum").addEventListener("keyup", function() {
+    	availableBusinessNumber = false;
+    	enableSubmitButton();
+    });
+  
+    //바이어코드 중복확인
+    document.querySelector("#buyerCodeExist").addEventListener("click", function() {
+    	availableBuyerCode = false;
+    	// 입력된 바이어코드를
+    	const buyerCode = document.querySelector("#buyerCode").value;
+    	
+    	// fetch 요청 보내고
+    	fetch(ctx + "/master/existbuyerCode/" + buyerCode)
+    		.then(res => res.json())
+    		.then(data => {
+    			// 응답 받아서 메세지 출력
+    			document.querySelector("#buyerCodeText1").innerText = data.message;
+    			
+    			if (data.status == "not exist") {
+    				availableBuyerCode = true;
+    				enableSubmitButton();
+    			}
+    		}); 
+    	
+    });
+  
+  //사업자번호 중복확인
+    document.querySelector("#businessNumberExist").addEventListener("click", function() {
+    	availableBusinessNumber = false;
+    	// 입력된 사업자번호을
+    	const businessNumber = document.querySelector("#businessNum").value;
+    	
+    	// fetch 요청 보내고
+    	fetch(ctx + "/master/existbusinessNum/" + businessNumber)
+    		.then(res => res.json())
+    		.then(data => {
+    			// 응답 받아서 메세지 출력
+    			document.querySelector("#businessNumberText1").innerText = data.message;
+    			
+    			if (data.status == "not exist") {
+    				availableBusinessNumber = true;
+    				enableSubmitButton();
+    			}
+    		}); 
+    	
+    });
+    
         function comma(str) {
         str = String(str);
         return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');

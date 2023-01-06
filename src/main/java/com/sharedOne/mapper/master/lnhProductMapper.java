@@ -19,4 +19,6 @@ public interface lnhProductMapper {
 
 	void update(ProductDto product);
 
+	ProductDto selectProductName(String productName);
+
 }

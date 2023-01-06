@@ -33,10 +33,15 @@ public class lnhProductService {
 	public void update(ProductDto product) {
 		productMapper.update(product);
 	}
+	
+	public ProductDto getByProductName(String productName) {
+		return productMapper.selectProductName(productName);
+	}
 	//삭제
 	public void remove(String productCode) {
 		productMapper.delete(productCode);
 	}
+
 	
 
 }
