@@ -82,6 +82,16 @@
 		 where productCode = #{productCode}
 		 
 	</select>
+	<insert id="insertOrderHeader">
+	INSERT INTO Order_header(
+		deliveryDate,
+		buyerCode,
+		status,
+		message
+	)
+	VALUES(#{deliveryDate}, #{buyerCode}, '승인요청', #{message})
+	
+	</insert>
 	
 
 

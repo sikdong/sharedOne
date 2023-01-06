@@ -9,7 +9,9 @@ import com.sharedOne.domain.master.BuyerDto;
 import com.sharedOne.domain.master.ProductDto;
 import com.sharedOne.domain.master.SalePriceDto;
 import com.sharedOne.domain.master.YdsProductDto;
+import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.order.OrderItemDto;
+import com.sharedOne.domain.order.YdsOrderDto;
 import com.sharedOne.mapper.order.YdsOrderMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -46,10 +48,21 @@ public class YdsOrderService {
 		yds.setSalePrice(ypd.getSalePrice());
 		int vat = ypd.getSalePrice()/10;
 		yds.setVat(vat);
-		int sum = (ypd.getSalePrice()+vat)*ypd.getQuantity();
+		int sum = ypd.getSalePrice()*ypd.getQuantity();
 		yds.setSum(sum);
 		return yds;
 		
+	}
+
+
+	public void insertOrder(YdsOrderDto yod) {
+		OrderHeaderDto ohd = new OrderHeaderDto();
+		  OrderItemDto oid = new OrderItemDto();
+		  ohd.setBuyerCode(yod.getBuyerCode());
+		  ohd.setDeliveryDate(yod.getDeliveryDate());
+		  ohd.setMessage(yod.getMessage());
+		  System.out.println("service에서의 " + ohd);
+		  mapper.insertOrderHeader(ohd);
 	}
 	
 	

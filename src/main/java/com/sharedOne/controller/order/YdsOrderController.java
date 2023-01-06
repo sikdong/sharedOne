@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.order.OrderItemDto;
+import com.sharedOne.domain.order.YdsOrderDto;
 import com.sharedOne.service.order.AsjOrderService;
 import com.sharedOne.service.order.YdsOrderService;
 
@@ -90,22 +91,18 @@ public class YdsOrderController {
 		  
 	  }
 	  
-	  @PostMapping("list")
-	  public void insertOrder(String deliveryDate, String buyerCode, String productCode
-			  ,int salePrice ,int quantity) {
-		  System.out.println("납기요청일 " + deliveryDate);
-		  System.out.println("바이어코드 " + buyerCode);
-		  System.out.println("제품코드" + productCode);
-		  System.out.println("단가" + salePrice);
-		  System.out.println("수량" + quantity);
+	  @PostMapping("register")
+	  public void insertOrder(YdsOrderDto yod){
+		  service.insertOrder(yod);
+			/*
+			 * System.out.println(buyerCode); System.out.println(deliveryDate);
+			 * System.out.println(productCode); System.out.println(salePrice);
+			 * System.out.println(quantity); System.out.println(message);
+			 */
+			/* service.insertOrderHeader(); */
+			/* service.insertOrderItem(oid); */
 	  }
 	  
-	  /*@PostMapping("addTempProductOrder")
-	  @ResponseBody
-	  public YdsProductDto addTempProductOrder(@RequestBody YdsProductDto product){
-		 return service.addTempProductOrder(product);
-		  
-	  }*/
 	  
 	 @PostMapping("addTempProductOrder")
 	 @ResponseBody
