@@ -1,5 +1,6 @@
 package com.sharedOne.service.order;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,11 +59,29 @@ public class YdsOrderService {
 	public void insertOrder(YdsOrderDto yod) {
 		OrderHeaderDto ohd = new OrderHeaderDto();
 		  OrderItemDto oid = new OrderItemDto();
+	
 		  ohd.setBuyerCode(yod.getBuyerCode());
 		  ohd.setDeliveryDate(yod.getDeliveryDate());
 		  ohd.setMessage(yod.getMessage());
 		  System.out.println("service에서의 " + ohd);
 		  mapper.insertOrderHeader(ohd);
+		  
+		  List<String> productCodes = yod.getProductCode();
+		  System.out.println("코드는" + productCodes);
+		  List<Integer> quantities = yod.getQuantity();
+		  List<Integer> salePrices = yod.getSalePrice();
+		  for(int i = 0; i < productCodes.size(); i++) {
+			  oid.setProductCode(productCodes.get(i));
+			  oid.setSalePrice(salePrices.get(i));
+			  oid.setQuantity(quantities.get(i));
+			  System.out.println("오더 목록 " + i + "번째는" +oid);
+			  mapper.insertOrderItem(oid);
+		  }
+		  
+		  
+		  
+		  
+		 
 	}
 	
 	

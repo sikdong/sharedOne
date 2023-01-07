@@ -23,5 +23,7 @@ public interface YdsOrderMapper {
 	YdsProductDto addTempProductOrder(YdsProductDto ypd);
 
 	void insertOrderHeader(OrderHeaderDto ohd);
+
+	void insertOrderItem(OrderItemDto oid);
 	
 }

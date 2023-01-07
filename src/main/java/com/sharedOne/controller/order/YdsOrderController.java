@@ -93,6 +93,7 @@ public class YdsOrderController {
 	  
 	  @PostMapping("register")
 	  public void insertOrder(YdsOrderDto yod){
+		  System.out.println("오더 목록 : " + yod);
 		  service.insertOrder(yod);
 			/*
 			 * System.out.println(buyerCode); System.out.println(deliveryDate);
@@ -108,7 +109,6 @@ public class YdsOrderController {
 	 @ResponseBody
 	 public YdsProductDto addTempProductOrder(@RequestBody YdsProductDto ypd) {
 		 return service.addTempProductOrder(ypd);
-		 
 	 }
 	
 }

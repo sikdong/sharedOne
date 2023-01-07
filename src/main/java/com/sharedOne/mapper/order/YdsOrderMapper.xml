@@ -93,6 +93,16 @@
 	
 	</insert>
 	
+	<insert id="insertOrderItem">
+	INSERT INTO Order_item(
+		productCode,
+		quantity,
+		salePrice
+	)
+	VALUES(#{productCode}, #{quantity}, #{salePrice})
+	
+	</insert>
+	
 
 
 </mapper>
