@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sharedOne.mapper.report.lnhReportMapper">
+
+	<select id="orderList" resultType="com.sharedOne.domain.order.OrderHeaderDto">
+		SELECT
+			orderId,
+			orderCode,
+			inserted,
+			modified,
+			deliveryDate,
+			writer,
+			buyerCode,
+			status,
+			message
+		FROM
+			Order_header
+		WHERE 	   orderId LIKE #{orderQ} 
+		   OR    orderCode LIKE #{orderQ} 
+		   OR  	  inserted LIKE #{orderQ} 
+		   OR 	  modified LIKE #{orderQ} 
+		   OR deliveryDate LIKE #{orderQ} 
+		   OR       writer LIKE #{orderQ} 
+		   OR    buyerCode LIKE #{orderQ} 	
+		   OR 		status LIKE #{orderQ} 
+		   OR 	   message LIKE #{orderQ} 
+		   
+		ORDER BY orderId DESC 	<!-- orderId 등록이 최신 기준으로 -->
+
+	</select>
+
+</mapper>

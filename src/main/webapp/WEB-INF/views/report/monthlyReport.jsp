@@ -135,12 +135,12 @@ div.right {
 		
 		<!-- *우측* 검색 필터 -->
 		<div class="col-sm-10 mt-1">
-			<form action="" method=""><!-- form get? post?  -->		
+			<form action="<%-- ${montlyReportLink} --%>" method=""><!-- form get? post?  -->		
 				<!-- 검색필터 1st row : 전체 검색. -->
-				<div class="row d-flex">
+				<div class="row d-flex"><!-- get방식으로 -->
 					<div class="col-sm-6 mb-4">
 						<div class="input-group">
-							<input name="" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
+							<input name="orderQ" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
 			        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
@@ -268,23 +268,24 @@ div.right {
 					<th>담당자</th>
 					<th>바이어코드</th>
 					<th>상태</th>
+					<th>메세지</th>
 				</tr>
 			</thead>
 			<tbody>
-			<!-- //productCode, productName, productType, weight, size, price, unit, content, inserted -->
-<%-- 				<c:forEach items="${OrderList }" var="order">
+				<c:forEach items="${orderList }" var="order">
 					<tr>
 						<td>${order.orderCode }</td>
 						<td>${order.inserted }</td>
 						<td>${order.modified }</td>
 						<td>${order.deliveryDate }</td>
 						<td>${order.writer }</td>
-						<td>${order.byuerCode }</td>
+						<td>${order.buyerCode }</td>
 						<td>${order.status }</td>
+						<td>${order.message }</td>
 
 					</tr>
-				</c:forEach> --%>
-					<tr>
+				</c:forEach>
+<!-- 					<tr>
 						<td>WT22060101</td>
 						<td>2022-06-01</td>
 						<td>2022-06-01</td>
@@ -337,7 +338,7 @@ div.right {
 						<td>이나현</td>
 						<td>MOB</td>
 						<td>승인</td>
-					</tr>
+					</tr> -->
 				
 			</tbody>
 		</table>

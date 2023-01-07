@@ -24,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sharedOne.domain.master.ProductDto;
+import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.service.master.lnhProductService;
+import com.sharedOne.service.report.lnhReportService;
 
 @Controller
 @RequestMapping("report")
@@ -32,9 +34,14 @@ public class lnhReportController {
 	@Autowired
 	private lnhProductService productService;
 	
+	@Autowired
+	private lnhReportService service;
+	
 	
 	@GetMapping("monthlyReport")
-	public void getMontlyReport(Model model) {
+	public void getMontlyReport(@RequestParam(name = "orderQ", defaultValue = "") String orderQ, Model model) {
+		System.out.println(orderQ);
+		
 		List <ProductDto> productList = productService.selectProductList();
 		
 		Set <String> setTypes = new HashSet<>();
@@ -50,6 +57,12 @@ public class lnhReportController {
 		model.addAttribute("sizes", setSizes);
 		
 		model.addAttribute("productList", productList);
+		
+		// business logic 작동
+		List<OrderHeaderDto> orderList = service.orderList(orderQ);
+		System.out.println("컨트롤러: " + orderList);
+		// add attribute
+		model.addAttribute("orderList", orderList); // c:forEach items = orderList
 	}
 	
 	//엑셀 파일 css 서식

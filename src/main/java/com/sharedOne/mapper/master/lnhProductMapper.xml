@@ -28,6 +28,7 @@
 			
  	</select>
  	
+ 	
  	 <!-- 제품 입력 -->
  	<insert id="register" useGeneratedKeys="true" keyProperty="productCode">
  	INSERT INTO Product (productCode, productName, productType, weight, size, price, unit, content)
