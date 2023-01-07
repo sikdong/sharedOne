@@ -110,6 +110,13 @@ div.right {
  		background-color: #1d5c83 !important;
  		color: white !important;
  	}
+ 	
+ 	.table{border-collapse:collapse; width:100%; table-layout:fixed}
+	.table thead{float:left; width:1300px;}
+	.table thead th{display:auto; width:1300px; text-align: left;}
+	.table tbody{overflow-y:auto; overflow-x:hidden; float:left; width:1300px; height:550px;}
+	.table tbody tr{display:table; width:1300px;}
+	.table td{word-wrap:break-word; width:1300px; height: auto;}
 
 </style>
 
@@ -261,15 +268,15 @@ div.right {
 			<thead>
 				<!-- productCode, productName, productType, weight, size, price, unit, content -->
 				<tr>
-					<th>주문서 ID</th>
+					<th style="width: 9%;">주문서 ID</th>
 					<th>바이어코드</th>
 					<th>제품코드</th>
 					<th>단가</th>
 					<th>수량</th>
 					<th>합계</th>
-					<th>등록일</th>
-					<th>수정일</th>
-					<th>납기일</th>
+					<th style="width: 9%;">등록일</th>
+					<th style="width: 9%;">수정일</th>
+					<th style="width: 9%;">납기일</th>
 					<th>담당자</th>
 					<th>상태</th>
 					<th>메세지</th>
@@ -277,76 +284,26 @@ div.right {
 			</thead>
 			<tbody>
 				<c:forEach items="${orderList }" var="order">
+				<c:forEach items="${itemList }" var="itemList">
+				<c:forEach items="${salePrice }" var="price">
 					<tr>
-						<td>${order.orderCode }</td>
+						<td style="width: 9%;">${order.orderCode }</td>
 						<td>${order.buyerCode }</td>
-						<td>${order.orderItem.productCode }</td>
-						<td>${order.itemPrice.salePrice }</td>
-						<td>${order.orderItem.quantity }</td>
-						<td>${order.orderItem.sum }</td>
-						<td>${order.inserted }</td>
-						<td>${order.modified }</td>
-						<td>${order.deliveryDate }</td>
+						<td>${itemList.productCode }</td>
+						<td>${price.salePrice }</td>
+						<td>${itemList.quantity }</td>
+						<td>${itemList.sum }</td>
+						<td style="width: 9%;">${order.inserted }</td>
+						<td style="width: 9%;">${order.modified }</td>
+						<td style="width: 9%;">${order.deliveryDate }</td>
 						<td>${order.writer }</td>
 						<td>${order.status }</td>
 						<td>${order.message }</td>
 
 					</tr>
 				</c:forEach>
-<!-- 					<tr>
-						<td>WT22060101</td>
-						<td>2022-06-01</td>
-						<td>2022-06-01</td>
-						<td>2022-08-30</td>
-						<td>이나현</td>
-						<td>MOB</td>
-						<td>종결</td>
-					</tr>
-					<tr>
-						<td>WT22070402</td>
-						<td>2022-07-04</td>
-						<td>2022-07-15</td>
-						<td>2022-08-30</td>
-						<td>이나현</td>
-						<td>MOB</td>
-						<td>종결</td>
-					</tr>
-					<tr>
-						<td>WT22080101</td>
-						<td>2022-08-01</td>
-						<td>2022-08-01</td>
-						<td>2022-09-30</td>
-						<td>이나현</td>
-						<td>MOB</td>
-						<td>종결</td>
-					</tr>
-					<tr>
-						<td>WT22090402</td>
-						<td>2022-09-04</td>
-						<td>2022-09-15</td>
-						<td>2022-10-30</td>
-						<td>이나현</td>
-						<td>MOB</td>
-						<td>종결</td>
-					</tr>
-										<tr>
-						<td>WT22100101</td>
-						<td>2022-10-01</td>
-						<td>2022-10-01</td>
-						<td>2022-12-30</td>
-						<td>이나현</td>
-						<td>MOB</td>
-						<td>승인</td>
-					</tr>
-					<tr>
-						<td>WT22110402</td>
-						<td>2022-11-04</td>
-						<td>2022-11-15</td>
-						<td>2022-12-30</td>
-						<td>이나현</td>
-						<td>MOB</td>
-						<td>승인</td>
-					</tr> -->
+				</c:forEach>
+				</c:forEach>
 				
 			</tbody>
 		</table>
