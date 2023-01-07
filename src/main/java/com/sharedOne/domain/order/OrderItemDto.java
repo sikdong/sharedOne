@@ -15,7 +15,7 @@ public class OrderItemDto {
 	private String orderCode;
 	
 	private List <ProductDto> product;
-//	private String productCode;
+	private String productCode;
 //	private String productName;
 //	private String unit;
 //	private int price;

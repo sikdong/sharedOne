@@ -262,11 +262,15 @@ div.right {
 				<!-- productCode, productName, productType, weight, size, price, unit, content -->
 				<tr>
 					<th>주문서 ID</th>
+					<th>바이어코드</th>
+					<th>제품코드</th>
+					<th>단가</th>
+					<th>수량</th>
+					<th>합계</th>
 					<th>등록일</th>
 					<th>수정일</th>
 					<th>납기일</th>
 					<th>담당자</th>
-					<th>바이어코드</th>
 					<th>상태</th>
 					<th>메세지</th>
 				</tr>
@@ -275,11 +279,15 @@ div.right {
 				<c:forEach items="${orderList }" var="order">
 					<tr>
 						<td>${order.orderCode }</td>
+						<td>${order.buyerCode }</td>
+						<td>${order.orderItem.productCode }</td>
+						<td>${order.itemPrice.salePrice }</td>
+						<td>${order.orderItem.quantity }</td>
+						<td>${order.orderItem.sum }</td>
 						<td>${order.inserted }</td>
 						<td>${order.modified }</td>
 						<td>${order.deliveryDate }</td>
 						<td>${order.writer }</td>
-						<td>${order.buyerCode }</td>
 						<td>${order.status }</td>
 						<td>${order.message }</td>
 
