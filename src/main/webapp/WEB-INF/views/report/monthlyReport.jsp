@@ -257,7 +257,10 @@ div.right {
 		<h4>주문목록</h4>
 
 			<div style="float: right;">
-				<form action="/excel/download" method="get">
+				<c:url value="/report/excelDown" var="listLink">
+				</c:url>
+				<form action="${listLink }" method="get">
+					<input name="orderQ" value="" class="form-control" type="hidden">
 					<button class="btn btn-primary primaryBtn" type="submit" style="margin-bottom: 10px;">
 						엑셀 다운로드
 					</button>
