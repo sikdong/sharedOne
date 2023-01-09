@@ -27,4 +27,6 @@ public class OrderItemDto {
 //	private LocalDate endDate;
 	
 	
+	private List <OrderHeaderDto> orderHeader;
+	
 }
