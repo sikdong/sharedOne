@@ -29,22 +29,28 @@ public class lnhProductController {
 	private lnhProductService productService;
 	
 	@GetMapping("productList")
-	public void productList(Model model){
-		List <ProductDto> productList = productService.selectProductList();
+	public void productList(@RequestParam(name = "keyword", defaultValue = "") String keyword, Model model){
+		List <ProductDto> product1 = productService.selectProductList();
 		
 		Set <String> setTypes = new HashSet<>();
-		for( ProductDto product : productList) {
+		for( ProductDto product : product1) {
 			setTypes.add(product.getProductType());
 		}
 		Set <Integer> setSizes = new HashSet<>();
-		for( ProductDto product : productList) {
+		for( ProductDto product : product1) {
 			setSizes.add(product.getSize());
 		}
+		
+		List <ProductDto> searchResult = productService.searchProductList(keyword);
+		
+		System.out.println(keyword);
+		System.out.println(searchResult);
 		
 		model.addAttribute("types", setTypes);
 		model.addAttribute("sizes", setSizes);
 		
-		model.addAttribute("productList", productList);
+		model.addAttribute("product", product1);
+		model.addAttribute("productList", searchResult);
 	}
 	
 	@GetMapping("productRegister")

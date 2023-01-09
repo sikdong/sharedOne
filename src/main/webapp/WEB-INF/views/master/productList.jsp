@@ -125,7 +125,7 @@
 				<div class="row d-flex">
 					<div class="col-sm-6 mb-4">
 						<div class="input-group">
-							<input name="" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
+							<input name="keyword" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
 			        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
@@ -136,7 +136,7 @@
 						<div class="input-group" >
 							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions1" placeholder="제품코드">
 							<datalist id="datalistOptions1">
-								<c:forEach items="${productList }" var="product">
+								<c:forEach items="${product }" var="product">
 									<option value="${product.productCode }">
 								</c:forEach>
 							</datalist>
@@ -147,7 +147,7 @@
 						<div class="input-group">
 							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품명">
 							<datalist id="datalistOptions2">
-								<c:forEach items="${productList }" var="product">
+								<c:forEach items="${product }" var="product">
 									<option value="${product.productName }">
 								</c:forEach>
 							</datalist>

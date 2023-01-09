@@ -9,6 +9,8 @@ import com.sharedOne.domain.order.OrderHeaderDto;
 
 @Mapper
 public interface lnhProductMapper {
+	
+	List <ProductDto> searchProductList(String keyword); 
 
 	List <ProductDto> selectProductList();
 
