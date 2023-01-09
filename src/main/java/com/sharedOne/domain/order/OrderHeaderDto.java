@@ -20,6 +20,7 @@ public class OrderHeaderDto {
 	private String name;
 	private String status;
 	private String message;
+	private String comment;
 	
 	private List <BuyerDto> buyer;
 	private String buyerCode;
