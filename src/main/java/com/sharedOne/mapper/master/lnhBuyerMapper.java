@@ -23,4 +23,6 @@ public interface lnhBuyerMapper {
 
 	BuyerDto selectByBusinessNumber(String businessNumber);
 
+	List<BuyerDto> searchBuyerList(String keyword);
+
 }

@@ -20,6 +20,10 @@ public class lnhProductService {
 		
 	}
 	
+	public List<ProductDto> searchProductList(String keyword) {
+		return productMapper.searchProductList("%" + keyword + "%");
+	}
+	
 	//제품 등록
 	public int register(ProductDto product) {
 		return productMapper.register(product);
@@ -42,6 +46,7 @@ public class lnhProductService {
 	public void remove(String productCode) {
 		productMapper.delete(productCode);
 	}
+
 
 
 	
