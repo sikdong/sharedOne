@@ -15,5 +15,7 @@ public interface lnhReportMapper {
 
 	List<ReportDto> thisYearSales();
 
+	//int salesByBuyer(String orderQ);
+
 
 }

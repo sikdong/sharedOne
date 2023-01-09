@@ -27,10 +27,15 @@
 google.charts.load('current', {'packages':['corechart']});
 
 // Draw the line chart and bar chart when Charts is loaded.
-google.charts.setOnLoadCallback(drawChart);
-
+<c:if test="${param.orderQ eq null }">
+	google.charts.setOnLoadCallback(drawChart);
+</c:if>
+<c:if test="${param.orderQ ne null }">
+google.charts.setOnLoadCallback(drawBuyerChart);
+google.charts.setOnLoadCallback(drawWriterChart);
+</c:if>	
 function drawChart() {
-
+	
   var data = new google.visualization.DataTable();
   data.addColumn('string', '월');
   data.addColumn('number', '매출');
@@ -46,11 +51,47 @@ function drawChart() {
   var linechart = new google.visualization.LineChart(document.getElementById('columnchart_material1'));
   linechart.draw(data, linechart_options);
 
-  var barchart_options = {title:'올 해 별 매출 현황',
+  var barchart_options = {title:'올 해 매출 현황',
                  legend: 'none'};
   var barchart = new google.visualization.BarChart(document.getElementById('columnchart_material2'));
   barchart.draw(data, barchart_options);
 }
+
+function drawBuyerChart() {
+	
+	  var data = new google.visualization.DataTable();
+	  data.addColumn('string', '바이어');
+	  data.addColumn('number', '매출');
+	  <c:forEach items="${buyerSales}" var="buyerSales">
+		  data.addRows([
+		    ['${buyerSales.key }', ${buyerSales.value}]
+			]);
+	  </c:forEach>
+	  var piechart_options = {title:'바이어 별 매출 현황'};
+	  var piechart = new google.visualization.PieChart(document.getElementById('columnchart_material1'));
+	  piechart.draw(data, piechart_options);
+
+	}
+
+function drawWriterChart() {
+	
+	  var data = new google.visualization.DataTable();
+	  data.addColumn('string', '직원');
+	  data.addColumn('number', '매출');
+	  <c:forEach items="${thisYearSales}" var="sales">
+		  data.addRows([
+		    [${sales.month }+'월', ${sales.thisSales}]
+		  <c:if test="${not empty thisYearSales.size() }">
+			,
+		</c:if>
+			]);
+	  </c:forEach>
+	  var options = {title:'담당 직원 별 매출 현황',
+              legend: 'none'};
+		var chart = new google.visualization.ColumnChart(document.getElementById('columnchart_material2'));
+		chart.draw(data, options);
+
+	}
 
 </script>
 

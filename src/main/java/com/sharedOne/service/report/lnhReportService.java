@@ -18,6 +18,8 @@ public class lnhReportService {
 
 	public List<OrderHeaderDto> orderList(String orderQ) { 
 		
+		//mapper.salesByBuyer(orderQ);
+		
 		return mapper.orderList("%" + orderQ + "%");
 	}
 

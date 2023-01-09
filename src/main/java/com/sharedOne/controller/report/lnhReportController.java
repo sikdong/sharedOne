@@ -18,9 +18,12 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
@@ -72,12 +75,30 @@ public class lnhReportController {
 		
 		// business logic 작동
 		
+		//올해 매출 그래프(디폴트)
 		List<ReportDto> thisYearSales = service.thisYearSales();
 		
+		//검색 결과 리스트
 		List<OrderHeaderDto> orderList = service.orderList(orderQ);
 		
 		List<OrderItemDto> itemList = orderList.get(0).getOrderItem();
- 
+		
+		HashMap<String, Integer> buyerSales = new HashMap<>();
+		//같은 바이어면 sum 더하는 작업 제대로...
+		for (int i = 0; i < orderList.size(); i++) {
+			for (int j = 0; j < i; j++) {
+				if (orderList.get(i).getBuyerCode() == orderList.get(j).getBuyerCode()) {
+					buyerSales.put(orderList.get(i).getBuyerCode(), orderList.get(i).getOrderItem().get(0).getSum() + orderList.get(j).getOrderItem().get(0).getSum());
+					
+				}else {
+					buyerSales.put(orderList.get(i).getBuyerCode(), orderList.get(i).getOrderItem().get(0).getSum());
+				}
+
+			}
+		}
+		
+		System.out.println("바이어 별 매출 "+buyerSales);
+		
 		System.out.println("컨트롤러: " + orderList);
 		System.out.println(itemList);
 		System.out.println("월별매출"+thisYearSales);
@@ -86,6 +107,7 @@ public class lnhReportController {
 		model.addAttribute("orderList", orderList); // c:forEach items = orderList
 		model.addAttribute("itemList",itemList);
 		model.addAttribute("thisYearSales",thisYearSales);
+		model.addAttribute("buyerSales", buyerSales);
 	}
 	
 	//엑셀 다운로드
