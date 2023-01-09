@@ -27,10 +27,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>판매가관리</title>
+<title>가격관리</title>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
 <style type="text/css">
 	.filterText {
@@ -41,7 +43,6 @@
 		border-right-style: groove;
 	}
 	.scrollBox {
-		border : solid; color:red;
 		width : 100%;
 		height: 30%;
 	}
@@ -49,12 +50,28 @@
 		background-color: #D3D3D3;
 		cursor: pointer;
 	}
+	.scrollBox {
+		width: 100%;
+		height: 70%;
+		box-sizing: border-box;
+		overflow: scroll;
+	}
+ 	.primaryBtn {
+ 		background-color: white !important;
+ 		border-color: #1d5c83 !important;
+ 		color: #1d5c83 !important;
+ 	}
+ 	
+ 	.primaryBtn:hover {
+ 		background-color: #1d5c83 !important;
+ 		color: white !important;
+ 	}
 </style>
 
 
+	
 </head>
 <body>
-
 <!-- 현재 날짜 설정  -->
 <c:set value="<%=sf.format(nowDate)%>" var="nowDate"/>
 <!-- ${nowDate}  -->
@@ -62,9 +79,10 @@
 <!-- 한달후 날짜 설정 -->
 <c:set value='<%=sf.format(addMonth)%>' var="addMonth" /> 
 <!-- ${addMonth}  -->
+<my:side_bar></my:side_bar>
 <div class="container-sm mt-4">
+	<h4>가격 관리</h4>
 	<div class="row d-flex">
-		
 		<!-- *좌측* 검색 조건 설명란 -->
 		<div class="col-sm-2 leftFilterDiv mt-2">
 			<div class="mb-5">
@@ -72,6 +90,12 @@
 			</div>
 			<div class="mb-5">
 				<p class="filterText ">조건 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
+			</div>
+			<div class="mb-5">
+				<p class="filterText ">조건 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
+			</div>
+			<div class="mb-5">
+				<p class="filterText ">단가 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex. 주문일 / 납기일 등등... ) -->
 			</div>
 			<div class="mb-5">
 				<p class="filterText ">단가 기간</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex. 주문일 / 납기일 등등... ) -->
@@ -82,62 +106,89 @@
 		<div class="col-sm-10 mt-1">
 			<form action="" method=""><!-- form get? post?  -->		
 				<!-- 검색필터 1st row : 전체 검색. -->
-				<div class="row d-flex">
+				<div class="row d-flex  mb-1">
 					<div class="col-sm-6 mb-4">
 						<div class="input-group">
-							<input name="" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
+							<input name="q" value="${param.q }" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
 			        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
 				</div><!-- 1st row 끝 -->
 				<!-- 검색필터 2nd row : 조건 검색 ( 각자 페이지의 따라 변경  ) -->
-				<div class="row d-flex">
+				<div class="row d-flex mb-1">
 					<div class="col-sm-3 mb-4">
-						<div class="input-group" >
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions1" placeholder="바이어코드">
+						<div class="input-group" >			
+							<input name="productCode" value="${param.productCode }" type="text" id="" class="form-control" list="datalistOptions1" placeholder="제품코드">
 							<datalist id="datalistOptions1">
 								<c:forEach items="${productList }" var="product">
-									<option value="${product.productCode }">
+									<option value="${product.productCode }">${product.productCode }</option>
 								</c:forEach>
 							</datalist>
+									
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="바이어명">
+
+							<input name="productName" value="${param.productName }" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품명">
 							<datalist id="datalistOptions2">
 								<c:forEach items="${productList }" var="product">
-									<option value="${product.productName }">
+									<option value="${product.productName }">${product.productName }</option>
 								</c:forEach>
 							</datalist>
+
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>	
-					</div>
-					<div class="col-sm-3">
-						<div class="input-group">
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions3" placeholder="국가">
-							<datalist id="datalistOptions3">
-								<c:forEach items="${types }" var="type">
-									<option value="${type }">
-								</c:forEach>
-							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-						</div>
-					</div>
-					<div class="col-sm-3">
-						<div class="input-group">
-							<input name="" value="" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="바이어담당자">
-							<datalist id="datalistOptions4">
-								<c:forEach items="${sizes }" var="size">
-									<option value="${size }">
-								</c:forEach>
-							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-						</div>
-					</div>
+					</div>			
 				</div><!-- 2nd row 끝 -->
-				<!-- 검색필터 3rd row : 기간 선택 : 등록일 -->
+				<!-- 검색필터 3rd row : 조건 검색 ( 각자 페이지의 따라 변경  ) -->
+				<div class="row d-flex mb-1">
+					<div class="col-sm-3 mb-4">
+						<div class="input-group">
+							<input name="buyerCode" value="${param.buyerCode }" type="text" id="" class="form-control" list="datalistOptions3" placeholder="바이어코드">
+							<datalist id="datalistOptions3">
+								<c:forEach items="${buyerList }" var="buyer">
+									<option value="${buyer.buyerCode }">${buyer.buyerCode }</option>
+								</c:forEach>
+							</datalist>
+							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="input-group">
+							<input name="buyerName" value="${param.buyerName }" type="text" id="" class="form-control" list="datalistOptions4" placeholder="바이어명">
+							<datalist id="datalistOptions4">
+								<c:forEach items="${buyerList }" var="buyer">
+									<option value="${buyer.buyerName }">${buyer.buyerName }</option>
+								</c:forEach>
+							</datalist>
+							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="input-group">
+							<input name="country" value="${param.country }" type="text" id="" class="form-control" list="datalistOptions5" placeholder="국가">
+							<datalist id="datalistOptions5">
+								<c:forEach items="${countryList }" var="country">
+									<option value="${country }">${country }</option>
+								</c:forEach>
+							</datalist>
+							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+						</div>
+					</div>
+				</div><!-- 3rd row 끝 -->
+				<!-- 검색필터 4th row : 단가 선택  -->
+				<div class="row d-flex mb-3">
+					<div class="col-sm-8">
+						<input type="range" class="form-range" min="0" max="3" id="customRange2">
+						<label for="customRange2" class="form-label">0 ~ 10,000</label>
+						<label for="customRange2" class="form-label">10,000 ~ 50,000</label>
+						<label for="customRange2" class="form-label">50,000 ~ 100,000</label>
+						<label for="customRange2" class="form-label">100,000 이상</label>
+					</div>
+				</div><!-- 4th row 끝 -->
+				<!-- 검색필터 5th row : 기간 선택 -->
 				<div class="row d-flex">
 					<div class="col-sm-2">
 						<div class="form-check"  style="margin-top: 10px;">
@@ -147,17 +198,17 @@
 					</div>
 					<div class="col-sm-5">
 						<div class="input-group">
-							<input name="inserted1" value="" type="date" id="insertedId1" class="form-control">
+							<input name="d1" value="${param.d1 }" type="date" id="insertedId1" class="form-control">
 							<span class="input-group-text">~</span>
-			        		<input name="inserted2" value="" type="date" id="insertedId2" class="form-control">
+			        		<input name="d2" value="${param.d2 }" type="date" id="insertedId2" class="form-control">
 						</div>
 					</div>
-				</div><!-- 3rd row 끝 -->
+				</div><!-- 5th row 끝 -->
 				<div class="row mt-4">
 					<div class="col-sm-4"></div>
 					<div class="col-sm-4">
 						<div style="text-align: justify;">
-							<button class="btn btn-outline-primary" type="submit">선택 조건 검색</button>
+							<button class="btn btn-oneline-primary primaryBtn" type="submit">선택 조건 검색</button>
 						</div>
 					</div>
 				</div>
@@ -168,86 +219,62 @@
 	<hr>
 	
 	<div class="d-flex">
-		<h4>단가관리</h4>
-		<div class="col-sm-10"></div>
-		<button id="" class="btn btn-primary" >단가등록</button>
-
-	</div>
-	<!-- header -->
-	<div class="scrollBox">
-		<nav id="navbar-example1" class="navbar bg-body-tertiary px-3 mb-3">
-
-		</nav>
-		<div data-bs-spy="scroll" data-bs-target="#navbar-example1" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
-			<table class="table">
-		  		<thead>
-					 <tr>
-						<th>선택</th>
-						<th>바이어번호</th>
-						<th>바이어명</th>
-						<th>국가</th>
-						<th>담당자</th>
-						<th>전화번호</th>
-						<th>비고</th>
-					 </tr>
-				</thead>
-				<tbody>
-					<!-- header -->
-					<c:forEach items="${headerList }" var="header">
-						<tr class="listHover">
-							<td><input type="checkbox" name=""></td>
-							<td>${header.buyerCode }</td>
-							<td>${header.buyerName }</td>
-							<td>${header.country }</td>
-							<td>${header.manager }</td>
-							<td>${header.phone }</td>
-							<td>수정/ 삭제</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-		    </table>
+		<div class="col-sm-2">
+			<h4>가격 상세</h4>
 		</div>
+		<div class="col-sm-8"></div>
+		<div class="col-sm-1">
+			<!-- <button id="" class="btn btn-oneline-primary primaryBtn">가격수정</button>		 -->	
+		</div>
+		<div class="col-sm-1">
+			<form action="${pageContext.request.contextPath }/master/salePriceRegister" method="post">
+				<button name="" value="" id="" class="btn btn-oneline-primary primaryBtn" >가격등록</button>
+			</form>
+		</div>	
 	</div>
 	
-	<hr>
-	
-	<h4>단가상세</h4>
-	<p>바이어 : "$[ item.buyerName } " </p>	
 	<div class="scrollBox">	
-		<nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
-			
-		</nav>
-		<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
-		  <table class="table">
-				<thead>
-					<tr>
-						<th>No.</th>
-						<th>제품번호</th>
-						<th>제품명</th>
-						<th>원가</th>
-						<th>단가</th>
-						<th>할인율</th>
-						<th>단가기간</th>
-						<th>비고</th>
+	  <table class="table">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>제품코드</th>
+					<th>제품명</th>
+					<th>바이어코드</th>
+					<th>국가</th>
+					<th>바이어명</th>
+					<th>원가</th>
+					<th>단가</th>
+					<th>할인율</th>
+					<th>단가기간</th>
+					<th>비고</th>
+				</tr>
+			</thead>		
+			<tbody>
+				<c:forEach items="${allSalePriceList }" var="item" varStatus="st">
+					<tr class="listHover">
+						<td>${st.count }</td>
+						<td>${item.productCode }</td>
+						<td>${item.productName }</td>
+						<td>${item.buyerCode }</td>
+						<td>${item.country }</td>
+						<td>${item.buyerName }</td>
+						<td>${item.price }</td>
+						<td>${item.salePrice }</td>
+						<td>${item.discountRate }%</td>
+						<td>${item.fromDate } ~ ${item.endDate }</td>
+						<td>
+							<form action="${pageContext.request.contextPath }/master/salePriceModify" method="get">
+								<input type="hidden" id=""  name="priceId" value="${item.priceId }" >
+								<button type="submit" class="btn btn-outline-secondary">수정</button>
+							</form>
+						</td>
 					</tr>
-				</thead>		
-				<tbody>
-					<c:forEach items="${itemList }" var="item" varStatus="st">
-						<tr class="listHover">
-							<td>${st.count }</td>
-							<td>${item.producCode }</td>
-							<td>${item.productName }</td>
-							<td>${item.price }</td>
-							<td>${item.salePrice }</td>
-							<td>${item.discountRate }</td>
-							<td>${item.fromDate } ~ ${item.endDate }</td>
-							<td>수정/ 삭제 </td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
+				</c:forEach>
+			</tbody>
+		</table>
 	</div><!-- scrollBox 끝 -->
+
 </div><!-- container 끝  -->
 
 

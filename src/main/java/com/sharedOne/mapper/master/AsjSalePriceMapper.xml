@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.sharedOne.mapper.master.AsjSalePriceMapper">
+ 
+ 	<!-- 아이템 : id, 제품코드, 제품명,바이어코드, 바이어명, 국가, 원가, 단가, 할인율, 단가기간, -->
+	<select id="selectAllSalePriceItemList" resultType="com.sharedOne.domain.master.SalePriceDto">
+	 	SELECT 
+	 		sp.priceId,
+	 		sp.salePrice,
+	 		sp.discountRate,
+	 		sp.fromDate,
+	 		sp.endDate,
+	 		
+	 		b.buyerCode,
+	 		b.buyerName,
+	 		b.country,
+	 		
+	 		p.productCode,
+	 		p.productName,
+	 		p.price
+	 	FROM
+	 		SalePrice sp
+	 	LEFT JOIN Buyer b ON b.buyerCode = sp.buyerCode
+	 	LEFT JOIN Product p ON p.productCode = sp.productCode
+	 	
+	 	WHERE
+	 	(
+	 	<trim prefixOverrides="OR">
+			<if test="keyword != '' or productCode != ''">
+			OR p.productCode LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or productName != ''">
+			OR p.productName LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or buyerCode != ''">
+			OR b.buyerCode LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or buyerName != ''">
+			OR b.buyerName LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or country != ''">
+			OR b.country LIKE #{keyword}
+			</if>			
+		</trim>
+		)	 	
+	 	
+ 		<if test="productCode != '' ">
+ 		AND p.productCode = #{productCode }
+ 		</if>
+ 		<if test="productName != '' ">
+ 		AND p.productName = #{productName }
+ 		</if>
+ 		<if test="buyerCode != '' ">
+ 		AND b.buyerCode = #{buyerCode }
+ 		</if>
+ 		<if test="buyerName != '' ">
+ 		AND b.buyerName = #{buyerName }
+ 		</if>
+ 		<if test="country != '' ">
+ 		AND b.country = #{country }
+ 		</if>
+ 		
+		ORDER BY p.productCode ASC;
+	 	
+	</select> 		
+	<!-- <resultMap type="com.sharedOne.domain.master.SalePriceDto" id="itemMap">
+		<id column="priceId" property="priceId"/>
+		<result column="salePrice" property="salePrice"/>
+		<result column="discountRate" property="discountRate"/>
+		<result column="fromDate" property="fromDate"/>
+		<result column="endDate" property="endDate"/>
+		<result column="buyerCode" property="buyerCode"/>
+		<collection property="product" ofType="com.sharedOne.domain.master.ProductDto">
+			<result column="productCode" property="productCode"/>
+			<result column="productName" property="productName"/>
+			<result column="price" property="price"/>
+		</collection>
+	</resultMap> -->
+	
+	<select id="selectSaleByPriceId" resultType="com.sharedOne.domain.master.SalePriceDto">
+		SELECT 
+			sp.priceId,
+	 		sp.salePrice,
+	 		sp.discountRate,
+	 		sp.fromDate,
+	 		sp.endDate,
+	 		
+	 		b.buyerCode,
+	 		b.buyerName,
+	 		b.country,
+	 		
+	 		p.productCode,
+	 		p.productName,
+	 		p.price
+ 		FROM
+	 		SalePrice sp
+	 	LEFT JOIN Buyer b ON b.buyerCode = sp.buyerCode
+	 	LEFT JOIN Product p ON p.productCode = sp.productCode
+	 	
+	 	WHERE
+	 		sp.priceId = #{priceId }
+	</select>
+	
+	<update id="updateSalePriceByPriceId">
+		UPDATE SalePrice
+		SET 
+			salePrice = #{salePrice},
+			discountRate = #{discountRate},
+			fromDate = #{fromDate},
+			endDate = #{endDate}
+		WHERE
+			priceId = #{priceId}	
+	</update>
+	
+ 
+ </mapper>

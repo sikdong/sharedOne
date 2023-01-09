@@ -1,5 +1,6 @@
 package com.sharedOne.controller.order;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,23 +16,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sharedOne.domain.master.BuyerDto;
 import com.sharedOne.domain.master.ProductDto;
+import com.sharedOne.domain.master.YdsProductDto;
 
 import lombok.RequiredArgsConstructor;
 
 import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.order.OrderItemDto;
-import com.sharedOne.service.order.OrderService;
+import com.sharedOne.domain.order.YdsOrderDto;
+import com.sharedOne.service.order.AsjOrderService;
 import com.sharedOne.service.order.YdsOrderService;
 
 @Controller
 @RequestMapping("order")
+@RequiredArgsConstructor
 public class YdsOrderController {
 	
-	@Autowired
-	private YdsOrderService service;
 	
-	@Autowired
-	private OrderService orderService;
+	private final YdsOrderService service;
 
 	
 	@GetMapping("register")
@@ -67,20 +69,43 @@ public class YdsOrderController {
 		return service.searchBuyer(buyerCode);
 	}
 	
-	@GetMapping("searchAllProductInfo/{allProductInfo}")
+	@GetMapping("searchAllProductInfo/{allProductInfo}/{tableBuyerCode}")
 	@ResponseBody
-	public List<ProductDto> searchAllProductInfo(@PathVariable String allProductInfo){
-		return service.searchProduct(allProductInfo);
+	public List<ProductDto> searchAllProductInfo(@PathVariable String allProductInfo, 
+			@PathVariable String tableBuyerCode){
+		System.out.println(tableBuyerCode);
+		return service.searchProduct(allProductInfo, tableBuyerCode);
 		
 	}
-	
-	
-	  @GetMapping("list") public void orderList(Model model, String orderCode ) {
-			List<OrderHeaderDto> headerList = orderService.selectOrderHeaderList();
-			List<OrderItemDto> itemListByOrderCode = orderService.selectOrderItemListByOrderCode(orderCode);
 
-			model.addAttribute("headerList", headerList);
-			model.addAttribute("itemList", itemListByOrderCode); }
+	
+
+	  /*@GetMapping("list") 
+	  public void orderList(Model model, String orderCode ) {
+	  List <OrderHeaderDto> headerList = orderService.selectOrderHeaderList(); List
+	 <OrderItemDto> itemListByOrderCode =
+	 orderService.selectOrderItemListByOrderCode(orderCode);
 	 
+	 model.addAttribute("headerList", headerList); model.addAttribute("itemList",
+	 itemListByOrderCode); }*/
+	  
+	  @GetMapping("modify")
+	  public void modifyOrder() {
+		  
+	  }
+	  
+	  @PostMapping("register")
+	  public void insertOrder(YdsOrderDto yod){
+		  System.out.println("오더 목록 : " + yod);
+		  service.insertOrder(yod);
+	  }
+	  
+	  
+	 @PostMapping("addTempProductOrder")
+	 @ResponseBody
+	 public YdsProductDto addTempProductOrder(@RequestBody YdsProductDto ypd) {
+		 System.out.println(ypd);
+		 return service.addTempProductOrder(ypd);
+	 }
 	
 }

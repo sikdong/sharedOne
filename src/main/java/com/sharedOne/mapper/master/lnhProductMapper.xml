@@ -34,7 +34,10 @@
 			price,
 			unit,
 			content,
-			inserted
+			inserted,
+			modified,
+			fromDate,
+			endDate
 		FROM 
 			Product
 			
