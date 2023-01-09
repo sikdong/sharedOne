@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sharedOne.domain.order.OrderHeaderDto;
+import com.sharedOne.domain.order.OrderItemDto;
+import com.sharedOne.domain.report.ReportDto;
 import com.sharedOne.mapper.report.lnhReportMapper;
 
 @Service
@@ -18,4 +20,9 @@ public class lnhReportService {
 		
 		return mapper.orderList("%" + orderQ + "%");
 	}
+
+	public List<ReportDto> thisYearSales() {
+		return mapper.thisYearSales();
+	}
+
 }

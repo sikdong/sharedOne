@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sharedOne.domain.master.ProductDto;
 import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.order.OrderItemDto;
+import com.sharedOne.domain.report.ReportDto;
 import com.sharedOne.service.master.lnhProductService;
 import com.sharedOne.service.report.lnhReportService;
 
@@ -70,15 +71,21 @@ public class lnhReportController {
 		model.addAttribute("productList", productList);
 		
 		// business logic 작동
+		
+		List<ReportDto> thisYearSales = service.thisYearSales();
+		
 		List<OrderHeaderDto> orderList = service.orderList(orderQ);
 		
 		List<OrderItemDto> itemList = orderList.get(0).getOrderItem();
  
 		System.out.println("컨트롤러: " + orderList);
 		System.out.println(itemList);
+		System.out.println("월별매출"+thisYearSales);
+		
 		// add attribute
 		model.addAttribute("orderList", orderList); // c:forEach items = orderList
 		model.addAttribute("itemList",itemList);
+		model.addAttribute("thisYearSales",thisYearSales);
 	}
 	
 	//엑셀 다운로드
