@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.sharedOne.mapper.order.YjhOrderMapper">
+	
+	<select id="selectOrderSheetHead" resultType="com.sharedOne.domain.order.OrderHeaderDto">
+		SELECT oh.orderId orderId, oh.orderCode orderCode, oh.inserted inserted, oh.writer writer, oh.message message, oh.comment comment, oh.deliveryDate deliveryDate
+		FROM Order_header oh JOIN Buyer b ON oh.buyerCode = b.buyerCode
+		WHERE oh.orderId = #{orderId};
+	</select>
+	
+	<select id="selectOrderSheetBuyer" resultType="com.sharedOne.domain.master.BuyerDto">
+		SELECT 
+	    b.buyerName buyerName, b.country country, b.address address, b.phone phone, b.manager manager, b.businessNumber businessNumber
+		FROM Order_header oh JOIN Buyer b ON oh.buyerCode = b.buyerCode
+		WHERE oh.orderId = #{orderId};
+	</select>
+	
+	<select id="selectOrderItem" resultType="com.sharedOne.domain.order.YjhOrderItemDto">
+		SELECT p.productName productName, p.productType productType, p.weight weight, p.size size, p.unit unit,
+	   		   sp.salePrice salePrice, oi.quantity quantity, oi.sum sum
+		FROM Order_item oi JOIN Product p ON oi.productCode = p. productCode
+				   		   JOIN SalePrice sp ON oi.priceId = sp.priceId
+                   		   JOIN Order_header oh ON oi.orderCode = oh.orderCode
+		WHERE oh.orderId = #{orderId}; 
+	</select>
+	
+	<update id="setApproval">
+		UPDATE Order_header
+		SET status = "승인완료",
+			comment = #{comment}
+		WHERE orderId = #{orderId};
+	</update>
+	
+	<update id="setCompanion">
+		UPDATE Order_header
+		SET status = "요청반려",
+			comment = #{comment}
+		WHERE orderId = #{orderId};
+	</update>
+	
+	<update id="setClosing">
+		UPDATE Order_header
+		SET status = "거래종결"
+		WHERE orderId = #{orderId};
+	</update>
+	
+	<resultMap type="com.sharedOne.domain.order.OrderItemDto" id="orderItemMap">
+ 		<id column="itemId" property="itemId"/>
+ 		<result column="quantity" property="quantity"/>
+ 		<result column="sum" property="sum"/>
+ 		<collection property="product" ofType="com.sharedOne.domain.master.ProductDto">
+ 			<result column="productCode" property="productCode"/>
+ 			<result column="productName" property="productName"/>
+ 			<result column="weight" property="weight"/>
+ 			<result column="size" property="size"/>
+ 			<result column="unit" property="unit"/>
+ 			<result column="price" property="price"/>
+ 		</collection>
+ 		<collection property="price" ofType="com.sharedOne.domain.master.SalePriceDto">
+ 			<result column="salePrice" property="salePrice"/>
+ 		</collection>
+ 		<collection property="orderHeader" ofType="com.sharedOne.domain.order.OrderHeaderDto">
+ 			<id column="orderId" property="orderId"/>
+ 			<result column="deliveryDate" property="deliveryDate"/>
+ 		</collection>
+ 	</resultMap>
+</mapper>
