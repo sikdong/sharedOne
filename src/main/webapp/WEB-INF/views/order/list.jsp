@@ -259,13 +259,13 @@
 					<th>등록일</th>
 					<th>처리일</th>
 					<th>처리상태</th>				
-					<th>주문상세</th>
+					<th>주문선택</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${headerList }" var="h">
-					<tr class="listHover" id="header${h.orderId }" >
-						<td><input type="checkbox" id="checkbox${h.orderId }"></td>
+					<tr class="listHover" id="header${h.orderCode }" >
+						<td><input type="checkbox" id="checkbox${h.orderCode }"></td>
 						<td>${h.orderCode }</td>	
 						<td>${h.buyerCode }</td>					
 						<td>${h.buyerName }</td>
@@ -276,22 +276,34 @@
 						<td>
 							<c:choose>
 								<c:when test="${h.status == '임시저장'}">
-									<button type="button" class="btn btn-secondary" disabled>${h.status }</button>
+									<form action="">
+										<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-secondary" >${h.status }</button>
+									</form>
 								</c:when>
 								<c:when test="${h.status == '승인요청'}">
-									<button type="button" class="btn btn-primary" disabled>${h.status }</button>
+									<form action="${pageContext.request.contextPath }/order/orderSheet">
+										<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-primary" >${h.status }</button>
+									</form>
 								</c:when>
 								<c:when test="${h.status == '승인완료'}">
-									<button type="button" class="btn btn-success" disabled>${h.status }</button>
+									<form action="${pageContext.request.contextPath }/order/companionSheet">
+										<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-success" >${h.status }</button>
+									</form>
 								</c:when>
-								<c:when test="${h.status == '요청반려'}">
-									<button type="button" class="btn btn-danger" disabled>${h.status }</button>
+								<c:when test="${h.status == '요청반려'}">									
+									<form action="${pageContext.request.contextPath }/order/companionSheet">
+										<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-danger" >${h.status }</button>
+									</form>
 								</c:when>
 								<c:when test="${h.status == '승인취소'}">
-									<button type="button" class="btn btn-secondary" disabled>${h.status }</button>
+									<form action="${pageContext.request.contextPath }/order/companionSheet">
+										<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-secondary" >${h.status }</button>
+									</form>
 								</c:when>
 								<c:when test="${h.status == '거래종결'}">
-									<button type="button" class="btn btn-secondary" disabled>${h.status }</button>
+									<form action="${pageContext.request.contextPath }/order/companionSheet">
+										<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-secondary" >${h.status }</button>
+									</form>
 								</c:when>
 							</c:choose>
 							
@@ -302,7 +314,7 @@
 							<!-- ?q=&orderCode=&buyerCode=&writer=&status=&d1=2023-01-09&d2=2023-01-09&d3=&d4=&d5=&d6= -->
 								<form action="" method="get">
 									
-									<button name="orderCode" value="${h.orderCode }" type="submit" class="btn btn-outline-secondary">선택</button>
+									<button id="detailBtn${h.orderCode }" name="orderCode" value="${h.orderCode }" type="submit" class="btn btn-outline-secondary">주문상세</button>
 									
 								</form>
 							</td>
@@ -377,6 +389,13 @@
 		const ctx = ${pageComtext.request.contextPath}
 		
 		console.log('backBtn${param.orderCode}');
+		
+		
+		$(function(){ 
+			$('#detailBtn${param.orderCode}').click(function(){
+				$('#checkbox${param.orderCode}').checked();
+			})
+		})
 		
 		$(function(){ 
 			$('#backBtn${param.orderCode}').click(function(){
