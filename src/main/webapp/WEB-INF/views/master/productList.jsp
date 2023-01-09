@@ -59,6 +59,7 @@
 
 	th, td {
  		padding: 10px;
+ 		text-align: auto;
  	}
 	
 	.table .trtr:hover {
@@ -102,7 +103,7 @@
 <!-- ${addMonth}  -->
 
 <div class="container-sm mt-4" style="width: 77vw; margin-left: 20%;">
-
+	<h4>제품 관리</h4>
 	<div class="row d-flex">
 		
 		<!-- *좌측* 검색 조건 설명란 -->
@@ -229,7 +230,7 @@
 			<table class="table">
 			   	 <thead>
 					 <tr>
-            <th>No.</th>
+           				 <th>No.</th>
 						<th>제품코드</th>
 						<th>제품명</th>
 						<th>타입</th>
@@ -237,6 +238,7 @@
 						<th>규격(Inch)</th>
 						<th>단위(EA)</th>
 						<th>원가</th>
+						<th>원가기간</th>
 					 </tr>
 				 </thead>
 				<tbody class = "scorllBox">			
@@ -245,7 +247,7 @@
 							<c:param name="code" value="${product.productCode }"></c:param>
 						</c:url>
 					<tr onclick="window.open('${getLink}','제품정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
-              <td>${st.count }</td>
+              				<td>${st.count }</td>
 							<td style="width: 800px">${product.productCode }</td>
 							<td style="margin-right: 50px">${product.productName }</td>
 							<td>${product.productType }</td>
@@ -253,6 +255,7 @@
 							<td>${product.size }</td>
 							<td>${product.unit }</td>
 							<td>${product.price }</td>
+							<td>${product.fromDate } ~ ${product.endDate }</td>
 						</tr>
 					</c:forEach>
 				</tbody>

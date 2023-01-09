@@ -95,12 +95,19 @@
                     </div>
                 </li>
                 <li>
+                	<c:url value="/master/productList" var="productListLink">
+                		<c:param name="" value=""></c:param>
+                	</c:url>
                     <div class="li-div">
-                        <a href="#" class="rounded" style="color: #e3e3e3;">제품 관리</a>
+                        <a href="${productListLink }" class="rounded" style="color: #e3e3e3;">제품 관리</a>
                     </div>
-                </li><li>
+                </li>
+                <li>
+                	<c:url value="/master/salePriceList" var="salePriceListLink">
+                		<c:param name="" value=""></c:param>
+                	</c:url>
                     <div class="li-div">
-                        <a href="#" class="rounded" style="color: #e3e3e3;">가격 관리</a>
+                        <a href="${salePriceListLink }" class="rounded" style="color: #e3e3e3;">가격 관리</a>
                     </div>
                 </li>
               </ul>
@@ -114,8 +121,12 @@
             <div class="collapse" id="order-collapse" style="">
                 <ul>
                     <li>
+                   
+                    	<c:url value="/order/list" var="orderListLink">
+                			<c:param name="" value=""></c:param>
+                		</c:url>
                         <div class="li-div">
-                            <a href="#" class="rounded" style="color: #e3e3e3;">주문 목록</a>
+                            <a href="${orderListLink }" class="rounded" style="color: #e3e3e3;">주문 목록</a>
                         </div>
                     </li>
                 </ul>

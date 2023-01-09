@@ -17,4 +17,7 @@ public class ProductDto {
 	private String unit;
 	private String content;
 	private LocalDate inserted;
+	private LocalDate modified;
+	private LocalDate fromDate;
+	private LocalDate endDate;
 }

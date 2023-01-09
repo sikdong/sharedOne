@@ -19,22 +19,22 @@ public class AsjProductController {
 	@Autowired
 	private AsjProductService asjProductService;
 	
-	@GetMapping("productList")
-	public void productList(Model model){
-		List <ProductDto> productList = asjProductService.selectProductList();
-		
-		Set <String> setTypes = new HashSet<>();
-		for( ProductDto product : productList) {
-			setTypes.add(product.getProductType());
-		}
-		Set <Integer> setSizes = new HashSet<>();
-		for( ProductDto product : productList) {
-			setSizes.add(product.getSize());
-		}
-		
-		model.addAttribute("types", setTypes);
-		model.addAttribute("sizes", setSizes);
-		
-		model.addAttribute("productList", productList);
-	}
+//	@GetMapping("productList")
+//	public void productList(Model model){
+//		List <ProductDto> productList = asjProductService.selectProductList();
+//		
+//		Set <String> setTypes = new HashSet<>();
+//		for( ProductDto product : productList) {
+//			setTypes.add(product.getProductType());
+//		}
+//		Set <Integer> setSizes = new HashSet<>();
+//		for( ProductDto product : productList) {
+//			setSizes.add(product.getSize());
+//		}
+//		
+//		model.addAttribute("types", setTypes);
+//		model.addAttribute("sizes", setSizes);
+//		
+//		model.addAttribute("productList", productList);
+//	}
 }
