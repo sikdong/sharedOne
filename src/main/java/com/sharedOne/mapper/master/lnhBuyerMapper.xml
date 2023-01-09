@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.sharedOne.mapper.master.lnhBuyerMapper">
+ 
+ <!-- 중복 검사 -->
+ 	
+ 	<select id="selectByBuyerCode" resultType="com.sharedOne.domain.master.BuyerDto">
+		SELECT * FROM Buyer WHERE buyerCode = #{buyerCode}
+	</select>
+ 	
+ 	<select id="selectByBusinessNumber" resultType="com.sharedOne.domain.master.BuyerDto">
+		SELECT * FROM Buyer WHERE businessNumber = #{businessNumber}
+	</select>
+ 
+ 
+  	<select id="selectBuyerList" resultType="com.sharedOne.domain.master.BuyerDto">
+
+		SELECT 
+			buyerCode,
+			buyerName,
+			address,
+			country,
+			businessNumber,
+			phone,
+			deliveryCompany,
+			manager
+		FROM 
+			Buyer
+			
+ 	</select>
+ 
+ 
+  	 <!-- 바이어 입력 -->
+ 	<insert id="register" useGeneratedKeys="true" keyProperty="buyerCode">
+ 	INSERT INTO Buyer (buyerCode, buyerName, address, country, businessNumber, phone, deliveryCompany, manager)
+ 	VALUES (#{buyerCode}, #{buyerName}, #{address}, #{country}, #{businessNumber}, #{phone}, #{deliveryCompany}, #{manager})
+ 	</insert>
+ 	
+ 	<!-- 바이어 내용 가져오기 -->
+ 	<select id="get" resultType="com.sharedOne.domain.master.BuyerDto">
+	 	SELECT *
+	 	FROM 
+			Buyer
+		WHERE buyerCode = #{buyerCode}
+ 	</select>
+ 	
+ 	<!-- 바이어 수정 -->
+ 	<update id="update">
+	 	UPDATE Buyer
+	 	SET
+	 		buyerName = #{buyerName},
+	 		address = #{address},
+	 		country = #{country},
+	 		businessNumber = #{businessNumber},
+	 		phone = #{phone},
+	 		deliveryCompany = #{deliveryCompany},
+	 		manager = #{manager}
+	 	WHERE
+	 		buyerCode = #{buyerCode}
+ 	</update>
+ 	
+ 	<!-- 바이어 삭제 -->
+ 	<delete id="delete">
+		DELETE FROM Buyer
+		WHERE buyerCode = #{buyerCode}
+ 	</delete>
+ </mapper>

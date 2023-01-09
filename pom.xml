@@ -18,7 +18,7 @@
 	</properties>
 
 	<dependencyManagement>
-		<dependencies>
+		<dependencies>	
 			<dependency>
 				<groupId>software.amazon.awssdk</groupId>
 				<artifactId>bom</artifactId>
@@ -31,10 +31,24 @@
 
 	<dependencies>
 
+
 		<dependency>
 			<groupId>software.amazon.awssdk</groupId>
 			<artifactId>s3</artifactId>
 		</dependency>
+
+		<!-- 엑셀기능 -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>4.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>4.1.2</version>
+		</dependency>
+
 
 		<!-- jsp -->
 		<dependency>

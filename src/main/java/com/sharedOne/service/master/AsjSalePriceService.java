@@ -7,20 +7,20 @@ import org.springframework.stereotype.Service;
 
 import com.sharedOne.domain.master.BuyerDto;
 import com.sharedOne.domain.master.SalePriceDto;
-import com.sharedOne.mapper.master.SalePriceMapper;
+import com.sharedOne.mapper.master.AsjSalePriceMapper;
 
 @Service
-public class SalePriceService {
+public class AsjSalePriceService {
 	
 	@Autowired
-	private SalePriceMapper salePriceMapper;
+	private AsjSalePriceMapper asjSalePriceMapper;
 	
 	public List<BuyerDto> selectSalePriceHeaderList() {
-		return salePriceMapper.selectSalePriceHeaderList();
+		return asjSalePriceMapper.selectSalePriceHeaderList();
 	}
 
-	public List<SalePriceDto> selectSalePriceItemList(String buyerCode) {
-		return salePriceMapper.selectSalePriceItemList(buyerCode);
+	public List<SalePriceDto> selectSalePriceItemListByBuyerCode(String buyerCode) {
+		return asjSalePriceMapper.selectSalePriceItemListByBuyerCode(buyerCode);
 	}
 
 }

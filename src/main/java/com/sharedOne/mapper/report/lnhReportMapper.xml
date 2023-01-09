@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sharedOne.mapper.report.lnhReportMapper">
+
+	<select id="orderList" resultMap="reportMap">
+		SELECT
+			h.orderCode,
+			i.productCode,
+			p.salePrice,
+			i.quantity,
+			i.sum,
+			h.inserted,
+			h.modified,
+			h.deliveryDate,
+			h.writer,
+			h.buyerCode,
+			h.status,
+			h.message
+		FROM
+			Order_header h LEFT JOIN Order_item i ON h.orderCode = i.orderCode
+							LEFT JOIN SalePrice p ON i.priceId = p.priceId
+			
+		WHERE	h.orderCode LIKE #{orderQ} 
+		   OR  	  i.productCode LIKE #{orderQ} 
+		   OR  	  p.salePrice LIKE #{orderQ} 
+		   OR  	  i.quantity LIKE #{orderQ} 
+		   OR  	  i.sum LIKE #{orderQ} 
+		   OR  	  h.inserted LIKE #{orderQ} 
+		   OR 	  h.modified LIKE #{orderQ} 
+		   OR h.deliveryDate LIKE #{orderQ} 
+		   OR       h.writer LIKE #{orderQ} 
+		   OR    h.buyerCode LIKE #{orderQ} 	
+		   OR 		h.status LIKE #{orderQ} 
+		   OR 	   h.message LIKE #{orderQ} 
+		
+		ORDER BY h.orderId DESC 	<!-- orderId 등록이 최신 기준으로 -->
+
+	</select>
+	
+	<resultMap type="com.sharedOne.domain.order.OrderHeaderDto" id="reportMap">
+		<result column="orderCode" property="orderCode" />
+		<result column="inserted" property="inserted" />
+		<result column="modified" property="modified" />
+		<result column="deliveryDate" property="deliveryDate" />
+		<result column="writer" property="writer" />
+		<result column="buyerCode" property="buyerCode" />
+		<result column="status" property="status" />
+		<result column="message" property="message" />
+		<collection property="orderItem" resultMap="orderItem"></collection>
+		<collection property="itemPrice" resultMap="itemPrice"></collection>
+		
+	</resultMap>
+	
+	<resultMap type="com.sharedOne.domain.order.OrderItemDto" id="orderItem">
+		<result column="productCode" property="productCode"/>
+		<result column="quantity" property="quantity"/>
+		<result column="sum" property="sum"/>
+	</resultMap>
+	
+	<resultMap type="com.sharedOne.domain.master.SalePriceDto" id="itemPrice">
+		<result column="salePrice" property="salePrice"/>
+	</resultMap>
+	
+</mapper>

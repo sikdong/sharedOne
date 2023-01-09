@@ -1,10 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
-
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
-
 
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
@@ -42,7 +39,9 @@
 		border-right-style: groove;
 	}
 	.scrollBox {
-		border : solid; color:red;
+
+/* 		border : solid; color:red; */
+
 		width : 100%;
 		height: 30%;
 	}
@@ -50,11 +49,49 @@
 		background-color: #D3D3D3;
 		cursor: pointer;
 	}
+
+	.scrollBox {
+		width: 100%;
+		height: 1000px;
+		box-sizing: border-box;
+		overflow: scroll;
+	}
+
+	th, td {
+ 		padding: 10px;
+ 	}
+	
+	.table .trtr:hover {
+ 		font-weight: bold;
+ 		background-color: #c7c9c2;
+ 	}
+ 	
+ 	.primaryBtn {
+ 		background-color: white !important;
+ 		border-color: #1d5c83 !important;
+ 		color: #1d5c83 !important;
+ 	}
+ 	
+ 	.primaryBtn:hover {
+ 		background-color: #1d5c83 !important;
+ 		color: white !important;
+ 	}
+ 
+ 	
+	.table{border-collapse:collapse; width:100%}
+	.table thead{float:left; width:1300px;}
+	.table thead th{display:auto; width:1300px;}
+	.table tbody{overflow-y:auto; overflow-x:hidden; float:left; width:1300px; height:550px;}
+	.table tbody tr{display:table; width:1300px;}
+	.table td{width:1300px; text-align: left;}
+ 	
 </style>
 
 
 </head>
 <body>
+
+<my:side_bar active=""></my:side_bar>
 
 <!-- 현재 날짜 설정  -->
 <c:set value="<%=sf.format(nowDate)%>" var="nowDate"/>
@@ -63,7 +100,9 @@
 <!-- 한달후 날짜 설정 -->
 <c:set value='<%=sf.format(addMonth)%>' var="addMonth" /> 
 <!-- ${addMonth}  -->
-<div class="container-sm mt-4">
+
+<div class="container-sm mt-4" style="width: 77vw; margin-left: 20%;">
+
 	<div class="row d-flex">
 		
 		<!-- *좌측* 검색 조건 설명란 -->
@@ -155,13 +194,13 @@
 					</div>
 					<div class="col-sm-5 d-flex">
 						
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">오늘</button>		
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1주 </button>	
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">15일</button>		
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">3개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">6개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1년</button>	
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">오늘</button>		
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">1주 </button>	
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">15일</button>		
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">1개월</button>
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">3개월</button>
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">6개월</button>
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">1년</button>	
 						
 					</div>
 				</div><!-- 3rd row 끝 -->
@@ -169,7 +208,7 @@
 					<div class="col-sm-4"></div>
 					<div class="col-sm-4">
 						<div style="text-align: justify;">
-							<button class="btn btn-outline-primary" type="submit">선택 조건 검색</button>
+							<button class="btn btn-outline-primary primaryBtn" type="submit">선택 조건 검색</button>
 						</div>
 					</div>
 				</div>
@@ -181,38 +220,37 @@
 	<div class="d-flex">
 		<h4>제품목록</h4>
 		<div class="col-sm-10"></div>
-		<button id="" class="btn btn-primary" >제품등록</button>
+		<c:url value="/master/productRegister" var="registerLink"></c:url>
+		<button id="registerBtn" class="btn btn-outline-primary primaryBtn" onclick="window.open('${registerLink}','제품등록','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');">제품등록</button>
 	</div>
 	<!-- 리스트 -->
-	<div class="scrollBox">
-		<nav id="navbar-example" class="navbar bg-body-tertiary px-3 mb-3">
 
-		</nav>
-		<div data-bs-spy="scroll" data-bs-target="#navbar-example" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+	<div class="listBox">
 			<table class="table">
 			   	 <thead>
 					 <tr>
-						<th>제품코드</th>
+						<th style="max-width: 800px;">제품코드</th>
 						<th>제품명</th>
 						<th>타입</th>
 						<th>무게(g)</th>
 						<th>규격(Inch)</th>
 						<th>단위(EA)</th>
 						<th>원가</th>
-						<th>비고</th>
 					 </tr>
 				 </thead>
-				<tbody>			
-					<c:forEach items="${productList }" var="product">
-						<tr class="listHover">
-							<td>${product.productCode }</td>
+				<tbody class = "scorllBox">			
+					<c:forEach items="${productList }" var="product" varStatus="st">
+						<c:url value="/master/productModify" var="getLink">
+							<c:param name="code" value="${product.productCode }"></c:param>
+						</c:url>
+					<tr onclick="window.open('${getLink}','제품정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
+							<td style="max-width: 500px;">${product.productCode }</td>
 							<td>${product.productName }</td>
 							<td>${product.productType }</td>
 							<td>${product.weight }</td>
 							<td>${product.size }</td>
 							<td>${product.unit }</td>
 							<td>${product.price }</td>
-							<td>수정/ 삭제</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -220,37 +258,6 @@
 		</div>
 	</div>
 	
-	
-<%-- 	<table class="table">
-		<thead>
-			<!-- productCode, productName, productType, weight, size, price, unit, content -->
-			<tr>
-				<th>제품코드</th>
-				<th>제품명</th>
-				<th>타입</th>
-				<th>무게(g)</th>
-				<th>규격(Inch)</th>
-				<th>단위(EA)</th>
-				<th>원가</th>
-			</tr>
-		</thead>
-		<tbody>
-		<!-- //productCode, productName, productType, weight, size, price, unit, content, inserted -->
-			<c:forEach items="${productList }" var="product">
-				<tr>
-					<td>${product.productCode }</td>
-					<td>${product.productName }</td>
-					<td>${product.productType }</td>
-					<td>${product.weight }</td>
-					<td>${product.size }</td>
-					<td>${product.unit }</td>
-					<td>${product.price }</td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table> --%>
-	
-</div>
 
 
 

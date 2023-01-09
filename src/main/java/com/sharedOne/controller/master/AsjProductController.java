@@ -10,18 +10,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.sharedOne.domain.master.ProductDto;
-import com.sharedOne.service.master.ProductService;
+import com.sharedOne.service.master.AsjProductService;
 
 @Controller
 @RequestMapping("master")
-public class ProductController {
+public class AsjProductController {
 
 	@Autowired
-	private ProductService productService;
+	private AsjProductService asjProductService;
 	
 	@GetMapping("productList")
 	public void productList(Model model){
-		List <ProductDto> productList = productService.selectProductList();
+		List <ProductDto> productList = asjProductService.selectProductList();
 		
 		Set <String> setTypes = new HashSet<>();
 		for( ProductDto product : productList) {
