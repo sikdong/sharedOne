@@ -83,7 +83,7 @@
 	.table thead th{display:auto; width:1300px;}
 	.table tbody{overflow-y:auto; overflow-x:hidden; float:left; width:1300px; height:550px;}
 	.table tbody tr{display:table; width:1300px;}
-	.table td{text-align:inherit; width:1300px;}
+	.table td{width:1300px; text-align: left;}
  	
 </style>
 
@@ -229,8 +229,7 @@
 			<table class="table">
 			   	 <thead>
 					 <tr>
-            <th>No.</th>
-						<th>제품코드</th>
+						<th style="max-width: 800px;">제품코드</th>
 						<th>제품명</th>
 						<th>타입</th>
 						<th>무게(g)</th>
@@ -245,9 +244,8 @@
 							<c:param name="code" value="${product.productCode }"></c:param>
 						</c:url>
 					<tr onclick="window.open('${getLink}','제품정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
-              <td>${st.count }</td>
-							<td style="width: 800px">${product.productCode }</td>
-							<td style="margin-right: 50px">${product.productName }</td>
+							<td style="max-width: 500px;">${product.productCode }</td>
+							<td>${product.productName }</td>
 							<td>${product.productType }</td>
 							<td>${product.weight }</td>
 							<td>${product.size }</td>
@@ -260,37 +258,6 @@
 		</div>
 	</div>
 	
-	
-<%-- 	<table class="table">
-		<thead>
-			<!-- productCode, productName, productType, weight, size, price, unit, content -->
-			<tr>
-				<th>제품코드</th>
-				<th>제품명</th>
-				<th>타입</th>
-				<th>무게(g)</th>
-				<th>규격(Inch)</th>
-				<th>단위(EA)</th>
-				<th>원가</th>
-			</tr>
-		</thead>
-		<tbody>
-		<!-- //productCode, productName, productType, weight, size, price, unit, content, inserted -->
-			<c:forEach items="${productList }" var="product">
-				<tr>
-					<td>${product.productCode }</td>
-					<td>${product.productName }</td>
-					<td>${product.productType }</td>
-					<td>${product.weight }</td>
-					<td>${product.size }</td>
-					<td>${product.unit }</td>
-					<td>${product.price }</td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table> --%>
-	
-</div>
 
 
 

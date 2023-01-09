@@ -6,6 +6,17 @@
   
  <mapper namespace="com.sharedOne.mapper.master.lnhBuyerMapper">
  
+ <!-- 중복 검사 -->
+ 	
+ 	<select id="selectByBuyerCode" resultType="com.sharedOne.domain.master.BuyerDto">
+		SELECT * FROM Buyer WHERE buyerCode = #{buyerCode}
+	</select>
+ 	
+ 	<select id="selectByBusinessNumber" resultType="com.sharedOne.domain.master.BuyerDto">
+		SELECT * FROM Buyer WHERE businessNumber = #{businessNumber}
+	</select>
+ 
+ 
   	<select id="selectBuyerList" resultType="com.sharedOne.domain.master.BuyerDto">
 
 		SELECT 

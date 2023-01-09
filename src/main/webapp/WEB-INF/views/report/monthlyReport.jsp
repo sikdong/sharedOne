@@ -110,6 +110,13 @@ div.right {
  		background-color: #1d5c83 !important;
  		color: white !important;
  	}
+ 	
+ 	.table{border-collapse:collapse; width:100%; table-layout:fixed}
+	.table thead{float:left; width:1300px;}
+	.table thead th{display:auto; width:1300px; text-align: left;}
+	.table tbody{overflow-y:auto; overflow-x:hidden; float:left; width:1300px; height:550px;}
+	.table tbody tr{display:table; width:1300px;}
+	.table td{word-wrap:break-word; width:1300px; height: auto;}
 
 </style>
 
@@ -135,12 +142,12 @@ div.right {
 		
 		<!-- *우측* 검색 필터 -->
 		<div class="col-sm-10 mt-1">
-			<form action="" method=""><!-- form get? post?  -->		
+			<form action="<%-- ${montlyReportLink} --%>" method=""><!-- form get? post?  -->		
 				<!-- 검색필터 1st row : 전체 검색. -->
-				<div class="row d-flex">
+				<div class="row d-flex"><!-- get방식으로 -->
 					<div class="col-sm-6 mb-4">
 						<div class="input-group">
-							<input name="" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
+							<input name="orderQ" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
 			        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
@@ -250,7 +257,10 @@ div.right {
 		<h4>주문목록</h4>
 
 			<div style="float: right;">
-				<form action="/excel/download" method="get">
+				<c:url value="/report/excelDown" var="listLink">
+				</c:url>
+				<form action="${listLink }" method="get">
+					<input name="orderQ" value="" class="form-control" type="hidden">
 					<button class="btn btn-primary primaryBtn" type="submit" style="margin-bottom: 10px;">
 						엑셀 다운로드
 					</button>
@@ -261,83 +271,42 @@ div.right {
 			<thead>
 				<!-- productCode, productName, productType, weight, size, price, unit, content -->
 				<tr>
-					<th>주문서 ID</th>
-					<th>등록일</th>
-					<th>수정일</th>
-					<th>납기일</th>
-					<th>담당자</th>
+					<th style="width: 9%;">주문서 ID</th>
 					<th>바이어코드</th>
+					<th>제품코드</th>
+					<th>단가</th>
+					<th>수량</th>
+					<th>합계</th>
+					<th style="width: 9%;">등록일</th>
+					<th style="width: 9%;">수정일</th>
+					<th style="width: 9%;">납기일</th>
+					<th>담당자</th>
 					<th>상태</th>
+					<th>메세지</th>
 				</tr>
 			</thead>
 			<tbody>
-			<!-- //productCode, productName, productType, weight, size, price, unit, content, inserted -->
-<%-- 				<c:forEach items="${OrderList }" var="order">
+				<c:forEach items="${orderList }" var="order">
+				<c:forEach items="${itemList }" var="itemList">
+				<c:forEach items="${salePrice }" var="price">
 					<tr>
-						<td>${order.orderCode }</td>
-						<td>${order.inserted }</td>
-						<td>${order.modified }</td>
-						<td>${order.deliveryDate }</td>
+						<td style="width: 9%;">${order.orderCode }</td>
+						<td>${order.buyerCode }</td>
+						<td>${itemList.productCode }</td>
+						<td>${price.salePrice }</td>
+						<td>${itemList.quantity }</td>
+						<td>${itemList.sum }</td>
+						<td style="width: 9%;">${order.inserted }</td>
+						<td style="width: 9%;">${order.modified }</td>
+						<td style="width: 9%;">${order.deliveryDate }</td>
 						<td>${order.writer }</td>
-						<td>${order.byuerCode }</td>
 						<td>${order.status }</td>
+						<td>${order.message }</td>
 
 					</tr>
-				</c:forEach> --%>
-					<tr>
-						<td>WT22060101</td>
-						<td>2022-06-01</td>
-						<td>2022-06-01</td>
-						<td>2022-08-30</td>
-						<td>이나현</td>
-						<td>MOB</td>
-						<td>종결</td>
-					</tr>
-					<tr>
-						<td>WT22070402</td>
-						<td>2022-07-04</td>
-						<td>2022-07-15</td>
-						<td>2022-08-30</td>
-						<td>이나현</td>
-						<td>MOB</td>
-						<td>종결</td>
-					</tr>
-					<tr>
-						<td>WT22080101</td>
-						<td>2022-08-01</td>
-						<td>2022-08-01</td>
-						<td>2022-09-30</td>
-						<td>이나현</td>
-						<td>MOB</td>
-						<td>종결</td>
-					</tr>
-					<tr>
-						<td>WT22090402</td>
-						<td>2022-09-04</td>
-						<td>2022-09-15</td>
-						<td>2022-10-30</td>
-						<td>이나현</td>
-						<td>MOB</td>
-						<td>종결</td>
-					</tr>
-										<tr>
-						<td>WT22100101</td>
-						<td>2022-10-01</td>
-						<td>2022-10-01</td>
-						<td>2022-12-30</td>
-						<td>이나현</td>
-						<td>MOB</td>
-						<td>승인</td>
-					</tr>
-					<tr>
-						<td>WT22110402</td>
-						<td>2022-11-04</td>
-						<td>2022-11-15</td>
-						<td>2022-12-30</td>
-						<td>이나현</td>
-						<td>MOB</td>
-						<td>승인</td>
-					</tr>
+				</c:forEach>
+				</c:forEach>
+				</c:forEach>
 				
 			</tbody>
 		</table>
