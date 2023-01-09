@@ -14,5 +14,8 @@
 	<button onclick='window.open("/master/salePriceRegister", "_blank", "width=500, height=400, top=100px,left=100px,menubar=no,toolbar=no,location=no,status=no,scrollbar=no")' id="\${questReadButtonId}" 
 	class="quest-btn" style = "border-radius: 5px; border-color: whitesmoke; margin-top: 3px;">판매가격 등록</button>`;
 	
+	<button onclick='window.open("/order/orderSheet/?orderId=11", "_blank", "width=800, height=1000, top=100px,left=100px,menubar=no,toolbar=no,location=no,status=no,scrollbar=no")' id="\${questReadButtonId}" 
+	class="quest-btn" style = "border-radius: 5px; border-color: whitesmoke; margin-top: 3px;">주문서 보이기</button>`;
+	
 </body>
 </html>
