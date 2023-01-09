@@ -43,6 +43,7 @@ import com.sharedOne.service.report.lnhReportService;
 @Controller
 @RequestMapping("report")
 public class lnhReportController {
+
 	@Autowired
 	private lnhProductService productService;
 	
@@ -70,11 +71,12 @@ public class lnhReportController {
 		
 		model.addAttribute("productList", productList);
 		
-		// business logic 작동
-		
+
+		//business logic 작동		
+		List<OrderHeaderDto> orderList = service.orderList(page, searchStartDate, searchEndDate, orderS, orderQ, pageInfo); // page = "파라미터 수집
+		List<ProductDto> productCatalog = service.productCatalog(productS, productQ); // 
 		List<ReportDto> thisYearSales = service.thisYearSales();
-		
-		List<OrderHeaderDto> orderList = service.orderList(orderQ);
+
 		
 		List<OrderItemDto> itemList = orderList.get(0).getOrderItem();
  
@@ -83,6 +85,7 @@ public class lnhReportController {
 		System.out.println("월별매출"+thisYearSales);
 		
 		// add attribute
+		model.addAttribute("productCatalog", productCatalog); // c:forEach items = productCatalog
 		model.addAttribute("orderList", orderList); // c:forEach items = orderList
 		model.addAttribute("itemList",itemList);
 		model.addAttribute("thisYearSales",thisYearSales);

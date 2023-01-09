@@ -10,7 +10,6 @@
 		SELECT * FROM Product WHERE productName = #{productName}
 	</select>
  
- 
  	<select id="selectProductList" resultType="com.sharedOne.domain.master.ProductDto">
  	<!-- productCode, productName, productType, weight, size, price, unit, content, inserted -->
 		SELECT 
@@ -50,10 +49,9 @@
 			OR  unit LIKE #{keyword} 
 			OR  content LIKE #{keyword} 
 			OR  inserted LIKE #{keyword}
-			
+		
 		ORDER BY productCode
  	</select>
- 	
  	
  	 <!-- 제품 입력 -->
  	<insert id="register" useGeneratedKeys="true" keyProperty="productCode">
@@ -73,6 +71,7 @@
  	<update id="update">
 	 	UPDATE Product
 	 	SET
+
 	 		<!-- productName = #{productName},
 	 		productType = #{productType}, -->
 	 		weight = #{weight},

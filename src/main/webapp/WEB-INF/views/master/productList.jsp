@@ -181,9 +181,7 @@
 			<table class="table">
 			   	 <thead>
 					 <tr>
-
 						<th style="max-width: 800px;">제품코드</th>
-
 						<th>제품명</th>
 						<th>타입</th>
 						<th>무게(g)</th>
@@ -199,10 +197,8 @@
 							<c:param name="code" value="${product.productCode }"></c:param>
 						</c:url>
 					<tr onclick="window.open('${getLink}','제품정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
-
 							<td style="max-width: 500px;">${product.productCode }</td>
 							<td>${product.productName }</td>
-
 							<td>${product.productType }</td>
 							<td>${product.weight }</td>
 							<td>${product.size }</td>
