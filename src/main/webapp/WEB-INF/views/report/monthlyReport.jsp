@@ -33,21 +33,21 @@ google.charts.setOnLoadCallback(drawChart);
 function drawChart() {
 
   var data = new google.visualization.DataTable();
-  data.addColumn('string', '제품');
+  data.addColumn('string', '월');
   data.addColumn('number', '매출');
-  data.addRows([
-    ['GATE', 600],
-    ['GLOBE', 1500],
-    ['SWING', 1200],
-    ['LUG', 1360],
-    ['WAFER', 1740]
-  ]);
-  
-  var linechart_options = {title:'이 달의 제품 별 매출 현황'};
-  var linechart = new google.visualization.PieChart(document.getElementById('columnchart_material1'));
+  <c:forEach items="${thisYearSales}" var="sales">
+	  data.addRows([
+	    [${sales.month }+'월', ${sales.thisSales}]
+	  <c:if test="${not empty thisYearSales.size() }">
+		,
+	</c:if>
+		]);
+  </c:forEach>
+  var linechart_options = {title:'올 해 매출 현황'};
+  var linechart = new google.visualization.LineChart(document.getElementById('columnchart_material1'));
   linechart.draw(data, linechart_options);
 
-  var barchart_options = {title:'이 달의 제품 별 매출 현황',
+  var barchart_options = {title:'올 해 별 매출 현황',
                  legend: 'none'};
   var barchart = new google.visualization.BarChart(document.getElementById('columnchart_material2'));
   barchart.draw(data, barchart_options);

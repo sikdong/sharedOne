@@ -59,5 +59,22 @@
 		<result column="salePrice" property="salePrice"/>
 	</resultMap>
 	
+	<select id="thisYearSales" resultType="com.sharedOne.domain.report.ReportDto">
+	SELECT MONTH(h.inserted) as month,
+		sum(i.sum) as thisSales
+	FROM Order_header h LEFT JOIN Order_item i ON h.orderCode = i.orderCode
+	WHERE year(inserted) = year(now()) 
+	GROUP BY month
+	
+	</select>
+	
+<!-- 	<resultMap type="com.sharedOne.domain.report.ReportDto" id="thisYearSales">
+		<collection property="month" ofType="Integer">
+			<result property="month" column="month"/>
+		</collection>
+		<collection property="thisSales" ofType="Integer">
+			<result property="thisSales" column="thisSales"/>
+		</collection>
+	</resultMap> -->
 	
 </mapper>
