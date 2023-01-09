@@ -257,14 +257,13 @@ div.right {
 		<h4>주문목록</h4>
 
 			<div style="float: right;">
-				<c:url value="/report/excelDown" var="listLink">
+			<c:set var="ctx" value="${pageContext.request.contextPath}" />
+				<%-- <c:url value="/report/excelDown?orderQ=${orderQ }" var="listLink">
 				</c:url>
-				<form action="${listLink }" method="get">
-					<input name="orderQ" value="" class="form-control" type="hidden">
-					<button class="btn btn-primary primaryBtn" type="submit" style="margin-bottom: 10px;">
+					<input name="orderQ" value="" class="form-control" type="hidden"> --%>
+					<a href="${ctx }/report/excelDown?orderQ=${param.orderQ }" class="btn btn-primary primaryBtn" type="submit" style="margin-bottom: 10px;">
 						엑셀 다운로드
-					</button>
-				</form>
+					</a>
 			</div>
 			<!-- 리스트 -->
 		<table class="table">
@@ -288,12 +287,11 @@ div.right {
 			<tbody>
 				<c:forEach items="${orderList }" var="order">
 				<c:forEach items="${itemList }" var="itemList">
-				<c:forEach items="${salePrice }" var="price">
 					<tr>
 						<td style="width: 9%;">${order.orderCode }</td>
 						<td>${order.buyerCode }</td>
 						<td>${itemList.productCode }</td>
-						<td>${price.salePrice }</td>
+						<td>${itemList.salePrice }</td>
 						<td>${itemList.quantity }</td>
 						<td>${itemList.sum }</td>
 						<td style="width: 9%;">${order.inserted }</td>
@@ -306,8 +304,6 @@ div.right {
 					</tr>
 				</c:forEach>
 				</c:forEach>
-				</c:forEach>
-				
 			</tbody>
 		</table>
 	</div>
