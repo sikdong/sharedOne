@@ -17,8 +17,14 @@ public class ProductDto {
 	private String unit;
 	private String content;
 	private LocalDate inserted;
+
+	private LocalDate modified;
+	private LocalDate fromDate;
+	private LocalDate endDate;
+
 	private String buyerCode;
 	
 	// 테이블에서 조인해서 가져오려면 필요해서 넣었습니다
 	private int salePrice;
+
 }
