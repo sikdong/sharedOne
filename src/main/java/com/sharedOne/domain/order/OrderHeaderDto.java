@@ -23,7 +23,8 @@ public class OrderHeaderDto {
 	
 	private List <BuyerDto> buyer;
 	private String buyerCode;
-//	private String buyerName;
+
+	private String buyerName;
 	
 	private List <OrderItemDto> orderItem;
 	

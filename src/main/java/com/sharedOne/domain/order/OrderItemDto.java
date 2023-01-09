@@ -1,5 +1,6 @@
 package com.sharedOne.domain.order;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.sharedOne.domain.master.SalePriceDto;
@@ -16,15 +17,15 @@ public class OrderItemDto {
 	
 	private List <ProductDto> product;
 	private String productCode;
-//	private String productName;
-//	private String unit;
-//	private int price;
+	private String productName;
+	private String unit;
+	private int price;
 	
-	private List <SalePriceDto> price;
-//	private int salePrice;
-//	private int discountRate;
-//	private LocalDate fromDate;
-//	private LocalDate endDate;
+	private List <SalePriceDto> salePriceDto;
+	private int salePrice;
+	private int discountRate;
+	private LocalDate fromDate;
+	private LocalDate endDate;
 	
 	
 }

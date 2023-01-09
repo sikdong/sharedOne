@@ -1,10 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
-
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
-
 
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
@@ -42,7 +39,9 @@
 		border-right-style: groove;
 	}
 	.scrollBox {
+
 /* 		border : solid; color:red; */
+
 		width : 100%;
 		height: 30%;
 	}
@@ -50,6 +49,14 @@
 		background-color: #D3D3D3;
 		cursor: pointer;
 	}
+
+	.scrollBox {
+		width: 100%;
+		height: 1000px;
+		box-sizing: border-box;
+		overflow: scroll;
+	}
+
 	th, td {
  		padding: 10px;
  	}
@@ -78,13 +85,14 @@
 	.table tbody tr{display:table; width:1300px;}
 	.table td{width:1300px; text-align: left;}
  	
- 	
 </style>
 
 
 </head>
 <body>
+
 <my:side_bar active=""></my:side_bar>
+
 <!-- 현재 날짜 설정  -->
 <c:set value="<%=sf.format(nowDate)%>" var="nowDate"/>
 <!-- ${nowDate}  -->
@@ -92,7 +100,9 @@
 <!-- 한달후 날짜 설정 -->
 <c:set value='<%=sf.format(addMonth)%>' var="addMonth" /> 
 <!-- ${addMonth}  -->
+
 <div class="container-sm mt-4" style="width: 77vw; margin-left: 20%;">
+
 	<div class="row d-flex">
 		
 		<!-- *좌측* 검색 조건 설명란 -->
@@ -214,6 +224,7 @@
 		<button id="registerBtn" class="btn btn-outline-primary primaryBtn" onclick="window.open('${registerLink}','제품등록','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');">제품등록</button>
 	</div>
 	<!-- 리스트 -->
+
 	<div class="listBox">
 			<table class="table">
 			   	 <thead>
@@ -228,7 +239,7 @@
 					 </tr>
 				 </thead>
 				<tbody class = "scorllBox">			
-					<c:forEach items="${productList }" var="product">
+					<c:forEach items="${productList }" var="product" varStatus="st">
 						<c:url value="/master/productModify" var="getLink">
 							<c:param name="code" value="${product.productCode }"></c:param>
 						</c:url>
