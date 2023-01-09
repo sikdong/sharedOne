@@ -45,7 +45,23 @@ public class YjhOrderController {
 		model.addAttribute("sumValue",sumValue );
 	}
 	
-	@PostMapping("orderSheet")
+	@GetMapping("confirmOrderSheet")
+	public void getConfirmOrderSheet(Model model, int orderId) {
+		
+		OrderHeaderDto orderHeader = service.getOrderSheetHead(orderId);
+		model.addAttribute("orderHeader", orderHeader);
+
+		List<YjhOrderItemDto> orderItem = service.getOrderSheetItem(orderId);
+		model.addAttribute("orderItem", orderItem);
+
+		BuyerDto buyerInfo = service.getOrderSheetBuyer(orderId);
+		model.addAttribute("buyer", buyerInfo);
+		
+		sumValueDto sumValue = service.getSumValue(orderId);
+		model.addAttribute("sumValue",sumValue );
+	}
+	
+	@PostMapping("confirmOrderSheet")
 	public String setApproval(RedirectAttributes rttr,String comment,int orderId, String status) {
 		
 		if(status.equals("승인")) {
