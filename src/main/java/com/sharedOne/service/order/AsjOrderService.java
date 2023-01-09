@@ -7,21 +7,22 @@ import org.springframework.stereotype.Service;
 
 import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.order.OrderItemDto;
-import com.sharedOne.mapper.order.OrderMapper;
+import com.sharedOne.mapper.order.AsjOrderMapper;
 
 @Service
-public class OrderService {
+public class AsjOrderService {
 
 	@Autowired
-	private OrderMapper orderMapper;
+	private AsjOrderMapper asjOrderMapper;
 
 	public List <OrderHeaderDto> selectOrderHeaderList() {
-		return orderMapper.selectOrderHeaderList();
 		
+		return asjOrderMapper.selectOrderHeaderList();
 	}
 
 	public List<OrderItemDto> selectOrderItemListByOrderCode(String orderCode) {
-		return orderMapper.selectOrderItemListByOrderCode(orderCode);
+		System.out.println("$$$orderCode :" + orderCode);
+		return asjOrderMapper.selectOrderItemListByOrderCode(orderCode);
 	}
 	
 	

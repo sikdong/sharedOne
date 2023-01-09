@@ -1,10 +1,13 @@
 package com.sharedOne.service.report;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sharedOne.domain.master.ProductDto;
 import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.report.PageInfo;
 import com.sharedOne.mapper.report.HmsReportMapper;
@@ -15,7 +18,12 @@ public class HmsReportService {
 	@Autowired
 	private HmsReportMapper mapper;
 	
-	public List<OrderHeaderDto> orderList(int page, String orderQ, PageInfo pageInfo) { // int page = 페이지 파라미터 추가
+	public List<OrderHeaderDto> orderList(int page, 
+										  String searchStartDate, 
+										  String searchEndDate, 
+										  String orderS, 
+										  String orderQ, 
+										  PageInfo pageInfo) { // int page = 페이지 파라미터 추가
 		int records = 10; // 10개까지 표시
 		int offset = (page - 1) * records; // 
 		
@@ -31,11 +39,32 @@ public class HmsReportService {
 		pageInfo.setRightPageNumber(rightPageNumber);
 		pageInfo.setLastPageNumber(lastPage);
 		
-		return mapper.orderList(offset, records, "%" + orderQ + "%");
+		// 기간 설정 
+		
+		//입력된 날짜가 빈 값일 때
+		if (searchStartDate == "") {
+	        searchStartDate = "00010101";
+	    }
+	    if (searchEndDate == "") {
+	        searchEndDate = "99991231";
+	    }
+
+	    // String으로 들어오는 날짜 데이터 변환
+	    //LocalDateTime startDateTime = LocalDate.parse(searchStartDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atTime(0, 0, 0);
+	    //LocalDateTime endDateTime = LocalDate.parse(searchEndDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atTime(23, 59, 59);
+		
+		return mapper.orderList(offset, records, orderS, "%" + orderQ + "%");
+
+	    
+
+	}
+
+	public List<ProductDto> productCatalog(String productS, String productQ) {
+		return mapper.productCatalog(productS, "%" + productQ + "%");
 	}
 
 	
-
 	
+
 	
 }

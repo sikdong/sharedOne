@@ -8,10 +8,10 @@ import com.sharedOne.domain.master.BuyerDto;
 import com.sharedOne.domain.master.SalePriceDto;
 
 @Mapper
-public interface SalePriceMapper {
+public interface AsjSalePriceMapper {
 
 	List<BuyerDto> selectSalePriceHeaderList();
 
-	List<SalePriceDto> selectSalePriceItemList(String buyerCode);
+	List<SalePriceDto> selectSalePriceItemListByBuyerCode(String buyerCode);
 
 }

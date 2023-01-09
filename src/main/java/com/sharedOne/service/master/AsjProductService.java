@@ -6,16 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sharedOne.domain.master.ProductDto;
-import com.sharedOne.mapper.master.ProductMapper;
+import com.sharedOne.mapper.master.AsjProductMapper;
 
 @Service
-public class ProductService {
+public class AsjProductService {
 
 	@Autowired
-	private ProductMapper productMapper;
+	private AsjProductMapper asjProductMapper;
 	
 	public List <ProductDto> selectProductList() {
-		return productMapper.selectProductList();
+		return asjProductMapper.selectProductList();
 		
 	}
 

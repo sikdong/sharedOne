@@ -21,8 +21,7 @@ public class OrderHeaderDto {
 	private String message;
 	
 	private List <BuyerDto> buyer;
-//	private String buyerCode;
-//	private String buyerName;
+	private String buyerName;
 	
 	
 	/* Order에 들어갈 자료는 무엇이 있을까

@@ -11,7 +11,7 @@
 	
 	<select id="orderList" resultType="com.sharedOne.domain.order.OrderHeaderDto">
 	SELECT 
-		orderId,
+		orderId, 
 		orderCode,
 		inserted,		
 		deliveryDate,
@@ -22,34 +22,44 @@
 	FROM 
 		Order_header 
 	WHERE
-		 	orderCode LIKE #{orderQ} 
-		OR 	writer    LIKE #{orderQ} 
+	<trim prefixOverrides="OR">
+		<if test="orderS == 'selectAll' or orderS == 'selectOrderCode'">
+		OR orderCode LIKE #{orderQ} 
+		</if>
+		
+		<if test="orderS == 'selectAll' or orderS == 'selectBuyerCode'">
 		OR 	buyerCode LIKE #{orderQ} 
-	ORDER BY orderId DESC 	<!-- orderId 등록이 최신 기준으로 -->
-	LIMIT #{offset}, #{records}
+		</if>
+		
+		<if test="orderS == 'selectAll' or orderS == 'selectWriter'">
+		OR 	writer    LIKE #{orderQ} 
+		</if>
+	</trim>
+	ORDER BY orderId DESC		<!-- orderId 등록이 최신 기준으로 -->
+	<!-- LIMIT #{offset}, #{records} -->
 	</select>
-	<select id="searchOrderCode" resultType="com.sharedOne.domain.order.OrderHeaderDto">
+	<select id="productCatalog" resultType="com.sharedOne.domain.master.ProductDto">
 		SELECT
-			orderId,
-			orderCode,
+			productCode,
+			productName,
+			productType,
+			weight,
+			size,
+			price,
+			unit,
+			content,
 			inserted,
 			modified,
-			deliveryDate,
-			writer,
-			buyerCode,
-			status,
-			message
+			fromDate,
+			endDate
 		FROM
-			Order_Header
-		WHERE 	   orderId LIKE '%orderQ%'
-		   OR    orderCode LIKE '%orderQ%'
-		   OR  	  inserted LIKE '%orderQ%'
-		   OR 	  modified LIKE '%orderQ%'
-		   OR deliveryDate LIKE '%orderQ%'
-		   OR       writer LIKE '%orderQ%'
-		   OR    buyerCode LIKE '%orderQ%'	
-		   OR 		status LIKE '%orderQ%'
-		   OR 	   message LIKE '%orderQ%';
+			Product
+		WHERE 	   
+			productCode LIKE #{productQ} OR
+			productName LIKE #{productQ} OR
+			productType LIKE #{productQ} OR
+			       size LIKE #{productQ} 
+		ORDER BY productCode DESC
 	</select>
 </mapper>
   

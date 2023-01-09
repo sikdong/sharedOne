@@ -16,8 +16,10 @@
     .sideDiv{
         position: fixed;
         width: 16%;
+
         min-width: 270px;
         max-width: 270px;
+
         height: 100vh;
         background: #1d5c83;
         color: #e3e3e3;
@@ -29,7 +31,9 @@
     .list-head{
         margin-left: 10px;
         text-align: left;
+
         width: 150px;
+
     }
     .threeline{
         color: #e3e3e3;
@@ -81,7 +85,7 @@
           <li class="mb-1">
             <div class="row list-row">
                 <div class=" list-head"><i class="fa-regular fa-clipboard"></i>&nbsp; 마스터 관리</div>
-                <div class=" listbtn"><a class="threeline" href="#" data-bs-toggle="collapse" data-bs-target="#master-collapse" aria-expanded="false"><i class="fa-solid fa-bars"></i></a></div>
+                <div class=" listbtn"><a class="threeline" href="#" data-bs-toggle="collapse" data-target="#master-collapse" aria-expanded="false"><i class="fa-solid fa-bars"></i></a></div>
             </div>
             <div class="collapse" id="master-collapse" style="">
               <ul>

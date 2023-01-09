@@ -7,14 +7,19 @@ import org.springframework.stereotype.Service;
 
 import com.sharedOne.domain.master.BuyerDto;
 import com.sharedOne.domain.master.ProductDto;
+import com.sharedOne.domain.master.SalePriceDto;
+import com.sharedOne.domain.master.YdsProductDto;
+import com.sharedOne.domain.order.OrderItemDto;
 import com.sharedOne.mapper.order.YdsOrderMapper;
+
+import lombok.RequiredArgsConstructor;
 
 
 @Service
+@RequiredArgsConstructor
 public class YdsOrderService {
 	
-	@Autowired(required = true)
-	private YdsOrderMapper mapper;
+	private final YdsOrderMapper mapper;
 
 	public List<BuyerDto> searchBuyer(String buyerInfo) {
 		// TODO Auto-generated method stub
@@ -27,9 +32,20 @@ public class YdsOrderService {
 		return mapper.getBuyerNames();
 	}
 
-	public List<ProductDto> searchProduct(String ProductInfo) {
+	public List<ProductDto> searchProduct(String allproductInfo) {
 		// TODO Auto-generated method stub
-		return null;
+		allproductInfo = "%" + allproductInfo + "%";
+		return mapper.searchProduct(allproductInfo);
+	}
+
+
+	public YdsProductDto addTempProductOrder(YdsProductDto ypd) {
+		// TODO Auto-generated method stub
+		YdsProductDto yds = mapper.addTempProductOrder(ypd);
+		yds.setQuantity(ypd.getQuantity());
+		yds.setSalePrice(ypd.getSalePrice());
+		return yds;
+		
 	}
 	
 	
