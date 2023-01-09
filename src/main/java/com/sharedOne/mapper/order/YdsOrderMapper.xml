@@ -44,30 +44,30 @@
 	
 	<select id="searchProduct" resultType="com.sharedOne.domain.master.ProductDto">
 		SELECT 
-			productCode,
-			productType,
-			productName,
-			weight,
-			size,
-			price,
-			unit,
-			content,
-			inserted
+			p.productCode,
+			p.productType,
+			p.productName,
+			p.weight,
+			p.size,
+			p.price,
+			p.unit,
+			s.salePrice,
+			s.buyerCode
 		FROM
-			Product
-		<where>
+			Product p 
+		LEFT JOIN SalePrice s ON p.productCode = s.productCode
+		WHERE
 			<trim prefixOverrides="OR">
-				<if test="productName != null">
-					OR productName Like #{productInfo}
+				<if test="#{productInfo} != null">
+					OR p.productCode Like #{productInfo}
 				</if>
-				<if test="productType != null">
-					OR productType Like #{productInfo}
+				<if test="#{productInfo} != null">
+					OR p.productName Like #{productInfo}
 				</if>
-				<if test="productCode != null">
-					OR productCode Like #{productInfo}
+				<if test="#{productInfo} != null">
+					OR p.productType Like #{productInfo}
 				</if>
 			</trim>
-		</where>
 	</select>
 	
 	<select id="addTempProductOrder" resultType="com.sharedOne.domain.master.YdsProductDto">
@@ -78,7 +78,7 @@
 		 	size,
 		 	unit,
 		 	price
-		 FROM Product
+		 FROM Product 
 		 where productCode = #{productCode}
 		 
 	</select>

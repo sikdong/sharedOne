@@ -18,7 +18,7 @@ public interface YdsOrderMapper {
 
 	List<BuyerDto> getBuyerNames();
 
-	List<ProductDto> searchProduct(String productInfo);
+	List<ProductDto> searchProduct(String productInfo, String tableBuyerCode);
 
 	YdsProductDto addTempProductOrder(YdsProductDto ypd);
 

@@ -69,10 +69,12 @@ public class YdsOrderController {
 		return service.searchBuyer(buyerCode);
 	}
 	
-	@GetMapping("searchAllProductInfo/{allProductInfo}")
+	@GetMapping("searchAllProductInfo/{allProductInfo}/{tableBuyerCode}")
 	@ResponseBody
-	public List<ProductDto> searchAllProductInfo(@PathVariable String allProductInfo){
-		return service.searchProduct(allProductInfo);
+	public List<ProductDto> searchAllProductInfo(@PathVariable String allProductInfo, 
+			@PathVariable String tableBuyerCode){
+		System.out.println(tableBuyerCode);
+		return service.searchProduct(allProductInfo, tableBuyerCode);
 		
 	}
 
@@ -95,19 +97,13 @@ public class YdsOrderController {
 	  public void insertOrder(YdsOrderDto yod){
 		  System.out.println("오더 목록 : " + yod);
 		  service.insertOrder(yod);
-			/*
-			 * System.out.println(buyerCode); System.out.println(deliveryDate);
-			 * System.out.println(productCode); System.out.println(salePrice);
-			 * System.out.println(quantity); System.out.println(message);
-			 */
-			/* service.insertOrderHeader(); */
-			/* service.insertOrderItem(oid); */
 	  }
 	  
 	  
 	 @PostMapping("addTempProductOrder")
 	 @ResponseBody
 	 public YdsProductDto addTempProductOrder(@RequestBody YdsProductDto ypd) {
+		 System.out.println(ypd);
 		 return service.addTempProductOrder(ypd);
 	 }
 	
