@@ -19,7 +19,7 @@ public class AsjProductController {
 	@Autowired
 	private AsjProductService asjProductService;
 	
-	@GetMapping("productList")
+	/*@GetMapping("productList")
 	public void productList(Model model){
 		List <ProductDto> productList = asjProductService.selectProductList();
 		
@@ -36,5 +36,5 @@ public class AsjProductController {
 		model.addAttribute("sizes", setSizes);
 		
 		model.addAttribute("productList", productList);
-	}
+	}*/
 }

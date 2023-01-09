@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.order.OrderItemDto;
+import com.sharedOne.domain.order.YdsOrderDto;
 import com.sharedOne.service.order.AsjOrderService;
 import com.sharedOne.service.order.YdsOrderService;
 
@@ -32,9 +33,6 @@ public class YdsOrderController {
 	
 	
 	private final YdsOrderService service;
-	
-	@Autowired
-	private AsjOrderService asjOrderService;
 
 	
 	@GetMapping("register")
@@ -71,48 +69,42 @@ public class YdsOrderController {
 		return service.searchBuyer(buyerCode);
 	}
 	
-	@GetMapping("searchAllProductInfo/{allProductInfo}")
+	@GetMapping("searchAllProductInfo/{allProductInfo}/{tableBuyerCode}")
 	@ResponseBody
-	public List<ProductDto> searchAllProductInfo(@PathVariable String allProductInfo){
-		return service.searchProduct(allProductInfo);
+	public List<ProductDto> searchAllProductInfo(@PathVariable String allProductInfo, 
+			@PathVariable String tableBuyerCode){
+		System.out.println(tableBuyerCode);
+		return service.searchProduct(allProductInfo, tableBuyerCode);
 		
 	}
 
 	
-	  @GetMapping("list") 
+	  /*@GetMapping("list") 
 	  public void orderList(Model model, String orderCode ) {
 	  List <OrderHeaderDto> headerList = orderService.selectOrderHeaderList(); List
 	 <OrderItemDto> itemListByOrderCode =
 	 orderService.selectOrderItemListByOrderCode(orderCode);
 	 
 	 model.addAttribute("headerList", headerList); model.addAttribute("itemList",
-	 itemListByOrderCode); }
+	 itemListByOrderCode); }*/
 	  
 	  @GetMapping("modify")
 	  public void modifyOrder() {
 		  
 	  }
 	  
-	  @PostMapping("list")
-	  public void insertOrder(String deliveryDate, String buyerCode, String productCode) {
-		  System.out.println("납기요청일 " + deliveryDate);
-		  System.out.println("바이어코드 " + buyerCode);
-		  System.out.println("제품코드" + productCode);
+	  @PostMapping("register")
+	  public void insertOrder(YdsOrderDto yod){
+		  System.out.println("오더 목록 : " + yod);
+		  service.insertOrder(yod);
 	  }
 	  
-	  /*@PostMapping("addTempProductOrder")
-	  @ResponseBody
-	  public YdsProductDto addTempProductOrder(@RequestBody YdsProductDto product){
-		 return service.addTempProductOrder(product);
-		  
-	  }*/
 	  
 	 @PostMapping("addTempProductOrder")
 	 @ResponseBody
 	 public YdsProductDto addTempProductOrder(@RequestBody YdsProductDto ypd) {
 		 System.out.println(ypd);
 		 return service.addTempProductOrder(ypd);
-		 
 	 }
 	
 }

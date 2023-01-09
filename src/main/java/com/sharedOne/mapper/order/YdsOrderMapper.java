@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.sharedOne.domain.master.BuyerDto;
 import com.sharedOne.domain.master.ProductDto;
 import com.sharedOne.domain.master.YdsProductDto;
+import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.order.OrderItemDto;
 
 
@@ -17,8 +18,12 @@ public interface YdsOrderMapper {
 
 	List<BuyerDto> getBuyerNames();
 
-	List<ProductDto> searchProduct(String productInfo);
+	List<ProductDto> searchProduct(String productInfo, String tableBuyerCode);
 
 	YdsProductDto addTempProductOrder(YdsProductDto ypd);
+
+	void insertOrderHeader(OrderHeaderDto ohd);
+
+	void insertOrderItem(OrderItemDto oid);
 	
 }
