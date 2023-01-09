@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sharedOne.domain.master.ProductDto;
+import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.mapper.master.lnhProductMapper;
 
 @Service
@@ -17,6 +18,10 @@ public class lnhProductService {
 	public List <ProductDto> selectProductList() {
 		return productMapper.selectProductList();
 		
+	}
+	
+	public List<ProductDto> searchProductList(String keyword) {
+		return productMapper.searchProductList("%" + keyword + "%");
 	}
 	
 	//제품 등록
@@ -33,10 +38,17 @@ public class lnhProductService {
 	public void update(ProductDto product) {
 		productMapper.update(product);
 	}
+	
+	public ProductDto getByProductName(String productName) {
+		return productMapper.selectProductName(productName);
+	}
 	//삭제
 	public void remove(String productCode) {
 		productMapper.delete(productCode);
 	}
+
+
+
 	
 
 }

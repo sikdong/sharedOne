@@ -44,23 +44,64 @@
 	
 	<select id="searchProduct" resultType="com.sharedOne.domain.master.ProductDto">
 		SELECT 
-			productCode,
-			productType,
-			productName,
-			weight,
-			size,
-			price,
-			unit,
-			content,
-			inserted
+			p.productCode,
+			p.productType,
+			p.productName,
+			p.weight,
+			p.size,
+			p.price,
+			p.unit,
+			s.salePrice,
+			s.buyerCode
 		FROM
-			Product
-		<where>
-			<trim></trim>
-		</where>
-	
-	
+			Product p 
+		LEFT JOIN SalePrice s ON p.productCode = s.productCode
+		WHERE
+			<trim prefixOverrides="OR">
+				<if test="#{productInfo} != null">
+					OR p.productCode Like #{productInfo}
+				</if>
+				<if test="#{productInfo} != null">
+					OR p.productName Like #{productInfo}
+				</if>
+				<if test="#{productInfo} != null">
+					OR p.productType Like #{productInfo}
+				</if>
+			</trim>
 	</select>
+	
+	<select id="addTempProductOrder" resultType="com.sharedOne.domain.master.YdsProductDto">
+		SELECT
+		 	productCode,
+		 	productName,
+		 	productType,
+		 	size,
+		 	unit,
+		 	price
+		 FROM Product 
+		 where productCode = #{productCode}
+		 
+	</select>
+	<insert id="insertOrderHeader">
+	INSERT INTO Order_header(
+		deliveryDate,
+		buyerCode,
+		status,
+		message
+	)
+	VALUES(#{deliveryDate}, #{buyerCode}, '승인요청', #{message})
+	
+	</insert>
+	
+	<insert id="insertOrderItem">
+	INSERT INTO Order_item(
+		productCode,
+		quantity,
+		salePrice
+	)
+	VALUES(#{productCode}, #{quantity}, #{salePrice})
+	
+	</insert>
 	
 
 

@@ -84,7 +84,7 @@
 	.table thead th{display:auto; width:1300px;}
 	.table tbody{overflow-y:auto; overflow-x:hidden; float:left; width:1300px; height:550px;}
 	.table tbody tr{display:table; width:1300px;}
-	.table td{text-align:inherit; width:1300px;}
+	.table td{width:1300px; text-align: left;}
  	
 </style>
 
@@ -126,7 +126,7 @@
 				<div class="row d-flex">
 					<div class="col-sm-6 mb-4">
 						<div class="input-group">
-							<input name="" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
+							<input name="keyword" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
 			        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
@@ -137,7 +137,7 @@
 						<div class="input-group" >
 							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions1" placeholder="제품코드">
 							<datalist id="datalistOptions1">
-								<c:forEach items="${productList }" var="product">
+								<c:forEach items="${product }" var="product">
 									<option value="${product.productCode }">
 								</c:forEach>
 							</datalist>
@@ -148,7 +148,7 @@
 						<div class="input-group">
 							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품명">
 							<datalist id="datalistOptions2">
-								<c:forEach items="${productList }" var="product">
+								<c:forEach items="${product }" var="product">
 									<option value="${product.productName }">
 								</c:forEach>
 							</datalist>
@@ -230,8 +230,9 @@
 			<table class="table">
 			   	 <thead>
 					 <tr>
-           				 <th>No.</th>
-						<th>제품코드</th>
+
+						<th style="max-width: 800px;">제품코드</th>
+
 						<th>제품명</th>
 						<th>타입</th>
 						<th>무게(g)</th>
@@ -247,9 +248,10 @@
 							<c:param name="code" value="${product.productCode }"></c:param>
 						</c:url>
 					<tr onclick="window.open('${getLink}','제품정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
-              				<td>${st.count }</td>
-							<td style="width: 800px">${product.productCode }</td>
-							<td style="margin-right: 50px">${product.productName }</td>
+
+							<td style="max-width: 500px;">${product.productCode }</td>
+							<td>${product.productName }</td>
+
 							<td>${product.productType }</td>
 							<td>${product.weight }</td>
 							<td>${product.size }</td>
@@ -263,37 +265,6 @@
 		</div>
 	</div>
 	
-	
-<%-- 	<table class="table">
-		<thead>
-			<!-- productCode, productName, productType, weight, size, price, unit, content -->
-			<tr>
-				<th>제품코드</th>
-				<th>제품명</th>
-				<th>타입</th>
-				<th>무게(g)</th>
-				<th>규격(Inch)</th>
-				<th>단위(EA)</th>
-				<th>원가</th>
-			</tr>
-		</thead>
-		<tbody>
-		<!-- //productCode, productName, productType, weight, size, price, unit, content, inserted -->
-			<c:forEach items="${productList }" var="product">
-				<tr>
-					<td>${product.productCode }</td>
-					<td>${product.productName }</td>
-					<td>${product.productType }</td>
-					<td>${product.weight }</td>
-					<td>${product.size }</td>
-					<td>${product.unit }</td>
-					<td>${product.price }</td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table> --%>
-	
-</div>
 
 
 

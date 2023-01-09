@@ -5,7 +5,25 @@
   
  <mapper namespace="com.sharedOne.mapper.master.lnhProductMapper">
  
+ <!-- 중복체크 -->
+ 	<select id="selectProductName" resultType="com.sharedOne.domain.master.ProductDto">
+		SELECT * FROM Product WHERE productName = #{productName}
+	</select>
+ 
+ 
  	<select id="selectProductList" resultType="com.sharedOne.domain.master.ProductDto">
+ 	<!-- productCode, productName, productType, weight, size, price, unit, content, inserted -->
+		SELECT 
+			productCode,
+			productName,
+			productType,
+			size
+		FROM 
+			Product
+			
+ 	</select>
+ 	
+ 	<select id="searchProductList" resultType="com.sharedOne.domain.master.ProductDto">
  	<!-- productCode, productName, productType, weight, size, price, unit, content, inserted -->
 		SELECT 
 			productCode,
@@ -23,7 +41,19 @@
 		FROM 
 			Product
 			
+		WHERE 	productCode LIKE #{keyword}
+			OR  productName LIKE #{keyword} 
+			OR  productType LIKE #{keyword} 
+			OR  weight LIKE #{keyword} 
+			OR  size LIKE #{keyword} 
+			OR  price LIKE #{keyword} 
+			OR  unit LIKE #{keyword} 
+			OR  content LIKE #{keyword} 
+			OR  inserted LIKE #{keyword}
+			
+		ORDER BY productCode
  	</select>
+ 	
  	
  	 <!-- 제품 입력 -->
  	<insert id="register" useGeneratedKeys="true" keyProperty="productCode">
@@ -43,8 +73,8 @@
  	<update id="update">
 	 	UPDATE Product
 	 	SET
-	 		productName = #{productName},
-	 		productType = #{productType},
+	 		<!-- productName = #{productName},
+	 		productType = #{productType}, -->
 	 		weight = #{weight},
 	 		size = #{size},
 	 		price = #{price},
