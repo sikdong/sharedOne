@@ -33,22 +33,21 @@ google.charts.setOnLoadCallback(drawChart);
 function drawChart() {
 
   var data = new google.visualization.DataTable();
-  data.addColumn('string', '월');
+  data.addColumn('string', '제품');
   data.addColumn('number', '매출');
   data.addRows([
-    ['6월', 600],
-    ['7월', 1500],
-    ['8월', 1200],
-    ['9월', 1360],
-    ['10월', 2680],
-    ['11월', 1740]
+    ['GATE', 600],
+    ['GLOBE', 1500],
+    ['SWING', 1200],
+    ['LUG', 1360],
+    ['WAFER', 1740]
   ]);
-
-  var linechart_options = {title:'월 별 매출 현황'};
-  var linechart = new google.visualization.LineChart(document.getElementById('columnchart_material1'));
+  
+  var linechart_options = {title:'이 달의 제품 별 매출 현황'};
+  var linechart = new google.visualization.PieChart(document.getElementById('columnchart_material1'));
   linechart.draw(data, linechart_options);
 
-  var barchart_options = {title:'월 별 매출 현황',
+  var barchart_options = {title:'이 달의 제품 별 매출 현황',
                  legend: 'none'};
   var barchart = new google.visualization.BarChart(document.getElementById('columnchart_material2'));
   barchart.draw(data, barchart_options);
@@ -74,7 +73,7 @@ div.mainBoard {
 	margin-top: 20px;
 	margin-bottom: 10px;
 	width: 100%;
-	height: :1000px;
+	height: 1000px;
 	
 }
 
@@ -111,6 +110,13 @@ div.right {
  		background-color: #1d5c83 !important;
  		color: white !important;
  	}
+ 	
+ 	.table{border-collapse:collapse; width:100%; table-layout:fixed}
+	.table thead{float:left; width:1300px;}
+	.table thead th{display:auto; width:1300px; text-align: left;}
+	.table tbody{overflow-y:auto; overflow-x:hidden; float:left; width:1300px; height:550px;}
+	.table tbody tr{display:table; width:1300px;}
+	.table td{word-wrap:break-word; width:1300px; height: auto;}
 
 </style>
 
@@ -258,38 +264,49 @@ div.right {
 		<h4>주문목록</h4>
 
 			<div style="float: right;">
-				<form action="/excel/download" method="get">
-					<button class="btn btn-primary primaryBtn" type="submit" style="margin-bottom: 10px;">
-						엑셀 다운로드
-					</button>
-				</form>
+				<c:set var="ctx" value="${pageContext.request.contextPath}" />
+				<a href="${ctx }/report/excelDown?orderQ=${param.orderQ }"
+					class="btn btn-primary primaryBtn" type="submit"
+					style="margin-bottom: 10px;"> 엑셀 다운로드 </a>
 			</div>
 			<!-- 리스트 -->
 		<table class="table">
 			<thead>
+				<!-- productCode, productName, productType, weight, size, price, unit, content -->
 				<tr>
-					<th>주문서 ID</th>  <!-- orderId -->
-					<th>주문서번호</th> <!-- orderCode -->
-					<th>등록일</th>     <!-- inserted -->
-					<th>납기일</th>     <!-- deliveryDate -->
-					<th>수정일</th>     <!-- modified -->
-					<th>담당자</th>     <!-- writer -->
-					<th>바이어코드</th> <!-- buyerCode -->
-					<th>상태</th>       <!-- status -->
+					<th style="width: 9%;">주문서 ID</th>
+					<th>바이어코드</th>
+					<th>제품코드</th>
+					<th>단가</th>
+					<th>수량</th>
+					<th>합계</th>
+					<th style="width: 9%;">등록일</th>
+					<th style="width: 9%;">수정일</th>
+					<th style="width: 9%;">납기일</th>
+					<th>담당자</th>
+					<th>상태</th>
+					<th>메세지</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${orderList}" var="order">					
+				<c:forEach items="${orderList }" var="order">
+				<c:forEach items="${itemList }" var="itemList">
 					<tr>
-						<td>${order.orderId}</td>
-						<td>${order.orderCode}</td>
-						<td>${order.inserted}</td>
-						<td>${order.deliveryDate}</td>
-						<td>${order.modified}</td>
-						<td>${order.writer}</td>
-						<td>${order.buyerCode}</td>
-						<td>${order.status}</td>
+						<td style="width: 9%;">${order.orderCode }</td>
+						<td>${order.buyerCode }</td>
+						<td>${itemList.productCode }</td>
+						<td>${itemList.salePrice }</td>
+						<td>${itemList.quantity }</td>
+						<td>${itemList.sum }</td>
+						<td style="width: 9%;">${order.inserted }</td>
+						<td style="width: 9%;">${order.modified }</td>
+						<td style="width: 9%;">${order.deliveryDate }</td>
+						<td>${order.writer }</td>
+						<td>${order.status }</td>
+						<td>${order.message }</td>
+
 					</tr>
+				</c:forEach>
 				</c:forEach>
 			</tbody>
 		</table>

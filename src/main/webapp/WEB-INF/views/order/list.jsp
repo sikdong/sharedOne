@@ -74,6 +74,17 @@
 		box-sizing: border-box;
 		overflow: scroll;
 	}
+	 	
+ 	.primaryBtn {
+ 		background-color: white !important;
+ 		border-color: #1d5c83 !important;
+ 		color: #1d5c83 !important;
+ 	}
+ 	
+ 	.primaryBtn:hover {
+ 		background-color: #1d5c83 !important;
+ 		color: white !important;
+ 	}
 </style>
 
 
@@ -88,9 +99,10 @@
 <c:set value='<%=sf.format(addMonth)%>' var="addMonth" /> 
 <!-- ${addMonth}  -->
 <my:side_bar></my:side_bar>
+
 <div class="container-sm mt-4" style=" width: 77vw; margin-left: auto; ">
+	<h4>주문 관리</h4>
 	<div class="row d-flex">
-		
 		<!-- *좌측* 검색 조건 설명란 -->
 		<div class="col-sm-2 leftFilterDiv mt-2" >
 			<div class="mb-5">
@@ -111,7 +123,7 @@
 				<div class="row d-flex">
 					<div class="col-sm-6 mb-4">
 						<div class="input-group">
-							<input name="" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
+							<input name="q" value="${param.q }" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
 			        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
@@ -120,21 +132,22 @@
 				<div class="row d-flex">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions1" placeholder="주문번호">
+							<input name="orderCode" value="${param.orderCode }" type="text" id="" class="form-control" list="datalistOptions1" placeholder="주문코드">
 							<datalist id="datalistOptions1">
-								<c:forEach items="${productList }" var="product">
-									<option value="${product.productCode }">
+								<c:forEach items="${headerList }" var="h">
+									<option value="${h.orderCode }">
 								</c:forEach>
 							</datalist>
+							
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="바이어명">
+							<input name="buyerCode" value="${param.buyerCode }" type="text" id="" class="form-control" list="datalistOptions2" placeholder="바이어코드">
 							<datalist id="datalistOptions2">
-								<c:forEach items="${productList }" var="product">
-									<option value="${product.productName }">
+								<c:forEach items="${buyerCodeList }" var="buyerCode">
+									<option value="${buyerCode }">
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -142,10 +155,10 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions3" placeholder="담당자">
+							<input name="writer" value="${param.writer }" type="text" id="" class="form-control" list="datalistOptions3" placeholder="작성자">
 							<datalist id="datalistOptions3">
-								<c:forEach items="${types }" var="type">
-									<option value="${type }">
+								<c:forEach items="${writerList }" var="writer">
+									<option value="${writer }">
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -153,10 +166,10 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="처리상태">
+							<input name="status" value="${param.status }" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="처리상태">
 							<datalist id="datalistOptions4">
-								<c:forEach items="${sizes }" var="size">
-									<option value="${size }">
+								<c:forEach items="${statusList }" var="status">
+									<option value="${status }">
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -173,9 +186,9 @@
 					</div>
 					<div class="col-sm-5">
 						<div class="input-group">
-							<input name="inserted1" value="${nowDate }" type="date" id="insertedId1" class="form-control">
+							<input name="d1" value="${nowDate }" type="date" id="d1" class="form-control">
 							<span class="input-group-text">~</span>
-			        		<input name="inserted2" value="${nowDate }" type="date" id="insertedId2" class="form-control">
+			        		<input name="d2" value="${nowDate }" type="date" id="d2" class="form-control">
 						</div>
 					</div>
 				</div><!-- 3rd row 끝 -->
@@ -189,9 +202,9 @@
 					</div>
 					<div class="col-sm-5">
 						<div class="input-group">
-							<input name="modified1" value="" type="date" id="modifiedId1" class="form-control">
+							<input name="d3" value="" type="date" id="d3" class="form-control">
 							<span class="input-group-text">~</span>
-			        		<input name="modified2" value="" type="date" id="modifiedId2" class="form-control">
+			        		<input name="d4" value="" type="date" id="d4" class="form-control">
 						</div>
 					</div>
 				</div><!-- 4th row 끝 -->
@@ -205,9 +218,9 @@
 					</div>
 					<div class="col-sm-5">
 						<div class="input-group">
-							<input name="deliveryDate1" value="" type="date" id="deliveryDateId1" class="form-control">
+							<input name="d5" value="" type="date" id="d5" class="form-control">
 							<span class="input-group-text">~</span>
-			        		<input name="deliveryDate2" value="" type="date" id="deliveryDateId2" class="form-control">
+			        		<input name="d6" value="" type="date" id="d6" class="form-control">
 						</div>
 					</div>
 				</div><!-- 5th row 끝 -->
@@ -215,7 +228,7 @@
 					<div class="col-sm-4"></div>
 					<div class="col-sm-4">
 						<div style="text-align: justify;">
-							<button class="btn btn-primary" type="submit">선택 조건 검색</button>
+							<button class="btn btn-oneline-primary primaryBtn" type="submit">선택 조건 검색</button>
 						</div>
 					</div>
 				</div>
@@ -226,9 +239,11 @@
 	<hr>
 	
 	<div class="d-flex">
-		<h4>주문관리</h4>
+		<h4>주문 목록</h4>
 		<div class="col-sm-10"></div>
-		<button id="" class="btn btn-primary" >주문등록</button>
+		<form action="${pageContext.request.contextPath }/order/register" method="get">
+			<button id="" class="btn btn-oneline-primary primaryBtn" >주문등록</button>
+		</form>
 	</div>		
 	<!-- Order_header -->
 	<div class="scrollBox">
@@ -240,17 +255,17 @@
 					<th>바이어코드</th>
 					<th>바이어명</th>
 					<th>납기요청일</th>
-					<th>담당자</th>
+					<th>작성자</th>
 					<th>등록일</th>
-					<th>수정일</th>
+					<th>처리일</th>
 					<th>처리상태</th>				
 					<th>주문선택</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${headerList }" var="h">
-					<tr class="listHover" id="header${h.orderId }" >
-						<td><input type="checkbox" id="checkbox${h.orderId }"></td>
+					<tr class="listHover" id="header${h.orderCode }" >
+						<td><input type="checkbox" id="checkbox${h.orderCode }"></td>
 						<td>${h.orderCode }</td>	
 						<td>${h.buyerCode }</td>					
 						<td>${h.buyerName }</td>
@@ -261,33 +276,54 @@
 						<td>
 							<c:choose>
 								<c:when test="${h.status == '임시저장'}">
-									<button type="button" class="btn btn-secondary" disabled>${h.status }</button>
+									<form action="">
+										<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-secondary" >${h.status }</button>
+									</form>
 								</c:when>
 								<c:when test="${h.status == '승인요청'}">
-									<button type="button" class="btn btn-primary" disabled>${h.status }</button>
+									<form action="${pageContext.request.contextPath }/order/orderSheet">
+										<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-primary" >${h.status }</button>
+									</form>
 								</c:when>
 								<c:when test="${h.status == '승인완료'}">
-									<button type="button" class="btn btn-success" disabled>${h.status }</button>
+									<form action="${pageContext.request.contextPath }/order/companionSheet">
+										<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-success" >${h.status }</button>
+									</form>
 								</c:when>
-								<c:when test="${h.status == '요청반려'}">
-									<button type="button" class="btn btn-danger" disabled>${h.status }</button>
+								<c:when test="${h.status == '요청반려'}">									
+									<form action="${pageContext.request.contextPath }/order/companionSheet">
+										<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-danger" >${h.status }</button>
+									</form>
 								</c:when>
 								<c:when test="${h.status == '승인취소'}">
-									<button type="button" class="btn btn-secondary" disabled>${h.status }</button>
+									<form action="${pageContext.request.contextPath }/order/companionSheet">
+										<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-secondary" >${h.status }</button>
+									</form>
 								</c:when>
 								<c:when test="${h.status == '거래종결'}">
-									<button type="button" class="btn btn-secondary" disabled>${h.status }</button>
+									<form action="${pageContext.request.contextPath }/order/companionSheet">
+										<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-secondary" >${h.status }</button>
+									</form>
 								</c:when>
-							</c:choose>
-							
-							
+							</c:choose>		
 						</td>
-						
-						<td>
-							<form action="" method="get">
-								<button name="orderCode" value="${h.orderCode }" type="submit" class="btn btn-outline-secondary">선택</button>
-							</form>
-						</td>
+						<c:if test="${empty param.orderCode }">
+							<td>
+							<!-- ?q=&orderCode=&buyerCode=&writer=&status=&d1=2023-01-09&d2=2023-01-09&d3=&d4=&d5=&d6= -->
+								<form action="" method="get">
+									
+									<button id="detailBtn${h.orderCode }" name="orderCode" value="${h.orderCode }" type="submit" class="btn btn-outline-secondary">주문상세</button>
+									
+								</form>
+							</td>
+						</c:if>
+						<c:if test="${not empty param.orderCode }">
+							<td>
+								<input type="hidden" name="" id="" value="${h.orderCode}">
+								<button id="backBtn${h.orderCode }" type="button" class="btn btn-outline-secondary">돌아가기</button>
+								
+							</td>
+						</c:if>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -298,16 +334,14 @@
 	<c:if test="${not empty param.orderCode }">
 		<div class="d-flex">
 			<div class="col-sm-4">
-				<h4>주문상세
-					<span style="font-size: 15pt;">주문코드 : ${param.orderCode }</span>
-				</h4>
+				<h4>주문 상세</h4>
+				<span style="font-size: 15pt;">주문코드 : ${param.orderCode }</span>
+				
 			</div>
-			<div class="col-sm-6"></div>
+			<div class="col-sm-7"></div>
+			
 			<div class="col-sm-1">
-				<button id="" class="btn btn-secondary">주문수정</button>			
-			</div>
-			<div class="col-sm-1">
-				<button id="" class="btn btn-primary">승인요청</button>
+			<!-- 	<button id="" class="btn btn-oneline-primary primaryBtn"><span style="font-size: 12pt">주문서확인</span></button> -->
 			</div>
 		</div>	
 		
@@ -316,8 +350,7 @@
 				<thead>
 					<tr>
 						<th>No.</th>
-						<th>제품명</th>
-					
+						<th>제품명</th>	
 						<th>단가</th>
 						<th>공급가액</th>
 						<th>할인율</th>
@@ -330,19 +363,15 @@
 					<c:forEach items="${itemList }" var="item" varStatus="st">
 					<tr class="listHover">
 						<td>${st.count }</td>
-					<td>${item.productName }</td>
-				
-					<td>${item.price }</td>
-					<td>${item.salePrice }</td>
-					<td>${item.discountRate }</td>
-					<td>
-						${item.quantity } ${item.unit }
-						<!-- <span><i class="fa-solid fa-pen-to-square"></i></span>  -->
-					</td>
-					<td>${item.sum }</td>
+						<td>${item.productName }</td>			
+						<td>${item.price }</td>
+						<td>${item.salePrice }</td>
+						<td>${item.discountRate } %</td>
 						<td>
-							<!-- <span><i class="fa-regular fa-trash-can"></i></span> -->
+							${item.quantity } ${item.unit }
+							<!-- <span><i class="fa-solid fa-pen-to-square"></i></span>  -->
 						</td>
+						<td>${item.sum }</td>
 					</tr>
 					</c:forEach>
 				</tbody>
@@ -353,76 +382,26 @@
 </div><!-- container 끝  -->
 
 
-<script type="text/javascript">
-	const ctx = "${pageContext.request.contextPath}";
-	const detailContainerDiv = document.querySelector("#detailContainerDiv");
-	
-/* 	detailContainerDiv.innerHTML = "";
-	
-	<c:forEach items="${headerList }" var="h">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		const ctx = ${pageComtext.request.contextPath}
 		
-		document.querySelector("#header${h.orderId }").addEventListener("click", function(){
-			document.querySelector("#checkbox${h.orderId }").checked = true;
-			var orderCode = '${h.orderCode}';
-			
-			console.log(orderCode);
-			
-			fetch(`\${ctx}/order/list/\${orderCode} )
-			.then(()=>detailList() );
-				
-			
-			
-			
-		});
-	</c:forEach>
-	
-	function detailList(){
-		const details = `
-			<h4>주문상세</h4>
-			<p>주문번호 : ${h.orderCode }</p>	
-			<div class="scrollBox">	
-			<nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
-			  <table class="table">
-				<thead>
-					<tr class="listHover">
-						<th>No.</th>
-						<th>제품명</th>
-						<th>단위</th>
-						<th>단가</th>
-						<th>공급가액</th>
-						<th>부가세</th>
-						<th>수량</th>
-						<th>합계</th>
-						<th>비고</th>
-					</tr>
-				</thead>
-			  </table>
-			</nav>
-			<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
-			  <table>
-				 <tbody>
-					<c:forEach items="${itemList }" var="item" varStatus="st">
-						<tr>
-							<td>${st.count }</td>
-							<td>${item.productName }</td>
-							<td>${item.unit }</td>
-							<td>${item.price }</td>
-							<td>${item.salePrice }</td>
-							<td>10%</td>
-							<td>${item.quantity }</td>
-							<td>${item.sum }</td>
-							<td>수정/ 삭제</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			  </table>
-			</div>
-		</div><!-- scrollBox 끝 -->
-		`;
-		detailContainerDiv.insertAdjacentHTML("beforeend", details);
-	} */
-	
-</script>
+		console.log('backBtn${param.orderCode}');
+		
+		
+		$(function(){ 
+			$('#detailBtn${param.orderCode}').click(function(){
+				$('#checkbox${param.orderCode}').checked();
+			})
+		})
+		
+		$(function(){ 
+			$('#backBtn${param.orderCode}').click(function(){
+				history.go(-1);
+			})
+		})
+		
+	</script>
 	
 </body>
 </html>

@@ -65,7 +65,7 @@
 <c:set value="${pageContext.request.contextPath }" var="path"></c:set>
 	<my:side_bar></my:side_bar>
 <div class="root">
-<form action="${path}/order/list" method="POST">		
+<form action="" method="POST">		
 		<div style="font-size: 30px;">
 			<strong>주문서 등록</strong>
 		</div>
@@ -216,35 +216,20 @@
 								<div class="row d-flex">
 									<div class="col-sm-3 mb-4">
 										<div class="input-group" >
-											<input type="text"  class="form-control" list="datalistOptions1" placeholder="제품명">
-											<datalist id="datalistOptions1">
-												<c:forEach items="${productList }" var="product">
-													<option value="${product.productCode }">
-												</c:forEach>
-											</datalist>
-											<button class="btn btn-outline-secondary"><i class="fa-solid fa-magnifying-glass"></i></button>
+											<input type="text" id="productNameInput"  class="form-control" list="datalistOptions1" placeholder="제품명">
+											<button class="btn btn-outline-secondary" type="button" id="productNameBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
 										</div>
 									</div>
 									<div class="col-sm-3">
 										<div class="input-group">
-											<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품코드">
-											<datalist id="datalistOptions2">
-												<c:forEach items="${productList }" var="product">
-													<option value="${product.productName }">
-												</c:forEach>
-											</datalist>
-											<button class="btn btn-outline-secondary" type=""><i class="fa-solid fa-magnifying-glass"></i></button>
+											<input id="productCodeInput" type="text" class="form-control" list="datalistOptions2" placeholder="제품코드">
+											<button id="productCodeBtn"class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
 										</div>	
 									</div>
 									<div class="col-sm-3">
 										<div class="input-group">
-											<input name="" value="" type="text" id="" class="form-control" list="datalistOptions3" placeholder="제품그룹">
-											<datalist id="datalistOptions3">
-												<c:forEach items="${types }" var="type">
-													<option value="${type }">
-												</c:forEach>
-											</datalist>
-											<button class="btn btn-outline-secondary" type=""><i class="fa-solid fa-magnifying-glass"></i></button>
+											<input name="" type="text" id="productTypeInput" class="form-control" list="datalistOptions3" placeholder="제품그룹">
+											<button class="btn btn-outline-secondary" type="button" id="productTypeBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
 										</div>
 									</div>
 								</div><!-- 2nd row 끝 -->
@@ -255,29 +240,13 @@
 					</div><!-- container-sm div 끝-->
 					<hr />
 					<div id="productTable">
-				
 					</div>
 			
 		
 		
-		<div style="width : 77vw; display : flex;" class="mt-5">
-			<div class="form-width flex">
-				<label for="staticEmail" class="col-form-label" style="min-width : 50px;">단가</label>
-				<div class="ml-3">
-					<input type="number" class="form-control"
-						id="salePrice">
-				</div>
-			</div>
-			<div  class="form-width flex">
-				<label for="inputPassword" class="col-form-label" style="min-width : 50px;">수량(EA)</label>
-				<div class="ml-3">
-					<input type="number" class="form-control" id="quantity">
-				</div>
-			</div>
-		</div>
-			<button type="button" style="background : #1d5c83; color : white; margin-left : 40%; " class="mt-5 btn">임시저장</button>
-			<button type="button" id="addOrder" class="mt-5 btn btn-form" style="background : #1d5c83; color : white;">등록</button>
-			<button type="button" class="mt-5 btn" style="background : #1d5c83; color : white;">닫기</button>
+			<button type="button" id="addOrder" class="mt-5 btn btn-form" 
+			style=" margin-left : 48%; background : #1d5c83; color : white;">
+			추가</button>
 		<br />
 		<br />
 		<br />
@@ -288,7 +257,7 @@
                       <tr>
                         <th scope="col">번호</th>
                         <th style="text-align: center;" scope="col" colspan="5">제품정보</th>
-                        <th style="text-align: center;" scope="col" colspan="5">금액정보</th>
+                        <th style="text-align: center;" scope="col" colspan="4">금액정보</th>
                         <th style="text-align: center; vertical-align: middle;" scope="col" rowspan="2">삭제여부</th>
                       </tr>
                       <tr>
@@ -300,7 +269,6 @@
                         <th>단위</th>
                         <th>원가</th>
                         <th>단가</th>
-                        <th>부가세</th>
                         <th>수량</th>
                         <th>합계액</th>
                       </tr>
@@ -311,11 +279,12 @@
                   <div style="width : 77vw;" class="mt-5">
 					<label for="inputPassword" class=" col-form-label">주문 시 특이사항</label>
 					<div class="ml-3">
-						<textarea rows="5" class="form-control" id="inputPassword" ></textarea>
+						<textarea rows="5" class="form-control" name="message" ></textarea>
 					</div>
 				  </div>
-				  
-		        <button style="margin-left: 46%; background : #1d5c83; color : white;" class="mt-5 btn">주문 등록</button>
+				 <button style="margin-left: 40%; background : #1d5c83; color : white;" class="mt-5 btn">임시저장</button> 
+		        <button style=" background : #1d5c83; color : white;" class="mt-5 btn">주문 등록</button>
+            	<button type="button" class="mt-5 btn" style="background : #1d5c83; color : white;">닫기</button>
             </form>
             </div>
             <br />
@@ -365,7 +334,7 @@
 					<input class="form-radio-input" type="radio"
 						id="flexCheckDefault" name="buyerCode" value="\${item.buyerCode}">
 				</th>
-				<td>\${item.buyerCode }</td>
+				<td id="tableBuyerCode">\${item.buyerCode }</td>
 				<td>\${item.buyerName }</td>
 				<td>\${item.country }</td>
 				<td>\${item.address }</td>
@@ -413,7 +382,7 @@
 					<input class="form-radio-input" type="radio"
 						id="flexCheckDefault" name="buyerName">
 				</th>
-				<td>\${item.buyerCode }</td>
+				<td id="tableBuyerCode">\${item.buyerCode }</td>
 				<td>\${item.buyerName }</td>
 				<td>\${item.country }</td>
 				<td>\${item.address }</td>
@@ -461,7 +430,7 @@
 					<input class="form-radio-input" type="radio"
 						id="flexCheckDefault" name="buyerName">
 				</th>
-				<td>\${item.buyerCode }</td>
+				<td id="tableBuyerCode">\${item.buyerCode }</td>
 				<td>\${item.buyerName }</td>
 				<td>\${item.country }</td>
 				<td>\${item.address }</td>
@@ -509,7 +478,7 @@
 					<input class="form-radio-input" type="radio"
 						id="flexCheckDefault" name="buyerName">
 				</th>
-				<td>\${item.buyerCode }</td>
+				<td id="tableBuyerCode">\${item.buyerCode }</td>
 				<td>\${item.buyerName }</td>
 				<td>\${item.country }</td>
 				<td>\${item.address }</td>
@@ -527,7 +496,8 @@
 	<%-- 전체 제품 검색 --%>
 	document.querySelector("#allProductInfoBtn").addEventListener("click", function(){
 		const allProductInfo = document.querySelector("#allProductInfo").value;
-		fetch(path+"/order/searchAllProductInfo/"+allProductInfo)
+		const tableBuyerCode = document.querySelector("#tableBuyerCode").innerHTML;
+		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode)
 		.then(res => res.json())
 		.then(list => {
 			document.querySelector("#productTable").innerHTML = "";
@@ -543,6 +513,8 @@
 				<th scope="col">무게</th>
 				<th scope="col">단위</th>
 				<th scope="col">원가</th>
+				<th scope="col">단가</th>
+				<th scope="col">수량</th>
 			</tr>
 		</thead>
 		<tbody id="productBody">
@@ -550,11 +522,12 @@
 	</table>`
 		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
 		for(const item of list){
+			if(item.buyerCode == tableBuyerCode || item.buyerCode == null){
 			const productTableItem =
-			
+				
 			`<tr>
 				<th>
-					<input class="form-radio-input" type="radio"
+					<input class="form-radio-input" type="checkbox"
 						id="flexCheckDefault" name="productCode" value="\${item.productCode}">
 				</th>
 				<td>\${item.productCode }</td>
@@ -564,12 +537,179 @@
 				<td>\${item.weight }kg</td>
 				<td>\${item.unit }</td>
 				<td>\${item.price }</td>
+				<td><input type="number" id="\${item.productCode}" style="max-width : 100px;" class="form-control"
+				value="\${item.salePrice}"/></td>
+				<td><input type="number" id="quantity" style="max-width : 80px;" class="form-control"></td>
 			</tr>`
 			document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
+				}
 			}
 		})
 	})
 	
+	<%--제품명 검색 --%>
+	document.querySelector("#productNameBtn").addEventListener("click", function(){
+		const allProductInfo = document.querySelector("#productNameInput").value;
+		const tableBuyerCode = document.querySelector("#tableBuyerCode").innerHTML;
+		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode)
+		.then(res => res.json())
+		.then(list => {
+			document.querySelector("#productTable").innerHTML = "";
+			const table = 
+				`<table class="table">
+			<thead>
+			<tr>
+				<th scope="col">선택</th>
+				<th scope="col">제품코드</th>
+				<th scope="col">제품그룹</th>
+				<th scope="col">제품명</th>
+				<th scope="col">규격</th>
+				<th scope="col">무게</th>
+				<th scope="col">단위</th>
+				<th scope="col">원가</th>
+				<th scope="col">단가</th>
+				<th scope="col">수량</th>
+			</tr>
+		</thead>
+		<tbody id="productBody">
+		</tbody>
+	</table>`
+		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
+		for(const item of list){
+			if(item.buyerCode == tableBuyerCode || item.buyerCode == null){
+				const productTableItem =
+					
+				`<tr>
+					<th>
+						<input class="form-radio-input" type="checkbox"
+							id="flexCheckDefault" name="productCode" value="\${item.productCode}">
+					</th>
+					<td>\${item.productCode }</td>
+					<td>\${item.productType }</td>
+					<td>\${item.productName }</td>
+					<td>\${item.size }inch</td>
+					<td>\${item.weight }kg</td>
+					<td>\${item.unit }</td>
+					<td>\${item.price }</td>
+					<td><input type="number" id="salePrice" style="max-width : 100px;" class="form-control" 
+					value="\${item.salePrice}"</td>
+					<td><input type="number" id="quantity" style="max-width : 80px;" class="form-control"></td>
+				</tr>`
+				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
+					}
+			}
+		})
+	})
+	<%--제품코드로 검색 --%>
+	document.querySelector("#productCodeBtn").addEventListener("click", function(){
+		const allProductInfo = document.querySelector("#productCodeInput").value;
+		const tableBuyerCode = document.querySelector("#tableBuyerCode").innerHTML;
+		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode)
+		.then(res => res.json())
+		.then(list => {
+			document.querySelector("#productTable").innerHTML = "";
+			const table = 
+				`<table class="table">
+			<thead>
+			<tr>
+				<th scope="col">선택</th>
+				<th scope="col">제품코드</th>
+				<th scope="col">제품그룹</th>
+				<th scope="col">제품명</th>
+				<th scope="col">규격</th>
+				<th scope="col">무게</th>
+				<th scope="col">단위</th>
+				<th scope="col">원가</th>
+				<th scope="col">단가</th>
+				<th scope="col">수량</th>
+			</tr>
+		</thead>
+		<tbody id="productBody">
+		</tbody>
+	</table>`
+		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
+		for(const item of list){
+			if(item.buyerCode == tableBuyerCode || item.buyerCode == null){
+				const productTableItem =
+					
+				`<tr>
+					<th>
+						<input class="form-radio-input" type="checkbox"
+							id="flexCheckDefault" name="productCode" value="\${item.productCode}">
+					</th>
+					<td>\${item.productCode }</td>
+					<td>\${item.productType }</td>
+					<td>\${item.productName }</td>
+					<td>\${item.size }inch</td>
+					<td>\${item.weight }kg</td>
+					<td>\${item.unit }</td>
+					<td>\${item.price }</td>
+					<td><input type="number" id="salePrice" style="max-width : 100px;" class="form-control" 
+					value="\${item.salePrice}"</td>
+					<td><input type="number" id="quantity" style="max-width : 80px;" class="form-control"></td>
+				</tr>`
+				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
+					}
+			}
+		})
+	})
+	
+	<%--제품그룹로 검색 --%>
+	document.querySelector("#productTypeBtn").addEventListener("click", function(){
+		const allProductInfo = document.querySelector("#productTypeInput").value;
+		const tableBuyerCode = document.querySelector("#tableBuyerCode").innerHTML;
+		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode)
+		.then(res => res.json())
+		.then(list => {
+			document.querySelector("#productTable").innerHTML = "";
+			const table = 
+				`<table class="table">
+			<thead>
+			<tr>
+				<th scope="col">선택</th>
+				<th scope="col">제품코드</th>
+				<th scope="col">제품그룹</th>
+				<th scope="col">제품명</th>
+				<th scope="col">규격</th>
+				<th scope="col">무게</th>
+				<th scope="col">단위</th>
+				<th scope="col">원가</th>
+				<th scope="col">단가</th>
+				<th scope="col">수량</th>
+			</tr>
+		</thead>
+		<tbody id="productBody">
+		</tbody>
+	</table>`
+		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
+		for(const item of list){
+			if(item.buyerCode == tableBuyerCode || item.buyerCode == null){
+				const productTableItem =
+					
+				`<tr>
+					<th>
+						<input class="form-radio-input" type="checkbox"
+							id="flexCheckDefault" name="productCode" value="\${item.productCode}">
+					</th>
+					<td>\${item.productCode }</td>
+					<td>\${item.productType }</td>
+					<td>\${item.productName }</td>
+					<td>\${item.size }inch</td>
+					<td>\${item.weight }kg</td>
+					<td>\${item.unit }</td>
+					<td>\${item.price }</td>
+					<td><input type="number" value="" id="salePrice" style="max-width : 100px;" class="form-control" 
+					</td>
+					<td><input type="number" id="quantity" style="max-width : 80px;" class="form-control"></td>
+				</tr>`
+				document.querySelector("#salePrice").value = item.salePrice;	
+				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
+				}
+			}
+		})
+	})
+	
+	<%--상세정보에 추가 --%>
 	document.querySelector("#addOrder").addEventListener("click", function() {
 		const productCode = document.querySelector('input[name="productCode"]:checked').value;
 		const quantity = document.querySelector("#quantity").value;
@@ -581,7 +721,7 @@
 		}
 		fetch(path+"/order/addTempProductOrder/", {
 			method : "POST",
-			header : {
+			headers : {
 				"Content-Type" : "application/json"
 			},
 			body : JSON.stringify(data)
@@ -598,17 +738,16 @@
               <td>\${data.productName}</td>
               <td>\${data.size}</td>
               <td>\${data.unit}</td>
-              <td>\${data.price}</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Otto</td>
-              <td>@mdo</td>
+              <td>\${data.price}원</td>
+              <td>\${data.salePrice}원<input type="hidden" name="salePrice" value="\${data.salePrice}"></td>
+              <td>\${data.quantity}<input type="hidden" name="quantity" value="\${data.quantity}"></td>
+              <td>\${data.sum}원</td>
               <td>
                   <button class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
               </td>
             </tr>`
           	document.querySelector("#tempOrderTable").insertAdjacentHTML("beforeend", productOrderTable);
-			
+			document.querySelector("#productBody").innerHTML = "";
 		})
 	})
 	</script>

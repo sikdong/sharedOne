@@ -6,8 +6,28 @@
   
  <mapper namespace="com.sharedOne.mapper.master.lnhBuyerMapper">
  
+ <!-- 중복 검사 -->
+ 	
+ 	<select id="selectByBuyerCode" resultType="com.sharedOne.domain.master.BuyerDto">
+		SELECT * FROM Buyer WHERE buyerCode = #{buyerCode}
+	</select>
+ 	
+ 	<select id="selectByBusinessNumber" resultType="com.sharedOne.domain.master.BuyerDto">
+		SELECT * FROM Buyer WHERE businessNumber = #{businessNumber}
+	</select>
+ 
   	<select id="selectBuyerList" resultType="com.sharedOne.domain.master.BuyerDto">
 
+		SELECT 
+			buyerCode,
+			buyerName,
+			country
+		FROM 
+			Buyer
+			
+ 	</select>
+ 	
+ 	  	<select id="searchBuyerList" resultType="com.sharedOne.domain.master.BuyerDto">
 		SELECT 
 			buyerCode,
 			buyerName,
@@ -19,7 +39,15 @@
 			manager
 		FROM 
 			Buyer
-			
+		WHERE 	buyerCode LIKE #{keyword}
+			OR  buyerName LIKE #{keyword}
+			OR  address LIKE #{keyword}
+			OR  country LIKE #{keyword}
+			OR  businessNumber LIKE #{keyword}
+			OR  phone LIKE #{keyword}
+			OR  deliveryCompany LIKE #{keyword}
+			OR  manager LIKE #{keyword}
+		ORDER BY buyerCode;
  	</select>
  
  

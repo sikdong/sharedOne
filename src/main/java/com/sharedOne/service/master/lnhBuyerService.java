@@ -30,10 +30,22 @@ public class lnhBuyerService {
 	//수정
 	public void update(BuyerDto buyer) {
 		buyerMapper.update(buyer);
+		System.out.println("서비스: " + buyer);
 	}
 	//삭제
 	public void remove(String buyerCode) {
 		buyerMapper.delete(buyerCode);
+	}
+
+	//중복확인
+	public BuyerDto getByBusinessNumber(String businessNumber) {
+		return buyerMapper.selectByBusinessNumber(businessNumber);
+	}
+	public BuyerDto getByBuyerCode(String buyerCode) {
+		return buyerMapper.selectByBuyerCode(buyerCode);
+	}
+	public List<BuyerDto> searchBuyerList(String keyword) {
+		return buyerMapper.searchBuyerList("%" + keyword + "%");
 	}
 
 }
