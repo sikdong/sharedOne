@@ -32,22 +32,21 @@ google.charts.setOnLoadCallback(drawChart);
 function drawChart() {
 
   var data = new google.visualization.DataTable();
-  data.addColumn('string', '월');
+  data.addColumn('string', '제품');
   data.addColumn('number', '매출');
   data.addRows([
-    ['6월', 600],
-    ['7월', 1500],
-    ['8월', 1200],
-    ['9월', 1360],
-    ['10월', 2680],
-    ['11월', 1740]
+    ['GATE', 600],
+    ['GLOBE', 1500],
+    ['SWING', 1200],
+    ['LUG', 1360],
+    ['WAFER', 1740]
   ]);
-
-  var linechart_options = {title:'월 별 매출 현황'};
-  var linechart = new google.visualization.LineChart(document.getElementById('columnchart_material1'));
+  
+  var linechart_options = {title:'이 달의 제품 별 매출 현황'};
+  var linechart = new google.visualization.PieChart(document.getElementById('columnchart_material1'));
   linechart.draw(data, linechart_options);
 
-  var barchart_options = {title:'월 별 매출 현황',
+  var barchart_options = {title:'이 달의 제품 별 매출 현황',
                  legend: 'none'};
   var barchart = new google.visualization.BarChart(document.getElementById('columnchart_material2'));
   barchart.draw(data, barchart_options);
@@ -257,13 +256,10 @@ div.right {
 		<h4>주문목록</h4>
 
 			<div style="float: right;">
-			<c:set var="ctx" value="${pageContext.request.contextPath}" />
-				<%-- <c:url value="/report/excelDown?orderQ=${orderQ }" var="listLink">
-				</c:url>
-					<input name="orderQ" value="" class="form-control" type="hidden"> --%>
-					<a href="${ctx }/report/excelDown?orderQ=${param.orderQ }" class="btn btn-primary primaryBtn" type="submit" style="margin-bottom: 10px;">
-						엑셀 다운로드
-					</a>
+				<c:set var="ctx" value="${pageContext.request.contextPath}" />
+				<a href="${ctx }/report/excelDown?orderQ=${param.orderQ }"
+					class="btn btn-primary primaryBtn" type="submit"
+					style="margin-bottom: 10px;"> 엑셀 다운로드 </a>
 			</div>
 			<!-- 리스트 -->
 		<table class="table">
