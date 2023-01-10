@@ -69,7 +69,8 @@
             <div class="row mt-5" style="text-align: center;">     
                  <div id="rvbtn_group" style="text-align: right;">
                  	<button type="button" class="btn" id="print" style="border: gray 2px solid; font-weight: bold; float:left; font-size:x-large; padding:0px;" onclick="content_print();">&nbsp&nbsp<i class='bx bx-printer'></i>&nbsp&nbsp</button>
-                             
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#confirmModal" style="border: gray 2px solid; font-weight: bold;">승인</button>
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#returnModal" style="border: gray 2px solid; font-weight: bold;">반려</button>               
                 </div>
             </div>
         </div>
@@ -179,6 +180,63 @@
 	        	</tfoot>
 	        </table>
         </div>
+    </div>
+	
+	<!-- 승인 모달 -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: bold;">승인 확인</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+          	<c:url value="/order/orderSheet" var="approvalLink"></c:url>
+            <form method="post" id="confirmForm" action="${approvalLink}">
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label" style="font-weight: bold;">Comment</label>
+                <textarea class="form-control" id="message-text" style="height:300px"  id="comment" name="comment" 
+                			placeholder="내용을 적어주세요"></textarea>
+                <input type="hidden"  value="승인" name="status">
+                <input type="hidden" value="${orderHeader.orderId}" name="orderId">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+            <button type="button" class="btn"  style="background-color: #1d5c83; color: #e3e3e3;"
+            onclick="document.querySelector('#confirmForm').submit()">승인</button>
+          </div>
+        </div>
+      </div>
+    </div>
+	<!-- 반려 모달 -->
+    <div class="modal fade" id="returnModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">반려 확인</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+          	<c:url value="/order/orderSheet" var="companionLink"></c:url>
+            <form method="post" id="companionForm" action="${companionLink}">
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label" style="font-weight: bold;">Comment</label>
+                <textarea class="form-control" id="message-text" style="height:300px"  id="comment" name="comment" 
+                			placeholder="내용을 적어주세요"></textarea>
+                <input type="hidden"  value="반려" name="status">
+                <input type="hidden" value="${orderHeader.orderId}" name="orderId">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+            <button type="button" class="btn" style="background-color: #1d5c83; color: #e3e3e3;"
+            onclick="document.querySelector('#companionForm').submit()">반려</button>
+          </div>
+        </div>
+      </div>
     </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>

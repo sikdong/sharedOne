@@ -15,5 +15,4 @@ public interface AsjSalePriceMapper {
 
 	int updateSalePriceByPriceId(int priceId, int salePrice, int discountRate, String fromDate, String endDate);
 
-
 }

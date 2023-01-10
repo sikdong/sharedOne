@@ -1,5 +1,6 @@
 package com.sharedOne.domain.order;
 
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -17,14 +18,11 @@ public class OrderHeaderDto {
 	private LocalDate modified;
 	private String deliveryDate;
 	private String writer;
-	private String name;
+	private String buyerCode;
 	private String status;
 	private String message;
 	private String comment;
-	
 	private List <BuyerDto> buyer;
-	private String buyerCode;
-
 	private String buyerName;
 	
 	private List <OrderItemDto> orderItem;
