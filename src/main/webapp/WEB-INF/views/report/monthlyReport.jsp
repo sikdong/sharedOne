@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -323,23 +324,40 @@ div.right {
 			</thead>
 			<tbody>
 				<c:forEach items="${orderList }" var="order">
-				<c:forEach items="${itemList }" var="itemList">
-					<tr>
-						<td style="width: 9%;">${order.orderCode }</td>
-						<td>${order.buyerCode }</td>
-						<td>${itemList.productCode }</td>
-						<td>${itemList.salePrice }</td>
-						<td>${itemList.quantity }</td>
-						<td>${itemList.sum }</td>
-						<td style="width: 9%;">${order.inserted }</td>
-						<td style="width: 9%;">${order.modified }</td>
-						<td style="width: 9%;">${order.deliveryDate }</td>
-						<td>${order.writer }</td>
-						<td>${order.status }</td>
-						<td>${order.message }</td>
-
-					</tr>
-				</c:forEach>
+					<c:if test="${fn:length(order.orderItem) == 1 }">
+						<tr>
+							<td style="width: 9%;">${order.orderCode }</td>
+							<td>${order.buyerCode }</td>
+							<td>${order.orderItem[0].productCode }</td>
+							<td>${order.orderItem[0].salePrice }</td>
+							<td>${order.orderItem[0].quantity }</td>
+							<td>${order.orderItem[0].sum }</td>
+							<td style="width: 9%;">${order.inserted }</td>
+							<td style="width: 9%;">${order.modified }</td>
+							<td style="width: 9%;">${order.deliveryDate }</td>
+							<td>${order.writer }</td>
+							<td>${order.status }</td>
+							<td>${order.message }</td>
+						</tr>
+					</c:if>
+					<c:if test="${fn:length(order.orderItem) != 1 }">
+						<c:forEach items="${order.orderItem }" var="item">
+							<tr>
+								<td style="width: 9%;">${order.orderCode }</td>
+								<td>${order.buyerCode }</td>
+								<td>${item.productCode }</td>
+								<td>${item.salePrice }</td>
+								<td>${item.quantity }</td>
+								<td>${item.sum }</td>
+								<td style="width: 9%;">${order.inserted }</td>
+								<td style="width: 9%;">${order.modified }</td>
+								<td style="width: 9%;">${order.deliveryDate }</td>
+								<td>${order.writer }</td>
+								<td>${order.status }</td>
+								<td>${order.message }</td>
+							</tr>
+						</c:forEach>
+					</c:if>
 				</c:forEach>
 			</tbody>
 		</table>
