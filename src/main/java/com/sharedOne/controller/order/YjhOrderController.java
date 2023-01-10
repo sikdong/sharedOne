@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,7 @@ public class YjhOrderController {
 	YjhOrderService service;
 	
 	@GetMapping("orderSheet")
+	@PreAuthorize("isAuthenticated()")
 	public void getOrderSheet(Model model, int orderId) {
 		
 		OrderHeaderDto orderHeader = service.getOrderSheetHead(orderId);
@@ -44,8 +46,8 @@ public class YjhOrderController {
 		sumValueDto sumValue = service.getSumValue(orderId);
 		model.addAttribute("sumValue",sumValue );
 	}
-	
 	@GetMapping("confirmOrderSheet")
+	@PreAuthorize("hasAuthority('팀장')")
 	public void getConfirmOrderSheet(Model model, int orderId) {
 		
 		OrderHeaderDto orderHeader = service.getOrderSheetHead(orderId);
@@ -80,7 +82,8 @@ public class YjhOrderController {
 	}
 	
 	@GetMapping("companionSheet")
-	public void getCompanionSheet(Model model,int orderId) {
+	@PreAuthorize("hasAuthority('팀장','차장') or (authentication.name == #writer)")
+	public void getCompanionSheet(Model model,int orderId,String writer) {
 		
 		OrderHeaderDto orderHeader = service.getOrderSheetHead(orderId);
 		model.addAttribute("orderHeader", orderHeader);
