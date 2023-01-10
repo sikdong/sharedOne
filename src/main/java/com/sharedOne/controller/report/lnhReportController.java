@@ -1,19 +1,24 @@
 package com.sharedOne.controller.report;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,15 +34,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sharedOne.domain.master.ProductDto;
-import com.sharedOne.domain.master.SalePriceDto;
 import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.order.OrderItemDto;
+import com.sharedOne.domain.report.ReportDto;
 import com.sharedOne.service.master.lnhProductService;
 import com.sharedOne.service.report.lnhReportService;
 
 @Controller
 @RequestMapping("report")
 public class lnhReportController {
+
 	@Autowired
 	private lnhProductService productService;
 	
@@ -65,41 +71,24 @@ public class lnhReportController {
 		
 		model.addAttribute("productList", productList);
 		
-		// business logic 작동
-		List<OrderHeaderDto> orderList = service.orderList(orderQ);
-		
-		/*
-		 * List<OrderItemDto> itemList = new ArrayList<>(); List<SalePriceDto> salePrice
-		 * = new ArrayList<>(); for (int i = 0; i < orderList.size(); i++) {
-		 * 
-		 * if(orderList.get(i).getOrderItem()!= null) { for (int j = 0;
-		 * j<orderList.get(i).getOrderItem().size(); j++) {
-		 * itemList.add(orderList.get(i).getOrderItem().get(j)); } }
-		 * 
-		 * if(orderList.get(i).getItemPrice()!= null) { for (int j = 0; j <
-		 * orderList.get(i).getItemPrice().size(); j++) {
-		 * salePrice.add(orderList.get(i).getItemPrice().get(j)); } } }
-		 */
-		 
-		
-		
 
-		List<OrderItemDto> itemList = orderList.get(0).getOrderItem();
-		List<SalePriceDto> salePrice = orderList.get(0).getItemPrice();
- 
-		  
-		  //order_header 안에 있는 List<OrderItemDto>랑 List<SalePriceDto>를 어떻게 꺼내서 전달해야될지 고민...
-		  //검색에 따라 결과가 여러개가 나오면서 중복으로 여러개로 모델에 담겨 보내지거나 없으면 결과가 안나옴...
-		  //일단 오더 데이터 값이 좀 제대로 되어 있어야 할 필요가 있음
-		 
+		//business logic 작동		
+		List<OrderHeaderDto> orderList = service.orderList(page, searchStartDate, searchEndDate, orderS, orderQ, pageInfo); // page = "파라미터 수집
+		List<ProductDto> productCatalog = service.productCatalog(productS, productQ); // 
+		List<ReportDto> thisYearSales = service.thisYearSales();
+
 		
+		List<OrderItemDto> itemList = orderList.get(0).getOrderItem();
+ 
 		System.out.println("컨트롤러: " + orderList);
 		System.out.println(itemList);
-		System.out.println(salePrice);
+		System.out.println("월별매출"+thisYearSales);
+		
 		// add attribute
+		model.addAttribute("productCatalog", productCatalog); // c:forEach items = productCatalog
 		model.addAttribute("orderList", orderList); // c:forEach items = orderList
 		model.addAttribute("itemList",itemList);
-		model.addAttribute("salePrice",salePrice);
+		model.addAttribute("thisYearSales",thisYearSales);
 	}
 	
 	//엑셀 다운로드
@@ -107,9 +96,6 @@ public class lnhReportController {
 	@ResponseBody
 	public void excelDown(HttpServletResponse response,	@RequestParam(name = "orderQ", defaultValue = "") String orderQ) throws IOException {
 		
-		List<OrderHeaderDto> list = service.orderList(orderQ);
-		List<OrderItemDto> itemList = list.get(0).getOrderItem();
-		List<SalePriceDto> salePrice = list.get(0).getItemPrice();
 		
 		 try (Workbook workbook = new XSSFWorkbook()) {
 			 
@@ -120,9 +106,37 @@ public class lnhReportController {
 	            headStyle.setFillForegroundColor(HSSFColor.HSSFColorPredefined.LIGHT_BLUE.getIndex());
 	            headStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 	            Font font = workbook.createFont();
-	            font.setColor(HSSFColor.HSSFColorPredefined.WHITE.getIndex());
-	            font.setFontHeightInPoints((short) 13);
+	            font.setFontName(HSSFFont.FONT_ARIAL); // 폰트 스타일
+	            font.setColor(HSSFColor.HSSFColorPredefined.WHITE.getIndex()); // 폰트 색 지정
+	            font.setFontHeightInPoints((short) 13); // 폰트 크기
 	            headStyle.setFont(font);
+	            
+	            //셀병합
+				sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 11)); //첫행, 마지막행, 첫열, 마지막열 병합
+				
+				//테이블 셀 스타일
+				CellStyle cellStyle = workbook.createCellStyle();
+				sheet.setColumnWidth(0, (sheet.getColumnWidth(0))+(short)2048); // 0번째 컬럼 넓이 조절
+				sheet.setColumnWidth(6, (sheet.getColumnWidth(6))+(short)2048); // 6번째 컬럼 넓이 조절
+				sheet.setColumnWidth(7, (sheet.getColumnWidth(7))+(short)2048); // 6번째 컬럼 넓이 조절
+				sheet.setColumnWidth(8, (sheet.getColumnWidth(8))+(short)2048); // 6번째 컬럼 넓이 조절
+				cellStyle.setAlignment(HorizontalAlignment.CENTER);
+				
+				Font fontTitle = workbook.createFont();
+				fontTitle.setColor(HSSFColor.HSSFColorPredefined.LIGHT_BLUE.getIndex());
+				fontTitle.setFontName(HSSFFont.FONT_ARIAL);
+				fontTitle.setBold(true);
+				fontTitle.setFontHeightInPoints((short)20); // 폰트 크기
+				cellStyle.setFont(fontTitle ); // cellStyle에 font를 적용
+			
+				// 타이틀 생성
+				Row xssfRow = sheet.createRow(rowNo++); // 행 객체 추가
+				Cell xssfCell = xssfRow.createCell((short) 0); // 추가한 행에 셀 객체 추가
+				xssfCell.setCellStyle(cellStyle); // 셀에 스타일 지정
+				xssfCell.setCellValue("레포트"); // 데이터 입력
+				
+				sheet.createRow(rowNo++);
+				xssfRow = sheet.createRow(rowNo++);  // 빈행 추가
 			 
 				Row headerRow = sheet.createRow(rowNo++);
 				headerRow.createCell(0).setCellValue("주문서 ID");
@@ -142,28 +156,40 @@ public class lnhReportController {
 	                headerRow.getCell(i).setCellStyle(headStyle);
 	            }
 			 
+			 List<OrderHeaderDto> list = service.orderList(orderQ);
 			 
-			 for (OrderHeaderDto board : list) {
-				 Row row = sheet.createRow(rowNo++);
-				 row.createCell(0).setCellValue(board.getOrderCode());
-				 row.createCell(1).setCellValue(board.getBuyerCode());
-				 row.createCell(6).setCellValue(board.getInserted());
-				 row.createCell(7).setCellValue(board.getModified());
-				 row.createCell(8).setCellValue(board.getDeliveryDate());
-				 row.createCell(9).setCellValue(board.getWriter());
-				 row.createCell(10).setCellValue(board.getStatus());
-				 row.createCell(11).setCellValue(board.getMessage());
-				 
+			 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			  
+				 List<OrderItemDto> itemList = list.get(0).getOrderItem();
 				 for (OrderItemDto board1 : itemList) {
+					 Row row = sheet.createRow(rowNo++);
 					 row.createCell(2).setCellValue(board1.getProductCode());
+					 row.createCell(3).setCellValue(board1.getSalePrice());
 					 row.createCell(4).setCellValue(board1.getQuantity());
 					 row.createCell(5).setCellValue(board1.getSum()); 
+					 
+					 for (OrderHeaderDto board : list) {
+						 row.createCell(0).setCellValue(board.getOrderCode());
+						 row.createCell(1).setCellValue(board.getBuyerCode());
+
+						 Date cell6 = java.sql.Date.valueOf(board.getInserted());
+						 String inserted = sdf.format(cell6);
+						 row.createCell(6).setCellValue(inserted);
+						
+						 
+						 Date cell7 = java.sql.Date.valueOf(board.getModified());
+						 String modified = sdf.format(cell7);
+						 row.createCell(7).setCellValue(modified);
+						 
+						 Date cell8 = java.sql.Date.valueOf(board.getDeliveryDate());
+						 String deliveryDate = sdf.format(cell8);
+						 row.createCell(8).setCellValue(deliveryDate);
+						 
+						 row.createCell(9).setCellValue(board.getWriter());
+						 row.createCell(10).setCellValue(board.getStatus());
+						 row.createCell(11).setCellValue(board.getMessage());
 				 }
 				 
-				 for (SalePriceDto board1 : salePrice) {
-					 row.createCell(3).setCellValue(board1.getSalePrice());
-					 
-				 }
 				 
 				}
 			 

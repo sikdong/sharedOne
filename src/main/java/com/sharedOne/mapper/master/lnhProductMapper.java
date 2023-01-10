@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.sharedOne.domain.master.ProductDto;
+
 import com.sharedOne.domain.order.OrderHeaderDto;
 
 @Mapper
@@ -23,6 +24,5 @@ public interface lnhProductMapper {
 	void update(ProductDto product);
 
 	ProductDto selectProductName(String productName);
-
 
 }

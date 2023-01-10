@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>레포트</title>
+<title>제품목록</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
@@ -35,19 +35,20 @@ function drawChart() {
   var data = new google.visualization.DataTable();
   data.addColumn('string', '월');
   data.addColumn('number', '매출');
-  <c:forEach items="${thisYearSales}" var="sales">
-	  data.addRows([
-	    [${sales.month }+'월', ${sales.thisSales}]
-	  <c:if test="${not empty thisYearSales.size() }">
-		,
-	</c:if>
-		]);
-  </c:forEach>
-  var linechart_options = {title:'올 해 매출 현황'};
+  data.addRows([
+    ['6월', 600],
+    ['7월', 1500],
+    ['8월', 1200],
+    ['9월', 1360],
+    ['10월', 2680],
+    ['11월', 1740]
+  ]);
+
+  var linechart_options = {title:'월 별 매출 현황'};
   var linechart = new google.visualization.LineChart(document.getElementById('columnchart_material1'));
   linechart.draw(data, linechart_options);
 
-  var barchart_options = {title:'올 해 별 매출 현황',
+  var barchart_options = {title:'월 별 매출 현황',
                  legend: 'none'};
   var barchart = new google.visualization.BarChart(document.getElementById('columnchart_material2'));
   barchart.draw(data, barchart_options);
@@ -73,7 +74,7 @@ div.mainBoard {
 	margin-top: 20px;
 	margin-bottom: 10px;
 	width: 100%;
-	height: 1000px;
+	height: :1000px;
 	
 }
 
@@ -95,36 +96,21 @@ div.right {
 	
 /* 	overflow: scroll; */
 }
+.searchBtn{
+ background-color: #1d5c83;
+ margin-bottom: 10px;
+}
 
 .tableContainer {
 
 }
-
- 	.primaryBtn {
-		background-color: white !important;
-		border-color: #1d5c83 !important;
-		color: #1d5c83 !important;
- 	}
- 	
- 	.primaryBtn:hover {
- 		background-color: #1d5c83 !important;
- 		color: white !important;
- 	}
- 	
- 	.table{border-collapse:collapse; width:100%; table-layout:fixed}
-	.table thead{float:left; width:1300px;}
-	.table thead th{display:auto; width:1300px; text-align: left;}
-	.table tbody{overflow-y:auto; overflow-x:hidden; float:left; width:1300px; height:550px;}
-	.table tbody tr{display:table; width:1300px;}
-	.table td{word-wrap:break-word; width:1300px; height: auto;}
 
 </style>
 
 
 </head>
 <body>
-<my:side_bar active=""></my:side_bar>
-<div class="container-sm mt-4" style="width: 77vw; margin-left: 20%;">
+<div class="container-sm mt-4">
 	<div class="row d-flex" id ="searchBox">
 		
 		<!-- *좌측* 검색 조건 설명란 -->
@@ -142,20 +128,13 @@ div.right {
 		
 		<!-- *우측* 검색 필터 -->
 		<div class="col-sm-10 mt-1">
-			<form action="" method=""><!-- form get? post?  -->		
+			<form action="<%-- ${montlyReportLink} --%>" method=""><!-- form get? post?  -->	<!-- 00000000000000000000000000000000000000000000000000000 -->	
 				<!-- 검색필터 1st row : 전체 검색. -->
-				<div class="row d-flex">
+				<div class="row d-flex"><!-- get방식으로 -->
 					<div class="col-sm-6 mb-4">
 						<div class="input-group">
-							<!-- Select -->
-							<select name="orderS" id="" class="form-select">
-								<option value="selectAll">전체검색</option>
-								<option value="selectOrderCode">주문서번호</option>
-								<option value="selectBuyerCode">바이어 코드</option>
-								<option value="selectWriter">담당자</option>
-							</select>
 							<input name="orderQ" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
-			        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>	
+			        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
 				</div><!-- 1st row 끝 -->
@@ -237,7 +216,7 @@ div.right {
 					<div class="col-sm-4"></div>
 					<div class="col-sm-4">
 						<div style="text-align: justify;">
-							<button class="btn btn-outline-primary primaryBtn" type="submit">선택 조건 검색</button>
+							<button class="btn btn-primary searchBtn" type="submit">선택 조건 검색</button>
 						</div>
 					</div>
 				</div>
@@ -261,61 +240,95 @@ div.right {
 	
 <div class="tableContainer">
 
-		<h4>주문목록</h4>
+		<h4>제품목록</h4>
 
 			<div style="float: right;">
-				<c:set var="ctx" value="${pageContext.request.contextPath}" />
-				<a href="${ctx }/report/excelDown?orderQ=${param.orderQ }"
-					class="btn btn-primary primaryBtn" type="submit"
-					style="margin-bottom: 10px;"> 엑셀 다운로드 </a>
+				<form action="/excel/download" method="get">
+					<button class="btn btn-primary searchBtn" type="submit">
+						엑셀 다운로드
+					</button>
+				</form>
 			</div>
-			<!-- 리스트 -->
+			<!-- 리스트 --> <!-- 00000000000000000000000000000000000000000000000000000 -->
 		<table class="table">
 			<thead>
-				<!-- productCode, productName, productType, weight, size, price, unit, content -->
 				<tr>
-					<th style="width: 9%;">주문서 ID</th>
-					<th>바이어코드</th>
-					<th>제품코드</th>
-					<th>단가</th>
-					<th>수량</th>
-					<th>합계</th>
-					<th style="width: 9%;">등록일</th>
-					<th style="width: 9%;">수정일</th>
-					<th style="width: 9%;">납기일</th>
-					<th>담당자</th>
-					<th>상태</th>
-					<th>메세지</th>
+					<th>주문서 ID</th>  <!-- orderId -->
+					<th>주문서번호</th> <!-- orderCode -->
+					<th>등록일</th>     <!-- inserted -->
+					<th>납기일</th>     <!-- deliveryDate -->
+					<th>수정일</th>     <!-- modified -->
+					<th>담당자</th>     <!-- writer -->
+					<th>바이어코드</th> <!-- buyerCode -->
+					<th>상태</th>       <!-- status -->
 				</tr>
 			</thead>
-			<tbody>
-				<c:forEach items="${orderList }" var="order">
-				<c:forEach items="${itemList }" var="itemList">
+			<tbody> 
+				<c:forEach items="${orderList}" var="order">					
 					<tr>
-						<td style="width: 9%;">${order.orderCode }</td>
-						<td>${order.buyerCode }</td>
-						<td>${itemList.productCode }</td>
-						<td>${itemList.salePrice }</td>
-						<td>${itemList.quantity }</td>
-						<td>${itemList.sum }</td>
-						<td style="width: 9%;">${order.inserted }</td>
-						<td style="width: 9%;">${order.modified }</td>
-						<td style="width: 9%;">${order.deliveryDate }</td>
-						<td>${order.writer }</td>
-						<td>${order.status }</td>
-						<td>${order.message }</td>
-
+						<td>${order.orderId}</td>
+						<td>${order.orderCode}</td>
+						<td>${order.inserted}</td>
+						<td>${order.deliveryDate}</td>
+						<td>${order.modified}</td>
+						<td>${order.writer}</td>
+						<td>${order.buyerCode}</td>
+						<td>${order.status}</td>
 					</tr>
-				</c:forEach>
 				</c:forEach>
 			</tbody>
 		</table>
 	</div>
 </div>
 
+<!-- 부트스트랩 page -->
+<div class="row">
+	<div class="col">
+		<nav aria-label="Page navigation example">
+  			<ul class="pagination justify-content-center">
+    			<!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
+    			<c:forEach begin="${pageInfo.leftPageNumber}" end="${pageInfo.rightPageNumber}" var="pageNumber">
+    				<c:url value="/report/montlyReport" var="montlyReportLink" >
+    					<c:param name="page" value="${pageNumber}"/>
+    				</c:url>		<%--현재 페이지에 active class 추가 --%>
+    				<li class="page-item ${pageInfo.currentPageNumber eq pageNumber ? 'active' : ''}">
+    					<a class="page-link" href="${montlyReportLink}">${pageNumber}</a>  		
+    				</li>
+    			</c:forEach>
+    			<!-- <li class="page-item"><a class="page-link" href="">Next</a></li>  -->
+  			</ul>
+		</nav>
+	</div>
+</div>
+
+<my:sidebar active=""></my:sidebar>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script type="text/javascript">
+//실제 사용 방법
 
+$('#datePicker').datepicker({
+		format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
+		startDate: '-10d',	//달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
+		... //생략
+                language : "ko"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
+		    
+		})//여기까지가 기본 사용 방법
+            .on("changeDate", function(e) {
+                 //이벤트의 종류
+                 //show : datePicker가 보이는 순간 호출
+                 //hide : datePicker가 숨겨지는 순간 호출
+                 //clearDate: clear 버튼 누르면 호출
+                 //changeDate : 사용자가 클릭해서 날짜가 변경되면 호출 (개인적으로 가장 많이 사용함)
+                 //changeMonth : 월이 변경되면 호출
+                 //changeYear : 년이 변경되는 호출
+                 //changeCentury : 한 세기가 변경되면 호출 ex) 20세기에서 21세기가 되는 순간
+                 
+                 console.log(e);// 찍어보면 event 객체가 나온다.
+                 //간혹 e 객체에서 date 를 추출해야 하는 경우가 있는데 
+                 // e.date를 찍어보면 Thu Jun 27 2019 00:00:00 GMT+0900 (한국 표준시)
+                 // 위와 같은 형태로 보인다. 
+                 // 추후에 yyyy-mm-dd 형태로 변경하는 코드를 업로드 하겠습니다. 
+            }
 </script>
 	
 </body>

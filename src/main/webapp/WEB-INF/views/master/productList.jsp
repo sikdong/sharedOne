@@ -7,19 +7,7 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.lang.Deprecated" %>
-<%
-	//오늘 날짜 구하기
-	Date nowDate = new Date();
-	SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-	
-	//한달 후 날짜 구하기
-	Date addMonth = new Date();
-    
-    int getNowMM = nowDate.getMonth();
-    
-    addMonth.setMonth(getNowMM + 1);
-    
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -94,14 +82,6 @@
 
 <my:side_bar active=""></my:side_bar>
 
-<!-- 현재 날짜 설정  -->
-<c:set value="<%=sf.format(nowDate)%>" var="nowDate"/>
-<!-- ${nowDate}  -->
-
-<!-- 한달후 날짜 설정 -->
-<c:set value='<%=sf.format(addMonth)%>' var="addMonth" /> 
-<!-- ${addMonth}  -->
-
 <div class="container-sm mt-4" style="width: 77vw; margin-left: 20%;">
 	<h4>제품 관리</h4>
 	<div class="row d-flex">
@@ -113,9 +93,6 @@
 			</div>
 			<div class="mb-5">
 				<p class="filterText ">조건 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
-			</div>
-			<div class="mb-5">
-				<p class="filterText ">기간 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex. 주문일 / 납기일 등등... ) -->
 			</div>
 		</div><!-- 좌측 조건 설명 div 끝 -->
 		
@@ -178,33 +155,7 @@
 						</div>
 					</div>
 				</div><!-- 2nd row 끝 -->
-				<!-- 검색필터 3rd row : 기간 선택 -->
-				<div class="row d-flex">
-					<div class="col-sm-2">
-						<div class="form-check"  style="margin-top: 10px;">
-						    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-							<label class="form-check-label" for="flexCheckDefault">전체기간</label>
-						</div>
-					</div>
-					<div class="col-sm-5">
-						<div class="input-group">
-							<input name="d1" value="${nowDate }" type="date" id="d1Id" class="form-control">
-							<span class="input-group-text">~</span>
-			        		<input name="d2" value="${nowDate }" type="date" id="d2Id" class="form-control">
-						</div>
-					</div>
-					<div class="col-sm-5 d-flex">
-						
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">오늘</button>		
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">1주 </button>	
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">15일</button>		
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">1개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">3개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">6개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 10pt">1년</button>	
-						
-					</div>
-				</div><!-- 3rd row 끝 -->
+
 				<div class="row mt-4">
 					<div class="col-sm-4"></div>
 					<div class="col-sm-4">
@@ -230,9 +181,7 @@
 			<table class="table">
 			   	 <thead>
 					 <tr>
-
 						<th style="max-width: 800px;">제품코드</th>
-
 						<th>제품명</th>
 						<th>타입</th>
 						<th>무게(g)</th>
@@ -248,10 +197,8 @@
 							<c:param name="code" value="${product.productCode }"></c:param>
 						</c:url>
 					<tr onclick="window.open('${getLink}','제품정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
-
 							<td style="max-width: 500px;">${product.productCode }</td>
 							<td>${product.productName }</td>
-
 							<td>${product.productType }</td>
 							<td>${product.weight }</td>
 							<td>${product.size }</td>
