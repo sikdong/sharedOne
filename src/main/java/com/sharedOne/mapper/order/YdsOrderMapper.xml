@@ -87,6 +87,13 @@
 	
 	</insert>
 	
+	<update id="createOrderCode">
+		UPDATE Order_header 
+		SET 
+		orderCode = CONCAT('WT',#{year}, #{generatedId})
+		WHERE orderId = #{generatedId} 
+	</update>
+	
 	<insert id="insertOrderItem">
 	INSERT INTO Order_item(
 		orderId,
@@ -94,9 +101,17 @@
 		quantity,
 		salePrice
 	)
-	VALUES(#{generatedId}, #{productCode}, #{quantity}, #{salePrice})
+	VALUES(#{generatedId}, #{oid.productCode}, #{oid.quantity}, #{oid.salePrice})
 	
 	</insert>
+	
+	<select id="getDate" resultType="string">
+	SELECT 
+		inserted
+	FROM Order_header
+	WHERE orderId = #{generatedId}
+	
+	</select>
 	
 
 

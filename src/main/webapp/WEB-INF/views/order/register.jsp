@@ -302,6 +302,10 @@
 		<br /> <br /> <br />
 		<hr style="width: 77vw;" />
 		
+		<div>
+			<strong>상세정보</strong>
+		</div>
+		<br /><br />
 			<table class="table table-hover table-bordered table-sm caption-top">
 				<thead>
 					<tr>
@@ -384,8 +388,8 @@
 			const buyerTableItem =
 			
 			`<tr>
-				<th>
-					<input class="form-radio-input" type="radio"
+				<th> 
+					<input class="form-radio-input" type="radio" style="width : 20px; height : 20px;"
 						id="flexCheckDefault" name="buyerCode" value="\${item.buyerCode}">
 				</th>
 				<td id="tableBuyerCode">\${item.buyerCode }</td>
@@ -433,7 +437,7 @@
 			
 			`<tr>
 				<th>
-					<input class="form-radio-input" type="radio"
+					<input class="form-radio-input" type="radio" style="width : 20px; height : 20px;"
 						id="flexCheckDefault" name="buyerName">
 				</th>
 				<td id="tableBuyerCode">\${item.buyerCode }</td>
@@ -481,7 +485,7 @@
 			
 			`<tr>
 				<th>
-					<input class="form-radio-input" type="radio"
+					<input class="form-radio-input" type="radio" style="width : 20px; height : 20px;"
 						id="flexCheckDefault" name="buyerName">
 				</th>
 				<td id="tableBuyerCode">\${item.buyerCode }</td>
@@ -528,8 +532,8 @@
 			const buyerTableItem =
 			
 			`<tr>
-				<th>
-					<input class="form-radio-input" type="radio"
+				<th> 
+					<input class="form-radio-input" type="radio" style="width : 20px; height : 20px;"
 						id="flexCheckDefault" name="buyerName">
 				</th>
 				<td id="tableBuyerCode">\${item.buyerCode }</td>
@@ -580,7 +584,7 @@
 				
 			`<tr>
 				<th>
-					<input class="form-radio-input" type="checkbox"
+					<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
 						id="productCheckBox" name="productCode" value="\${item.productCode}" data-sale-price="\${item.salePrice}">
 				</th>
 				<td>\${item.productCode }</td>
@@ -631,7 +635,7 @@
 					
 				`<tr>
 					<th>
-						<input class="form-radio-input" type="checkbox"
+						<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
 							id="flexCheckDefault" name="productCode" value="\${item.productCode}">
 					</th>
 					<td>\${item.productCode }</td>
@@ -679,7 +683,7 @@
 					
 				`<tr>
 					<th>
-						<input class="form-radio-input" type="checkbox"
+						<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
 							id="flexCheckDefault" name="productCode" value="\${item.productCode}">
 					</th>
 					<td>\${item.productCode }</td>
@@ -729,6 +733,7 @@
 				`<tr>
 					<th>
 						<input class="form-radio-input" type="checkbox"
+						style="width : 20px; height : 20px;"
 							id="flexCheckDefault" name="productCode" value="\${item.productCode}">
 					</th>
 					<td>\${item.productCode }</td>
@@ -756,7 +761,6 @@
 		let productCodes = [];
 		productCode.forEach((el) => {
 			productCodes.push(el.value);
-			console.log(el.value);
 			})
 		
 		console.log(productCodes);
@@ -776,7 +780,7 @@
 		.then(data => { 
 			for(const da of data){
 			const productOrderTable =
-            `<tr>
+            `<tr id="tr\${i}">
               <th scope="row">\${i}</th>
               <td>\${da.productCode}<input type="hidden" name="productCode" value="\${da.productCode}"></td>
               <td>\${da.productType}</td>
@@ -784,11 +788,11 @@
               <td>\${da.size}</td>
               <td>\${da.unit}</td>
               <td>\${da.price}원</td>
-              <td><input class="form-control" type="number" name="salePrice" value="\${da.salePrice}"></td>
+              <td><input class="form-control" onclick = "plusSum()" type="number" name="salePrice" value="\${da.salePrice}"></td>
               <td><input class="form-control" type="number" name="quantity" value=""></td>
-              <td></td>
+              <td><input id="sum\${i}" class="form-control" type="number" name="sum"></td>
               <td>
-                  <button class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
+                  <button onclick="document.querySelector('#tr\${i}').innerHTML = '';" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
               </td>
             </tr>`
           	document.querySelector("#tempOrderTable").insertAdjacentHTML("beforeend", productOrderTable);
@@ -797,6 +801,7 @@
 			document.querySelector("#productBody").innerHTML = "";
 		})
 	}); 
+	
 	
 	</script>
 </body>
