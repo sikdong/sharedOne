@@ -18,5 +18,7 @@ public interface lnhReportMapper {
 
 	int salesByBuyer(@Param("orderQ") String orderQ, @Param("buyerCode") String buyerCode);
 
+	int salesByWriter(@Param("orderQ") String orderQ, @Param("writer") String writer);
+
 
 }

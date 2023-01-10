@@ -79,12 +79,9 @@ function drawWriterChart() {
 	  var data = new google.visualization.DataTable();
 	  data.addColumn('string', '직원');
 	  data.addColumn('number', '매출');
-	  <c:forEach items="${thisYearSales}" var="sales">
+	  <c:forEach items="${writerSales}" var="writerSales">
 		  data.addRows([
-		    [${sales.month }+'월', ${sales.thisSales}]
-		  <c:if test="${not empty thisYearSales.size() }">
-			,
-		</c:if>
+		    ['${writerSales.key }', ${writerSales.value}]
 			]);
 	  </c:forEach>
 	  var options = {title:'담당 직원 별 매출 현황',

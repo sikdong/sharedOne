@@ -85,27 +85,31 @@ public class lnhReportController {
 			
 			//검색결과 바이어 리스트
 			List<String> buyerList = new ArrayList<>();
+			List<String> writerList = new ArrayList<>();
 			for (int i = 0; i < orderList.size(); i++) {
 				buyerList.add(orderList.get(i).getBuyerCode());
+				writerList.add(orderList.get(i).getWriter());
 			}
 			
 			Map<String, Integer> buyerSales = service.salesByBuyer(orderQ, buyerList);
+			Map<String, Integer> writerSales = service.salesByWriter(orderQ, writerList);
 
 		
 			System.out.println("오더리스트 사이즈: " + orderList.size());
 			
 			  
+			System.out.println("월별매출"+thisYearSales);
 			System.out.println("바이어 별 매출 "+buyerSales);
-			 
+			System.out.println("직원 별 매출" + writerSales); 
 			
 			System.out.println("컨트롤러: " + orderList);
 
-			System.out.println("월별매출"+thisYearSales);
 			
 			// add attribute
 			model.addAttribute("orderList", orderList); // c:forEach items = orderList
 			model.addAttribute("buyerSales", buyerSales);
-		
+			model.addAttribute("writerSales", writerSales);
+			
 		model.addAttribute("thisYearSales",thisYearSales);
 	}
 	

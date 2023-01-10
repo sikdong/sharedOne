@@ -38,4 +38,14 @@ public class lnhReportService {
 		return mapper.thisYearSales();
 	}
 
+	public Map<String, Integer> salesByWriter(String orderQ, List<String> writerList) {
+		Map<String, Integer> salesByWriter = new HashMap<>();
+		
+		for (String writer : writerList) {
+			salesByWriter.put(writer, mapper.salesByWriter(orderQ, writer));
+		}
+		
+		return salesByWriter;
+	}
+
 }
