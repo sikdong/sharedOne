@@ -203,7 +203,6 @@
 
 <%-- 							<td style="max-width: 500px;">${product.productCode }</td>
 							<td>${product.productName }</td>
-
 							<td>${product.productType }</td>
 							<td>${product.weight }</td>
 							<td>${product.size }</td>

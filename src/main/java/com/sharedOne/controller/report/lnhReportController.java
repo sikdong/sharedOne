@@ -46,6 +46,7 @@ import com.sharedOne.service.report.lnhReportService;
 @Controller
 @RequestMapping("report")
 public class lnhReportController {
+
 	@Autowired
 	private lnhProductService productService;
 	
@@ -106,6 +107,7 @@ public class lnhReportController {
 			model.addAttribute("orderList", orderList); // c:forEach items = orderList
 			model.addAttribute("buyerSales", buyerSales);
 		
+
 		model.addAttribute("thisYearSales",thisYearSales);
 	}
 	

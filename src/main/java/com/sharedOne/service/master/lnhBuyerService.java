@@ -36,6 +36,7 @@ public class lnhBuyerService {
 	public void remove(String buyerCode) {
 		buyerMapper.delete(buyerCode);
 	}
+
 	//중복확인
 	public BuyerDto getByBusinessNumber(String businessNumber) {
 		return buyerMapper.selectByBusinessNumber(businessNumber);
