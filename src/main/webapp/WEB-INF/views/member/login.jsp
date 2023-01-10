@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>    
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>  
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -177,7 +178,7 @@ label{
     border: 0px;
     opacity: 0;
 }
-.loginbtn{
+#loginbtn{
     -webkit-tap-highlight-color: rgba(0,0,0,0);
     -webkit-text-size-adjust: 100%;
     box-sizing: border-box;
@@ -188,8 +189,8 @@ label{
     
     padding: 6px 12px;
     margin-bottom: 0;
-    font-size: 14px;
-    font-weight: 400;
+    font-size: large;
+    font-weight: 500;
     line-height: 1.42857143;
     text-align: center;
     white-space: nowrap;
@@ -208,10 +209,11 @@ label{
 }   
 </style>
 <body>
+<my:side_bar></my:side_bar>
     <div class="error-pagewrap">
 		<div class="error-page-int">
             <div class="d-flex align-items-center" style="justify-content: center; color: #1d5c83; ">
-                <h1 class="sideHead" style="font-weight: 800;">Order</h1>
+                <h1 class="loginHead" style="font-weight: 800;">Order</h1>
               </div>
 			<div class="text-center m-b-md custom-login">
 				
@@ -230,7 +232,7 @@ label{
                                 <input type="password" title="비밀번호를 입력해주세요." placeholder="비밀번호를 입력해주세요." required="" value="" name="password" id="password" class="form-control">
                                 
                             </div>                            
-                            <input class="btn loginbtn" style="background-color: #1d5c83;" value="로그인" type="submit">
+                            <input id="loginbtn" style="background-color: #1d5c83;" value="로그인" type="submit">
                         </form>
                     </div>
                 </div>

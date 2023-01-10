@@ -191,7 +191,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-          	<c:url value="/order/orderSheet" var="approvalLink"></c:url>
+          	<c:url value="/order/confirmOrderSheet" var="approvalLink"></c:url>
             <form method="post" id="confirmForm" action="${approvalLink}">
               <div class="mb-3">
                 <label for="message-text" class="col-form-label" style="font-weight: bold;">Comment</label>
@@ -219,7 +219,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-          	<c:url value="/order/orderSheet" var="companionLink"></c:url>
+          	<c:url value="/order/confirmOrderSheet" var="companionLink"></c:url>
             <form method="post" id="companionForm" action="${companionLink}">
               <div class="mb-3">
                 <label for="message-text" class="col-form-label" style="font-weight: bold;">Comment</label>
