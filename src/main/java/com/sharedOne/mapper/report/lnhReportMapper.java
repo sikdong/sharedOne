@@ -2,6 +2,7 @@ package com.sharedOne.mapper.report;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import com.sharedOne.domain.order.OrderHeaderDto;
@@ -15,7 +16,7 @@ public interface lnhReportMapper {
 
 	List<ReportDto> thisYearSales();
 
-	//int salesByBuyer(String orderQ);
+	int salesByBuyer(@Param("orderQ") String orderQ, @Param("buyerCode") String buyerCode);
 
 
 }

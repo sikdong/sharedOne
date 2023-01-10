@@ -57,6 +57,7 @@ public class lnhReportController {
 	public void getMontlyReport(@RequestParam(name = "orderQ", defaultValue = "") String orderQ, Model model) {
 		System.out.println(orderQ);
 		
+		//조건 검색 제품 리스트
 		List <ProductDto> productList = productService.selectProductList();
 		
 		Set <String> setTypes = new HashSet<>();
@@ -81,46 +82,29 @@ public class lnhReportController {
 			
 			//검색 결과 리스트
 			List<OrderHeaderDto> orderList = service.orderList(orderQ);
-			List<OrderItemDto> itemList = new ArrayList<>();
-			if(orderList.size() <2) {
-				itemList = orderList.get(0).getOrderItem();
-			}else {
-				for (int i = 0; i < orderList.size(); i++) {
-					itemList.addAll(orderList.get(i).getOrderItem());
-				}
+			
+			//검색결과 바이어 리스트
+			List<String> buyerList = new ArrayList<>();
+			for (int i = 0; i < orderList.size(); i++) {
+				buyerList.add(orderList.get(i).getBuyerCode());
 			}
 			
-			HashMap<String, Integer> buyerSales = new HashMap<>();
+			Map<String, Integer> buyerSales = service.salesByBuyer(orderQ, buyerList);
+
 		
 			System.out.println("오더리스트 사이즈: " + orderList.size());
-			System.out.println("아이템 리스트 사이즈: "+itemList.size());
-			System.out.println(orderList.get(0).getOrderItem());
 			
-			/*
-			 * if (!orderList.get(0).getOrderItem().isEmpty()) {
-			 * 
-			 * //같은 바이어면 sum 더하는 작업 제대로... for (int i = 0; i < orderList.size(); i++) { for
-			 * (int j = 0; j < i; j++) { if (orderList.get(i).getBuyerCode() ==
-			 * orderList.get(j).getBuyerCode()) {
-			 * buyerSales.put(orderList.get(i).getBuyerCode(),
-			 * orderList.get(i).getOrderItem().get(0).getSum() +
-			 * orderList.get(j).getOrderItem().get(0).getSum());
-			 * 
-			 * }else { buyerSales.put(orderList.get(i).getBuyerCode(),
-			 * orderList.get(i).getOrderItem().get(0).getSum()); }
-			 * 
-			 * } } }
-			 * 
-			 * System.out.println("바이어 별 매출 "+buyerSales);
-			 */
+			  
+			System.out.println("바이어 별 매출 "+buyerSales);
+			 
 			
 			System.out.println("컨트롤러: " + orderList);
-			System.out.println(itemList);
+
 			System.out.println("월별매출"+thisYearSales);
 			
 			// add attribute
 			model.addAttribute("orderList", orderList); // c:forEach items = orderList
-			/* model.addAttribute("buyerSales", buyerSales); */
+			model.addAttribute("buyerSales", buyerSales);
 		
 		model.addAttribute("thisYearSales",thisYearSales);
 	}

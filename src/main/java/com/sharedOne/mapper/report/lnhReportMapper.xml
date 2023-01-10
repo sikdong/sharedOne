@@ -72,7 +72,19 @@
 	<select id="salesByBuyer" resultType="int">
 		SELECT sum(i.sum) salesByBuyer 
 		FROM Order_header h LEFT JOIN Order_item i ON h.orderCode = i.orderCode 
-		WHERE buyerCode = #{buyerCode} 
+		WHERE	(h.orderCode LIKE #{orderQ} 
+		   OR  	  i.productCode LIKE #{orderQ} 
+		   OR  	  i.salePrice LIKE #{orderQ} 
+		   OR  	  i.quantity LIKE #{orderQ} 
+		   OR  	  i.sum LIKE #{orderQ} 
+		   OR  	  h.inserted LIKE #{orderQ} 
+		   OR 	  h.modified LIKE #{orderQ} 
+		   OR h.deliveryDate LIKE #{orderQ} 
+		   OR       h.writer LIKE #{orderQ} 
+		   OR    h.buyerCode LIKE #{orderQ} 	
+		   OR 		h.status LIKE #{orderQ} 
+		   OR 	   h.message LIKE #{orderQ})  
+			AND buyerCode = #{buyerCode}
 	
 	</select>
 	

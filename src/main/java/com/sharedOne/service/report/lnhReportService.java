@@ -1,6 +1,9 @@
 package com.sharedOne.service.report;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,9 +21,17 @@ public class lnhReportService {
 
 	public List<OrderHeaderDto> orderList(String orderQ) { 
 		
-		//mapper.salesByBuyer(orderQ);
-		
 		return mapper.orderList("%" + orderQ + "%");
+	}
+	
+	public Map<String, Integer> salesByBuyer(String orderQ, List<String> buyerCodes) {
+		Map<String, Integer> salesByBuyer = new HashMap<>();
+		
+		for (String buyerCode : buyerCodes ) {
+			salesByBuyer.put(buyerCode, mapper.salesByBuyer(orderQ, buyerCode));
+		}
+		return salesByBuyer;
+		
 	}
 
 	public List<ReportDto> thisYearSales() {
