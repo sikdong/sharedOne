@@ -1,6 +1,7 @@
 package com.sharedOne.controller.order;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -72,6 +73,7 @@ public class YdsOrderController {
 	public List<ProductDto> searchAllProductInfo(@PathVariable String allProductInfo, 
 			@PathVariable String tableBuyerCode){
 		System.out.println(tableBuyerCode);
+		System.out.println(allProductInfo);
 		return service.searchProduct(allProductInfo, tableBuyerCode);
 		
 	}
@@ -99,9 +101,15 @@ public class YdsOrderController {
 	  
 	 @PostMapping("addTempProductOrder")
 	 @ResponseBody
-	 public YdsProductDto addTempProductOrder(@RequestBody YdsProductDto ypd) {
-		 System.out.println(ypd);
-		 return service.addTempProductOrder(ypd);
+	 public List<YdsProductDto> addTempProductOrder(@RequestBody Map<String,Object> data) {
+		 System.out.println(data);
+			/*
+			 * List<String> tt = data.get("productCodes"); System.out.println("tt" + tt);
+			 */
+		 
+			/* return service.addTempProductOrder(ypd); */
+		 return service.addTempProductOrder(data);
 	 }
+	 
 	
 }

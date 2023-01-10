@@ -57,32 +57,26 @@
 			Product p 
 		LEFT JOIN SalePrice s ON p.productCode = s.productCode
 		WHERE
-			<trim prefixOverrides="OR">
-				<if test="#{productInfo} != null">
-					OR p.productCode Like #{productInfo}
-				</if>
-				<if test="#{productInfo} != null">
-					OR p.productName Like #{productInfo}
-				</if>
-				<if test="#{productInfo} != null">
-					OR p.productType Like #{productInfo}
-				</if>
-			</trim>
+				p.productCode LIKE #{allProductInfo}
+				OR p.productName LIKE #{allProductInfo}
+				OR p.productType LIKE #{allProductInfo}
 	</select>
 	
 	<select id="addTempProductOrder" resultType="com.sharedOne.domain.master.YdsProductDto">
 		SELECT
-		 	productCode,
-		 	productName,
-		 	productType,
-		 	size,
-		 	unit,
-		 	price
-		 FROM Product 
-		 where productCode = #{productCode}
+		 	p.productCode,
+		 	p.productName,
+		 	p.productType,
+		 	p.size,
+		 	p.unit,
+		 	p.price,
+		 	s.salePrice
+		 FROM Product p
+		 LEFT JOIN SalePrice s ON s.productCode = p.productCode
+		 where s.productCode = #{productCode} AND s.buyerCode = #{buyerCode} 
 		 
 	</select>
-	<insert id="insertOrderHeader">
+	<insert id="insertOrderHeader" useGeneratedKeys="true" keyProperty="orderId">
 	INSERT INTO Order_header(
 		deliveryDate,
 		buyerCode,
@@ -95,11 +89,12 @@
 	
 	<insert id="insertOrderItem">
 	INSERT INTO Order_item(
+		orderId,
 		productCode,
 		quantity,
 		salePrice
 	)
-	VALUES(#{productCode}, #{quantity}, #{salePrice})
+	VALUES(#{generatedId}, #{productCode}, #{quantity}, #{salePrice})
 	
 	</insert>
 	
