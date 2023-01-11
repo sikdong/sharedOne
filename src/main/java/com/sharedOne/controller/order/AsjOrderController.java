@@ -75,7 +75,7 @@ public class AsjOrderController {
 		
 		List<OrderItemDto> itemListByOrderCode = orderService.selectOrderItemListByOrderCode(orderCode);
 		
-		System.out.println(itemListByOrderCode);
+		System.out.println("***"+itemListByOrderCode);
 		
 		return itemListByOrderCode;
 		
