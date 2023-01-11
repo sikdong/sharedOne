@@ -10,6 +10,7 @@ import com.sharedOne.domain.master.ProductDto;
 import com.sharedOne.domain.master.YdsProductDto;
 import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.order.OrderItemDto;
+import com.sharedOne.domain.order.YdsOrderDto;
 
 
 @Component
@@ -33,6 +34,8 @@ public interface YdsOrderMapper {
 	void createOrderCode(@Param("generatedId") int generatedId, @Param("year") String year);
 
 	String getDate(int generatedId);
+
+	YdsOrderDto modifyOrder(int orderId);
 
 	
 }

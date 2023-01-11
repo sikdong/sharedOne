@@ -1,4 +1,4 @@
-/*package com.sharedOne.controller.order;
+package com.sharedOne.controller.order;
 
 import java.util.HashSet;
 import java.util.List;
@@ -51,7 +51,7 @@ public class AsjOrderController {
 		
 		Set<String> setName = new HashSet<>();
 		for(OrderHeaderDto header: headerList) {
-			String name = header.getName();
+			String name = header.getWriter();
 			setName.add(name);
 		}
 		model.addAttribute("writerList", setName);
@@ -66,4 +66,4 @@ public class AsjOrderController {
 	}
 	
 	
-}*/
+}

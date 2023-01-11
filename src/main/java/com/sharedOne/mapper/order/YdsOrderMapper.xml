@@ -70,7 +70,8 @@
 		 	p.size,
 		 	p.unit,
 		 	p.price,
-		 	s.salePrice
+		 	s.salePrice,
+		 	s.priceId
 		 FROM Product p
 		 LEFT JOIN SalePrice s ON s.productCode = p.productCode
 		 where s.productCode = #{productCode} AND s.buyerCode = #{buyerCode} 
@@ -84,7 +85,7 @@
 		message,
 		writer
 	)
-	VALUES(#{deliveryDate}, #{buyerCode}, '승인요청', #{message}, #{writer})
+	VALUES(#{deliveryDate}, #{buyerCode}, #{status} , #{message}, #{writer})
 	
 	</insert>
 	
@@ -100,10 +101,10 @@
 		orderId,
 		productCode,
 		quantity,
-		salePrice,
+		finalPrice,
 		sum
 	)
-	VALUES(#{generatedId}, #{oid.productCode}, #{oid.quantity}, #{oid.salePrice}, #{oid.sum})
+	VALUES(#{generatedId}, #{oid.productCode}, #{oid.quantity}, #{oid.finalPrice}, #{oid.sum})
 	
 	</insert>
 	

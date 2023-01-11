@@ -546,7 +546,7 @@
 			`<tr>
 				<th>
 					<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
-						id="productCheckBox" name="productCode" value="\${item.productCode}">
+						id="productCheckBox" name="productCode" value="\${item.productCode}" data-sale-price="\${item.salePrice}">
 				</th>
 				<td>\${item.productCode }</td>
 				<td>\${item.productType }</td>
@@ -750,14 +750,14 @@
               <td>\${da.price}원</td>
               <td>
 	              <input class="form-control" 
-	              type="number" id="finalPrice\${i}" 
-	              onclick = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
-	              onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
-	              name="finalPrice" value="\${da.salePrice}">
+	              type="number" id="salePrice\${i}" 
+	              onclick = "document.querySelector('#sum\${i}').value = document.querySelector('#salePrice\${i}').value * document.querySelector('#quantity\${i}').value"
+	              onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#salePrice\${i}').value * document.querySelector('#quantity\${i}').value"
+	              name="salePrice" value="\${da.salePrice}">
               </td>
               <td><input 
-              onclick = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value" 
-	          onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
+              onclick = "document.querySelector('#sum\${i}').value = document.querySelector('#salePrice\${i}').value * document.querySelector('#quantity\${i}').value" 
+	          onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#salePrice\${i}').value * document.querySelector('#quantity\${i}').value"
 	              
               id="quantity\${i}" class="form-control" type="number" name="quantity" value=""></td>
               <td><input type="number" id="sum\${i}" name="sum" class="form-control" /></td>

@@ -66,6 +66,7 @@ public class YdsOrderService {
 		  ohd.setBuyerCode(yod.getBuyerCode());
 		  ohd.setDeliveryDate(yod.getDeliveryDate());
 		  ohd.setMessage(yod.getMessage());
+		  ohd.setStatus(yod.getStatus());
 		  mapper.insertOrderHeader(ohd);
 		  int generatedId = ohd.getOrderId();
 		  String date = mapper.getDate(generatedId);
@@ -75,11 +76,11 @@ public class YdsOrderService {
 		  List<String> productCodes = yod.getProductCode();
 		  System.out.println("코드는" + productCodes);
 		  List<Integer> quantities = yod.getQuantity();
-		  List<Integer> salePrices = yod.getSalePrice();
+		  List<Integer> finalPrices = yod.getFinalPrice();
 		  List<Integer> sums = yod.getSum();
 		  for(int i = 0; i < productCodes.size(); i++) {
 			  oid.setProductCode(productCodes.get(i));
-			  oid.setSalePrice(salePrices.get(i));
+			  oid.setFinalPrice(finalPrices.get(i));
 			  oid.setQuantity(quantities.get(i));
 			  oid.setSum(sums.get(i));
 			  System.out.println("오더 목록 " + i + "번째는" +oid);
@@ -90,6 +91,11 @@ public class YdsOrderService {
 		  
 		  
 	}
-	
+
+	public YdsOrderDto modifyOrder(int orderId) {
+		// TODO Auto-generated method stub
+		return mapper.modifyOrder(orderId);
+	}
+
 	
 }
