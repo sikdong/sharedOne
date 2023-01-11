@@ -174,7 +174,7 @@
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
-							<label for="inputPhone" class="col-form-label" >선적비용부담회사</label>
+							<label for="inputdeliveryCompany" class="col-form-label" >선적비용부담회사</label>
 
 							<div class="col-sm-5">
 								<select id="deliveryCompany" name="deliveryCompany" class="form-control"
@@ -186,7 +186,7 @@
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
-							<label for="inputPhone" class="col-form-label" >담당자</label> 
+							<label for="inputManager" class="col-form-label" >담당자</label> 
 							<div class="col-sm-5">
 								<input id="manager" type="text" class="form-control" name ="manager" value="${buyer.manager }"
 									placeholder="${buyer.manager }" />
@@ -249,7 +249,7 @@
     	
     });
   
-  //삭제 버튼 클릭하면 삭제 form 전송
+    //삭제확인 버튼 클릭하면 삭제 form 전송
     function removeCheck() {
 	  
 	 	if (confirm("정말 삭제하시겠습니까?") == true) { 
@@ -263,20 +263,38 @@
 	     }
 
 	}
- //수정 버튼 클릭하면 수정 form 전성
-    function modifyCheck() {
-  	  
-	 	if (confirm("정말 수정하시겠습니까?") == true) { 
-	 		document.modifyfrm.submit();
-	 		window.opener.location.reload();    //부모창 reload
-	 		setTimeout(function() {   
+ //수정 버튼 클릭하면 수정 form 전송
+$(function() {
+    $("#modifyBtn").click( function() {
+    	
+    	if(confirm("수정하시겠습니까?")){
+    		const buyerName = $('input[name=buyerName]').val();
+			const buyerAddress = $('input[name=buyerAddress]').val();
+			const buyerCountry = $('input[name=buyerCountry]').val();
+			const businessNum = $('input[name=businessNum]').val();
+			const buyerPhone = $('input[name=buyerPhone]').val();
+			const deliveryCompany = $('input[name=deliveryCompany]').val();
+			const manager = $('input[name=manager]').val();
+			const data = { buyerName, buyerAddress, buyerCountry, businessNum, buyerPhone, deliveryCompany, manager };
+			
+	    	$.ajax({
+	    		url : "/master/buyerModify",
+	    		method : "POST",
+	    		data : (data),
+	    		dataType : "json"		    	
+	    	})	
+	    	window.opener.location.reload();
+	    	window.close;
+/* 	    	setTimeout(function() {   
 	             window.close();
-	          }, 100);
-	 	} else{
-	     return false;
-	     }
-
-	}
+	          }, 100); */
+	    	
+	    	
+    	}else{
+    		return false;
+    	}	 
+    });
+});
 
     
         function comma(str) {

@@ -49,14 +49,16 @@
 			OR  unit LIKE #{keyword} 
 			OR  content LIKE #{keyword} 
 			OR  inserted LIKE #{keyword}
+			OR  fromDate LIKE #{keyword}
+			OR  endDate LIKE #{keyword}
 		
 		ORDER BY productCode
  	</select>
  	
  	 <!-- 제품 입력 -->
  	<insert id="register" useGeneratedKeys="true" keyProperty="productCode">
- 	INSERT INTO Product (productCode, productName, productType, weight, size, price, unit, content)
- 	VALUES (#{productCode}, #{productName}, #{productType}, #{weight}, #{size}, #{price}, #{unit}, #{content})
+ 	INSERT INTO Product (productCode, productName, productType, weight, size, price, unit, fromDate, endDate, content)
+ 	VALUES (#{productCode}, #{productName}, #{productType}, #{weight}, #{size}, #{price}, #{unit}, #{fromDate}, #{endDate}, #{content})
  	</insert>
  	
  	<!-- 제품 내용 가져오기 -->
@@ -77,6 +79,8 @@
 	 		weight = #{weight},
 	 		size = #{size},
 	 		price = #{price},
+	 		fromDate = #{fromDate},
+	 		endDate = #{endDate},
 	 		unit = #{unit},
 	 		content = #{content}
 	 	WHERE

@@ -69,7 +69,7 @@
 	    border-radius: 5px; 
 	    background: #1d5c83;
 	    position: absolute;
-	    top: 771px;
+	    top: 939px;
 	    right: 75px;
     }
     
@@ -142,7 +142,14 @@
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
-							<label for="inputProductPrice" class="col-form-label">원가</label>
+							<label for="inputName" class="col-form-label">단위</label>
+							<div class="col-sm-5">
+								<input id="productName" name="unit" type="text"
+									class="form-control" value="${product.unit }" placeholder="${product.unit }" />
+							</div>
+						</div>
+						<div class="mb-2 row mt-2 rowdiv">
+							<label for="inputProductPrice" class="col-form-label">단가</label>
 							<div class="col-sm-5">
 								<input id="productPrice" name="price"
 									onkeyup="inputNumberFormat(this);"
@@ -153,13 +160,24 @@
 									/>
 							</div>
 						</div>
+
 						<div class="mb-2 row mt-2 rowdiv">
-							<label for="inputName" class="col-form-label">단위</label>
+							<label for="inputPriceStartDate" class="col-form-label">단가
+								시작일</label>
 							<div class="col-sm-5">
-								<input id="productName" name="unit" type="text"
-									class="form-control" value="${product.unit }" placeholder="${product.unit }" />
+								<input id="productStartDate" name="fromDate" type="date"
+									class="form-control" value="${product.fromDate }"/>
 							</div>
 						</div>
+						<div class="mb-2 row mt-2 rowdiv">
+							<label for="inputPriceEndDate" class="col-form-label">단가
+								종료일</label>
+							<div class="col-sm-5">
+								<input id="productEndDate" name="endDate" type="date"
+									class="form-control" value="${product.endDate }"/>
+							</div>
+						</div>
+
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputName" class="col-form-label">제품 설명</label>
 							<div class="col-sm-5">

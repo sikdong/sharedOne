@@ -88,7 +88,7 @@
 </style>
 <body>   
     <div class="insert-body mt-5 ">
-    	<form id="registerForm' action="" method="post">
+    	<form id="registerForm" name ="registerfrm" action="" method="post">
 	        <div class="container-md">
 	            <div class="row">
 	                <div class="col mt-1">
@@ -159,7 +159,7 @@
 	                    </div>
 	                <hr />
 	                <div>
-	                    <input id="registerBtn" class="btn registerBtn" type="submit" value="등록"/>
+	                    <input id="registerBtn" class="btn registerBtn" type="submit" value="등록" onclick="submit()"/>
 	                </div>
 	              
 	            </div>
@@ -170,12 +170,14 @@
     <script>
     
     //등록버튼 누르면 등록 실행 후 창 닫기
-    document.querySelector("#registerBtn").addEventListener("click", function() {
-    	document.querySelector("#registerForm").submit();
-    	window.opener.location.reload();    //부모창 reload
-    	window.close();    //현재 팝업창 Close
+    function submit() {
+    	document.registerfrm.submit();
+ 		window.opener.location.reload();    //부모창 reload
+ 		setTimeout(function() {   
+             window.close();
+          }, 100);
     	
-    })
+    }
     
     const ctx = "${pageContext.request.contextPath}";
     

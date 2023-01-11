@@ -195,8 +195,8 @@
                   <th style="width: 130px;">무게(g)</th>
                   <th style="width: 130px;">규격(Inch)</th>
                   <th style="width: 100px;">단위(EA)</th>
-                  <th style="width: 150px;">원가</th>
-                  <th style="width: 300px;">원가기간</th>
+                  <th style="width: 150px;">단가</th>
+                  <th style="width: 300px;">단가기간</th>
 
 					 </tr>
 				 </thead>

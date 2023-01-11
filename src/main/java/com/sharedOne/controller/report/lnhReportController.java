@@ -192,7 +192,7 @@ public class lnhReportController {
 						 row.createCell(0).setCellValue(board1.getOrderCode());
 						 row.createCell(1).setCellValue(board1.getBuyerCode());
 						 row.createCell(2).setCellValue(board1.getOrderItem().get(0).getProductCode());
-						 row.createCell(3).setCellValue(board1.getOrderItem().get(0).getSalePrice());
+						 row.createCell(3).setCellValue(board1.getOrderItem().get(0).getFinalPrice());
 						 row.createCell(4).setCellValue(board1.getOrderItem().get(0).getQuantity());
 						 row.createCell(5).setCellValue(board1.getOrderItem().get(0).getSum());
 
@@ -222,7 +222,7 @@ public class lnhReportController {
 							 row.createCell(0).setCellValue(board1.getOrderCode());
 							 row.createCell(1).setCellValue(board1.getBuyerCode());
 							 row.createCell(2).setCellValue(board2.getProductCode());
-							 row.createCell(3).setCellValue(board2.getSalePrice());
+							 row.createCell(3).setCellValue(board2.getFinalPrice());
 							 row.createCell(4).setCellValue(board2.getQuantity());
 							 row.createCell(5).setCellValue(board2.getSum());
 							 Date cell6 = java.sql.Date.valueOf(board1.getInserted());

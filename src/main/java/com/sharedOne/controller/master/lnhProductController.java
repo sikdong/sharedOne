@@ -64,11 +64,9 @@ public class lnhProductController {
 	}
 	
 	@PostMapping("productRegister")
-	public String register(ProductDto product, RedirectAttributes rttr) {
-		
+	public void register(ProductDto product) {
 		productService.register(product);
 		
-		return "redirect:/master/productList";
 	}
 	
 	//새 창으로 띄우는 경우 

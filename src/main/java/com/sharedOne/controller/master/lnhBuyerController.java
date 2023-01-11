@@ -59,20 +59,10 @@ public class lnhBuyerController {
 	}
 
 	@PostMapping("buyerRegister")
-	public void register(BuyerDto buyer, RedirectAttributes rttr) {
+	public void register(BuyerDto buyer) {
 		buyerService.register(buyer);
 	}
 
-	// 새 창으로 띄우는 경우
-	/*
-	 * @GetMapping("buyerGet") public void get(
-	 * 
-	 * @RequestParam(name = "code") String buyerCode, Authentication auth, Model
-	 * model) { BuyerDto buyer = buyerService.get(buyerCode);
-	 * model.addAttribute("buyer", buyer);
-	 * 
-	 * }
-	 */
 
 	@GetMapping("buyerModify") // @은 외부 빈, #은 메소드의 파라미터
 	/* @PreAuthorize("@Security.checkWriter(authentication.name, #buyerCode)") */
@@ -85,11 +75,8 @@ public class lnhBuyerController {
 
 	@PostMapping("buyerModify")
 	/* @PreAuthorize("@Security.checkWriter(authentication.name, #buyerCode)") */
-	public String modify(BuyerDto buyer) {
+	public void modify(BuyerDto buyer) {
 		buyerService.update(buyer);
-		String code = buyer.getBuyerCode();
-
-		return "redirect:/master/buyerModify?code=" + code;
 	}
 	
 	@GetMapping("existbuyerCode/{buyerCode}")

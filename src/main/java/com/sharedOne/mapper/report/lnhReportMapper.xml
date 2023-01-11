@@ -9,7 +9,7 @@
 		SELECT
 			h.orderCode,
 			i.productCode,
-			i.salePrice,
+			i.finalPrice,
 			i.quantity,
 			i.sum,
 			h.inserted,
@@ -24,7 +24,7 @@
 			
 		WHERE	h.orderCode LIKE #{orderQ} 
 		   OR  	  i.productCode LIKE #{orderQ} 
-		   OR  	  i.salePrice LIKE #{orderQ} 
+		   OR  	  i.finalPrice LIKE #{orderQ} 
 		   OR  	  i.quantity LIKE #{orderQ} 
 		   OR  	  i.sum LIKE #{orderQ} 
 		   OR  	  h.inserted LIKE #{orderQ} 
@@ -54,7 +54,7 @@
 	
 	<resultMap type="com.sharedOne.domain.order.OrderItemDto" id="orderItem">
 		<result column="productCode" property="productCode"/>
-		<result column="salePrice" property="salePrice"/>
+		<result column="finalPrice" property="finalPrice"/>
 		<result column="quantity" property="quantity"/>
 		<result column="sum" property="sum"/>
 	</resultMap>
@@ -76,7 +76,7 @@
 		
 		WHERE	(h.orderCode LIKE #{orderQ} 
 		   OR  	  i.productCode LIKE #{orderQ} 
-		   OR  	  i.salePrice LIKE #{orderQ} 
+		   OR  	  i.finalPrice LIKE #{orderQ} 
 		   OR  	  i.quantity LIKE #{orderQ} 
 		   OR  	  i.sum LIKE #{orderQ} 
 		   OR  	  h.inserted LIKE #{orderQ} 
@@ -96,7 +96,7 @@
 		
 		WHERE	(h.orderCode LIKE #{orderQ} 
 		   OR  	  i.productCode LIKE #{orderQ} 
-		   OR  	  i.salePrice LIKE #{orderQ} 
+		   OR  	  i.finalPrice LIKE #{orderQ} 
 		   OR  	  i.quantity LIKE #{orderQ} 
 		   OR  	  i.sum LIKE #{orderQ} 
 		   OR  	  h.inserted LIKE #{orderQ} 

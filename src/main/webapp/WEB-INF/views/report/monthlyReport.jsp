@@ -327,7 +327,7 @@ div.right {
 							<td style="width: 220px;">${order.orderCode }</td>
 							<td style="width: 220px;">${order.buyerCode }</td>
 							<td style="width: 220px;">${order.orderItem[0].productCode }</td>
-							<td style="width: 150px;">${order.orderItem[0].salePrice }</td>
+							<td style="width: 150px;">${order.orderItem[0].finalPrice }</td>
 							<td style="width: 130px;">${order.orderItem[0].quantity }</td>
 							<td style="width: 200px;">${order.orderItem[0].sum }</td>
 							<td style="width: 250px;">${order.inserted }</td>
@@ -344,7 +344,7 @@ div.right {
 								<td style="width: 220px;">${order.orderCode }</td>
 								<td style="width: 220px;">${order.buyerCode }</td>
 								<td style="width: 220px;">${item.productCode }</td>
-								<td style="width: 150px;">${item.salePrice }</td>
+								<td style="width: 150px;">${item.finalPrice }</td>
 								<td style="width: 130px;">${item.quantity }</td>
 								<td style="width: 200px;">${item.sum }</td>
 								<td style="width: 250px;">${order.inserted }</td>
