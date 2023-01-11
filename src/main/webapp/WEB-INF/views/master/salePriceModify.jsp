@@ -143,7 +143,7 @@ $('input[name=salePrice]').keyup(function(){
 	/* Math.round() 소수점 반올림하고, toFixed(0) 소숫점 제거  */
 	var dc = (1 - ( sp / pr )) * 100; 	
 	dc = parseFloat(dc).toFixed(0);
-	Math.round(dc);
+	dc = Math.round(dc);
 	/* console.log(dc); */
 	$('input[name=discountRate]').attr('value', dc);
 })
