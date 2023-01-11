@@ -12,4 +12,6 @@ public class YdsOrderDto {
 	private List<String> productCode;
 	private List<Integer> salePrice;
 	private List<Integer> quantity;
+	private List<Integer> sum;
+	private String writer;
 }

@@ -25,10 +25,14 @@ public interface YdsOrderMapper {
 
 	void insertOrderHeader(OrderHeaderDto ohd);
 
-	void insertOrderItem(@Param("oid")OrderItemDto oid, @Param("generatedId") int generatedId);
+	void insertOrderItem(@Param("generatedId") int generatedId, @Param("oid") OrderItemDto oid);
 
 	YdsProductDto addTempProductOrder(@Param("productCode") String productCode, 
 			@Param("buyerCode") String buyerCode);
+
+	void createOrderCode(@Param("generatedId") int generatedId, @Param("year") String year);
+
+	String getDate(int generatedId);
 
 	
 }

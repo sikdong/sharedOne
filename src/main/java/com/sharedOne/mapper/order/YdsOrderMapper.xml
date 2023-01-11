@@ -81,22 +81,39 @@
 		deliveryDate,
 		buyerCode,
 		status,
-		message
+		message,
+		writer
 	)
-	VALUES(#{deliveryDate}, #{buyerCode}, '승인요청', #{message})
+	VALUES(#{deliveryDate}, #{buyerCode}, '승인요청', #{message}, #{writer})
 	
 	</insert>
+	
+	<update id="createOrderCode">
+		UPDATE Order_header 
+		SET 
+		orderCode = CONCAT('WT',#{year}, #{generatedId})
+		WHERE orderId = #{generatedId} 
+	</update>
 	
 	<insert id="insertOrderItem">
 	INSERT INTO Order_item(
 		orderId,
 		productCode,
 		quantity,
-		salePrice
+		salePrice,
+		sum
 	)
-	VALUES(#{generatedId}, #{productCode}, #{quantity}, #{salePrice})
+	VALUES(#{generatedId}, #{oid.productCode}, #{oid.quantity}, #{oid.salePrice}, #{oid.sum})
 	
 	</insert>
+	
+	<select id="getDate" resultType="string">
+	SELECT 
+		inserted
+	FROM Order_header
+	WHERE orderId = #{generatedId}
+	
+	</select>
 	
 
 
