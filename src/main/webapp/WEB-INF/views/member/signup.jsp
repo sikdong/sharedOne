@@ -139,7 +139,7 @@
 	                        <div class="mb-2 row mt-2 rowdiv">
 								<label for="inputAuth" class="col-form-label" >직급</label>
 									<div class="col-sm-5">
-										<select id="memberAuth" name="Auth" class="form-control"
+										<select id="memberAuth" name="rank" class="form-control"
 											style="padding-left: 8px;">
 											<option selected>직급을 선택하세요.</option>
 											<option name ="팀장" >팀장</option>
@@ -164,15 +164,15 @@
     <script>
 	    
     //등록버튼 누르면 등록 실행 후 창 닫기
-    document.querySelector("#registerBtn").addEventListener("click", function() {
-    	
-    	document.querySelector("#memberForm").submit();
-    	
-    	setTimeout("window.close()", 3000);
-    	
-    	    //현재 팝업창 Close
-    	
-    })
+    $(function() {
+
+        $("#registerBtn").click( function() {
+             $('#memberForm').submit();
+             setTimeout(function() {   
+                 window.close();
+              }, 100);
+          });
+    });
     
     const ctx = "${pageContext.request.contextPath}";  
     

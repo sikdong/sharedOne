@@ -13,5 +13,5 @@ public class MemberDto {
 	private String email;
 	private String phone;
 	
-	private List<String> Auth;
+	private List<String> rank;
 }

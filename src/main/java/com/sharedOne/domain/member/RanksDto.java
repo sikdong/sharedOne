@@ -3,8 +3,8 @@ package com.sharedOne.domain.member;
 import lombok.Data;
 
 @Data
-public class AuthDto {
+public class RanksDto {
 	
 	private String id;
-	private String Auth;
+	private String rank;
 }

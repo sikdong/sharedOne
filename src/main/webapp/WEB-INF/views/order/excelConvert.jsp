@@ -2,12 +2,27 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Calendar"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="application/vnd.ms-excel;charset=UTF-8">
+<%
+
+	Calendar cal = Calendar.getInstance();
+
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+
+    response.setHeader("Content-Disposition","attachment;filename="+sdf.format(cal.getTime())+"_excel_file.xls");
+
+    response.setHeader("Content-Description", "JSP Generated Data");
+
+ %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous" />	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
@@ -68,15 +83,8 @@
         <div class="row">
             <div class="row mt-5" style="text-align: center;">     
                  <div id="rvbtn_group" style="text-align: right;">
-                 	<c:url value="/report/excelDown" var="listLink"></c:url>
                  	<button type="button" class="btn" id="print" style="border: gray 2px solid; font-weight: bold; float:left; font-size:x-large; padding:0px;" onclick="content_print();">&nbsp&nbsp<i class='bx bx-printer'></i>&nbsp&nbsp</button>
-					<form action="${listLink }" method="get">
-						<input name="orderId" value="" class="form-control" type="hidden">
-						<!-- <button class="btn btn-primary primaryBtn" type="submit" style="margin-bottom: 10px;">
-							엑셀 다운로드
-						</button> -->
-	                    <button type="submit" class="btn" id="excelConverBtn" style="border: gray 2px solid; font-weight: bold; float:left; font-size:x-large; padding:0px;">&nbsp&nbsp<i class='bx bx-printer'></i>&nbsp&nbsp</button>         
-					</form>
+                    <button type="button" class="btn" id="excelConverBtn" style="border: gray 2px solid; font-weight: bold; float:left; font-size:x-large; padding:0px;"">&nbsp&nbsp<i class='bx bx-printer'></i>&nbsp&nbsp</button>         
                 </div>
             </div>
         </div>
@@ -176,38 +184,8 @@
 	        </div>
         </div>
         <br>
-        <div class="row mb-5">
-	        <span style="float: left; font-size: large; font-weight: bold;">특이사항</span>
-	        <table>
-	        	<tfoot>
-	        		<tr>
-	                	<td>${orderHeader.message }</td>
-	                </tr>
-	        	</tfoot>
-	        </table>
-        </div>
     </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-<script>
-/* 엑셀 파일로 다운로드 */
-$(document).ready(function(){
-	$("#excelConverBtn").on('click',function(){
-		location.href="/order/excelConvert/${orderHeader.orderId}";
-	});
-});
-/* 프린터 출력 */
-function content_print(){
-    
-    var initBody = document.body.innerHTML;
-    window.onbeforeprint = function(){
-        document.body.innerHTML = document.getElementById('printDiv').innerHTML;
-    }
-    window.onafterprint = function(){
-        document.body.innerHTML = initBody;
-    }
-    window.print();    
-}           
-</script>
 </body>
 </html>

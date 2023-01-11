@@ -1,6 +1,6 @@
 package com.sharedOne.mapper.member;
 
-import com.sharedOne.domain.member.AuthDto;
+import com.sharedOne.domain.member.RanksDto;
 import com.sharedOne.domain.member.MemberDto;
 
 public interface YjhMemberMapper {
@@ -9,6 +9,6 @@ public interface YjhMemberMapper {
 
 	int insertMember(MemberDto member);
 
-	int insertAuth(AuthDto auth);
+	int insertRanks(RanksDto rank);
 
 }
