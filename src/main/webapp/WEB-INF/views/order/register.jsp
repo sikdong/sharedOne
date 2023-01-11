@@ -62,6 +62,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
 	integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 </head>
 <body>
 	<c:set value="${pageContext.request.contextPath }" var="path"></c:set>
@@ -160,7 +161,7 @@
 					<div class="row d-flex">
 						<div class="col-sm-5">
 							<div class="input-group" style="margin-top: 15px !important;">
-								<input name="deliveryDate" type="date" id="d1Id"
+								<input required name="deliveryDate" type="date" id="d1Id"
 									class="form-control">
 							</div>
 						</div>
@@ -174,45 +175,6 @@
 		<!-- container-sm div 끝-->
 		<hr />
 		<div class="mt-5" id="buyerTable"></div>
-		<!-- <div class="container-sm mt-4">
-			<div class="row d-flex">
-				*우측* 검색 필터
-				<div class="col-sm-10 mt-1">
-					<form action="" method="">form get? post? 		
-						검색필터 1st row : 전체 검색.
-						검색필터 2nd row : 조건 검색 ( 각자 페이지의 따라 변경  )
-						<div class="row d-flex">
-							<div class="col-sm-3 mb-4">
-								<div>바이어명</div>
-								<div class="input-group mt5">
-									<input name="" value="" type="text" id="" class="form-control" list="datalistOptions1" placeholder="">
-									<button data-bs-toggle="modal" data-bs-target="#buyerModal" class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div>바이어코드</div>
-								<div class="input-group mt5">
-									<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="">
-								</div>	
-							</div>
-							<div class="col-sm-3">
-								<div>국가</div>
-								<div class="input-group mt5">
-									<input name="" value="" type="text" id="" class="form-control" list="datalistOptions3" placeholder="">
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div>납기 요청일</div>
-								<div class="input-group mt5">
-									<input name="" value="" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="">
-								</div>
-							</div>
-						</div>2nd row 끝
-						검색필터 3rd row : 기간 선택
-					</form>	
-				</div>우측 검색 조건 div 끝
-			</div>좌측 + 우측 전체를 감싸는 d-flex 끝
-		</div>container-sm div 끝 -->
 
 		<br />
 		<hr />
@@ -229,7 +191,6 @@
 					</div>
 					<div class="mb-5">
 						<p class="filterText ">조건 선택</p>
-						<!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
 					</div>
 				</div>
 				<!-- 좌측 조건 설명 div 끝 -->
@@ -322,10 +283,10 @@
 						<th>제품명</th>
 						<th>규격</th>
 						<th>단위</th>
-						<th>원가</th>
+						<th>단가</th>
 						<th style="width : 120px;">단가</th>
 						<th style="width : 80px;">수량</th>
-						<th>합계액</th>
+						<th style="width : 150px;">합계액</th>
 					</tr>
 				</thead>
 				<tbody class="table-group-divider" id="tempOrderTable">
@@ -341,8 +302,8 @@
 				class="mt-5 btn">임시저장</button>
 			<button style="background: #1d5c83; color: white;" class="mt-5 btn">주문
 				등록</button>
-			<button type="button" class="mt-5 btn"
-				style="background: #1d5c83; color: white;">닫기</button>
+			<a href="${path }/order/list" type="button" class="mt-5 btn"
+				style="background: #1d5c83; color: white;">닫기</a>
 		</form>
 	</div>
 	<br />
@@ -570,7 +531,7 @@
 				<th scope="col">규격</th>
 				<th scope="col">무게</th>
 				<th scope="col">단위</th>
-				<th scope="col">원가</th>
+				<th scope="col">단가</th>
 			</tr>
 		</thead>
 		<tbody id="productBody">
@@ -622,7 +583,7 @@
 				<th scope="col">규격</th>
 				<th scope="col">무게</th>
 				<th scope="col">단위</th>
-				<th scope="col">원가</th>
+				<th scope="col">단가</th>
 			</tr>
 		</thead>
 		<tbody id="productBody">
@@ -670,7 +631,7 @@
 				<th scope="col">규격</th>
 				<th scope="col">무게</th>
 				<th scope="col">단위</th>
-				<th scope="col">원가</th>
+				<th scope="col">단가</th>
 			</tr>
 		</thead>
 		<tbody id="productBody">
@@ -719,7 +680,7 @@
 				<th scope="col">규격</th>
 				<th scope="col">무게</th>
 				<th scope="col">단위</th>
-				<th scope="col">원가</th>
+				<th scope="col">단가</th>
 			</tr>
 		</thead>
 		<tbody id="productBody">
@@ -763,7 +724,6 @@
 			productCodes.push(el.value);
 			})
 		
-		console.log(productCodes);
 		const data = {
 				'productCodes' : productCodes,
 				'buyerCode' : buyerCode
@@ -788,10 +748,20 @@
               <td>\${da.size}</td>
               <td>\${da.unit}</td>
               <td>\${da.price}원</td>
-              <td><input class="form-control" onclick = "plusSum()" type="number" name="salePrice" value="\${da.salePrice}"></td>
-              <td><input class="form-control" type="number" name="quantity" value=""></td>
-              <td><input id="sum\${i}" class="form-control" type="number" name="sum"></td>
               <td>
+	              <input class="form-control" 
+	              type="number" id="salePrice\${i}" 
+	              onclick = "document.querySelector('#sum\${i}').value = document.querySelector('#salePrice\${i}').value * document.querySelector('#quantity\${i}').value"
+	              onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#salePrice\${i}').value * document.querySelector('#quantity\${i}').value"
+	              name="salePrice" value="\${da.salePrice}">
+              </td>
+              <td><input 
+              onclick = "document.querySelector('#sum\${i}').value = document.querySelector('#salePrice\${i}').value * document.querySelector('#quantity\${i}').value" 
+	          onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#salePrice\${i}').value * document.querySelector('#quantity\${i}').value"
+	              
+              id="quantity\${i}" class="form-control" type="number" name="quantity" value=""></td>
+              <td><input type="number" id="sum\${i}" name="sum" class="form-control" /></td>
+              <td style="display : flex; justify-content : center;">
                   <button onclick="document.querySelector('#tr\${i}').innerHTML = '';" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
               </td>
             </tr>`
@@ -801,6 +771,8 @@
 			document.querySelector("#productBody").innerHTML = "";
 		})
 	}); 
+	
+	
 	
 	
 	</script>

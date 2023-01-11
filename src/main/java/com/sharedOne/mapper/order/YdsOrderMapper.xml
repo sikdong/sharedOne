@@ -81,9 +81,10 @@
 		deliveryDate,
 		buyerCode,
 		status,
-		message
+		message,
+		writer
 	)
-	VALUES(#{deliveryDate}, #{buyerCode}, '승인요청', #{message})
+	VALUES(#{deliveryDate}, #{buyerCode}, '승인요청', #{message}, #{writer})
 	
 	</insert>
 	
@@ -99,9 +100,10 @@
 		orderId,
 		productCode,
 		quantity,
-		salePrice
+		salePrice,
+		sum
 	)
-	VALUES(#{generatedId}, #{oid.productCode}, #{oid.quantity}, #{oid.salePrice})
+	VALUES(#{generatedId}, #{oid.productCode}, #{oid.quantity}, #{oid.salePrice}, #{oid.sum})
 	
 	</insert>
 	
