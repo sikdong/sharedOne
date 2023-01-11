@@ -37,7 +37,7 @@ public class YjhOrderService {
 		int quantity = 0;
 		int total = 0;
 		for(int i = 0; i < mapper.selectOrderItem(orderId).size(); i++) {
-			price += mapper.selectOrderItem(orderId).get(i).getSalePrice();
+			price += mapper.selectOrderItem(orderId).get(i).getFinalPrice();
 			quantity += mapper.selectOrderItem(orderId).get(i).getQuantity();
 			total += mapper.selectOrderItem(orderId).get(i).getSum();
 		}
@@ -52,7 +52,7 @@ public class YjhOrderService {
 		int quantity = 0;
 		int total = 0;
 		for(int i = 0; i < mapper.selectOrderItem(orderId).size(); i++) {
-			price += mapper.selectOrderItem(orderId).get(i).getSalePrice();
+			price += mapper.selectOrderItem(orderId).get(i).getFinalPrice();
 			quantity += mapper.selectOrderItem(orderId).get(i).getQuantity();
 			total += mapper.selectOrderItem(orderId).get(i).getSum();
 		}

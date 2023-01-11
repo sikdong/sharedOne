@@ -156,7 +156,7 @@
 		                    <td>${item.productName }</td>
 		                    <td>${item.size }</td>
 		                    <td>${item.unit }</td>
-		                    <td class="salePrice"><fmt:formatNumber value="${item.salePrice}" type="currency" currencySymbol="￦"/></td>	              
+		                    <td class="finalPrice"><fmt:formatNumber value="${item.finalPrice}" type="currency" currencySymbol="￦"/></td>	              
 		                    <td class="quantity">${item.quantity }</td>
 		                    <td class="sum"><fmt:formatNumber value="${item.sum }" type="currency" currencySymbol="￦"/></td>
 		                  </tr>	               

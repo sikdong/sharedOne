@@ -238,7 +238,7 @@ public class YjhOrderController {
 					itemRow.createCell(1).setCellValue(orderSheet.getProductName());
 					itemRow.createCell(2).setCellValue(orderSheet.getSize());
 					itemRow.createCell(3).setCellValue(orderSheet.getUnit());
-					itemRow.createCell(4).setCellValue(orderSheet.getSalePrice());
+					itemRow.createCell(4).setCellValue(orderSheet.getFinalPrice());
 					itemRow.createCell(5).setCellValue(orderSheet.getQuantity());
 					itemRow.createCell(6).setCellValue(orderSheet.getSum());
 					Num++;
