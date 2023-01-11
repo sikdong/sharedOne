@@ -52,9 +52,15 @@
 		cursor: pointer;
 	}
 	
+	#registerBtn {
+		margin-left: 30px;
+		margin-bottom: 10px;
+	}
+	
 	.table .trtr:hover {
 	 	font-weight: bold;
 	 	background-color: #c7c9c2;
+	 	cursor : pointer;
  	}
  	
  	th, td {
@@ -184,7 +190,7 @@
 			<c:url value="/master/buyerModify" var="getLink">
 					<c:param name="code" value="${buyer.buyerCode }"></c:param>
 				</c:url>
-				<tr onclick="window.open('${getLink}','바이어정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
+				<tr title="${buyer.buyerName } 정보 수정하기" onclick="window.open('${getLink}','바이어정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
 <%-- 				<tr onclick="location.href='${getLink}'" class="trtr"> --%>
 					<td style="width: 100px;">${buyer.buyerCode }</td>
 					<td style="width: 150px;">${buyer.buyerName }</td>

@@ -89,7 +89,7 @@
 <body>   
     <div class="insert-body mt-5 ">
 		<div class="container-md">
-			<form id="modifyForm" action="" method="post">
+			<form id="modifyForm" name="modifyfrm" action="" method="post">
 				<input type="hidden" name="productCode" value="${product.productCode}">
 				<div class="row">
 					<div class="col mt-1">
@@ -173,7 +173,7 @@
 
 				<!-- 수정버튼 -->
 
-				<input id="modifyBtn" class="btn" type="submit" value="수정">
+				<input id="modifyBtn" class="btn" type="submit" value="수정" onclick="modifyCheck()">
 			</form>
 
 			<form action="/master/productRemove" method="post">
@@ -187,15 +187,25 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <script>
     //삭제확인 버튼 클릭하면 삭제 form 전송
-
     function removeCheck() {
 	  
-	 	if (confirm("정말 삭제하시겠습니까??") == true) { 
+	 	if (confirm("정말 삭제하시겠습니까?") == true) { 
 	 		document.removefrm.submit();
 	 		window.opener.location.reload();    //부모창 reload
 	 		setTimeout(function() {   
 	             window.close();
 	          }, 100);
+	 	} else{
+	     return false;
+	     }
+
+	}
+    
+    //수정 버튼 클릭하면 수정 form 전성
+    function modifyCheck() {
+  	  
+	 	if (confirm("정말 수정하시겠습니까?") == true) { 
+	 		document.modifyfrm.submit();
 	 	} else{
 	     return false;
 	     }

@@ -119,7 +119,7 @@
 <body>
 	<div class="insert-body mt-5 ">
 		<div class="container-md">
-			<form id="modifyForm" action="" method="post">
+			<form id="modifyForm" name="modifyfrm" action="" method="post">
 			<input type="hidden" name="buyerCode" value="${buyer.buyerCode}"> 
 				<div class="row">
 					<div class="col mt-1">
@@ -196,7 +196,7 @@
 					<hr />
 
 					<!-- 수정버튼 -->
-					<input id="modifyBtn" class="btn" type="submit" value="수정">
+					<input id="modifyBtn" class="btn" type="submit" value="수정" onclick="modifyCheck()">
 				</div>
 			</form>
 		</div>
@@ -249,12 +249,25 @@
     	
     });
   
-  //삭제확인 버튼 클릭하면 삭제 form 전송
-
+  //삭제 버튼 클릭하면 삭제 form 전송
     function removeCheck() {
 	  
-	 	if (confirm("정말 삭제하시겠습니까??") == true) { 
+	 	if (confirm("정말 삭제하시겠습니까?") == true) { 
 	 		document.removefrm.submit();
+	 		window.opener.location.reload();    //부모창 reload
+	 		setTimeout(function() {   
+	             window.close();
+	          }, 100);
+	 	} else{
+	     return false;
+	     }
+
+	}
+ //수정 버튼 클릭하면 수정 form 전성
+    function modifyCheck() {
+  	  
+	 	if (confirm("정말 수정하시겠습니까?") == true) { 
+	 		document.modifyfrm.submit();
 	 		window.opener.location.reload();    //부모창 reload
 	 		setTimeout(function() {   
 	             window.close();

@@ -112,7 +112,7 @@ div.mainBoard {
 	margin-top: 20px;
 	margin-bottom: 10px;
 	width: 100%;
-	height: 1000px;
+	height: 500px;
 	
 }
 
@@ -186,13 +186,6 @@ div.right {
 				<div class="row d-flex">
 					<div class="col-sm-6 mb-4">
 						<div class="input-group">
-							<!-- Select -->
-							<select name="orderS" id="" class="form-select">
-								<option value="selectAll">전체검색</option>
-								<option value="selectOrderCode">주문서번호</option>
-								<option value="selectBuyerCode">바이어 코드</option>
-								<option value="selectWriter">담당자</option>
-							</select>
 							<input name="orderQ" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
 			        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>	
 						</div>
@@ -316,7 +309,7 @@ div.right {
 					<th style="width: 220px;">주문서 ID</th>
 					<th style="width: 220px;">바이어코드</th>
 					<th style="width: 220px;">제품코드</th>
-					<th style="width: 150px;">단가</th>
+					<th style="width: 150px;">판매가</th>
 					<th style="width: 130px;">수량</th>
 					<th style="width: 200px;">합계</th>
 					<th style="width: 200px;">등록일</th>
@@ -324,7 +317,7 @@ div.right {
 					<th style="width: 200px;">납기일</th>
 					<th style="width: 150px;">담당자</th>
 					<th style="width: 150px;">상태</th>
-					<th style="width: 300px;">메세지</th>
+					<th style="width: 130px;">메세지</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -342,7 +335,7 @@ div.right {
 							<td style="width: 250px;">${order.deliveryDate }</td>
 							<td style="width: 150px;">${order.writer }</td>
 							<td style="width: 200px;">${order.status }</td>
-							<td style="width: 300px;">${order.message }</td>
+							<td style="width: 130px;">${order.message }</td>
 						</tr>
 					</c:if>
 					<c:if test="${fn:length(order.orderItem) != 1 }">
@@ -359,7 +352,7 @@ div.right {
 								<td style="width: 250px;">${order.deliveryDate }</td>
 								<td style="width: 150px;">${order.writer }</td>
 								<td style="width: 200px;">${order.status }</td>
-								<td style="width: 300px;">${order.message }</td>
+								<td style="width: 130px;">${order.message }</td>
 							</tr>
 						</c:forEach>
 					</c:if>

@@ -54,10 +54,11 @@
 	
 	<resultMap type="com.sharedOne.domain.order.OrderItemDto" id="orderItem">
 		<result column="productCode" property="productCode"/>
+		<result column="salePrice" property="salePrice"/>
 		<result column="quantity" property="quantity"/>
 		<result column="sum" property="sum"/>
-		<result column="salePrice" property="salePrice"/>
 	</resultMap>
+	
 	
 	<select id="thisYearSales" resultType="com.sharedOne.domain.report.ReportDto">
 	SELECT MONTH(h.inserted) as month,
@@ -71,7 +72,8 @@
 	<!-- 검색 결과 바이어 별 매출 -->
 	<select id="salesByBuyer" resultType="int">
 		SELECT sum(i.sum) salesByBuyer 
-		FROM Order_header h LEFT JOIN Order_item i ON h.orderCode = i.orderCode 
+		FROM Order_header h LEFT JOIN Order_item i ON h.orderCode = i.orderCode
+		
 		WHERE	(h.orderCode LIKE #{orderQ} 
 		   OR  	  i.productCode LIKE #{orderQ} 
 		   OR  	  i.salePrice LIKE #{orderQ} 
@@ -84,13 +86,14 @@
 		   OR    h.buyerCode LIKE #{orderQ} 	
 		   OR 		h.status LIKE #{orderQ} 
 		   OR 	   h.message LIKE #{orderQ})  
-			AND buyerCode = #{buyerCode}
+			AND h.buyerCode = #{buyerCode}
 	
 	</select>
 	
 		<select id="salesByWriter" resultType="int">
 		SELECT sum(i.sum) salesByWriter 
-		FROM Order_header h LEFT JOIN Order_item i ON h.orderCode = i.orderCode 
+		FROM Order_header h LEFT JOIN Order_item i ON h.orderCode = i.orderCode
+		
 		WHERE	(h.orderCode LIKE #{orderQ} 
 		   OR  	  i.productCode LIKE #{orderQ} 
 		   OR  	  i.salePrice LIKE #{orderQ} 

@@ -46,7 +46,6 @@ import com.sharedOne.service.report.lnhReportService;
 @Controller
 @RequestMapping("report")
 public class lnhReportController {
-
 	@Autowired
 	private lnhProductService productService;
 	
@@ -159,7 +158,7 @@ public class lnhReportController {
 				Row xssfRow = sheet.createRow(rowNo++); // 행 객체 추가
 				Cell xssfCell = xssfRow.createCell((short) 0); // 추가한 행에 셀 객체 추가
 				xssfCell.setCellStyle(cellStyle); // 셀에 스타일 지정
-				xssfCell.setCellValue("레포트"); // 데이터 입력
+				xssfCell.setCellValue("리포트"); // 데이터 입력
 				
 				sheet.createRow(rowNo++);
 				xssfRow = sheet.createRow(rowNo++);  // 빈행 추가
@@ -168,7 +167,7 @@ public class lnhReportController {
 				headerRow.createCell(0).setCellValue("주문서 ID");
 				headerRow.createCell(1).setCellValue("바이어코드");
 				headerRow.createCell(2).setCellValue("제품코드");
-				headerRow.createCell(3).setCellValue("단가");
+				headerRow.createCell(3).setCellValue("판매가");
 				headerRow.createCell(4).setCellValue("수량");
 				headerRow.createCell(5).setCellValue("합계");
 				headerRow.createCell(6).setCellValue("등록일");

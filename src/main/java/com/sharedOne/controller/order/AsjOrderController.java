@@ -51,7 +51,7 @@ public class AsjOrderController {
 		
 		Set<String> setName = new HashSet<>();
 		for(OrderHeaderDto header: headerList) {
-			String name = header.getName();
+			String name = header.getWriter();
 			setName.add(name);
 		}
 		model.addAttribute("writerList", setName);

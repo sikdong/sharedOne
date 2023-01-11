@@ -37,6 +37,11 @@
 		background-color: #D3D3D3;
 		cursor: pointer;
 	}
+	
+	#registerBtn {
+		margin-left: 30px;
+		margin-bottom: 10px;
+	}
 
 	.scrollBox {
 		width: 100%;
@@ -53,6 +58,7 @@
 	.table .trtr:hover {
  		font-weight: bold;
  		background-color: #c7c9c2;
+ 		cursor : pointer;
  	}
  	
  	.primaryBtn {
@@ -182,7 +188,7 @@
 			   	 <thead>
 					 <tr>
 
-						<th style="max-width: 800px;width: 220px;">제품코드</th>
+					<th style="max-width: 800px;width: 220px;">제품코드</th>
 
                   <th style="width: 300px;">제품명</th>
                   <th style="width: 220px;">타입</th>
@@ -199,18 +205,9 @@
 						<c:url value="/master/productModify" var="getLink">
 							<c:param name="code" value="${product.productCode }"></c:param>
 						</c:url>
-					<tr onclick="window.open('${getLink}','제품정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
+					<tr title="${product.productName } 정보 수정하기" onclick="window.open('${getLink}','제품정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
 
-<%-- 							<td style="max-width: 500px;">${product.productCode }</td>
-							<td>${product.productName }</td>
-							<td>${product.productType }</td>
-							<td>${product.weight }</td>
-							<td>${product.size }</td>
-							<td>${product.unit }</td>
-							<td>${product.price }</td>
-							<td>${product.fromDate } ~ ${product.endDate }</td> --%>
-							
-							<td style="max-width: 500px; word-break:break-all;width: 220px;">${product.productCode }</td>
+					<td style="max-width: 500px; word-break:break-all;width: 220px;">${product.productCode }</td>
                      <td style="word-break:break-all;width: 300px;">${product.productName }</td>
                      <td style="word-break:break-all;width: 220px;">${product.productType }
                      <td style="word-break:break-all;width: 130px;">${product.weight }</td>
