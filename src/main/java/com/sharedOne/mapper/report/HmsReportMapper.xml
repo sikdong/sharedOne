@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sharedOne.mapper.report.HmsReportMapper">
+
+	<select id="countPage" resultType="int">
+	SELECT COUNT(*) FROM Order_header
+	</select>
+	
+	<select id="orderList" resultType="com.sharedOne.domain.order.OrderHeaderDto">
+	SELECT 
+		orderId, 
+		orderCode,
+		inserted,		
+		deliveryDate,
+		modified,
+		writer,
+		buyerCode,
+		status
+	FROM 
+		Order_header 
+	WHERE
+	<trim prefixOverrides="OR">
+		<if test="orderS == 'selectAll' or orderS == 'selectOrderCode'">
+		OR orderCode LIKE #{orderQ} 
+		</if>
+		
+		<if test="orderS == 'selectAll' or orderS == 'selectBuyerCode'">
+		OR 	buyerCode LIKE #{orderQ} 
+		</if>
+		
+		<if test="orderS == 'selectAll' or orderS == 'selectWriter'">
+		OR 	writer    LIKE #{orderQ} 
+		</if>
+	</trim>
+	ORDER BY orderId DESC		<!-- orderId 등록이 최신 기준으로 -->
+	<!-- LIMIT #{offset}, #{records} -->
+	</select>
+	<select id="productCatalog" resultType="com.sharedOne.domain.master.ProductDto">
+		SELECT
+			productCode,
+			productName,
+			productType,
+			weight,
+			size,
+			price,
+			unit,
+			content,
+			inserted,
+			modified,
+			fromDate,
+			endDate
+		FROM
+			Product
+		WHERE 	   
+			productCode LIKE #{productQ} OR
+			productName LIKE #{productQ} OR
+			productType LIKE #{productQ} OR
+			       size LIKE #{productQ} 
+		ORDER BY productCode DESC
+	</select>
+</mapper>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

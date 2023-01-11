@@ -305,9 +305,7 @@
 										<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-secondary" >${h.status }</button>
 									</form>
 								</c:when>
-							</c:choose>
-							
-							
+							</c:choose>		
 						</td>
 						<c:if test="${empty param.orderCode }">
 							<td>
@@ -374,7 +372,6 @@
 							<!-- <span><i class="fa-solid fa-pen-to-square"></i></span>  -->
 						</td>
 						<td>${item.sum }</td>
-					
 					</tr>
 					</c:forEach>
 				</tbody>
@@ -383,6 +380,7 @@
 		<!-- <div id="detailContainerDiv"></div> -->
 	</c:if>
 </div><!-- container 끝  -->
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 	<script type="text/javascript">
@@ -404,7 +402,6 @@
 		})
 		
 	</script>
-	
 	
 </body>
 </html>

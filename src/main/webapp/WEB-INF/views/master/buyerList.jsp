@@ -95,7 +95,6 @@
 			<div class="mb-5">
 				<p class="filterText">조건 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
 			</div>
-
 		</div><!-- 좌측 조건 설명 div 끝 -->
 		
 		<!-- *우측* 검색 필터 -->
@@ -145,7 +144,6 @@
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
-
 				</div><!-- 2nd row 끝 -->
 
 				<div class="row mt-4">

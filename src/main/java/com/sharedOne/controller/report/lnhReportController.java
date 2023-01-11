@@ -46,6 +46,7 @@ import com.sharedOne.service.report.lnhReportService;
 @Controller
 @RequestMapping("report")
 public class lnhReportController {
+
 	@Autowired
 	private lnhProductService productService;
 	
