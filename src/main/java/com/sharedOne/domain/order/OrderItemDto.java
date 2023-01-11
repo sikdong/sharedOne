@@ -22,7 +22,7 @@ public class OrderItemDto {
 	private int price;
 	
 	private List <SalePriceDto> salePriceDto;
-	private int salePrice;
+	private int finalPrice;
 	private int discountRate;
 	private LocalDate fromDate;
 	private LocalDate endDate;
