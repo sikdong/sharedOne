@@ -368,6 +368,15 @@ function list(){
 					
 					$('#codeConfirm').append('주문코드 : ${h.orderCode}');
 					$.each(itemList, function(idx, item){
+						
+						/* ajax 자동할인율  price / finalPrice  */
+						let pr = item.price;
+						let fp = item.finalPrice;
+						let dc = (1 - ( fp / pr )) * 100; 	
+						dc = parseFloat(dc).toFixed(0);
+						dc = Math.round(dc);
+						console.log(dc);
+						
 						$('#checkbox'+item.orderCode).removeAttr("checked"); 
 						console.log(item);
 						idx= idx+1;
@@ -381,7 +390,7 @@ function list(){
 							'<td>'+item.productName+'</td>'+
 							'<td>'+item.price+'</td>'+
 							'<td>'+item.finalPrice+'</td>'+
-							'<td>'+item.discountRate+'%</td>'+
+							'<td>'+dc+'%</td>'+
 							'<td>'+item.quantity+item.unit+'</td>'+
 							'<td>'+item.sum+'</td>'+
 						'</tr>'
