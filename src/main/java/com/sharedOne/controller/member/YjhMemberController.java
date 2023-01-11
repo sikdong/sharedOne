@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.sharedOne.domain.member.AuthDto;
+import com.sharedOne.domain.member.RanksDto;
 import com.sharedOne.domain.member.MemberDto;
 import com.sharedOne.service.member.YjhMemberService;
 
@@ -19,6 +19,7 @@ public class YjhMemberController {
 	YjhMemberService service;
 	
 	@RequestMapping("login")
+	@PreAuthorize("not isAuthenticated()")
 	public void login() {
 		
 	}
@@ -30,11 +31,11 @@ public class YjhMemberController {
 	
 	@PostMapping("signup")
 	@PreAuthorize("hasAuthority('팀장')")
-	public void signup(MemberDto member , AuthDto auth) {
+	public void signup(MemberDto member , RanksDto rank) {
 		
 		int cnt1 = service.insertMember(member);
 		
-		int cnt2 = service.insertAuth(auth);
+		int cnt2 = service.insertRanks(rank);
 
 	}
 }
