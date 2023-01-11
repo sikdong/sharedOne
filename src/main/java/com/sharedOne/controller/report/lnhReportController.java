@@ -18,9 +18,12 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
@@ -55,6 +58,7 @@ public class lnhReportController {
 	public void getMontlyReport(@RequestParam(name = "orderQ", defaultValue = "") String orderQ, Model model) {
 		System.out.println(orderQ);
 		
+		//조건 검색 제품 리스트
 		List <ProductDto> productList = productService.selectProductList();
 		
 		Set <String> setTypes = new HashSet<>();
@@ -71,23 +75,39 @@ public class lnhReportController {
 		
 		model.addAttribute("productList", productList);
 		
-
-		//business logic 작동		
-		List<OrderHeaderDto> orderList = service.orderList(page, searchStartDate, searchEndDate, orderS, orderQ, pageInfo); // page = "파라미터 수집
-		List<ProductDto> productCatalog = service.productCatalog(productS, productQ); // 
+		// business logic 작동
+		
+		//올해 매출 그래프(디폴트)
 		List<ReportDto> thisYearSales = service.thisYearSales();
+		
+			
+			//검색 결과 리스트
+			List<OrderHeaderDto> orderList = service.orderList(orderQ);
+			
+			//검색결과 바이어 리스트
+			List<String> buyerList = new ArrayList<>();
+			for (int i = 0; i < orderList.size(); i++) {
+				buyerList.add(orderList.get(i).getBuyerCode());
+			}
+			
+			Map<String, Integer> buyerSales = service.salesByBuyer(orderQ, buyerList);
 
 		
-		List<OrderItemDto> itemList = orderList.get(0).getOrderItem();
- 
-		System.out.println("컨트롤러: " + orderList);
-		System.out.println(itemList);
-		System.out.println("월별매출"+thisYearSales);
+			System.out.println("오더리스트 사이즈: " + orderList.size());
+			
+			  
+			System.out.println("바이어 별 매출 "+buyerSales);
+			 
+			
+			System.out.println("컨트롤러: " + orderList);
+
+			System.out.println("월별매출"+thisYearSales);
+			
+			// add attribute
+			model.addAttribute("orderList", orderList); // c:forEach items = orderList
+			model.addAttribute("buyerSales", buyerSales);
 		
-		// add attribute
-		model.addAttribute("productCatalog", productCatalog); // c:forEach items = productCatalog
-		model.addAttribute("orderList", orderList); // c:forEach items = orderList
-		model.addAttribute("itemList",itemList);
+
 		model.addAttribute("thisYearSales",thisYearSales);
 	}
 	
@@ -118,8 +138,8 @@ public class lnhReportController {
 				CellStyle cellStyle = workbook.createCellStyle();
 				sheet.setColumnWidth(0, (sheet.getColumnWidth(0))+(short)2048); // 0번째 컬럼 넓이 조절
 				sheet.setColumnWidth(6, (sheet.getColumnWidth(6))+(short)2048); // 6번째 컬럼 넓이 조절
-				sheet.setColumnWidth(7, (sheet.getColumnWidth(7))+(short)2048); // 6번째 컬럼 넓이 조절
-				sheet.setColumnWidth(8, (sheet.getColumnWidth(8))+(short)2048); // 6번째 컬럼 넓이 조절
+				sheet.setColumnWidth(7, (sheet.getColumnWidth(7))+(short)2048); // 7번째 컬럼 넓이 조절
+				sheet.setColumnWidth(8, (sheet.getColumnWidth(8))+(short)2048); // 8번째 컬럼 넓이 조절
 				cellStyle.setAlignment(HorizontalAlignment.CENTER);
 				
 				Font fontTitle = workbook.createFont();
@@ -160,37 +180,65 @@ public class lnhReportController {
 			 
 			 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			  
-				 List<OrderItemDto> itemList = list.get(0).getOrderItem();
-				 for (OrderItemDto board1 : itemList) {
-					 Row row = sheet.createRow(rowNo++);
-					 row.createCell(2).setCellValue(board1.getProductCode());
-					 row.createCell(3).setCellValue(board1.getSalePrice());
-					 row.createCell(4).setCellValue(board1.getQuantity());
-					 row.createCell(5).setCellValue(board1.getSum()); 
-					 
-					 for (OrderHeaderDto board : list) {
-						 row.createCell(0).setCellValue(board.getOrderCode());
-						 row.createCell(1).setCellValue(board.getBuyerCode());
+				 for (OrderHeaderDto board1 : list) {
+					 //오더 아이템이 하나만 있는 경우
+					 if(board1.getOrderItem().size() ==1) {
+						 Row row = sheet.createRow(rowNo++);
+						 row.createCell(0).setCellValue(board1.getOrderCode());
+						 row.createCell(1).setCellValue(board1.getBuyerCode());
+						 row.createCell(2).setCellValue(board1.getOrderItem().get(0).getProductCode());
+						 row.createCell(3).setCellValue(board1.getOrderItem().get(0).getSalePrice());
+						 row.createCell(4).setCellValue(board1.getOrderItem().get(0).getQuantity());
+						 row.createCell(5).setCellValue(board1.getOrderItem().get(0).getSum());
 
-						 Date cell6 = java.sql.Date.valueOf(board.getInserted());
+						 Date cell6 = java.sql.Date.valueOf(board1.getInserted());
 						 String inserted = sdf.format(cell6);
 						 row.createCell(6).setCellValue(inserted);
-						
 						 
-						 Date cell7 = java.sql.Date.valueOf(board.getModified());
+						 Date cell7 = java.sql.Date.valueOf(board1.getModified());
 						 String modified = sdf.format(cell7);
 						 row.createCell(7).setCellValue(modified);
 						 
-						 Date cell8 = java.sql.Date.valueOf(board.getDeliveryDate());
+						 Date cell8 = java.sql.Date.valueOf(board1.getDeliveryDate());
 						 String deliveryDate = sdf.format(cell8);
 						 row.createCell(8).setCellValue(deliveryDate);
 						 
-						 row.createCell(9).setCellValue(board.getWriter());
-						 row.createCell(10).setCellValue(board.getStatus());
-						 row.createCell(11).setCellValue(board.getMessage());
-				 }
-				 
-				 
+						 row.createCell(9).setCellValue(board1.getWriter());
+						 row.createCell(10).setCellValue(board1.getStatus());
+						 row.createCell(11).setCellValue(board1.getMessage());
+					 }
+					 //오더 아이템이 여러개 인 경우
+					 if(board1.getOrderItem().size() !=1) {
+						 List<OrderItemDto> itemList = new ArrayList<>();
+						 
+						 itemList = board1.getOrderItem();
+						 for (OrderItemDto board2 : itemList) {
+							 Row row = sheet.createRow(rowNo++);
+							 row.createCell(0).setCellValue(board1.getOrderCode());
+							 row.createCell(1).setCellValue(board1.getBuyerCode());
+							 row.createCell(2).setCellValue(board2.getProductCode());
+							 row.createCell(3).setCellValue(board2.getSalePrice());
+							 row.createCell(4).setCellValue(board2.getQuantity());
+							 row.createCell(5).setCellValue(board2.getSum());
+							 Date cell6 = java.sql.Date.valueOf(board1.getInserted());
+							 String inserted = sdf.format(cell6);
+							 row.createCell(6).setCellValue(inserted);
+							
+							 Date cell7 = java.sql.Date.valueOf(board1.getModified());
+							 String modified = sdf.format(cell7);
+							 row.createCell(7).setCellValue(modified);
+							 
+							 Date cell8 = java.sql.Date.valueOf(board1.getDeliveryDate());
+							 String deliveryDate = sdf.format(cell8);
+							 row.createCell(8).setCellValue(deliveryDate);
+							 
+							 row.createCell(9).setCellValue(board1.getWriter());
+							 row.createCell(10).setCellValue(board1.getStatus());
+							 row.createCell(11).setCellValue(board1.getMessage());
+						 }
+						 
+					 }
+					 
 				}
 			 
 			 

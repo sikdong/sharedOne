@@ -68,13 +68,24 @@
 	
 	</select>
 	
-<!-- 	<resultMap type="com.sharedOne.domain.report.ReportDto" id="thisYearSales">
-		<collection property="month" ofType="Integer">
-			<result property="month" column="month"/>
-		</collection>
-		<collection property="thisSales" ofType="Integer">
-			<result property="thisSales" column="thisSales"/>
-		</collection>
-	</resultMap> -->
+	<!-- 검색 결과 바이어 별 매출 -->
+	<select id="salesByBuyer" resultType="int">
+		SELECT sum(i.sum) salesByBuyer 
+		FROM Order_header h LEFT JOIN Order_item i ON h.orderCode = i.orderCode 
+		WHERE	(h.orderCode LIKE #{orderQ} 
+		   OR  	  i.productCode LIKE #{orderQ} 
+		   OR  	  i.salePrice LIKE #{orderQ} 
+		   OR  	  i.quantity LIKE #{orderQ} 
+		   OR  	  i.sum LIKE #{orderQ} 
+		   OR  	  h.inserted LIKE #{orderQ} 
+		   OR 	  h.modified LIKE #{orderQ} 
+		   OR h.deliveryDate LIKE #{orderQ} 
+		   OR       h.writer LIKE #{orderQ} 
+		   OR    h.buyerCode LIKE #{orderQ} 	
+		   OR 		h.status LIKE #{orderQ} 
+		   OR 	   h.message LIKE #{orderQ})  
+			AND buyerCode = #{buyerCode}
+	
+	</select>
 	
 </mapper>
