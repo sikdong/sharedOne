@@ -254,7 +254,7 @@
 						<td>${h.buyerCode }</td>					
 						<td>${h.buyerName }</td>
 						<td>${h.deliveryDate }</td>
-						<td>${h.name }</td>
+						<td>${h.writer }</td>
 						<td>${h.inserted }</td>
 						<td>${h.modified }</td>
 						<td>
@@ -376,11 +376,11 @@ function list(){
 						.append(		
 						'<tr class="listHover">'+	
 							'<td>'+idx+'</td>'+
-							'<td>'+item.producCode+'</td>'+
+							'<td>'+item.productCode+'</td>'+
 							'<td>'+item.productType+'</td>'+
 							'<td>'+item.productName+'</td>'+
 							'<td>'+item.price+'</td>'+
-							'<td>'+item.salePrice+'</td>'+
+							'<td>'+item.finalPrice+'</td>'+
 							'<td>'+item.discountRate+'%</td>'+
 							'<td>'+item.quantity+item.unit+'</td>'+
 							'<td>'+item.sum+'</td>'+
