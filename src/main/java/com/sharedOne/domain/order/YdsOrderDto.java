@@ -10,8 +10,9 @@ public class YdsOrderDto {
 	private String deliveryDate;
 	private String message;
 	private List<String> productCode;
-	private List<Integer> salePrice;
+	private List<Integer> finalPrice;
 	private List<Integer> quantity;
 	private List<Integer> sum;
 	private String writer;
+	private String status;
 }
