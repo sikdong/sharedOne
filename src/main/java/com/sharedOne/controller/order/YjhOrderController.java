@@ -6,9 +6,17 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -131,23 +139,61 @@ public class YjhOrderController {
 					
 			sumValueDto sumValue = service.getSumValue(orderId);
 			
-			try (Workbook workbook = new XSSFWorkbook()){
+			Workbook workbook = new XSSFWorkbook();
 				
 				Sheet sheet = workbook.createSheet("주문서");
 				
+				CellStyle headStyle = workbook.createCellStyle();
+	            headStyle.setFillForegroundColor(HSSFColor.HSSFColorPredefined.LIGHT_BLUE.getIndex());
+	            headStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	            Font font = workbook.createFont();
+	            font.setFontName(HSSFFont.FONT_ARIAL); // 폰트 스타일
+	            font.setColor(HSSFColor.HSSFColorPredefined.WHITE.getIndex()); // 폰트 색 지정
+	            font.setFontHeightInPoints((short) 13); // 폰트 크기
+	            headStyle.setFont(font);
+	            
+	            //셀병합
+				sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 12)); //첫행, 마지막행, 첫열, 마지막열 병합
+				sheet.addMergedRegion(new CellRangeAddress(2, 3, 0, 1)); //첫행, 마지막행, 첫열, 마지막열 병합
+				sheet.addMergedRegion(new CellRangeAddress(2, 3, 2, 5)); //첫행, 마지막행, 첫열, 마지막열 병합
+				sheet.addMergedRegion(new CellRangeAddress(2, 3, 6, 7)); //첫행, 마지막행, 첫열, 마지막열 병합
+				sheet.addMergedRegion(new CellRangeAddress(2, 3, 8, 12)); //첫행, 마지막행, 첫열, 마지막열 병합
+				
+				//테이블 셀 스타일
+				CellStyle cellStyle = workbook.createCellStyle();
+				sheet.setColumnWidth(0, (sheet.getColumnWidth(0))+(short)2048); // 0번째 컬럼 넓이 조절
+				sheet.setColumnWidth(6, (sheet.getColumnWidth(6))+(short)2048); // 6번째 컬럼 넓이 조절
+				sheet.setColumnWidth(7, (sheet.getColumnWidth(7))+(short)2048); // 7번째 컬럼 넓이 조절
+				sheet.setColumnWidth(8, (sheet.getColumnWidth(8))+(short)2048); // 8번째 컬럼 넓이 조절
+				cellStyle.setAlignment(HorizontalAlignment.CENTER);
+				
+				Font fontTitle = workbook.createFont();
+				fontTitle.setColor(HSSFColor.HSSFColorPredefined.LIGHT_BLUE.getIndex());
+				fontTitle.setFontName(HSSFFont.FONT_ARIAL);
+				fontTitle.setBold(true);
+				fontTitle.setFontHeightInPoints((short)20); // 폰트 크기
+				cellStyle.setFont(fontTitle ); // cellStyle에 font를 적용
+				
 				int rowNo = 0;
+			
+				// 타이틀 생성
+				Row xssfRow = sheet.createRow(rowNo++); // 행 객체 추가
+				Cell xssfCell = xssfRow.createCell((short) 0); // 추가한 행에 셀 객체 추가
+				xssfCell.setCellStyle(cellStyle); // 셀에 스타일 지정
+				xssfCell.setCellValue("주문서"); // 데이터 입력
+				
 				
 				Row OhFirstRow = sheet.createRow(rowNo++);
 				OhFirstRow.createCell(0).setCellValue("주문번호");
-				OhFirstRow.createCell(1).setCellValue(orderHeader.getOrderCode());
-				OhFirstRow.createCell(2).setCellValue("기안자");
-				OhFirstRow.createCell(3).setCellValue(orderHeader.getWriter());
+				OhFirstRow.createCell(2).setCellValue(orderHeader.getOrderCode());
+				OhFirstRow.createCell(6).setCellValue("기안자");
+				OhFirstRow.createCell(8).setCellValue(orderHeader.getWriter());
 				
 				Row OhSecondRow = sheet.createRow(rowNo++);
 				OhSecondRow.createCell(0).setCellValue("기안일자");
-				OhSecondRow.createCell(1).setCellValue(orderHeader.getInserted());
-				OhSecondRow.createCell(2).setCellValue("납기요청일");
-				OhSecondRow.createCell(3).setCellValue(orderHeader.getDeliveryDate());
+				OhSecondRow.createCell(2).setCellValue(orderHeader.getInserted());
+				OhSecondRow.createCell(6).setCellValue("납기요청일");
+				OhSecondRow.createCell(8).setCellValue(orderHeader.getDeliveryDate());
 				
 				Row buyerRow1 = sheet.createRow(rowNo++);
 				buyerRow1.createCell(0).setCellValue("바이어");
@@ -184,17 +230,18 @@ public class YjhOrderController {
 				orderItemHeadSubRow.createCell(5).setCellValue("수량");
 				orderItemHeadSubRow.createCell(6).setCellValue("합계액");
 				
+				int Num = 1;
 				for(YjhOrderItemDto orderSheet : orderItem) {
-					
+				
 					Row itemRow = sheet.createRow(rowNo++);
-					itemRow.createCell(0).setCellValue(rowNo);
+					itemRow.createCell(0).setCellValue(Num);
 					itemRow.createCell(1).setCellValue(orderSheet.getProductName());
 					itemRow.createCell(2).setCellValue(orderSheet.getSize());
 					itemRow.createCell(3).setCellValue(orderSheet.getUnit());
 					itemRow.createCell(4).setCellValue(orderSheet.getSalePrice());
 					itemRow.createCell(5).setCellValue(orderSheet.getQuantity());
 					itemRow.createCell(6).setCellValue(orderSheet.getSum());
-					
+					Num++;
 				}
 				
 				Row sumRow = sheet.createRow(rowNo++);
@@ -208,8 +255,7 @@ public class YjhOrderController {
 				hsr.setHeader("Content-Disposition", "attachment;filename=orderSheet.xls");
 				
 				workbook.write(hsr.getOutputStream());
-				workbook.close();
-			}		
+				workbook.close();		
 			
 	 }
 	 
