@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.order.OrderItemDto;
@@ -37,10 +39,12 @@ public class AsjOrderController {
 		List<OrderHeaderDto> headerList = orderService.selectOrderHeaderList(keyword,buyerCode,orderCode,writer,status); 	
 		model.addAttribute("headerList", headerList); 		
 		
-		List<OrderItemDto> itemListByOrderCode = orderService.selectOrderItemListByOrderCode(orderCode);
-		model.addAttribute("itemList", itemListByOrderCode);
+//		List<OrderItemDto> itemListByOrderCode = orderService.selectOrderItemListByOrderCode(orderCode);
+//		model.addAttribute("itemList", itemListByOrderCode);
 		
-		
+		int size = headerList.size();
+		//System.out.println("size:"+size);
+		model.addAttribute("size", size);
 		
 		Set<String> setBuyer = new HashSet<>();
 		for(OrderHeaderDto header: headerList) {
@@ -51,7 +55,7 @@ public class AsjOrderController {
 		
 		Set<String> setName = new HashSet<>();
 		for(OrderHeaderDto header: headerList) {
-			String name = header.getName();
+			String name = header.getWriter();
 			setName.add(name);
 		}
 		model.addAttribute("writerList", setName);
@@ -62,6 +66,18 @@ public class AsjOrderController {
 			setStatus.add(stat);
 		}
 		model.addAttribute("statusList", setStatus);
+		
+	}
+	
+	@GetMapping("itemList/{orderCode}")
+	@ResponseBody
+	public List<OrderItemDto> itemList(Model model, @PathVariable String orderCode) {
+		
+		List<OrderItemDto> itemListByOrderCode = orderService.selectOrderItemListByOrderCode(orderCode);
+		
+		System.out.println(itemListByOrderCode);
+		
+		return itemListByOrderCode;
 		
 	}
 	

@@ -40,4 +40,19 @@ public class AsjSalePriceService {
 		return cnt;
 	}
 
+	public int selectPriceByProductCode(String productCode) {
+		return asjSalePriceMapper.selectPriceByProductCode(productCode);
+		
+	}
+
+	public List<SalePriceDto> selectSalePriceListByBuyerCode(String buyerCode) {
+		return asjSalePriceMapper.selectSalePriceListByBuyerCode(buyerCode);
+		
+	}
+
+	public int register(SalePriceDto sale) {
+		return asjSalePriceMapper.register(sale);
+		
+	}
+
 }
