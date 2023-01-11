@@ -22,6 +22,42 @@
  			Order_header h
  		LEFT JOIN Member m ON m.id = h.writer
  		LEFT JOIN Buyer b ON b.buyerCode = h.buyerCode
+ 		
+ 		<!-- keyword,orderCode,buyerCode,writer,status -->
+ 		WHERE
+ 		
+	 	(
+	 	<trim prefixOverrides="OR">
+			<if test="keyword != '' or orderCode != '' ">
+			OR h.orderCode LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or buyerCode != '' ">
+			OR b.buyerCode LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or writer != '' ">
+			OR m.name LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or status != '' ">
+			OR h.status LIKE #{keyword}
+			</if>			
+		</trim>
+		)	 	
+	 	
+ 		<if test="orderCode != '' ">
+ 		AND h.orderCode = #{orderCode }
+ 		</if>
+ 		<if test="buyerCode != '' ">
+ 		AND b.buyerCode = #{buyerCode }
+ 		</if>
+ 		<if test="writer != '' ">
+ 		AND m.name = #{writer }
+ 		</if>
+ 		<if test="status != '' ">
+ 		AND h.status = #{status }
+ 		</if>
+ 		
+ 		ORDER BY h.inserted DESC;
+ 		
  	</select>
  
  	

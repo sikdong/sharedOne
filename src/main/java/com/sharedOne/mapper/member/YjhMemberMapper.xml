@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.sharedOne.mapper.member.YjhMemberMapper">
+
+	<insert id="insertAuth">
+		INSERT INTO Authority(id, Auth)
+		VALUES (#{id}, #{Auth});
+	</insert>
+
+	<insert id="insertMember">
+		INSERT INTO Member(id, password, name, email, phone)
+		VALUES (#{id}, #{password}, #{name}, #{email}, #{phone});
+	</insert>
+	
+	<select id="selectById" resultMap="memberMap">
+		SELECT m.id id,
+			   password,
+			   name,
+			   email,
+			   phone,
+			   a.Auth Auth
+	    FROM Member m LEFT JOIN Authority a ON m.id = a.id 
+	    WHERE m.id = #{id};
+	</select>
+	
+	<resultMap type="com.sharedOne.domain.member.MemberDto" id="memberMap">
+		<id column="id" property="id"></id>
+		<result column="password" property="password"></result>
+		<result column="name" property="name"></result>
+		<result column="email" property="email"></result>
+		<result column="phone" property="phone"></result>
+		<collection property="Auth" ofType="String">
+			<result column="Auth" property="Auth"></result>
+		</collection>
+	</resultMap>
+</mapper>

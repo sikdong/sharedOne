@@ -18,4 +18,11 @@ public interface lnhBuyerMapper {
 	void update(BuyerDto buyer);
 
 	void delete(String buyerCode);
+	
+	BuyerDto selectByBuyerCode(String buyerCode);
+
+	BuyerDto selectByBusinessNumber(String businessNumber);
+
+	List<BuyerDto> searchBuyerList(String keyword);
+
 }

@@ -1,7 +1,7 @@
 package com.sharedOne.controller.order;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.order.OrderItemDto;
+import com.sharedOne.domain.order.YdsOrderDto;
 import com.sharedOne.service.order.AsjOrderService;
 import com.sharedOne.service.order.YdsOrderService;
 
@@ -30,11 +31,7 @@ import com.sharedOne.service.order.YdsOrderService;
 @RequiredArgsConstructor
 public class YdsOrderController {
 	
-	
 	private final YdsOrderService service;
-	
-	@Autowired
-	private AsjOrderService asjOrderService;
 
 	
 	@GetMapping("register")
@@ -71,49 +68,48 @@ public class YdsOrderController {
 		return service.searchBuyer(buyerCode);
 	}
 	
-	@GetMapping("searchAllProductInfo/{allProductInfo}")
+	@GetMapping("searchAllProductInfo/{allProductInfo}/{tableBuyerCode}")
 	@ResponseBody
-	public List<ProductDto> searchAllProductInfo(@PathVariable String allProductInfo){
-		return service.searchProduct(allProductInfo);
+	public List<ProductDto> searchAllProductInfo(@PathVariable String allProductInfo, 
+			@PathVariable String tableBuyerCode){
+		System.out.println(tableBuyerCode);
+		System.out.println(allProductInfo);
+		return service.searchProduct(allProductInfo, tableBuyerCode);
 		
 	}
 
-	
-	/*
-	 * @GetMapping("list") public void orderList(Model model, String orderCode ) {
-	 * List <OrderHeaderDto> headerList = asjOrderService.selectOrderHeaderList();
-	 * List <OrderItemDto> itemListByOrderCode =
-	 * asjOrderService.selectOrderItemListByOrderCode(orderCode);
-	 * 
-	 * model.addAttribute("headerList", headerList); model.addAttribute("itemList",
-	 * itemListByOrderCode); }
-	 */
+
+	  /*@GetMapping("list") 
+	  public void orderList(Model model, String orderCode ) {
+	  List <OrderHeaderDto> headerList = orderService.selectOrderHeaderList(); List
+	 <OrderItemDto> itemListByOrderCode =
+	 orderService.selectOrderItemListByOrderCode(orderCode);
+	 
+	 model.addAttribute("headerList", headerList); model.addAttribute("itemList",
+	 itemListByOrderCode); }*/
 	  
 	  @GetMapping("modify")
 	  public void modifyOrder() {
 		  
 	  }
 	  
-	  @PostMapping("list")
-	  public void insertOrder(String deliveryDate, String buyerCode, String productCode) {
-		  System.out.println("납기요청일 " + deliveryDate);
-		  System.out.println("바이어코드 " + buyerCode);
-		  System.out.println("제품코드" + productCode);
+	  @PostMapping("register")
+	  public void insertOrder(YdsOrderDto yod){
+		  System.out.println("오더 목록 : " + yod);
+		  service.insertOrder(yod);
 	  }
-	  
-	  /*@PostMapping("addTempProductOrder")
-	  @ResponseBody
-	  public YdsProductDto addTempProductOrder(@RequestBody YdsProductDto product){
-		 return service.addTempProductOrder(product);
-		  
-	  }*/
 	  
 	 @PostMapping("addTempProductOrder")
 	 @ResponseBody
-	 public YdsProductDto addTempProductOrder(@RequestBody YdsProductDto ypd) {
-		 System.out.println(ypd);
-		 return service.addTempProductOrder(ypd);
+	 public List<YdsProductDto> addTempProductOrder(@RequestBody Map<String,Object> data) {
+		 System.out.println(data);
+			/*
+			 * List<String> tt = data.get("productCodes"); System.out.println("tt" + tt);
+			 */
 		 
+			/* return service.addTempProductOrder(ypd); */
+		 return service.addTempProductOrder(data);
 	 }
+	 
 	
 }

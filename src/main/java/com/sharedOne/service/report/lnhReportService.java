@@ -1,0 +1,41 @@
+package com.sharedOne.service.report;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sharedOne.domain.order.OrderHeaderDto;
+import com.sharedOne.domain.order.OrderItemDto;
+import com.sharedOne.domain.report.ReportDto;
+import com.sharedOne.mapper.report.lnhReportMapper;
+
+@Service
+public class lnhReportService {
+	
+	@Autowired
+	private lnhReportMapper mapper;
+
+	public List<OrderHeaderDto> orderList(String orderQ) { 
+		
+		return mapper.orderList("%" + orderQ + "%");
+	}
+	
+	public Map<String, Integer> salesByBuyer(String orderQ, List<String> buyerCodes) {
+		Map<String, Integer> salesByBuyer = new HashMap<>();
+		
+		for (String buyerCode : buyerCodes ) {
+			salesByBuyer.put(buyerCode, mapper.salesByBuyer(orderQ, buyerCode));
+		}
+		return salesByBuyer;
+		
+	}
+
+	public List<ReportDto> thisYearSales() {
+		return mapper.thisYearSales();
+	}
+
+}

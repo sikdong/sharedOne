@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,31 +29,71 @@
 google.charts.load('current', {'packages':['corechart']});
 
 // Draw the line chart and bar chart when Charts is loaded.
-google.charts.setOnLoadCallback(drawChart);
-
+<c:if test="${param.orderQ eq null }">
+	google.charts.setOnLoadCallback(drawChart);
+</c:if>
+<c:if test="${param.orderQ ne null }">
+google.charts.setOnLoadCallback(drawBuyerChart);
+google.charts.setOnLoadCallback(drawWriterChart);
+</c:if>	
 function drawChart() {
-
+	
   var data = new google.visualization.DataTable();
   data.addColumn('string', '월');
   data.addColumn('number', '매출');
-  data.addRows([
-    ['6월', 600],
-    ['7월', 1500],
-    ['8월', 1200],
-    ['9월', 1360],
-    ['10월', 2680],
-    ['11월', 1740]
-  ]);
-
-  var linechart_options = {title:'월 별 매출 현황'};
+  <c:forEach items="${thisYearSales}" var="sales">
+	  data.addRows([
+	    [${sales.month }+'월', ${sales.thisSales}]
+	  <c:if test="${not empty thisYearSales.size() }">
+		,
+	</c:if>
+		]);
+  </c:forEach>
+  var linechart_options = {title:'올 해 매출 현황'};
   var linechart = new google.visualization.LineChart(document.getElementById('columnchart_material1'));
   linechart.draw(data, linechart_options);
 
-  var barchart_options = {title:'월 별 매출 현황',
+  var barchart_options = {title:'올 해 매출 현황',
                  legend: 'none'};
   var barchart = new google.visualization.BarChart(document.getElementById('columnchart_material2'));
   barchart.draw(data, barchart_options);
 }
+
+function drawBuyerChart() {
+	
+	  var data = new google.visualization.DataTable();
+	  data.addColumn('string', '바이어');
+	  data.addColumn('number', '매출');
+	  <c:forEach items="${buyerSales}" var="buyerSales">
+		  data.addRows([
+		    ['${buyerSales.key }', ${buyerSales.value}]
+			]);
+	  </c:forEach>
+	  var piechart_options = {title:'바이어 별 매출 현황'};
+	  var piechart = new google.visualization.PieChart(document.getElementById('columnchart_material1'));
+	  piechart.draw(data, piechart_options);
+
+	}
+
+function drawWriterChart() {
+	
+	  var data = new google.visualization.DataTable();
+	  data.addColumn('string', '직원');
+	  data.addColumn('number', '매출');
+	  <c:forEach items="${thisYearSales}" var="sales">
+		  data.addRows([
+		    [${sales.month }+'월', ${sales.thisSales}]
+		  <c:if test="${not empty thisYearSales.size() }">
+			,
+		</c:if>
+			]);
+	  </c:forEach>
+	  var options = {title:'담당 직원 별 매출 현황',
+              legend: 'none'};
+		var chart = new google.visualization.ColumnChart(document.getElementById('columnchart_material2'));
+		chart.draw(data, options);
+
+	}
 
 </script>
 
@@ -73,7 +115,7 @@ div.mainBoard {
 	margin-top: 20px;
 	margin-bottom: 10px;
 	width: 100%;
-	height: :1000px;
+	height: 1000px;
 	
 }
 
@@ -110,6 +152,13 @@ div.right {
  		background-color: #1d5c83 !important;
  		color: white !important;
  	}
+ 	
+ 	.table{border-collapse:collapse; width:100%; table-layout:fixed}
+	.table thead{float:left; width:1300px;}
+	.table thead th{display:auto; width:1300px; text-align: left;}
+	.table tbody{overflow-y:auto; overflow-x:hidden; float:left; width:1300px; height:550px;}
+	.table tbody tr{display:table; width:1300px;}
+	.table td{word-wrap:break-word; width:1300px; height: auto;}
 
 </style>
 
@@ -140,8 +189,15 @@ div.right {
 				<div class="row d-flex">
 					<div class="col-sm-6 mb-4">
 						<div class="input-group">
-							<input name="" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
-			        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<!-- Select -->
+							<select name="orderS" id="" class="form-select">
+								<option value="selectAll">전체검색</option>
+								<option value="selectOrderCode">주문서번호</option>
+								<option value="selectBuyerCode">바이어 코드</option>
+								<option value="selectWriter">담당자</option>
+							</select>
+							<input name="orderQ" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
+			        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>	
 						</div>
 					</div>
 				</div><!-- 1st row 끝 -->
@@ -250,95 +306,67 @@ div.right {
 		<h4>주문목록</h4>
 
 			<div style="float: right;">
-				<form action="/excel/download" method="get">
-					<button class="btn btn-primary primaryBtn" type="submit" style="margin-bottom: 10px;">
-						엑셀 다운로드
-					</button>
-				</form>
+				<c:set var="ctx" value="${pageContext.request.contextPath}" />
+				<a href="${ctx }/report/excelDown?orderQ=${param.orderQ }"
+					class="btn btn-primary primaryBtn" type="submit"
+					style="margin-bottom: 10px;"> 엑셀 다운로드 </a>
 			</div>
 			<!-- 리스트 -->
 		<table class="table">
 			<thead>
 				<!-- productCode, productName, productType, weight, size, price, unit, content -->
 				<tr>
-					<th>주문서 ID</th>
-					<th>등록일</th>
-					<th>수정일</th>
-					<th>납기일</th>
-					<th>담당자</th>
+					<th style="width: 9%;">주문서 ID</th>
 					<th>바이어코드</th>
+					<th>제품코드</th>
+					<th>단가</th>
+					<th>수량</th>
+					<th>합계</th>
+					<th style="width: 9%;">등록일</th>
+					<th style="width: 9%;">수정일</th>
+					<th style="width: 9%;">납기일</th>
+					<th>담당자</th>
 					<th>상태</th>
+					<th>메세지</th>
 				</tr>
 			</thead>
 			<tbody>
-			<!-- //productCode, productName, productType, weight, size, price, unit, content, inserted -->
-<%-- 				<c:forEach items="${OrderList }" var="order">
-					<tr>
-						<td>${order.orderCode }</td>
-						<td>${order.inserted }</td>
-						<td>${order.modified }</td>
-						<td>${order.deliveryDate }</td>
-						<td>${order.writer }</td>
-						<td>${order.byuerCode }</td>
-						<td>${order.status }</td>
-
-					</tr>
-				</c:forEach> --%>
-					<tr>
-						<td>WT22060101</td>
-						<td>2022-06-01</td>
-						<td>2022-06-01</td>
-						<td>2022-08-30</td>
-						<td>이나현</td>
-						<td>MOB</td>
-						<td>종결</td>
-					</tr>
-					<tr>
-						<td>WT22070402</td>
-						<td>2022-07-04</td>
-						<td>2022-07-15</td>
-						<td>2022-08-30</td>
-						<td>이나현</td>
-						<td>MOB</td>
-						<td>종결</td>
-					</tr>
-					<tr>
-						<td>WT22080101</td>
-						<td>2022-08-01</td>
-						<td>2022-08-01</td>
-						<td>2022-09-30</td>
-						<td>이나현</td>
-						<td>MOB</td>
-						<td>종결</td>
-					</tr>
-					<tr>
-						<td>WT22090402</td>
-						<td>2022-09-04</td>
-						<td>2022-09-15</td>
-						<td>2022-10-30</td>
-						<td>이나현</td>
-						<td>MOB</td>
-						<td>종결</td>
-					</tr>
-										<tr>
-						<td>WT22100101</td>
-						<td>2022-10-01</td>
-						<td>2022-10-01</td>
-						<td>2022-12-30</td>
-						<td>이나현</td>
-						<td>MOB</td>
-						<td>승인</td>
-					</tr>
-					<tr>
-						<td>WT22110402</td>
-						<td>2022-11-04</td>
-						<td>2022-11-15</td>
-						<td>2022-12-30</td>
-						<td>이나현</td>
-						<td>MOB</td>
-						<td>승인</td>
-					</tr>
-				
+				<c:forEach items="${orderList }" var="order">
+					<c:if test="${fn:length(order.orderItem) == 1 }">
+						<tr>
+							<td style="width: 9%;">${order.orderCode }</td>
+							<td>${order.buyerCode }</td>
+							<td>${order.orderItem[0].productCode }</td>
+							<td>${order.orderItem[0].salePrice }</td>
+							<td>${order.orderItem[0].quantity }</td>
+							<td>${order.orderItem[0].sum }</td>
+							<td style="width: 9%;">${order.inserted }</td>
+							<td style="width: 9%;">${order.modified }</td>
+							<td style="width: 9%;">${order.deliveryDate }</td>
+							<td>${order.writer }</td>
+							<td>${order.status }</td>
+							<td>${order.message }</td>
+						</tr>
+					</c:if>
+					<c:if test="${fn:length(order.orderItem) != 1 }">
+						<c:forEach items="${order.orderItem }" var="item">
+							<tr>
+								<td style="width: 9%;">${order.orderCode }</td>
+								<td>${order.buyerCode }</td>
+								<td>${item.productCode }</td>
+								<td>${item.salePrice }</td>
+								<td>${item.quantity }</td>
+								<td>${item.sum }</td>
+								<td style="width: 9%;">${order.inserted }</td>
+								<td style="width: 9%;">${order.modified }</td>
+								<td style="width: 9%;">${order.deliveryDate }</td>
+								<td>${order.writer }</td>
+								<td>${order.status }</td>
+								<td>${order.message }</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+				</c:forEach>
 			</tbody>
 		</table>
 	</div>
