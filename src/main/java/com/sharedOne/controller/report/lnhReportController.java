@@ -36,8 +36,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sharedOne.domain.master.ProductDto;
 import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.order.OrderItemDto;
+import com.sharedOne.domain.report.OrderReportDto;
+import com.sharedOne.domain.report.PageInfo;
 import com.sharedOne.domain.report.ReportDto;
 import com.sharedOne.service.master.lnhProductService;
+import com.sharedOne.service.report.HmsReportService;
 import com.sharedOne.service.report.lnhReportService;
 
 @Controller
@@ -50,10 +53,21 @@ public class lnhReportController {
 	@Autowired
 	private lnhReportService service;
 	
+	@Autowired
+	private HmsReportService hmsService;
 	
 	@GetMapping("monthlyReport")
-	public void getMontlyReport(@RequestParam(name = "orderQ", defaultValue = "") String orderQ, Model model) {
-		System.out.println(orderQ);
+	public void getMontlyReport(@RequestParam(name = "orderQ", defaultValue = "") String orderQ, 
+								@RequestParam(name = "orderS", defaultValue = "") String orderS,
+								@RequestParam(name = "productCode", defaultValue = "") String productCode, 
+								@RequestParam(name = "productName", defaultValue = "") String productName,
+								@RequestParam(name = "productType", defaultValue = "") String productType, 
+								@RequestParam(name = "size", defaultValue = "") String size,
+								@RequestParam(name = "productQ", defaultValue = "") String productQ,
+								@RequestParam(name = "productS", defaultValue = "") String productS,
+								@RequestParam(name = "page", defaultValue = "1") int page, 
+								PageInfo pageInfo, 
+								Model model) {
 		
 		List <ProductDto> productList = productService.selectProductList();
 		
@@ -61,6 +75,7 @@ public class lnhReportController {
 		for( ProductDto product : productList) {
 			setTypes.add(product.getProductType());
 		}
+		
 		Set <Integer> setSizes = new HashSet<>();
 		for( ProductDto product : productList) {
 			setSizes.add(product.getSize());
@@ -68,27 +83,34 @@ public class lnhReportController {
 		
 		model.addAttribute("types", setTypes);
 		model.addAttribute("sizes", setSizes);
-		
 		model.addAttribute("productList", productList);
 		
 
 		//business logic 작동		
-		List<OrderHeaderDto> orderList = service.orderList(page, searchStartDate, searchEndDate, orderS, orderQ, pageInfo); // page = "파라미터 수집
-		List<ProductDto> productCatalog = service.productCatalog(productS, productQ); // 
+		List<OrderReportDto> orderList = hmsService.orderList(page, 
+														      orderS, 
+														      orderQ, 
+														      productCode, 
+														      productName, 
+														      productType, 
+														      size, 
+														      pageInfo);	
+		System.out.println(orderList);
+		// List<ProductDto> productCatalog = hmsService.productCatalog(productS, productQ); 
+		 
 		List<ReportDto> thisYearSales = service.thisYearSales();
-
 		
-		List<OrderItemDto> itemList = orderList.get(0).getOrderItem();
+//		List<OrderItemDto> itemList = orderList.get(0).getOrderItem();
  
-		System.out.println("컨트롤러: " + orderList);
-		System.out.println(itemList);
-		System.out.println("월별매출"+thisYearSales);
+		// System.out.println("컨트롤러: " + orderList);
+		// System.out.println(itemList);
+		// System.out.println("월별매출"+thisYearSales);
 		
 		// add attribute
-		model.addAttribute("productCatalog", productCatalog); // c:forEach items = productCatalog
+		// model.addAttribute("productCatalog", productCatalog); // c:forEach items = productCatalog
 		model.addAttribute("orderList", orderList); // c:forEach items = orderList
-		model.addAttribute("itemList",itemList);
-		model.addAttribute("thisYearSales",thisYearSales);
+		// model.addAttribute("itemList", itemList);
+		model.addAttribute("thisYearSales", thisYearSales);
 	}
 	
 	//엑셀 다운로드
@@ -169,7 +191,7 @@ public class lnhReportController {
 					 row.createCell(5).setCellValue(board1.getSum()); 
 					 
 					 for (OrderHeaderDto board : list) {
-						 row.createCell(0).setCellValue(board.getOrderCode());
+						 row.createCell(0).setCellValue(board.getOrderId());
 						 row.createCell(1).setCellValue(board.getBuyerCode());
 
 						 Date cell6 = java.sql.Date.valueOf(board.getInserted());

@@ -148,12 +148,12 @@ div.right {
 					<div class="col-sm-6 mb-4">
 						<div class="input-group">
 							<!-- Select -->
-							<select name="orderS" id="" class="form-select">
+							<!-- <select name="orderS" id="" class="form-select">
 								<option value="selectAll">전체검색</option>
 								<option value="selectOrderCode">주문서번호</option>
 								<option value="selectBuyerCode">바이어 코드</option>
 								<option value="selectWriter">담당자</option>
-							</select>
+							</select> -->
 							<input name="orderQ" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
 			        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>	
 						</div>
@@ -163,10 +163,10 @@ div.right {
 				<div class="row d-flex">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions1" placeholder="제품코드">
+							<input name="productCode" value="${param.productCode}" type="text" id="" class="form-control" list="datalistOptions1" placeholder="제품코드">
 							<datalist id="datalistOptions1">
-								<c:forEach items="${productList }" var="product">
-									<option value="${product.productCode }">
+								<c:forEach items="${orderList}" var="condition">
+									<option value="${condition.productCode}">${condition.productCode}</option>
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -174,10 +174,10 @@ div.right {
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품명">
+							<input name="productName" value="${param.productName}" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품명">
 							<datalist id="datalistOptions2">
-								<c:forEach items="${productList }" var="product">
-									<option value="${product.productName }">
+								<c:forEach items="${orderList}" var="condition">
+									<option value="${condition.productName}">${condition.productName}</option>
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -185,10 +185,10 @@ div.right {
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions3" placeholder="제품타입">
+							<input name="productType" value="${param.productType}" type="text" id="" class="form-control" list="datalistOptions3" placeholder="제품타입">
 							<datalist id="datalistOptions3">
-								<c:forEach items="${types }" var="type">
-									<option value="${type }">
+								<c:forEach items="${orderList}" var="condition">
+									<option value="${condition.productType}">${condition.productType}</option>
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -196,10 +196,10 @@ div.right {
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="제품규격 Inch">
+							<input name="size" value="${param.size}" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="제품규격 Inch">
 							<datalist id="datalistOptions4">
-								<c:forEach items="${sizes }" var="size">
-									<option value="${size }">
+								<c:forEach items="${orderList}" var="condition">
+									<option value="${condition.size}">${condition.size}</option>
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -263,13 +263,13 @@ div.right {
 
 		<h4>주문목록</h4>
 
-			<div style="float: right;">
-				<c:set var="ctx" value="${pageContext.request.contextPath}" />
-				<a href="${ctx }/report/excelDown?orderQ=${param.orderQ }"
-					class="btn btn-primary primaryBtn" type="submit"
-					style="margin-bottom: 10px;"> 엑셀 다운로드 </a>
-			</div>
-			<!-- 리스트 -->
+		<div style="float: right;">
+			<c:set var="ctx" value="${pageContext.request.contextPath}" />
+			<a href="${ctx }/report/excelDown?orderQ=${param.orderQ }"
+				class="btn btn-primary primaryBtn" type="submit"
+				style="margin-bottom: 10px;"> 엑셀 다운로드 </a>
+		</div>
+		<!-- 리스트 -->
 		<table class="table">
 			<thead>
 				<!-- productCode, productName, productType, weight, size, price, unit, content -->
@@ -289,27 +289,25 @@ div.right {
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${orderList }" var="order">
-				<c:forEach items="${itemList }" var="itemList">
+				<c:forEach items="${orderList}" var="order">
 					<tr>
-						<td style="width: 9%;">${order.orderCode }</td>
-						<td>${order.buyerCode }</td>
-						<td>${itemList.productCode }</td>
-						<td>${itemList.salePrice }</td>
-						<td>${itemList.quantity }</td>
-						<td>${itemList.sum }</td>
-						<td style="width: 9%;">${order.inserted }</td>
-						<td style="width: 9%;">${order.modified }</td>
-						<td style="width: 9%;">${order.deliveryDate }</td>
-						<td>${order.writer }</td>
-						<td>${order.status }</td>
-						<td>${order.message }</td>
-
+						<td style="width: 9%;">${order.orderId}</td>
+						<td>${order.buyerCode}</td>
+						<td>${order.productCode}</td>
+						<td>${order.finalPrice}</td>
+						<td>${order.quantity}</td>
+						<td>${order.sum}</td>
+						<td style="width: 9%;">${order.inserted}</td>
+						<td style="width: 9%;">${order.modified}</td>
+						<td style="width: 9%;">${order.deliveryDate}</td>
+						<td>${order.writer}</td>
+						<td>${order.status}</td>
+						<td>${order.message}</td>
 					</tr>
-				</c:forEach>
-				</c:forEach>
+				</c:forEach>		
 			</tbody>
 		</table>
+		
 	</div>
 </div>
 
