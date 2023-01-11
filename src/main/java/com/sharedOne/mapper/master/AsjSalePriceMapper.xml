@@ -4,11 +4,13 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="com.sharedOne.mapper.master.AsjSalePriceMapper">
+
  	<!-- priceId, productCode, buyerCode, salePrice, discountRate, memo, fromDate, endDate -->
  	<insert id="register">
  		INSERT INTO SalePrice ( buyerCode, productCode, salePrice, discountRate, fromDate, endDate )
  		VALUES ( #{buyerCode}, #{productCode}, #{salePrice}, #{discountRate}, #{fromDate}, #{endDate} )
  	</insert>
+
  	<!-- 아이템 : id, 제품코드, 제품명,바이어코드, 바이어명, 국가, 원가, 단가, 할인율, 단가기간, -->
 	<select id="selectAllSalePriceItemList" resultType="com.sharedOne.domain.master.SalePriceDto">
 	 	SELECT 
@@ -17,11 +19,9 @@
 	 		sp.discountRate,
 	 		sp.fromDate,
 	 		sp.endDate,
-	 		
 	 		b.buyerCode,
 	 		b.buyerName,
 	 		b.country,
-	 		
 	 		p.productCode,
 	 		p.productName,
 	 		p.price
@@ -29,7 +29,6 @@
 	 		SalePrice sp
 	 	LEFT JOIN Buyer b ON b.buyerCode = sp.buyerCode
 	 	LEFT JOIN Product p ON p.productCode = sp.productCode
-	 	
 	 	WHERE
 	 	(
 	 	<trim prefixOverrides="OR">
@@ -68,7 +67,6 @@
  		</if>
  		
 		ORDER BY p.productCode ASC;
-	 	
 	</select> 		
 	
 	<select id="selectPriceByProductCode" resultType="int">
@@ -123,6 +121,5 @@
 		WHERE
 			priceId = #{priceId}	
 	</update>
-	
  
  </mapper>

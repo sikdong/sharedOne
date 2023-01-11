@@ -59,6 +59,7 @@
     	position:relative;
     }
     
+
     #businessNumberExist {
     	margin-top: 10px;
     	line-height: 10px;
@@ -111,7 +112,7 @@
 	    border-radius: 5px; 
 	    background: #1d5c83; 
 	    margin-bottom: 20px; 
-	    margin-right: 15px;";
+	    margin-right: 15px;
     }
     
 </style>
@@ -193,6 +194,7 @@
 						</div>
 					</div>
 					<hr />
+
 					<!-- 수정버튼 -->
 					<input id="modifyBtn" class="btn" type="submit" value="수정">
 				</div>
@@ -286,9 +288,6 @@
             str = String(str);
             return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1');
         }
-        
-        
-        
     </script>
 
 </body>

@@ -14,6 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap" rel="stylesheet" />
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <title>Insert title here</title>
 </head>
@@ -51,23 +52,32 @@
       height: 100%;
       border: 1px solid black;
       border-radius: 5px;
-    }  
+    }
+    @media print {
+	    html, body { -webkit-print-color-adjust:exact; width: 210mm; height: 297mm; margin: 5mm 5mm 5mm 5mm; }
+	    table { page-break-inside:auto; }
+	    tr    { page-break-inside:avoid; page-break-after:auto; }
+	    thead { display:table-header-group; }
+	    tfoot { display:table-footer-group; }
+	}  
 </style>
 <body>
     <div class="container order-report-content">
         <div class="row">
             <div class="row mt-5" style="text-align: center;">     
                  <div id="rvbtn_group" style="text-align: right;">
+                 	<button type="button" class="btn" id="print" style="border: gray 2px solid; font-weight: bold; float:left; font-size:x-large; padding:0px;" onclick="content_print();">&nbsp&nbsp<i class='bx bx-printer'></i>&nbsp&nbsp</button>
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#confirmModal" style="border: gray 2px solid; font-weight: bold;">수정</button>
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#returnModal" style="border: gray 2px solid; font-weight: bold;">종결</button>               
                 </div>
-                <span style="text-align: center; font-size: 30px; font-weight: bolder;">
-                    주문서
-                </span> 
             </div>
         </div>
         <br>
+        <div id="printDiv" style="width: fit-content; max-width: 960px;">
         <div class="row">
+        	<span style="text-align: center; font-size: 30px; font-weight: bolder; margin-bottom:15px;">
+	                    주문서
+	                </span> 
             <table style="border: 1px solid black;">
                 <tbody>
      
@@ -101,7 +111,7 @@
                     <th class="n-th">국가</th>
                     <td>${buyer.country }</td>
                     <th class="n-th">주소</th>
-                    <td>${buyer.address }</td>
+                    <td style="word-break:break-all;width: 300px;">${buyer.address }</td>
                   </tr>
                   <tr>
                     <th class="n-th">전화번호</th>
@@ -155,6 +165,7 @@
                   </tr>                  
                 </tbody>
               </table>
+            </div>  
         </div>
         <br>
         <div class="row mb-5">
@@ -203,6 +214,17 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 <script>
 
+function content_print(){
+    
+    var initBody = document.body.innerHTML;
+    window.onbeforeprint = function(){
+        document.body.innerHTML = document.getElementById('printDiv').innerHTML;
+    }
+    window.onafterprint = function(){
+        document.body.innerHTML = initBody;
+    }
+    window.print();    
+}           
 </script>
 </body>
 </html>

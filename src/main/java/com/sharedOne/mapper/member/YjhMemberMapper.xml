@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.sharedOne.mapper.member.YjhMemberMapper">
+
+	<insert id="insertRanks">
+		INSERT INTO Ranks(id, rank)
+		VALUES (#{id}, #{rank});
+	</insert>
+
+	<insert id="insertMember">
+		INSERT INTO Member(id, password, name, email, phone)
+		VALUES (#{id}, #{password}, #{name}, #{email}, #{phone});
+	</insert>
+	
+	<select id="selectById" resultMap="memberMap">
+		SELECT m.id id,
+			   password,
+			   name,
+			   email,
+			   phone,
+			   r.rank rank
+	    FROM Member m LEFT JOIN Ranks r ON m.id = r.id 
+	    WHERE m.id = #{id};
+	</select>
+	
+	<resultMap type="com.sharedOne.domain.member.MemberDto" id="memberMap">
+		<id column="id" property="id"></id>
+		<result column="password" property="password"></result>
+		<result column="name" property="name"></result>
+		<result column="email" property="email"></result>
+		<result column="phone" property="phone"></result>
+		<collection property="rank" ofType="String">
+			<result column="rank" property="rank"></result>
+		</collection>
+	</resultMap>
+</mapper>
