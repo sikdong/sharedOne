@@ -2,6 +2,7 @@ package com.sharedOne.service.order;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,23 +36,25 @@ public class YdsOrderService {
 		return mapper.getBuyerNames();
 	}
 
-	public List<ProductDto> searchProduct(String allproductInfo, String tableBuyerCode) {
+	public List<ProductDto> searchProduct(String allProductInfo, String tableBuyerCode) {
 		// TODO Auto-generated method stub
-		allproductInfo = "%" + allproductInfo + "%";
-		return mapper.searchProduct(allproductInfo, tableBuyerCode);
+		allProductInfo = "%" + allProductInfo + "%";
+		return mapper.searchProduct(allProductInfo, tableBuyerCode);
 	}
 
 
-	public YdsProductDto addTempProductOrder(YdsProductDto ypd) {
+	public List<YdsProductDto> addTempProductOrder(Map<String, Object> data) {
 		// TODO Auto-generated method stub
-		YdsProductDto yds = mapper.addTempProductOrder(ypd);
-		yds.setQuantity(ypd.getQuantity());
-		yds.setSalePrice(ypd.getSalePrice());
-		int vat = ypd.getSalePrice()/10;
-		yds.setVat(vat);
-		int sum = ypd.getSalePrice()*ypd.getQuantity();
-		yds.setSum(sum);
-		return yds;
+		/* YdsProductDto yds = mapper.addTempProductOrder(data); */
+		List<String> productCodes = (List<String>) data.get("productCodes");
+		String buyerCode = (String) data.get("buyerCode");
+		List<YdsProductDto> ypd = new ArrayList<>();
+		
+		for(String productCode : productCodes ) {
+			 ypd.add(mapper.addTempProductOrder(productCode, buyerCode));
+			}
+		return ypd;
+		
 		
 	}
 
@@ -59,29 +62,33 @@ public class YdsOrderService {
 	public void insertOrder(YdsOrderDto yod) {
 		OrderHeaderDto ohd = new OrderHeaderDto();
 		  OrderItemDto oid = new OrderItemDto();
-	
+		  ohd.setWriter(yod.getWriter());
 		  ohd.setBuyerCode(yod.getBuyerCode());
 		  ohd.setDeliveryDate(yod.getDeliveryDate());
 		  ohd.setMessage(yod.getMessage());
-		  System.out.println("service에서의 " + ohd);
 		  mapper.insertOrderHeader(ohd);
-		  
+		  int generatedId = ohd.getOrderId();
+		  String date = mapper.getDate(generatedId);
+		  String year = date.substring(0, 4);
+		  System.out.println(year);
+		  mapper.createOrderCode(generatedId, year);
 		  List<String> productCodes = yod.getProductCode();
 		  System.out.println("코드는" + productCodes);
 		  List<Integer> quantities = yod.getQuantity();
 		  List<Integer> salePrices = yod.getSalePrice();
+		  List<Integer> sums = yod.getSum();
 		  for(int i = 0; i < productCodes.size(); i++) {
 			  oid.setProductCode(productCodes.get(i));
 			  oid.setSalePrice(salePrices.get(i));
 			  oid.setQuantity(quantities.get(i));
+			  oid.setSum(sums.get(i));
 			  System.out.println("오더 목록 " + i + "번째는" +oid);
-			  mapper.insertOrderItem(oid);
+			  mapper.insertOrderItem(generatedId,oid);
 		  }
 		  
 		  
 		  
 		  
-		 
 	}
 	
 	

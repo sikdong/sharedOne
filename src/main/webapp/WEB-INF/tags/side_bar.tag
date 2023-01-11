@@ -4,12 +4,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%-- c커스텀 태그 사용하기 위해 --%>
 <%@ attribute name="active" required="false" %> <%-- narvar active 초기값 false --%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<c:url value="/member/logout" var="logoutLink"/>
+<c:url value="${pageContext.request.contextPath}/member/logout" var="logoutLink"/>
+<c:url value="${pageContext.request.contextPath}/member/login" var="loginLink"/>
+<c:url value="${pageContext.request.contextPath}/member/signup" var="signupLink"/>
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <!-- JQuery CDN 연동 -->
@@ -89,6 +91,7 @@
           <h1 class="sideHead">Order</h1>
         </div>
         <ul class="list-unstyled ps-0">
+        <sec:authorize access="isAuthenticated()">
           <li class="mb-1">
             <div class="row list-row">
                 <div class=" list-head"><i class="fa-regular fa-clipboard"></i>&nbsp; 마스터 관리</div>
@@ -163,11 +166,31 @@
                   </ul>
             </div>
           </li>
-          <li class="mb-1">
-            <div class="row list-row">
-                <a href="${logoutLink}" class="list-head" style="text-decoration: none;color: #e3e3e3;"><i class="fa-regular fa-file-lines"></i>&nbsp; 로그아웃</a>
-            </div>
-          </li>
+          </sec:authorize>
+          <!-- authorize tag -->
+         <sec:authorize access="hasAuthority('팀장')">
+	          <li class="mb-1">
+	            <div class="row list-row">
+	                <a href="#" class="list-head" onclick="window.open('/member/signup','사원등록','width=500,height=500,left=400,top=100,bottom=300,location=no,status=no,scrollbars=yes');"
+	                style="text-decoration: none;color: #e3e3e3;"><i class="fa-solid fa-user-plus"></i>&nbsp; 사원등록</a>
+	            </div>
+	          </li>
+         </sec:authorize>
+          <!-- spring security expressions -->
+          <sec:authorize access="not isAuthenticated()">
+	          <li class="mb-1">
+	            <div class="row list-row">
+	                <a href="${loginLink}" class="list-head" style="text-decoration: none;color: #e3e3e3;"><i class="fa-solid fa-arrow-right-to-bracket"></i>&nbsp; 로그인</a>
+	            </div>
+	          </li>
+          </sec:authorize>
+          <sec:authorize access="isAuthenticated()">
+	          <li class="mb-1">
+	            <div class="row list-row">
+	                <a href="${logoutLink}" class="list-head" style="text-decoration: none;color: #e3e3e3;"><i class="fa-solid fa-arrow-right-from-bracket"></i>&nbsp; 로그아웃</a>
+	            </div>
+	          </li>
+          </sec:authorize>
           <li class="my-3"style="border-top: 1px solid #5e6e82;"></li>
         </ul>
       </div>

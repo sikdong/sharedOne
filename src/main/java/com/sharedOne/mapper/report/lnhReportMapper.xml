@@ -9,7 +9,7 @@
 		SELECT
 			h.orderCode,
 			i.productCode,
-			p.salePrice,
+			i.salePrice,
 			i.quantity,
 			i.sum,
 			h.inserted,
@@ -21,11 +21,10 @@
 			h.message
 		FROM
 			Order_header h LEFT JOIN Order_item i ON h.orderCode = i.orderCode
-							LEFT JOIN SalePrice p ON i.priceId = p.priceId
 			
 		WHERE	h.orderCode LIKE #{orderQ} 
 		   OR  	  i.productCode LIKE #{orderQ} 
-		   OR  	  p.salePrice LIKE #{orderQ} 
+		   OR  	  i.salePrice LIKE #{orderQ} 
 		   OR  	  i.quantity LIKE #{orderQ} 
 		   OR  	  i.sum LIKE #{orderQ} 
 		   OR  	  h.inserted LIKE #{orderQ} 
@@ -50,7 +49,6 @@
 		<result column="status" property="status" />
 		<result column="message" property="message" />
 		<collection property="orderItem" resultMap="orderItem"></collection>
-		<collection property="itemPrice" resultMap="itemPrice"></collection>
 		
 	</resultMap>
 	
@@ -58,10 +56,36 @@
 		<result column="productCode" property="productCode"/>
 		<result column="quantity" property="quantity"/>
 		<result column="sum" property="sum"/>
-	</resultMap>
-	
-	<resultMap type="com.sharedOne.domain.master.SalePriceDto" id="itemPrice">
 		<result column="salePrice" property="salePrice"/>
 	</resultMap>
+	
+	<select id="thisYearSales" resultType="com.sharedOne.domain.report.ReportDto">
+	SELECT MONTH(h.inserted) as month,
+		sum(i.sum) as thisSales
+	FROM Order_header h LEFT JOIN Order_item i ON h.orderCode = i.orderCode
+	WHERE year(inserted) = year(now()) 
+	GROUP BY month
+	
+	</select>
+	
+	<!-- 검색 결과 바이어 별 매출 -->
+	<select id="salesByBuyer" resultType="int">
+		SELECT sum(i.sum) salesByBuyer 
+		FROM Order_header h LEFT JOIN Order_item i ON h.orderCode = i.orderCode 
+		WHERE	(h.orderCode LIKE #{orderQ} 
+		   OR  	  i.productCode LIKE #{orderQ} 
+		   OR  	  i.salePrice LIKE #{orderQ} 
+		   OR  	  i.quantity LIKE #{orderQ} 
+		   OR  	  i.sum LIKE #{orderQ} 
+		   OR  	  h.inserted LIKE #{orderQ} 
+		   OR 	  h.modified LIKE #{orderQ} 
+		   OR h.deliveryDate LIKE #{orderQ} 
+		   OR       h.writer LIKE #{orderQ} 
+		   OR    h.buyerCode LIKE #{orderQ} 	
+		   OR 		h.status LIKE #{orderQ} 
+		   OR 	   h.message LIKE #{orderQ})  
+			AND buyerCode = #{buyerCode}
+	
+	</select>
 	
 </mapper>

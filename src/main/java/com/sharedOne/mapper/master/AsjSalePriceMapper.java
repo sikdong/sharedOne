@@ -22,4 +22,5 @@ public interface AsjSalePriceMapper {
 	int register(SalePriceDto sale);
 
 
+
 }

@@ -289,7 +289,7 @@
 										<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-secondary" >${h.status }</button>
 									</form>
 								</c:when>
-							</c:choose>					
+							</c:choose>	
 						</td>
 						<td>
 							<button id="detailBtn${h.orderCode }" type="button" class="btn btn-outline-secondary">주문상세</button>
@@ -331,10 +331,8 @@
 			</tbody>
 		</table>
 	</div><!-- scrollBox 끝 -->
-	
-	
-	
 </div><!-- container 끝  -->
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -401,7 +399,6 @@ if (${size} < 7) {
 
 	
 </script>
-	
 	
 </body>
 </html>

@@ -1,9 +1,10 @@
 package com.sharedOne.controller.order;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +31,6 @@ import com.sharedOne.service.order.YdsOrderService;
 @RequestMapping("order")
 @RequiredArgsConstructor
 public class YdsOrderController {
-	
 	
 	private final YdsOrderService service;
 
@@ -74,11 +74,12 @@ public class YdsOrderController {
 	public List<ProductDto> searchAllProductInfo(@PathVariable String allProductInfo, 
 			@PathVariable String tableBuyerCode){
 		System.out.println(tableBuyerCode);
+		System.out.println(allProductInfo);
 		return service.searchProduct(allProductInfo, tableBuyerCode);
 		
 	}
 
-	
+
 	  /*@GetMapping("list") 
 	  public void orderList(Model model, String orderCode ) {
 	  List <OrderHeaderDto> headerList = orderService.selectOrderHeaderList(); List
@@ -94,17 +95,18 @@ public class YdsOrderController {
 	  }
 	  
 	  @PostMapping("register")
-	  public void insertOrder(YdsOrderDto yod){
-		  System.out.println("오더 목록 : " + yod);
+	  public void insertOrder(YdsOrderDto yod, Authentication at){
+		  if(at != null) {
+			 yod.setWriter(at.getName());
+		  }
 		  service.insertOrder(yod);
 	  }
 	  
-	  
 	 @PostMapping("addTempProductOrder")
 	 @ResponseBody
-	 public YdsProductDto addTempProductOrder(@RequestBody YdsProductDto ypd) {
-		 System.out.println(ypd);
-		 return service.addTempProductOrder(ypd);
+	 public List<YdsProductDto> addTempProductOrder(@RequestBody Map<String,Object> data) {
+		 return service.addTempProductOrder(data);
 	 }
+	 
 	
 }
