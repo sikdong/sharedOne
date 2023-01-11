@@ -161,7 +161,7 @@
 					<div class="row d-flex">
 						<div class="col-sm-5">
 							<div class="input-group" style="margin-top: 15px !important;">
-								<input value="2023-01-01" name="deliveryDate" type="date" id="d1Id"
+								<input required name="deliveryDate" type="date" id="deliveryDate"
 									class="form-control">
 							</div>
 						</div>
@@ -284,7 +284,7 @@
 						<th>규격</th>
 						<th>단위</th>
 						<th>단가</th>
-						<th style="width : 120px;">단가</th>
+						<th style="width : 120px;">판매가</th>
 						<th style="width : 80px;">수량</th>
 						<th style="width : 150px;">합계액</th>
 					</tr>
@@ -511,12 +511,14 @@
 		})
 	})
 	
-	
 	<%-- 전체 제품 검색 --%>
 	document.querySelector("#allProductInfoBtn").addEventListener("click", function(){
 		const allProductInfo = document.querySelector("#allProductInfo").value;
-		const tableBuyerCode = document.querySelector("#tableBuyerCode").innerHTML;
-		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode)
+		const tableBuyerCode = document.querySelector("input[name='buyerCode']:checked").value;
+		const deliveryDate = document.querySelector("#deliveryDate").value;
+		if(deliveryDate != ''){
+			
+		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode+"/"+deliveryDate)
 		.then(res => res.json())
 		.then(list => {
 			document.querySelector("#productTable").innerHTML = "";
@@ -532,6 +534,7 @@
 				<th scope="col">무게</th>
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
+				<th scope="col">판매가</th>
 			</tr>
 		</thead>
 		<tbody id="productBody">
@@ -540,7 +543,7 @@
 	</table>`
 		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
 		for(const item of list){
-			if(item.buyerCode == tableBuyerCode || item.buyerCode == null){
+			if(item.buyerCode == tableBuyerCode){
 			const productTableItem =
 				
 			`<tr>
@@ -555,6 +558,7 @@
 				<td>\${item.weight }kg</td>
 				<td>\${item.unit }</td>
 				<td>\${item.price }</td>
+				<td>\${item.salePrice }</td>
 			</tr>`
 			
 			document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
@@ -562,13 +566,18 @@
 			}
 			
 		})
+		} else {
+			alert("납기 요청일을 입력해주세요")
+		}
 	})
 	
 	<%--제품명 검색 --%>
 	document.querySelector("#productNameBtn").addEventListener("click", function(){
 		const allProductInfo = document.querySelector("#productNameInput").value;
 		const tableBuyerCode = document.querySelector("#tableBuyerCode").innerHTML;
-		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode)
+		const deliveryDate = document.querySelector("#deliveryDate").value;
+		if(deliveryDate != ''){
+		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode+"/"+deliveryDate)
 		.then(res => res.json())
 		.then(list => {
 			document.querySelector("#productTable").innerHTML = "";
@@ -584,6 +593,7 @@
 				<th scope="col">무게</th>
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
+				<th scope="col">판매가</th>
 			</tr>
 		</thead>
 		<tbody id="productBody">
@@ -591,7 +601,7 @@
 	</table>`
 		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
 		for(const item of list){
-			if(item.buyerCode == tableBuyerCode || item.buyerCode == null){
+			if(item.buyerCode == tableBuyerCode){
 				const productTableItem =
 					
 				`<tr>
@@ -606,17 +616,23 @@
 					<td>\${item.weight }kg</td>
 					<td>\${item.unit }</td>
 					<td>\${item.price }</td>
+					<td>\${item.salePrice }</td>
 				</tr>`
 				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
 					}
 			}
 		})
+		} else {
+			alert("납기 요청일을 입력해주세요")
+		}
 	})
 	<%--제품코드로 검색 --%>
 	document.querySelector("#productCodeBtn").addEventListener("click", function(){
 		const allProductInfo = document.querySelector("#productCodeInput").value;
 		const tableBuyerCode = document.querySelector("#tableBuyerCode").innerHTML;
-		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode)
+		const deliveryDate = document.querySelector("#deliveryDate").value;
+		if(deliveryDate != ''){
+		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode+"/"+deliveryDate)
 		.then(res => res.json())
 		.then(list => {
 			document.querySelector("#productTable").innerHTML = "";
@@ -632,6 +648,7 @@
 				<th scope="col">무게</th>
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
+				<th scope="col">판매가</th>
 			</tr>
 		</thead>
 		<tbody id="productBody">
@@ -639,7 +656,7 @@
 	</table>`
 		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
 		for(const item of list){
-			if(item.buyerCode == tableBuyerCode || item.buyerCode == null){
+			if(item.buyerCode == tableBuyerCode){
 				const productTableItem =
 					
 				`<tr>
@@ -654,18 +671,24 @@
 					<td>\${item.weight }kg</td>
 					<td>\${item.unit }</td>
 					<td>\${item.price }</td>
+					<td>\${item.salePrice }</td>
 				</tr>`
 				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
 					}
 			}
 		})
+		} else {
+			alert("납기 요청일을 입력해주세요")
+		}
 	})
 	
 	<%--제품그룹로 검색 --%>
 	document.querySelector("#productTypeBtn").addEventListener("click", function(){
 		const allProductInfo = document.querySelector("#productTypeInput").value;
 		const tableBuyerCode = document.querySelector("#tableBuyerCode").innerHTML;
-		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode)
+		const deliveryDate = document.querySelector("#deliveryDate").value;
+		if(deliveryDate != ''){
+		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode+"/"+deliveryDate)
 		.then(res => res.json())
 		.then(list => {
 			document.querySelector("#productTable").innerHTML = "";
@@ -681,6 +704,7 @@
 				<th scope="col">무게</th>
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
+				<th scope="col">판매가</th>
 			</tr>
 		</thead>
 		<tbody id="productBody">
@@ -688,7 +712,7 @@
 	</table>`
 		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
 		for(const item of list){
-			if(item.buyerCode == tableBuyerCode || item.buyerCode == null){
+			if(item.buyerCode == tableBuyerCode){
 				const productTableItem =
 					
 				`<tr>
@@ -704,20 +728,23 @@
 					<td>\${item.weight }kg</td>
 					<td>\${item.unit }</td>
 					<td>\${item.price }</td>
+					<td>\${item.salePrice }</td>
 				</tr>`
 				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
 				}
 			}
 		})
+		} else {
+			alert("납기 요청일을 입력해주세요")
+		}
 	})
 		
 	let i = 1
  	<%--상세정보에 추가 --%>
 	document.querySelector("#addOrder").addEventListener("click", function() {
 		
-		const query = 'input[name="productCode"]:checked';
 		const buyerCode = document.querySelector('input[name="buyerCode"]:checked').value;
-		const productCode = document.querySelectorAll(query);
+		const productCode = document.querySelectorAll('input[name="productCode"]:checked');
 			
 		let productCodes = [];
 		productCode.forEach((el) => {

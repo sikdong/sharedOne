@@ -15,4 +15,5 @@ public class YdsOrderDto {
 	private List<Integer> sum;
 	private String writer;
 	private String status;
+	private String inserted;
 }

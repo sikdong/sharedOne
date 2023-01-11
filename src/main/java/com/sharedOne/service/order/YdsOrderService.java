@@ -36,7 +36,7 @@ public class YdsOrderService {
 		return mapper.getBuyerNames();
 	}
 
-	public List<ProductDto> searchProduct(String allProductInfo, String tableBuyerCode) {
+	public List<ProductDto> searchProduct(String allProductInfo, String tableBuyerCode, String deliveryDate) {
 		// TODO Auto-generated method stub
 		allProductInfo = "%" + allProductInfo + "%";
 		return mapper.searchProduct(allProductInfo, tableBuyerCode);
