@@ -68,14 +68,11 @@
         <div class="row">
             <div class="row mt-5" style="text-align: center;">     
                  <div id="rvbtn_group" style="text-align: right;">
-                 	<c:url value="/report/excelDown" var="listLink"></c:url>
-                 	<button type="button" class="btn" id="print" style="border: gray 2px solid; font-weight: bold; float:left; font-size:x-large; padding:0px;" onclick="content_print();">&nbsp&nbsp<i class='bx bx-printer'></i>&nbsp&nbsp</button>
-					<form action="${listLink }" method="get">
-						<input name="orderId" value="" class="form-control" type="hidden">
-						<!-- <button class="btn btn-primary primaryBtn" type="submit" style="margin-bottom: 10px;">
-							엑셀 다운로드
-						</button> -->
-	                    <button type="submit" class="btn" id="excelConverBtn" style="border: gray 2px solid; font-weight: bold; float:left; font-size:x-large; padding:0px;">&nbsp&nbsp<i class='bx bx-printer'></i>&nbsp&nbsp</button>         
+                 	<c:url value="/order/excelConvert" var="excelLink"></c:url>
+                 	<button type="button" class="btn" id="print" style="border: gray 2px solid; font-weight: bold; float:left; font-size:x-large; padding:0px; width: 65px;" onclick="content_print();">&nbsp&nbsp<i class='bx bx-printer'></i>&nbsp&nbsp</button>
+					<form action="${excelLink }" method="get">
+						<input name="orderId" value="${orderHeader.orderId }" class="form-control" type="hidden">
+	                    <button type="submit" class="btn" id="excelConverBtn" style="width: 65px; margin-left:5px; border: gray 2px solid; font-weight: bold; float:left; font-size:x-large; padding:0px;">&nbsp&nbsp<i class="fa-regular fa-file-excel"></i>&nbsp&nbsp</button>         
 					</form>
                 </div>
             </div>
