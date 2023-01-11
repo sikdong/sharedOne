@@ -68,13 +68,11 @@ public class YdsOrderController {
 		return service.searchBuyer(buyerCode);
 	}
 
-	@GetMapping("searchAllProductInfo/{allProductInfo}/{tableBuyerCode}")
+	@GetMapping("searchAllProductInfo/{allProductInfo}/{tableBuyerCode}/{deliveryDate}")
 	@ResponseBody
 	public List<ProductDto> searchAllProductInfo(@PathVariable String allProductInfo,
-			@PathVariable String tableBuyerCode) {
-		System.out.println(tableBuyerCode);
-		System.out.println(allProductInfo);
-		return service.searchProduct(allProductInfo, tableBuyerCode);
+			@PathVariable String tableBuyerCode, @PathVariable String deliveryDate) {
+		return service.searchProduct(allProductInfo, tableBuyerCode,deliveryDate);
 
 	}
 

@@ -74,7 +74,8 @@
 		 	s.priceId
 		 FROM Product p
 		 LEFT JOIN SalePrice s ON s.productCode = p.productCode
-		 where s.productCode = #{productCode} AND s.buyerCode = #{buyerCode} 
+		 LEFT JOIN Buyer b ON s.buyerCode = b.buyerCode
+		 where p.productCode = #{productCode} AND b.buyerCode = #{buyerCode} 
 		 
 	</select>
 	<insert id="insertOrderHeader" useGeneratedKeys="true" keyProperty="orderId">
@@ -115,7 +116,7 @@
 	WHERE orderId = #{generatedId}
 	
 	</select>
-	
+
 
 
 </mapper>
