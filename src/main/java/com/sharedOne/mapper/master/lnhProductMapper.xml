@@ -40,23 +40,66 @@
 		FROM 
 			Product
 			
-		WHERE 	productCode LIKE #{keyword}
-			OR  productName LIKE #{keyword} 
-			OR  productType LIKE #{keyword} 
-			OR  weight LIKE #{keyword} 
-			OR  size LIKE #{keyword} 
-			OR  price LIKE #{keyword} 
-			OR  unit LIKE #{keyword} 
-			OR  content LIKE #{keyword} 
-			OR  inserted LIKE #{keyword}
+		WHERE
+	 	(
+	 	<trim prefixOverrides="OR">
+			<if test="keyword != '' or productCode != ''">
+			OR productCode LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or productName != ''">
+			OR productName LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or size != ''">
+			OR size LIKE #{keyword}
+			</if>
+			<if test="keyword != ''">
+			OR productType LIKE #{keyword}
+			</if>
+			<if test="keyword != ''">
+			OR weight LIKE #{keyword}
+			</if>
+			<if test="keyword != ''">
+			OR price LIKE #{keyword}
+			</if>
+			<if test="keyword != ''">
+			OR unit LIKE #{keyword}
+			</if>
+			<if test="keyword != ''">
+			OR content LIKE #{keyword}
+			</if>
+			<if test="keyword != ''">
+			OR inserted LIKE #{keyword}
+			</if>
+			<if test="keyword != ''">
+			OR modified LIKE #{keyword}
+			</if>
+			<if test="keyword != ''">
+			OR fromDate LIKE #{keyword}
+			</if>
+			<if test="keyword != ''">
+			OR endDate LIKE #{keyword}
+			</if>
+			
+		</trim>
+		)	 	
+	 	
+ 		<if test="productCode != '' ">
+ 		AND productCode = #{productCode }
+ 		</if>
+ 		<if test="productName != '' ">
+ 		AND productName = #{productName }
+ 		</if>
+ 		<if test="size != '' ">
+ 		AND size = #{size }
+ 		</if>
 		
 		ORDER BY productCode
  	</select>
  	
  	 <!-- 제품 입력 -->
  	<insert id="register" useGeneratedKeys="true" keyProperty="productCode">
- 	INSERT INTO Product (productCode, productName, productType, weight, size, price, unit, content)
- 	VALUES (#{productCode}, #{productName}, #{productType}, #{weight}, #{size}, #{price}, #{unit}, #{content})
+ 	INSERT INTO Product (productCode, productName, productType, weight, size, price, unit, fromDate, endDate, content)
+ 	VALUES (#{productCode}, #{productName}, #{productType}, #{weight}, #{size}, #{price}, #{unit}, #{fromDate}, #{endDate}, #{content})
  	</insert>
  	
  	<!-- 제품 내용 가져오기 -->
@@ -77,6 +120,8 @@
 	 		weight = #{weight},
 	 		size = #{size},
 	 		price = #{price},
+	 		fromDate = #{fromDate},
+	 		endDate = #{endDate},
 	 		unit = #{unit},
 	 		content = #{content}
 	 	WHERE

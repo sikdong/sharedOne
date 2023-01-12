@@ -52,9 +52,15 @@
 		cursor: pointer;
 	}
 	
+	#registerBtn {
+		margin-left: 30px;
+		margin-bottom: 10px;
+	}
+	
 	.table .trtr:hover {
 	 	font-weight: bold;
 	 	background-color: #c7c9c2;
+	 	cursor : pointer;
  	}
  	
  	th, td {
@@ -104,7 +110,7 @@
 				<div class="row d-flex">
 					<div class="col-sm-6 mb-4">
 						<div class="input-group">
-							<input name="keyword" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
+							<input name="keyword" value="${param.keyword }" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
 			        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
@@ -113,10 +119,10 @@
 				<div class="row d-flex">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions1" placeholder="바이어코드">
+							<input name="buyerCode" value="${param.buyerCode }"" type="text" id="" class="form-control" list="datalistOptions1" placeholder="바이어코드">
 							<datalist id="datalistOptions1">
 								<c:forEach items="${buyer }" var="buyer">
-									<option value="${buyer.buyerCode }">
+									<option value="${buyer.buyerCode }">${buyer.buyerCode }</option>
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -124,10 +130,10 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="바이어명">
+							<input name="buyerName" value="${param.buyerName }" type="text" id="" class="form-control" list="datalistOptions2" placeholder="바이어명">
 							<datalist id="datalistOptions2">
 								<c:forEach items="${buyer }" var="buyer">
-									<option value="${buyer.buyerName }">
+									<option value="${buyer.buyerName }">${buyer.buyerName }</option>
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -135,13 +141,18 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions3" placeholder="국가">
+							<input name="country" value="${param.country }" type="text" id="" class="form-control" list="datalistOptions3" placeholder="국가">
 							<datalist id="datalistOptions3">
 								<c:forEach items="${country }" var="country">
-									<option value="${country }">
+									<option value="${country }">${country }</option>
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div style="text-align: justify;">
+							<a class="btn btn-outline-primary primaryBtn" type="submit" href="/master/buyerList">검색 조건 초기화</a>
 						</div>
 					</div>
 				</div><!-- 2nd row 끝 -->
@@ -184,7 +195,7 @@
 			<c:url value="/master/buyerModify" var="getLink">
 					<c:param name="code" value="${buyer.buyerCode }"></c:param>
 				</c:url>
-				<tr onclick="window.open('${getLink}','바이어정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
+				<tr title="${buyer.buyerName } 정보 수정하기" onclick="window.open('${getLink}','바이어정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
 <%-- 				<tr onclick="location.href='${getLink}'" class="trtr"> --%>
 					<td style="width: 100px;">${buyer.buyerCode }</td>
 					<td style="width: 150px;">${buyer.buyerName }</td>

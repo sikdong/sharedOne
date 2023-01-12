@@ -83,7 +83,7 @@
 </style>
 <body>   
     <div class="insert-body mt-5 ">
-    	<form action="" method="post">
+    	<form action="" name= "registerfrm" method="post">
 	        <div class="container-md">
 	            <div class="row">
 	                <div class="col mt-1">
@@ -133,18 +133,32 @@
 	                            </div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
-	                            <label for="inputProductPrice" class="col-form-label">원가</label>
-	                            <div class="col-sm-5">
-	                                <input id="productPrice" name="price" onkeyup="inputNumberFormat(this);" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"type="text" class="form-control" placeholder="원가를 입력하세요."/>
-	                            </div>
-	                        </div>
-	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputName" class="col-form-label">단위</label>
 	                            <div class="col-sm-5">
 	                                <input id="productUnit" name="unit" type="text" class="form-control" placeholder="제품단위를 입력하세요."/>
 	                            </div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
+	                            <label for="inputProductPrice" class="col-form-label">단가</label>
+	                            <div class="col-sm-5">
+	                                <input id="productPrice" name="price" type="text" class="form-control" placeholder="단가를 입력하세요."/>
+	                            </div>
+		                        </div>
+	
+							<div class="mb-2 row mt-2 rowdiv">
+								<label for="inputPriceStartDate" class="col-form-label">단가 시작일</label>
+								<div class="col-sm-5">
+									<input id="productStartDate" name ="fromDate" type="date" class="form-control" />
+								</div>
+							</div>
+							<div class="mb-2 row mt-2 rowdiv">
+								<label for="inputPriceEndDate" class="col-form-label">단가 종료일</label>
+								<div class="col-sm-5">
+									<input id="productEndDate" name ="endDate" type="date" class="form-control" />
+								</div>
+							</div>
+	
+							<div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputName" class="col-form-label">제품 설명</label>
 	                            <div class="col-sm-5">
 	                                <input id="productContent" name="content" type="text" class="form-control" placeholder="제품설명을 입력하세요."/>
@@ -153,7 +167,7 @@
 	                    </div>
 	                <hr />
 	                <div>
-	                    <input id="registerBtn" class="btn registerBtn" type="submit" value="등록"/>
+	                    <input id="registerBtn" class="btn registerBtn" type="submit" value="등록" onclick="registerCheck()">
 	                </div>
 	              
 	            </div>
@@ -165,6 +179,15 @@
     const ctx = "${pageContext.request.contextPath}";
     
     var availableProductName = false;
+    
+  //등록버튼 누르면 등록 실행 후 창 닫기
+    function registerCheck() { 
+	document.registerfrm.submit();
+    window.opener.location.reload();
+	setTimeout(function() {
+		window.close();
+        }, 20);  
+    }  
     
     function enableSubmitButton() {
     	const button = document.querySelector("#registerBtn");
@@ -202,29 +225,6 @@
     	
     });
     
-    
-        function comma(str) {
-        str = String(str);
-        return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-        }
-
-        function uncomma(str) {
-            str = String(str);
-            return str.replace(/[^\d]+/g, '');
-        } 
-        
-        function inputNumberFormat(obj) {
-            obj.value = comma(uncomma(obj.value));
-        }
-        
-        function inputOnlyNumberFormat(obj) {
-            obj.value = onlynumber(uncomma(obj.value));
-        }
-        
-        function onlynumber(str) {
-            str = String(str);
-            return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1');
-        }
     </script>
 
 </body>
