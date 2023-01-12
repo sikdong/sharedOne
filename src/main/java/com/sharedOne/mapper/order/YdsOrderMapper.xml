@@ -78,7 +78,8 @@
 		 FROM Product p
 		 LEFT JOIN SalePrice s ON s.productCode = p.productCode
 		 LEFT JOIN Buyer b ON s.buyerCode = b.buyerCode
-		 where p.productCode = #{productCode} AND b.buyerCode = #{buyerCode} 
+		 where p.productCode = #{productCode} AND b.buyerCode = #{buyerCode}
+		 AND s.fromDate = #{fromDate} AND s.endDate = #{endDate} 
 		 
 	</select>
 	<insert id="insertOrderHeader" useGeneratedKeys="true" keyProperty="orderId">
