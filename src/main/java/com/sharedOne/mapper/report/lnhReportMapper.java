@@ -12,7 +12,7 @@ import com.sharedOne.domain.report.ReportDto;
 @Component
 public interface lnhReportMapper {
 
-	List<OrderHeaderDto> orderList(String orderQ);
+	List<OrderHeaderDto> orderList(String orderQ, String orderCode, String productCode, String writer, String status);
 
 	List<ReportDto> thisYearSales();
 

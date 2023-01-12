@@ -54,23 +54,28 @@ public class lnhReportController {
 	
 	
 	@GetMapping("monthlyReport")
-	public void getMontlyReport(@RequestParam(name = "orderQ", defaultValue = "") String orderQ, Model model) {
-		System.out.println(orderQ);
+	public void getMontlyReport(
+			@RequestParam(name = "orderQ", defaultValue = "") String orderQ,
+			@RequestParam(name="orderCode", defaultValue="") String orderCode,
+			@RequestParam(name="productCode", defaultValue="") String productCode,
+			@RequestParam(name="writer", defaultValue="") String writer,
+			@RequestParam(name="status", defaultValue="") String status,
+			Model model) {
 		
 		//검색 결과 리스트
-		List<OrderHeaderDto> orderList = service.orderList(orderQ);
+		List<OrderHeaderDto> orderList = service.orderList(orderQ, orderCode, productCode, writer, status);
 		
 		
 		//조건 검색 제품 리스트
 		List <ProductDto> productList = productService.selectProductList();
 		
 		Set <String> setWriters = new HashSet<>();
-		for( OrderHeaderDto writer : orderList) {
-			setWriters.add(writer.getWriter());
+		for( OrderHeaderDto writer1 : orderList) {
+			setWriters.add(writer1.getWriter());
 		}
 		Set <String> setStatus = new HashSet<>();
-		for( OrderHeaderDto status : orderList) {
-			setStatus.add(status.getStatus());
+		for( OrderHeaderDto status1 : orderList) {
+			setStatus.add(status1.getStatus());
 		}
 		
 		model.addAttribute("writers", setWriters);
@@ -84,8 +89,6 @@ public class lnhReportController {
 		List<ReportDto> thisYearSales = service.thisYearSales();
 		
 			
-			
-			if(orderQ!=null) {
 				//검색결과 바이어 리스트
 				List<String> buyerList = new ArrayList<>();
 				List<String> writerList = new ArrayList<>();
@@ -112,7 +115,7 @@ public class lnhReportController {
 				model.addAttribute("orderList", orderList); // c:forEach items = orderList
 				model.addAttribute("buyerSales", buyerSales);
 				model.addAttribute("writerSales", writerSales);
-			}
+
 			
 		model.addAttribute("thisYearSales",thisYearSales);
 	}
@@ -120,7 +123,12 @@ public class lnhReportController {
 	//엑셀 다운로드
 	@RequestMapping("excelDown")
 	@ResponseBody
-	public void excelDown(HttpServletResponse response,	@RequestParam(name = "orderQ", defaultValue = "") String orderQ) throws IOException {
+	public void excelDown(HttpServletResponse response,	
+			@RequestParam(name = "orderQ", defaultValue = "") String orderQ,
+			@RequestParam(name="orderCode", defaultValue="") String orderCode,
+			@RequestParam(name="productCode", defaultValue="") String productCode,
+			@RequestParam(name="writer", defaultValue="") String writer,
+			@RequestParam(name="status", defaultValue="") String status) throws IOException {
 		
 		
 		 try (Workbook workbook = new XSSFWorkbook()) {
@@ -183,7 +191,7 @@ public class lnhReportController {
 	                headerRow.getCell(i).setCellStyle(headStyle);
 	            }
 			 
-			 List<OrderHeaderDto> list = service.orderList(orderQ);
+			 List<OrderHeaderDto> list = service.orderList(orderQ, orderCode, productCode, writer, status);
 			 
 			 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			  

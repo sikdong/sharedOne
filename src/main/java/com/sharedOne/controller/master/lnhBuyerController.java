@@ -28,7 +28,12 @@ public class lnhBuyerController {
 	private lnhBuyerService buyerService;
 
 	@GetMapping("buyerList")
-	public void buyerList(@RequestParam(name = "keyword", defaultValue = "") String keyword,Model model) {
+	public void buyerList(
+			@RequestParam(name = "keyword", defaultValue = "") String keyword,
+			@RequestParam(name = "buyerCode", defaultValue = "") String buyerCode,
+			@RequestParam(name = "buyerName", defaultValue = "") String buyerName,
+			@RequestParam(name = "country", defaultValue = "") String country,
+			Model model) {
 		List<BuyerDto> buyer1 = buyerService.selectBuyerList();
 
 		Set<String> setCountries = new HashSet<>();
@@ -40,7 +45,7 @@ public class lnhBuyerController {
 			setManagers.add(buyer.getManager());
 		}
 		
-		List<BuyerDto> searhResult = buyerService.searchBuyerList(keyword);
+		List<BuyerDto> searhResult = buyerService.searchBuyerList(keyword, buyerCode, buyerName, country);
 		
 		System.out.println(keyword);
 		System.out.println(searhResult);

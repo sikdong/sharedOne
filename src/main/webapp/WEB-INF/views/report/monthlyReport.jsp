@@ -186,7 +186,7 @@ div.right {
 				<div class="row d-flex">
 					<div class="col-sm-6 mb-4">
 						<div class="input-group">
-							<input name="orderQ" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
+							<input name="orderQ" value="${param.orderQ }" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
 			        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>	
 						</div>
 					</div>
@@ -195,10 +195,10 @@ div.right {
 				<div class="row d-flex">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions1" placeholder="주문서 ID">
+							<input name="orderCode" value="${param.orderCode }"  type="text" id="" class="form-control" list="datalistOptions1" placeholder="주문서 ID">
 							<datalist id="datalistOptions1">
 								<c:forEach items="${orderList }" var="order">
-									<option value="${order.orderCode}">
+									<option value="${order.orderCode}">${order.orderCode}</option>
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -206,10 +206,10 @@ div.right {
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품코드">
+							<input name="productCode" value="${param.productCode }" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품코드">
 							<datalist id="datalistOptions2">
 								<c:forEach items="${productList }" var="product">
-									<option value="${product.productCode}">
+									<option value="${product.productCode}">${product.productCode }</option>
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -217,10 +217,10 @@ div.right {
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions3" placeholder="담당자">
+							<input name="writer" value="${param.writer }" type="text" id="" class="form-control" list="datalistOptions3" placeholder="담당자">
 							<datalist id="datalistOptions3">
 								<c:forEach items="${writers }" var="writer">
-									<option value="${writer }">
+									<option value="${writer }">${writer }</option>
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -228,10 +228,10 @@ div.right {
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="상태">
+							<input name="status" value="${param.status }" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="상태">
 							<datalist id="datalistOptions4">
 								<c:forEach items="${status }" var="status">
-									<option value="${status }">
+									<option value="${status }">${status }</option>
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
