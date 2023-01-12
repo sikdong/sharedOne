@@ -68,7 +68,7 @@
 	<c:set value="${pageContext.request.contextPath }" var="path"></c:set>
 	<my:side_bar></my:side_bar>
 	<div class="root">
-	<form action="" method="POST" id="orderForm">
+	<form action="${path }/order/list" method="POST" id="orderForm">
 		<input type="hidden" name="status" id="status" />
 		<div style="font-size: 30px;">
 			<strong>주문서 등록</strong>
@@ -784,7 +784,7 @@
               <td>\${da.price}원</td>
               <td>
 	              <input class="form-control" 
-	              type="text" id="finalPrice\${i}" 
+	              type="number" id="finalPrice\${i}" 
 	              onclick = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
 	              onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
 	              name="finalPrice" value="\${da.salePrice}">
@@ -793,7 +793,7 @@
               onclick = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value" 
 	          onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
 	              
-              id="quantity\${i}" class="form-control" type="text" name="quantity" value=""></td>
+              id="quantity\${i}" class="form-control" type="number" name="quantity" value=""></td>
               <td><input type="number" id="sum\${i}" name="sum" class="form-control" /></td>
               <td style="display : flex; justify-content : center;">
                   <button onclick="document.querySelector('#tr\${i}').innerHTML = '';" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>

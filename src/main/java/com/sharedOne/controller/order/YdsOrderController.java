@@ -89,7 +89,7 @@ public class YdsOrderController {
 		model.addAttribute("order", yod);
 	}
 
-	@PostMapping("register")
+	@PostMapping("list")
 	public void insertOrder(YdsOrderDto yod, Authentication at) {
 		if (at != null) {
 			yod.setWriter(at.getName());

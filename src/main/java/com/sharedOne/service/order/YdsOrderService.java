@@ -109,44 +109,45 @@ public class YdsOrderService {
 		OrderItemDto oid = new OrderItemDto();
 		System.out.println("null 이여도 사이즈는 몇개? " + yod.getQuantity().size());
 
+		// 상세 정보에 없는 경우
 		if (yod.getProductCode() != null) {
 			List<String> productCodes = yod.getProductCode();
-			for (int a = 0; a < yod.getQuantity().size(); a++) {
-				if (yod.getQuantity().get(a) != null) {
-					List<Integer> quantities = yod.getQuantity();
-					List<Integer> finalPrices = yod.getFinalPrice();
-					List<Integer> sums = yod.getSum();
-					for (int i = 0; i < productCodes.size(); i++) {
-						oid.setProductCode(productCodes.get(i));
-						oid.setFinalPrice(finalPrices.get(i));
-						oid.setQuantity(quantities.get(i));
-						oid.setSum(sums.get(i));
-						System.out.println("오더 목록 " + i + "번째는" + oid);
-						mapper.insertOrderItem(generatedId, oid);
-					}
-				} else {
-					System.out.println("아오 빡쳐");
-					List<Integer> quantities = new ArrayList<>();
-					List<Integer> sums = new ArrayList<>();
-					for (int i = 0; i < yod.getQuantity().size(); i++) {
-
-						quantities.add(i, 0);
-						sums.add(i, 0);
-					}
-					for (int i = 0; i < quantities.size(); i++) {
-
-						oid.setQuantity(quantities.get(i));
-						oid.setSum(sums.get(i));
-					}
-					mapper.insertOrderItem(generatedId, oid);
-				}
+			for (int i = 0; i < productCodes.size(); i++) {
+				oid.setProductCode(productCodes.get(i));
 			}
 		} else {
 			oid = null;
 			mapper.insertOrderItem(generatedId, oid);
 		}
-	}
+		for (int a = 0; a < yod.getQuantity().size(); a++) {
+			if (yod.getQuantity().get(a) != null) {
+				List<Integer> quantities = yod.getQuantity();
+				List<Integer> finalPrices = yod.getFinalPrice();
+				List<Integer> sums = yod.getSum();
+				for (int i = 0; i < quantities.size(); i++) {
+					oid.setFinalPrice(finalPrices.get(i));
+					oid.setQuantity(quantities.get(i));
+					oid.setSum(sums.get(i));
+					System.out.println("오더 목록 " + i + "번째는" + oid);
+					mapper.insertOrderItem(generatedId, oid);
+				}
+			} else {
+				List<Integer> quantities = new ArrayList<>();
+				List<Integer> sums = new ArrayList<>();
+				for (int i = 0; i < yod.getQuantity().size(); i++) {
 
+					quantities.add(i, 0);
+					sums.add(i, 0);
+				}
+				for (int i = 0; i < quantities.size(); i++) {
+
+					oid.setQuantity(quantities.get(i));
+					oid.setSum(sums.get(i));
+				}
+				mapper.insertOrderItem(generatedId, oid);
+			}
+		}
+	}
 
 	public YdsOrderDto modifyOrder(int orderId) {
 		// TODO Auto-generated method stub
