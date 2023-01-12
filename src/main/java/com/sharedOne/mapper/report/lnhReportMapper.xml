@@ -77,7 +77,12 @@
  		</if>
  		<if test="status != '' ">
  		AND h.status = #{status }
- 		</if> 
+ 		</if>
+ 		<if test="fromDate != '' and endDate !='' ">
+ 		AND h.deliveryDate BETWEEN #{fromDate} AND #{endDate}
+ 		</if>
+
+ 		
 		
 		ORDER BY h.orderId DESC 	<!-- orderId 등록이 최신 기준으로 -->
 

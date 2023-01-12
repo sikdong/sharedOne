@@ -33,24 +33,24 @@ public class lnhProductController {
 	private lnhProductService productService;
 	
 	@GetMapping("productList")
-	public void productList(@RequestParam(name = "keyword", defaultValue = "") String keyword, Model model){
+	public void productList(
+			@RequestParam(name = "keyword", defaultValue = "") String keyword, 
+			@RequestParam(name = "productCode", defaultValue = "") String productCode, 
+			@RequestParam(name = "productName", defaultValue = "") String productName, 
+			@RequestParam(name = "size", defaultValue = "") String size, 
+			Model model){
 		List <ProductDto> product1 = productService.selectProductList();
 		
-		Set <String> setTypes = new HashSet<>();
-		for( ProductDto product : product1) {
-			setTypes.add(product.getProductType());
-		}
 		Set <Integer> setSizes = new HashSet<>();
 		for( ProductDto product : product1) {
 			setSizes.add(product.getSize());
 		}
 		
-		List <ProductDto> searchResult = productService.searchProductList(keyword);
+		List <ProductDto> searchResult = productService.searchProductList(keyword, productCode, productName, size);
 		
 		System.out.println(keyword);
-		System.out.println(searchResult);
+		System.out.println("검색결과: "+searchResult);
 		
-		model.addAttribute("types", setTypes);
 		model.addAttribute("sizes", setSizes);
 		
 		model.addAttribute("product", product1);

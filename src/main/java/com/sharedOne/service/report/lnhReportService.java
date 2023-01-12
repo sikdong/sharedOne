@@ -19,11 +19,11 @@ public class lnhReportService {
 	@Autowired
 	private lnhReportMapper mapper;
 
-	public List<OrderHeaderDto> orderList(String orderQ, String orderCode, String productCode, String writer, String status) { 
+	public List<OrderHeaderDto> orderList(String orderQ, String orderCode, String productCode, String writer, String status, String fromDate, String endDate) { 
 		
 		orderQ = "%" + orderQ + "%";
 		
-		return mapper.orderList(orderQ, orderCode, productCode, writer, status);
+		return mapper.orderList(orderQ, orderCode, productCode, writer, status, fromDate, endDate);
 	}
 	
 	public Map<String, Integer> salesByBuyer(String orderQ, List<String> buyerCodes) {

@@ -152,8 +152,6 @@
 							<label for="inputProductPrice" class="col-form-label">단가</label>
 							<div class="col-sm-5">
 								<input id="productPrice" name="price"
-									onkeyup="inputNumberFormat(this);"
-									onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"
 									type="text" class="form-control"
 									value="${product.price }"
 									placeholder="${product.price }" 
@@ -228,7 +226,7 @@
             }, 10);  
         }
     
-        function comma(str) {
+/*         function comma(str) {
         str = String(str);
         return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
         }
@@ -249,7 +247,7 @@
         function onlynumber(str) {
             str = String(str);
             return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1');
-        }
+        } */
     </script>
 
 </body>

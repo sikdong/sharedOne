@@ -175,7 +175,7 @@ div.right {
 				<p class="filterText ">조건 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
 			</div>
 			<div class="mb-5">
-				<p class="filterText ">기간 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex. 주문일 / 납기일 등등... ) -->
+				<p class="filterText ">납기 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex. 주문일 / 납기일 등등... ) -->
 			</div>
 		</div><!-- 좌측 조건 설명 div 끝 -->
 		
@@ -242,28 +242,21 @@ div.right {
 				<div class="row d-flex">
 					<div class="col-sm-2">
 						<div class="form-check"  style="margin-top: 10px;">
-						    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+						    <input class="form-check-input" type="checkbox" value="" id="checkedAllDate" checked>
 							<label class="form-check-label" for="flexCheckDefault">전체기간</label>
 						</div>
 					</div>
-					<div class="col-sm-5">
+					<div class="col-sm-7">
 						<div class="input-group">
-							<input name="d1" value="${nowDate }" type="date" id="d1Id" class="form-control">
-							<span class="input-group-text">~</span>
-			        		<input name="d2" value="${nowDate }" type="date" id="d2Id" class="form-control">
+							<input name="fromDate" value="${param.fromDate }" type="date" id="d1" class="form-control">
+							<span class="input-group-text" style="padding-left: 20px; padding-right: 20px;">~</span>
+			        		<input name="endDate" value="${param.endDate }" type="date" id="d2" class="form-control">
 						</div>
 					</div>
-					<div class="col-sm-5 d-flex">
-						
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">오늘</button>		
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1주 </button>	
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">15일</button>		
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">3개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">6개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1년</button>	
-						
+					<div class="col-sm-2">
+							<a class="btn btn-outline-primary primaryBtn" type="submit" href="/report/monthlyReport">검색 조건 초기화</a>
 					</div>
+
 				</div><!-- 3rd row 끝 -->
 				<div class="row mt-4">
 					<div class="col-sm-4"></div>
@@ -321,7 +314,7 @@ div.right {
 			</thead>
 			<tbody>
 				<c:forEach items="${orderList }" var="order">
-					<c:if test="${fn:length(order.orderItem) == 1 }">
+					<c:if test="${fn:length(order.orderItem) < 2 }">
 						<tr>
 							<td style="width: 150px;">${order.orderCode }</td>
 							<td style="width: 130px;">${order.buyerCode }</td>
@@ -336,7 +329,7 @@ div.right {
 							<td style="width: 130px;">${order.message }</td>
 						</tr>
 					</c:if>
-					<c:if test="${fn:length(order.orderItem) != 1 }">
+					<c:if test="${fn:length(order.orderItem) >= 2 }">
 						<c:forEach items="${order.orderItem }" var="item">
 							<tr>
 								<td style="width: 150px;">${order.orderCode }</td>
@@ -361,6 +354,20 @@ div.right {
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script type="text/javascript">
+
+$('input[name=fromDate]').prop("disabled", true);
+$('input[name=endDate]').prop("disabled", true);
+$('#checkedAllDate').click(function(){
+	if($('#checkedAllDate').is(':checked') ){
+		
+		$('input[name=fromDate]').prop("disabled", true);
+		$('input[name=endDate]').prop("disabled", true);
+	}else{
+		$('input[name=fromDate]').removeAttr("disabled");
+		$('input[name=endDate]').removeAttr("disabled");
+	}
+})
+
 
 </script>
 	

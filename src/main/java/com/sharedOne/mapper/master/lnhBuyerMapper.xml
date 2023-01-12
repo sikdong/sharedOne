@@ -39,7 +39,7 @@
 			manager
 		FROM 
 			Buyer
-			 	WHERE
+		WHERE
 	 	(
 	 	<trim prefixOverrides="OR">
 			<if test="keyword != '' or buyerCode != ''">

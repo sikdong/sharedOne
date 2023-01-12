@@ -40,17 +40,58 @@
 		FROM 
 			Product
 			
-		WHERE 	productCode LIKE #{keyword}
-			OR  productName LIKE #{keyword} 
-			OR  productType LIKE #{keyword} 
-			OR  weight LIKE #{keyword} 
-			OR  size LIKE #{keyword} 
-			OR  price LIKE #{keyword} 
-			OR  unit LIKE #{keyword} 
-			OR  content LIKE #{keyword} 
-			OR  inserted LIKE #{keyword}
-			OR  fromDate LIKE #{keyword}
-			OR  endDate LIKE #{keyword}
+		WHERE
+	 	(
+	 	<trim prefixOverrides="OR">
+			<if test="keyword != '' or productCode != ''">
+			OR productCode LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or productName != ''">
+			OR productName LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or size != ''">
+			OR size LIKE #{keyword}
+			</if>
+			<if test="keyword != ''">
+			OR productType LIKE #{keyword}
+			</if>
+			<if test="keyword != ''">
+			OR weight LIKE #{keyword}
+			</if>
+			<if test="keyword != ''">
+			OR price LIKE #{keyword}
+			</if>
+			<if test="keyword != ''">
+			OR unit LIKE #{keyword}
+			</if>
+			<if test="keyword != ''">
+			OR content LIKE #{keyword}
+			</if>
+			<if test="keyword != ''">
+			OR inserted LIKE #{keyword}
+			</if>
+			<if test="keyword != ''">
+			OR modified LIKE #{keyword}
+			</if>
+			<if test="keyword != ''">
+			OR fromDate LIKE #{keyword}
+			</if>
+			<if test="keyword != ''">
+			OR endDate LIKE #{keyword}
+			</if>
+			
+		</trim>
+		)	 	
+	 	
+ 		<if test="productCode != '' ">
+ 		AND productCode = #{productCode }
+ 		</if>
+ 		<if test="productName != '' ">
+ 		AND productName = #{productName }
+ 		</if>
+ 		<if test="size != '' ">
+ 		AND size = #{size }
+ 		</if>
 		
 		ORDER BY productCode
  	</select>

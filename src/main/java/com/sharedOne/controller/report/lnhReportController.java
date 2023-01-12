@@ -60,10 +60,12 @@ public class lnhReportController {
 			@RequestParam(name="productCode", defaultValue="") String productCode,
 			@RequestParam(name="writer", defaultValue="") String writer,
 			@RequestParam(name="status", defaultValue="") String status,
+			@RequestParam(name="fromDate", defaultValue="") String fromDate,
+			@RequestParam(name="endDate", defaultValue="") String endDate,
 			Model model) {
 		
 		//검색 결과 리스트
-		List<OrderHeaderDto> orderList = service.orderList(orderQ, orderCode, productCode, writer, status);
+		List<OrderHeaderDto> orderList = service.orderList(orderQ, orderCode, productCode, writer, status, fromDate, endDate);
 		
 		
 		//조건 검색 제품 리스트
@@ -89,7 +91,7 @@ public class lnhReportController {
 		List<ReportDto> thisYearSales = service.thisYearSales();
 		
 			
-				//검색결과 바이어 리스트
+				//검색결과 바이어 리스트, 직원 리스트
 				List<String> buyerList = new ArrayList<>();
 				List<String> writerList = new ArrayList<>();
 				for (int i = 0; i < orderList.size(); i++) {
@@ -128,7 +130,9 @@ public class lnhReportController {
 			@RequestParam(name="orderCode", defaultValue="") String orderCode,
 			@RequestParam(name="productCode", defaultValue="") String productCode,
 			@RequestParam(name="writer", defaultValue="") String writer,
-			@RequestParam(name="status", defaultValue="") String status) throws IOException {
+			@RequestParam(name="status", defaultValue="") String status,
+			@RequestParam(name="fromDate", defaultValue="") String fromDate,
+			@RequestParam(name="endDate", defaultValue="") String endDate) throws IOException {
 		
 		
 		 try (Workbook workbook = new XSSFWorkbook()) {
@@ -191,7 +195,8 @@ public class lnhReportController {
 	                headerRow.getCell(i).setCellStyle(headStyle);
 	            }
 			 
-			 List<OrderHeaderDto> list = service.orderList(orderQ, orderCode, productCode, writer, status);
+			//검색 결과 리스트
+			List<OrderHeaderDto> list = service.orderList(orderQ, orderCode, productCode, writer, status, fromDate, endDate);
 			 
 			 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			  
