@@ -190,12 +190,12 @@ div.right {
 					<div class="col-sm-6 mb-4">
 						<div class="input-group">
 							<!-- Select -->
-							<select name="orderS" id="" class="form-select">
+							<!-- <select name="orderS" id="" class="form-select">
 								<option value="selectAll">전체검색</option>
 								<option value="selectOrderCode">주문서번호</option>
 								<option value="selectBuyerCode">바이어 코드</option>
 								<option value="selectWriter">담당자</option>
-							</select>
+							</select> -->
 							<input name="orderQ" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
 			        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>	
 						</div>
@@ -205,10 +205,10 @@ div.right {
 				<div class="row d-flex">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions1" placeholder="제품코드">
+							<input name="productCode" value="${param.productCode}" type="text" id="" class="form-control" list="datalistOptions1" placeholder="제품코드">
 							<datalist id="datalistOptions1">
-								<c:forEach items="${productList }" var="product">
-									<option value="${product.productCode }">
+								<c:forEach items="${orderList}" var="condition">
+									<option value="${condition.productCode}">${condition.productCode}</option>
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -216,10 +216,10 @@ div.right {
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품명">
+							<input name="productName" value="${param.productName}" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품명">
 							<datalist id="datalistOptions2">
-								<c:forEach items="${productList }" var="product">
-									<option value="${product.productName }">
+								<c:forEach items="${orderList}" var="condition">
+									<option value="${condition.productName}">${condition.productName}</option>
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -227,10 +227,10 @@ div.right {
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions3" placeholder="제품타입">
+							<input name="productType" value="${param.productType}" type="text" id="" class="form-control" list="datalistOptions3" placeholder="제품타입">
 							<datalist id="datalistOptions3">
-								<c:forEach items="${types }" var="type">
-									<option value="${type }">
+								<c:forEach items="${orderList}" var="condition">
+									<option value="${condition.productType}">${condition.productType}</option>
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -238,10 +238,10 @@ div.right {
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="제품규격 Inch">
+							<input name="size" value="${param.size}" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="제품규격 Inch">
 							<datalist id="datalistOptions4">
-								<c:forEach items="${sizes }" var="size">
-									<option value="${size }">
+								<c:forEach items="${orderList}" var="condition">
+									<option value="${condition.size}">${condition.size}</option>
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -258,20 +258,30 @@ div.right {
 					</div>
 					<div class="col-sm-5">
 						<div class="input-group">
-							<input name="d1" value="${nowDate }" type="date" id="d1Id" class="form-control">
+							<input name="startDateTime" value="" type="date" id="demo1" class="form-control">
 							<span class="input-group-text">~</span>
-			        		<input name="d2" value="${nowDate }" type="date" id="d2Id" class="form-control">
+			        		<input name="endDateTime" value="${nowDate}" type="date" id="endTime" class="form-control">
 						</div>
 					</div>
 					<div class="col-sm-5 d-flex">
+						<input type="button" id="" name="Today" class="btn btn-outline-secondary" style="font-size: 12pt" value="오늘">
+						<input type="button" id="" name="1Week" class="btn btn-outline-secondary" style="font-size: 12pt" value="1주">
+						<input type="button" id="" name="15Day" class="btn btn-outline-secondary" style="font-size: 12pt" value="15일">
+						<input type="button" id="" name="1Month" class="btn btn-outline-secondary" style="font-size: 12pt" value="1개월">
+						<input type="button" id="" name="3Month" class="btn btn-outline-secondary" style="font-size: 12pt" value="3개월">
+						<input type="button" id="" name="6Month" class="btn btn-outline-secondary" style="font-size: 12pt" value="6개월">
+						<input type="button" id="" name="1Year" class="btn btn-outline-secondary" style="font-size: 12pt" value="1년">
 						
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">오늘</button>		
+				
+						<!--
+				   		<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">오늘</button>		
 						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1주 </button>	
 						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">15일</button>		
 						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1개월</button>
 						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">3개월</button>
 						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">6개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1년</button>	
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1년</button> 
+						-->	
 						
 					</div>
 				</div><!-- 3rd row 끝 -->
@@ -287,7 +297,7 @@ div.right {
 		</div><!-- 우측 검색 조건 div 끝 -->
 	</div><!-- 좌측 + 우측 전체를 감싸는 d-flex 끝-->
 	
-
+	
 	<hr>
 	
 	<div class="mainBoard">
@@ -305,13 +315,13 @@ div.right {
 
 		<h4>주문목록</h4>
 
-			<div style="float: right;">
-				<c:set var="ctx" value="${pageContext.request.contextPath}" />
-				<a href="${ctx }/report/excelDown?orderQ=${param.orderQ }"
-					class="btn btn-primary primaryBtn" type="submit"
-					style="margin-bottom: 10px;"> 엑셀 다운로드 </a>
-			</div>
-			<!-- 리스트 -->
+		<div style="float: right;">
+			<c:set var="ctx" value="${pageContext.request.contextPath}" />
+			<a href="${ctx }/report/excelDown?orderQ=${param.orderQ }"
+				class="btn btn-primary primaryBtn" type="submit"
+				style="margin-bottom: 10px;"> 엑셀 다운로드 </a>
+		</div>
+		<!-- 리스트 -->
 		<table class="table">
 			<thead>
 				<!-- productCode, productName, productType, weight, size, price, unit, content -->
@@ -369,12 +379,18 @@ div.right {
 				</c:forEach>
 			</tbody>
 		</table>
+		
 	</div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-<script type="text/javascript">
+<script>
+function myFunction() {
 
+	var str = document.getElementById("demo").value; 
+
+	document.getElementById("demo1").value = str;
+
+	}
 </script>
 	
 </body>

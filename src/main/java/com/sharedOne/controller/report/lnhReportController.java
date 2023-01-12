@@ -3,6 +3,7 @@
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.util.HSSFColor;
@@ -39,8 +40,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sharedOne.domain.master.ProductDto;
 import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.order.OrderItemDto;
+import com.sharedOne.domain.report.OrderReportDto;
+import com.sharedOne.domain.report.PageInfo;
 import com.sharedOne.domain.report.ReportDto;
 import com.sharedOne.service.master.lnhProductService;
+import com.sharedOne.service.report.HmsReportService;
 import com.sharedOne.service.report.lnhReportService;
 
 @Controller
@@ -53,10 +57,50 @@ public class lnhReportController {
 	@Autowired
 	private lnhReportService service;
 	
+	@Autowired
+	private HmsReportService hmsService;
 	
 	@GetMapping("monthlyReport")
-	public void getMontlyReport(@RequestParam(name = "orderQ", defaultValue = "") String orderQ, Model model) {
-		System.out.println(orderQ);
+	public void getMontlyReport(@RequestParam(name = "orderQ", defaultValue = "") String orderQ, 
+								@RequestParam(name = "orderS", defaultValue = "") String orderS,
+								
+								@RequestParam(name = "productCode", defaultValue = "") String productCode, 
+								@RequestParam(name = "productName", defaultValue = "") String productName,
+								@RequestParam(name = "productType", defaultValue = "") String productType, 
+								@RequestParam(name = "size", defaultValue = "") String size,
+								
+								@RequestParam(name = "startDateTime", defaultValue = "0001-01-01") String startDateTime,
+								@RequestParam(name = "endDateTime", defaultValue = "9999-12-31") String endDateTime,
+								
+								@RequestParam(name = "productQ", defaultValue = "") String productQ,
+								@RequestParam(name = "productS", defaultValue = "") String productS,
+								
+								@RequestParam(name = "Today", defaultValue = "") String Today,
+								@RequestParam(name = "1Week", defaultValue = "") String Week,
+								@RequestParam(name = "15Day", defaultValue = "") String Fifteen_Day,
+								@RequestParam(name = "1Month", defaultValue = "") String One_Month,
+								@RequestParam(name = "3Month", defaultValue = "") String Three_Month,
+								@RequestParam(name = "1Year", defaultValue = "") String One_Year,
+								
+								@RequestParam(name = "page", defaultValue = "1") int page, 
+								PageInfo pageInfo, 
+								Model model) {
+		
+		// 현재 날짜 구하기
+        LocalDate now = LocalDate.now();
+ 
+        // 포맷 정의
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+ 
+        // 포맷 적용
+        String formatedNow = now.format(formatter);
+ 
+        // 결과 출력
+        System.out.println(formatedNow);  
+        
+        System.out.println("AAAA");
+        
+		System.out.println("################" + startDateTime);
 		
 		//조건 검색 제품 리스트
 		List <ProductDto> productList = productService.selectProductList();
@@ -65,6 +109,7 @@ public class lnhReportController {
 		for( ProductDto product : productList) {
 			setTypes.add(product.getProductType());
 		}
+		
 		Set <Integer> setSizes = new HashSet<>();
 		for( ProductDto product : productList) {
 			setSizes.add(product.getSize());
@@ -72,10 +117,39 @@ public class lnhReportController {
 		
 		model.addAttribute("types", setTypes);
 		model.addAttribute("sizes", setSizes);
-		
 		model.addAttribute("productList", productList);
 		
-		// business logic 작동
+		//business logic 작동		
+		List<OrderReportDto> orderList = hmsService.orderList(page, 
+														      orderS, 
+														      orderQ, 
+														      productCode, 
+														      productName, 
+														      productType, 
+														      size, 
+														      startDateTime,
+														      endDateTime,
+														      Today,
+														      Week,
+														      Fifteen_Day,
+														      One_Month,
+														      Three_Month,
+														      One_Year,
+														      pageInfo);	
+		System.out.println(orderList);
+    
+		// List<ProductDto> productCatalog = hmsService.productCatalog(productS, productQ); 
+		
+		
+    // List<OrderItemDto> itemList = orderList.get(0).getOrderItem();
+ 
+		// System.out.println("컨트롤러: " + orderList);
+		// System.out.println(itemList);
+		// System.out.println("월별매출"+thisYearSales);
+		
+		// add attribute
+		// model.addAttribute("productCatalog", productCatalog); // c:forEach items = productCatalog
+		// model.addAttribute("itemList", itemList);
 		
 		//올해 매출 그래프(디폴트)
 		List<ReportDto> thisYearSales = service.thisYearSales();
@@ -106,9 +180,8 @@ public class lnhReportController {
 			// add attribute
 			model.addAttribute("orderList", orderList); // c:forEach items = orderList
 			model.addAttribute("buyerSales", buyerSales);
-		
+		  model.addAttribute("thisYearSales",thisYearSales);
 
-		model.addAttribute("thisYearSales",thisYearSales);
 	}
 	
 	//엑셀 다운로드
