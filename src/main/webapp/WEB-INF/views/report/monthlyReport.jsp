@@ -25,17 +25,22 @@
 <!-- 구글 열차트 -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-// Load Charts and the corechart and barchart packages.
+
 google.charts.load('current', {'packages':['corechart']});
 
-// Draw the line chart and bar chart when Charts is loaded.
-<c:if test="${param.orderQ eq null || param.orderQ eq ''}">
+var paramList = new Array(); 
+var paramList = ["${param.orderQ}", "${param.orderCode}", "${param.productCode}", "${param.writer}", "${param.status}", "${param.fromDate}", "${param.endDate}"];
+
+//검색 조건 없으면 올해 매출 그래프, 있으면 바이어 별 & 직원 별 매출 그래프
+if (paramList == ",,,,,,") {
 	google.charts.setOnLoadCallback(drawChart);
-</c:if>
-<c:if test="${param.orderQ ne null }">
+}else {
+	
 google.charts.setOnLoadCallback(drawBuyerChart);
 google.charts.setOnLoadCallback(drawWriterChart);
-</c:if>	
+}
+
+
 function drawChart() {
 	
   var data = new google.visualization.DataTable();
@@ -313,6 +318,7 @@ div.right {
 				</tr>
 			</thead>
 			<tbody>
+			<!-- 오더 아이템이 1개 이하 -->
 				<c:forEach items="${orderList }" var="order">
 					<c:if test="${fn:length(order.orderItem) < 2 }">
 						<tr>
@@ -329,6 +335,7 @@ div.right {
 							<td style="width: 130px;">${order.message }</td>
 						</tr>
 					</c:if>
+			<!-- 오더 아이템이 여러개 -->
 					<c:if test="${fn:length(order.orderItem) >= 2 }">
 						<c:forEach items="${order.orderItem }" var="item">
 							<tr>
@@ -355,6 +362,8 @@ div.right {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script type="text/javascript">
 
+
+//전체 기간 선택
 $('input[name=fromDate]').prop("disabled", true);
 $('input[name=endDate]').prop("disabled", true);
 $('#checkedAllDate').click(function(){

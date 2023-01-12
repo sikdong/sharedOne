@@ -5,6 +5,69 @@
 
 <mapper namespace="com.sharedOne.mapper.report.lnhReportMapper">
 
+<!-- 검색 결과  -->
+<sql id="searchResult">
+	(
+	<trim prefixOverrides="OR">
+		<if test="orderQ != '' or orderCode != ''">
+			OR h.orderCode LIKE #{orderQ}
+		</if>
+		<if test="orderQ != '' or productCode != ''">
+			OR i.productCode LIKE #{orderQ}
+		</if>
+		<if test="orderQ != '' or writer != ''">
+			OR h.writer LIKE #{orderQ}
+		</if>
+		<if test="orderQ != '' or status != ''">
+			OR h.status LIKE #{orderQ}
+		</if>
+		<if test="orderQ != ''">
+			OR i.finalPrice LIKE #{orderQ}
+		</if>
+		<if test="orderQ != ''">
+			OR i.quantity LIKE #{orderQ}
+		</if>
+		<if test="orderQ != ''">
+			OR i.sum LIKE #{orderQ}
+		</if>
+		<if test="orderQ != ''">
+			OR h.inserted LIKE #{orderQ}
+		</if>
+		<if test="orderQ != ''">
+			OR h.modified LIKE #{orderQ}
+		</if>
+		<if test="orderQ != ''">
+			OR h.deliveryDate LIKE #{orderQ}
+		</if>
+		<if test="orderQ != ''">
+			OR h.buyerCode LIKE #{orderQ}
+		</if>
+		<if test="orderQ != ''">
+			OR h.message LIKE #{orderQ}
+		</if>
+
+
+	</trim>
+	)
+
+	<if test="orderCode != '' ">
+		AND h.orderCode = #{orderCode }
+	</if>
+	<if test="productCode != '' ">
+		AND i.productCode = #{productCode }
+	</if>
+	<if test="writer != '' ">
+		AND h.writer = #{writer }
+	</if>
+	<if test="status != '' ">
+		AND h.status = #{status }
+	</if>
+	<if test="fromDate != '' and endDate !='' ">
+		AND h.deliveryDate BETWEEN #{fromDate} AND #{endDate}
+	</if>
+
+</sql>
+
 	<select id="orderList" resultMap="reportMap">
 		SELECT
 			h.orderCode,
@@ -23,66 +86,7 @@
 			Order_header h LEFT JOIN Order_item i ON h.orderId = i.orderId
 			
 		WHERE
-	 	(
-	 	<trim prefixOverrides="OR">
-			<if test="orderQ != '' or orderCode != ''">
-			OR h.orderCode LIKE #{orderQ}
-			</if>
-			<if test="orderQ != '' or productCode != ''">
-			OR i.productCode LIKE #{orderQ}
-			</if>
-			<if test="orderQ != '' or writer != ''">
-			OR h.writer LIKE #{orderQ}
-			</if>
-			<if test="orderQ != '' or status != ''">
-			OR h.status LIKE #{orderQ}
-			</if>
-			<if test="orderQ != ''">
-			OR i.finalPrice LIKE #{orderQ}
-			</if>
-			<if test="orderQ != ''">
-			OR i.quantity LIKE #{orderQ}
-			</if>
-			<if test="orderQ != ''">
-			OR i.sum LIKE #{orderQ}
-			</if>
-			<if test="orderQ != ''">
-			OR h.inserted LIKE #{orderQ}
-			</if>
-			<if test="orderQ != ''">
-			OR h.modified LIKE #{orderQ}
-			</if>
-			<if test="orderQ != ''">
-			OR h.deliveryDate LIKE #{orderQ}
-			</if>
-			<if test="orderQ != ''">
-			OR h.buyerCode LIKE #{orderQ}
-			</if>
-			<if test="orderQ != ''">
-			OR h.message LIKE #{orderQ}
-			</if>
-
-			
-		</trim>
-		)	 	
-	 	
- 		<if test="orderCode != '' ">
- 		AND h.orderCode = #{orderCode }
- 		</if>
- 		<if test="productCode != '' ">
- 		AND i.productCode = #{productCode }
- 		</if>
- 		<if test="writer != '' ">
- 		AND h.writer = #{writer }
- 		</if>
- 		<if test="status != '' ">
- 		AND h.status = #{status }
- 		</if>
- 		<if test="fromDate != '' and endDate !='' ">
- 		AND h.deliveryDate BETWEEN #{fromDate} AND #{endDate}
- 		</if>
-
- 		
+			 <include refid="searchResult" />  
 		
 		ORDER BY h.orderId DESC 	<!-- orderId 등록이 최신 기준으로 -->
 
@@ -108,7 +112,7 @@
 		<result column="sum" property="sum"/>
 	</resultMap>
 	
-	
+	<!-- 올해 매출 그래프(디폴트) -->
 	<select id="thisYearSales" resultType="com.sharedOne.domain.report.ReportDto">
 	SELECT MONTH(h.inserted) as month,
 		sum(i.sum) as thisSales
@@ -123,38 +127,18 @@
 		SELECT sum(i.sum) salesByBuyer 
 		FROM Order_header h LEFT JOIN Order_item i ON h.orderId = i.orderId
 		
-		WHERE	(h.orderCode LIKE #{orderQ} 
-		   OR  	  i.productCode LIKE #{orderQ} 
-		   OR  	  i.finalPrice LIKE #{orderQ} 
-		   OR  	  i.quantity LIKE #{orderQ} 
-		   OR  	  i.sum LIKE #{orderQ} 
-		   OR  	  h.inserted LIKE #{orderQ} 
-		   OR 	  h.modified LIKE #{orderQ} 
-		   OR h.deliveryDate LIKE #{orderQ} 
-		   OR       h.writer LIKE #{orderQ} 
-		   OR    h.buyerCode LIKE #{orderQ} 	
-		   OR 		h.status LIKE #{orderQ} 
-		   OR 	   h.message LIKE #{orderQ})  
+		WHERE	
+		 <include refid="searchResult" />  
 			AND h.buyerCode = #{buyerCode}
 	
 	</select>
-	
+	<!-- 검색 결과 직원 별 매출 -->
 		<select id="salesByWriter" resultType="integer">
 		SELECT sum(i.sum) salesByWriter 
 		FROM Order_header h LEFT JOIN Order_item i ON h.orderId = i.orderId
 		
-		WHERE	(h.orderCode LIKE #{orderQ} 
-		   OR  	  i.productCode LIKE #{orderQ} 
-		   OR  	  i.finalPrice LIKE #{orderQ} 
-		   OR  	  i.quantity LIKE #{orderQ} 
-		   OR  	  i.sum LIKE #{orderQ} 
-		   OR  	  h.inserted LIKE #{orderQ} 
-		   OR 	  h.modified LIKE #{orderQ} 
-		   OR h.deliveryDate LIKE #{orderQ} 
-		   OR       h.writer LIKE #{orderQ} 
-		   OR    h.buyerCode LIKE #{orderQ} 	
-		   OR 		h.status LIKE #{orderQ} 
-		   OR 	   h.message LIKE #{orderQ})  
+		WHERE
+		 <include refid="searchResult" />  	 
 			AND writer = #{writer}
 	
 	</select>
