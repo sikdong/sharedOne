@@ -1,5 +1,6 @@
 package com.sharedOne.controller.order;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -72,6 +73,7 @@ public class YdsOrderController {
 	@ResponseBody
 	public List<ProductDto> searchAllProductInfo(@PathVariable String allProductInfo,
 			@PathVariable String tableBuyerCode, @PathVariable String deliveryDate) {
+		System.out.println("controller");
 		return service.searchProduct(allProductInfo, tableBuyerCode,deliveryDate);
 
 	}

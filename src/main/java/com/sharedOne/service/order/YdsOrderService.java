@@ -1,6 +1,10 @@
 package com.sharedOne.service.order;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +43,31 @@ public class YdsOrderService {
 	public List<ProductDto> searchProduct(String allProductInfo, String tableBuyerCode, String deliveryDate) {
 		// TODO Auto-generated method stub
 		allProductInfo = "%" + allProductInfo + "%";
-		return mapper.searchProduct(allProductInfo, tableBuyerCode);
+		LocalDate parsedDeliveryDate = LocalDate.parse(deliveryDate, DateTimeFormatter.ISO_DATE);
+		System.out.println("parsedDeliveryDate " + parsedDeliveryDate);
+		List<ProductDto> dates = mapper.getPriceDate(allProductInfo,tableBuyerCode);
+		System.out.println("dates " + dates);
+		List<ProductDto> pddList = new ArrayList<>();
+		for (ProductDto date : dates) { 
+			LocalDate fromDate = date.getFromDate();
+			System.out.println("fromDate " + fromDate);
+			LocalDate endDate = date.getEndDate();
+			System.out.println("endDate " + endDate);
+			if((fromDate.isEqual(parsedDeliveryDate) || fromDate.isBefore(parsedDeliveryDate))
+					&&(endDate.isEqual(parsedDeliveryDate) || endDate.isAfter(parsedDeliveryDate))){
+					
+				pddList = mapper.searchProduct(allProductInfo, tableBuyerCode,
+													  fromDate, endDate);
+				
+			}
+		}
+		System.out.println("리턴 전");
+		if(pddList.size() != 0) {
+			
+			return pddList;
+		} else {
+			return null;
+		}
 	}
 
 
