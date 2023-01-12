@@ -57,20 +57,24 @@ public class lnhReportController {
 	public void getMontlyReport(@RequestParam(name = "orderQ", defaultValue = "") String orderQ, Model model) {
 		System.out.println(orderQ);
 		
+		//검색 결과 리스트
+		List<OrderHeaderDto> orderList = service.orderList(orderQ);
+		
+		
 		//조건 검색 제품 리스트
 		List <ProductDto> productList = productService.selectProductList();
 		
-		Set <String> setTypes = new HashSet<>();
-		for( ProductDto product : productList) {
-			setTypes.add(product.getProductType());
+		Set <String> setWriters = new HashSet<>();
+		for( OrderHeaderDto writer : orderList) {
+			setWriters.add(writer.getWriter());
 		}
-		Set <Integer> setSizes = new HashSet<>();
-		for( ProductDto product : productList) {
-			setSizes.add(product.getSize());
+		Set <String> setStatus = new HashSet<>();
+		for( OrderHeaderDto status : orderList) {
+			setStatus.add(status.getStatus());
 		}
 		
-		model.addAttribute("types", setTypes);
-		model.addAttribute("sizes", setSizes);
+		model.addAttribute("writers", setWriters);
+		model.addAttribute("status", setStatus);
 		
 		model.addAttribute("productList", productList);
 		
@@ -82,9 +86,6 @@ public class lnhReportController {
 			
 			
 			if(orderQ!=null) {
-				//검색 결과 리스트
-				List<OrderHeaderDto> orderList = service.orderList(orderQ);
-				
 				//검색결과 바이어 리스트
 				List<String> buyerList = new ArrayList<>();
 				List<String> writerList = new ArrayList<>();
