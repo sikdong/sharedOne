@@ -24,6 +24,14 @@ public class HmsReportService {
 										  String productName, 
 										  String productType, 
 										  String size, 
+										  String startDateTime,
+										  String endDateTime,
+										  String Today,
+										  String Week,
+										  String Fifteen_Day,
+										  String One_Month,
+										  String Three_Month,
+										  String One_Year,
 										  PageInfo pageInfo) { // int page = 페이지 파라미터 추가
 		
 		orderQ = "%" + orderQ + "%";
@@ -65,7 +73,23 @@ public class HmsReportService {
 	    //LocalDateTime startDateTime = LocalDate.parse(searchStartDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atTime(0, 0, 0);
 	    //LocalDateTime endDateTime = LocalDate.parse(searchEndDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atTime(23, 59, 59);
 		
-		return mapper.orderList(offset, records, orderS, orderQ, productCode, productName, productType, size);
+		System.out.println("@@@@@@@@ productCode :" + productCode);
+		return mapper.orderList(offset, 
+								records, 
+								orderS, 
+								orderQ, 
+								productCode, 
+								productName, 
+								productType, 
+								size, 
+								startDateTime, 
+								endDateTime,
+								Today,
+								Week,
+								Fifteen_Day,
+								One_Month,
+								Three_Month,
+								One_Year);
 
 	    
 

@@ -34,8 +34,8 @@
 	LEFT JOIN Order_header h ON i.orderId = h.orderId
 	LEFT JOIN Product p ON i.productCode = p.productCode
 	
-	
-	<where>
+	WHERE
+	(
 	<trim prefixOverrides="OR">
 		<if test="orderQ != '' or productCode != ''">
 		OR i.productCode LIKE #{orderQ} 
@@ -53,8 +53,7 @@
 		OR p.size LIKE #{orderQ} 
 		</if>
 	</trim>
-	</where>
-	
+ 	)
 	<if test="productCode != '' ">
  		AND i.productCode = #{productCode}
  	</if>
@@ -67,6 +66,30 @@
  	<if test="size != '' ">
  		AND p.size = #{size}
  	</if>
+ 	<if test="startDateTime != '' or endDateTime != ''">
+ 		AND DATE(h.inserted) BETWEEN #{startDateTime} AND #{endDateTime}
+ 	</if>
+ 	
+ 	
+ 	<if test="Today != '' ">
+ 		AND DATE(h.inserted) BETWEEN DATE_ADD(NOW(), INTERVAL) AND NOW()
+ 	</if>
+ 	<if test="Week != '' ">
+ 		AND DATE(h.inserted) BETWEEN DATE_ADD(NOW(), INTERVAL -1 WEEK ) AND NOW()
+ 	</if>
+ 	<if test="Fifteen_Day != '' ">
+ 		AND DATE(h.inserted) BETWEEN DATE_ADD(NOW(), INTERVAL -15 DAY ) AND NOW()
+ 	</if>
+ 	<if test="One_Month != '' ">
+ 		AND DATE(h.inserted) BETWEEN DATE_ADD(NOW(), INTERVAL -1 MONTH ) AND NOW()
+ 	</if>
+ 	<if test="Three_Month != '' ">
+ 		AND DATE(h.inserted) BETWEEN DATE_ADD(NOW(), INTERVAL -3 MONTH ) AND NOW()
+ 	</if>
+ 	<if test="One_Year != '' ">
+ 		AND DATE(h.inserted) BETWEEN DATE_ADD(NOW(), INTERVAL -12 MONTH ) AND NOW()
+ 	</if>
+ 	
  	
 	ORDER BY h.orderId DESC		<!-- orderId 등록이 최신 기준으로 -->
 	

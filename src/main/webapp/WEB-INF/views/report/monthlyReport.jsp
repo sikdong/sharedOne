@@ -216,20 +216,30 @@ div.right {
 					</div>
 					<div class="col-sm-5">
 						<div class="input-group">
-							<input name="d1" value="${nowDate }" type="date" id="d1Id" class="form-control">
+							<input name="startDateTime" value="" type="date" id="demo1" class="form-control">
 							<span class="input-group-text">~</span>
-			        		<input name="d2" value="${nowDate }" type="date" id="d2Id" class="form-control">
+			        		<input name="endDateTime" value="${nowDate}" type="date" id="endTime" class="form-control">
 						</div>
 					</div>
 					<div class="col-sm-5 d-flex">
+						<input type="button" id="" name="Today" class="btn btn-outline-secondary" style="font-size: 12pt" value="오늘">
+						<input type="button" id="" name="1Week" class="btn btn-outline-secondary" style="font-size: 12pt" value="1주">
+						<input type="button" id="" name="15Day" class="btn btn-outline-secondary" style="font-size: 12pt" value="15일">
+						<input type="button" id="" name="1Month" class="btn btn-outline-secondary" style="font-size: 12pt" value="1개월">
+						<input type="button" id="" name="3Month" class="btn btn-outline-secondary" style="font-size: 12pt" value="3개월">
+						<input type="button" id="" name="6Month" class="btn btn-outline-secondary" style="font-size: 12pt" value="6개월">
+						<input type="button" id="" name="1Year" class="btn btn-outline-secondary" style="font-size: 12pt" value="1년">
 						
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">오늘</button>		
+				
+						<!--
+				   		<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">오늘</button>		
 						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1주 </button>	
 						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">15일</button>		
 						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1개월</button>
 						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">3개월</button>
 						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">6개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1년</button>	
+						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1년</button> 
+						-->	
 						
 					</div>
 				</div><!-- 3rd row 끝 -->
@@ -245,7 +255,7 @@ div.right {
 		</div><!-- 우측 검색 조건 div 끝 -->
 	</div><!-- 좌측 + 우측 전체를 감싸는 d-flex 끝-->
 	
-
+	
 	<hr>
 	
 	<div class="mainBoard">
@@ -310,10 +320,15 @@ div.right {
 		
 	</div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-<script type="text/javascript">
+<script>
+function myFunction() {
 
+	var str = document.getElementById("demo").value; 
+
+	document.getElementById("demo1").value = str;
+
+	}
 </script>
 	
 </body>

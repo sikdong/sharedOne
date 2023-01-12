@@ -3,6 +3,7 @@ package com.sharedOne.controller.report;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.util.HSSFColor;
@@ -59,15 +60,44 @@ public class lnhReportController {
 	@GetMapping("monthlyReport")
 	public void getMontlyReport(@RequestParam(name = "orderQ", defaultValue = "") String orderQ, 
 								@RequestParam(name = "orderS", defaultValue = "") String orderS,
+								
 								@RequestParam(name = "productCode", defaultValue = "") String productCode, 
 								@RequestParam(name = "productName", defaultValue = "") String productName,
 								@RequestParam(name = "productType", defaultValue = "") String productType, 
 								@RequestParam(name = "size", defaultValue = "") String size,
+								
+								@RequestParam(name = "startDateTime", defaultValue = "0001-01-01") String startDateTime,
+								@RequestParam(name = "endDateTime", defaultValue = "9999-12-31") String endDateTime,
+								
 								@RequestParam(name = "productQ", defaultValue = "") String productQ,
 								@RequestParam(name = "productS", defaultValue = "") String productS,
+								
+								@RequestParam(name = "Today", defaultValue = "") String Today,
+								@RequestParam(name = "1Week", defaultValue = "") String Week,
+								@RequestParam(name = "15Day", defaultValue = "") String Fifteen_Day,
+								@RequestParam(name = "1Month", defaultValue = "") String One_Month,
+								@RequestParam(name = "3Month", defaultValue = "") String Three_Month,
+								@RequestParam(name = "1Year", defaultValue = "") String One_Year,
+								
 								@RequestParam(name = "page", defaultValue = "1") int page, 
 								PageInfo pageInfo, 
 								Model model) {
+		
+		// 현재 날짜 구하기
+        LocalDate now = LocalDate.now();
+ 
+        // 포맷 정의
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+ 
+        // 포맷 적용
+        String formatedNow = now.format(formatter);
+ 
+        // 결과 출력
+        System.out.println(formatedNow);  
+        
+        System.out.println("AAAA");
+        
+		System.out.println("################" + startDateTime);
 		
 		List <ProductDto> productList = productService.selectProductList();
 		
@@ -94,6 +124,14 @@ public class lnhReportController {
 														      productName, 
 														      productType, 
 														      size, 
+														      startDateTime,
+														      endDateTime,
+														      Today,
+														      Week,
+														      Fifteen_Day,
+														      One_Month,
+														      Three_Month,
+														      One_Year,
 														      pageInfo);	
 		System.out.println(orderList);
 		// List<ProductDto> productCatalog = hmsService.productCatalog(productS, productQ); 

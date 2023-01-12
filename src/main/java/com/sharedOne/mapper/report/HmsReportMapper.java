@@ -19,10 +19,19 @@ public interface HmsReportMapper {
 								   String productCode,
 								   String productName, 
 								   String productType, 
-								   String size
-									);
+								   String size,
+								   String startDateTime,
+								   String endDateTime,
+								   String Today,
+								   String Week,
+								   String Fifteen_Day,
+								   String One_Month,
+								   String Three_Month,
+								   String One_Year);
+									
 
 	int countPage();
 
 	List<ProductDto> productCatalog(String productS, String productQ);
+
 }
