@@ -535,6 +535,7 @@
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
 				<th scope="col">판매가</th>
+				<th scope="col">판매 기간</th>
 			</tr>
 		</thead>
 		<tbody id="productBody">
@@ -543,7 +544,6 @@
 	</table>`
 		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
 		for(const item of list){
-			if(item.buyerCode == tableBuyerCode){
 			const productTableItem =
 				
 			`<tr>
@@ -559,11 +559,12 @@
 				<td>\${item.unit }</td>
 				<td>\${item.price }</td>
 				<td>\${item.salePrice }</td>
+				<td>\${item.fromDate}~\${item.endDate}</td>
 			</tr>`
 			
 			document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
 				}
-			}
+	
 			
 		})
 		} else {

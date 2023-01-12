@@ -1,5 +1,6 @@
 package com.sharedOne.mapper.order;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -21,7 +22,8 @@ public interface YdsOrderMapper {
 	List<BuyerDto> getBuyerNames();
 
 	List<ProductDto> searchProduct(@Param("allProductInfo") String allProductInfo, 
-			@Param("tableBuyerCode") String tableBuyerCode);
+			@Param("tableBuyerCode") String tableBuyerCode, 
+			@Param("fromDate") LocalDate fromDate, @Param("endDate") LocalDate endDate);
 
 	List<YdsProductDto> addTempProductOrder(List<YdsProductDto> ypd);
 
@@ -37,6 +39,8 @@ public interface YdsOrderMapper {
 	String getDate(int generatedId);
 
 	YdsOrderDto modifyOrder(int orderId);
+
+	List<ProductDto> getPriceDate(String allProductInfo, String tableBuyerCode);
 
 	
 }
