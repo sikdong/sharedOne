@@ -130,7 +130,7 @@
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputName" class="col-form-label">무게</label>
 							<div class="col-sm-5">
-								<input id="productName" name="weight" type="text"
+								<input id="productName" name="weight" type="text" value="${product.weight }"
 									class="form-control" placeholder="${product.weight }" />
 							</div>
 						</div>
@@ -194,9 +194,9 @@
 				<input id="modifyBtn" class="btn" type="submit" value="수정" onclick="modifyCheck()">
 			</form>
 
-			<form action="/master/productRemove" method="post">
+			<form action="/master/productRemove" name="removefrm" method="post">
 				<input type="hidden" name="code" value="${product.productCode}">
-				<input id= "removeBtn" class="btn" name="removefrm" type="submit" value="삭제" onclick="removeCheck()">
+				<input id= "removeBtn" class="btn" type="submit" value="삭제" onclick="removeCheck()">
 			</form>
 
 		</div>
@@ -219,16 +219,14 @@
 
 	}
     
-    //수정 버튼 클릭하면 수정 form 전성
-    function modifyCheck() {
-  	  
-	 	if (confirm("정말 수정하시겠습니까?") == true) { 
-	 		document.modifyfrm.submit();
-	 	} else{
-	     return false;
-	     }
-
-	}
+    //수정 버튼 클릭하면 수정 form 전송
+    function modifyCheck() { 
+    	document.modifyfrm.submit();
+        window.opener.location.reload();
+    	setTimeout(function() {
+    		window.close();
+            }, 10);  
+        }
     
         function comma(str) {
         str = String(str);

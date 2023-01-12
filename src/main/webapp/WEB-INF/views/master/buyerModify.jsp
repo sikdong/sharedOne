@@ -263,38 +263,15 @@
 	     }
 
 	}
- //수정 버튼 클릭하면 수정 form 전송
-$(function() {
-    $("#modifyBtn").click( function() {
-    	
-    	if(confirm("수정하시겠습니까?")){
-    		const buyerName = $('input[name=buyerName]').val();
-			const buyerAddress = $('input[name=buyerAddress]').val();
-			const buyerCountry = $('input[name=buyerCountry]').val();
-			const businessNum = $('input[name=businessNum]').val();
-			const buyerPhone = $('input[name=buyerPhone]').val();
-			const deliveryCompany = $('input[name=deliveryCompany]').val();
-			const manager = $('input[name=manager]').val();
-			const data = { buyerName, buyerAddress, buyerCountry, businessNum, buyerPhone, deliveryCompany, manager };
-			
-	    	$.ajax({
-	    		url : "/master/buyerModify",
-	    		method : "POST",
-	    		data : (data),
-	    		dataType : "json"		    	
-	    	})	
-	    	window.opener.location.reload();
-	    	window.close;
-/* 	    	setTimeout(function() {   
-	             window.close();
-	          }, 100); */
-	    	
-	    	
-    	}else{
-    		return false;
-    	}	 
-    });
-});
+    //수정 버튼 클릭하면 수정 form 전송
+    function modifyCheck() { 
+    	document.modifyfrm.submit();
+        window.opener.location.reload();
+    	setTimeout(function() {
+    		window.close();
+            }, 10);  
+        }  
+
 
     
         function comma(str) {

@@ -83,7 +83,7 @@
 </style>
 <body>   
     <div class="insert-body mt-5 ">
-    	<form action="" method="post">
+    	<form action="" name= "registerfrm" method="post">
 	        <div class="container-md">
 	            <div class="row">
 	                <div class="col mt-1">
@@ -141,7 +141,7 @@
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputProductPrice" class="col-form-label">단가</label>
 	                            <div class="col-sm-5">
-	                                <input id="productPrice" name="price" onkeyup="inputNumberFormat(this);" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"type="text" class="form-control" placeholder="단가를 입력하세요."/>
+	                                <input id="productPrice" name="price" type="text" class="form-control" placeholder="단가를 입력하세요."/>
 	                            </div>
 		                        </div>
 	
@@ -167,7 +167,7 @@
 	                    </div>
 	                <hr />
 	                <div>
-	                    <input id="registerBtn" class="btn registerBtn" type="submit" value="등록"/>
+	                    <input id="registerBtn" class="btn registerBtn" type="submit" value="등록" onclick="registerCheck()">
 	                </div>
 	              
 	            </div>
@@ -179,6 +179,15 @@
     const ctx = "${pageContext.request.contextPath}";
     
     var availableProductName = false;
+    
+  //등록버튼 누르면 등록 실행 후 창 닫기
+    function registerCheck() { 
+	document.registerfrm.submit();
+    window.opener.location.reload();
+	setTimeout(function() {
+		window.close();
+        }, 20);  
+    }  
     
     function enableSubmitButton() {
     	const button = document.querySelector("#registerBtn");
@@ -216,7 +225,7 @@
     	
     });
     
-    
+/*     
         function comma(str) {
         str = String(str);
         return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
@@ -238,7 +247,7 @@
         function onlynumber(str) {
             str = String(str);
             return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1');
-        }
+        } */
     </script>
 
 </body>
