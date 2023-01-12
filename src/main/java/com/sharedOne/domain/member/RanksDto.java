@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class RanksDto {
 	
-	private String id;
+	private int memberId;
 	private String rank;
 }

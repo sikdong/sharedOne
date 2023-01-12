@@ -23,7 +23,7 @@
 	   		   oi.finalPrice finalPrice, oi.quantity quantity, oi.sum sum
 		FROM Order_item oi JOIN Product p ON oi.productCode = p. productCode
 				   		   JOIN SalePrice sp ON oi.priceId = sp.priceId
-                   		   JOIN Order_header oh ON oi.orderCode = oh.orderCode
+                   		   JOIN Order_header oh ON oi.orderId = oh.orderId
 		WHERE oh.orderId = #{orderId}; 
 	</select>
 	
