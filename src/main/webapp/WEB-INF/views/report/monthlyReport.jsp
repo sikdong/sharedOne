@@ -29,7 +29,7 @@
 google.charts.load('current', {'packages':['corechart']});
 
 // Draw the line chart and bar chart when Charts is loaded.
-<c:if test="${param.orderQ eq null }">
+<c:if test="${param.orderQ eq null || param.orderQ eq ''}">
 	google.charts.setOnLoadCallback(drawChart);
 </c:if>
 <c:if test="${param.orderQ ne null }">
