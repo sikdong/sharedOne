@@ -275,7 +275,7 @@ div.right {
 		</div><!-- 우측 검색 조건 div 끝 -->
 	</div><!-- 좌측 + 우측 전체를 감싸는 d-flex 끝-->
 	
-
+	
 	<hr>
 	
 	<div class="mainBoard">
@@ -293,13 +293,13 @@ div.right {
 
 		<h4>주문목록</h4>
 
-			<div style="float: right;">
-				<c:set var="ctx" value="${pageContext.request.contextPath}" />
-				<a href="${ctx }/report/excelDown?orderQ=${param.orderQ }"
-					class="btn btn-primary primaryBtn" type="submit"
-					style="margin-bottom: 10px;"> 엑셀 다운로드 </a>
-			</div>
-			<!-- 리스트 -->
+		<div style="float: right;">
+			<c:set var="ctx" value="${pageContext.request.contextPath}" />
+			<a href="${ctx }/report/excelDown?orderQ=${param.orderQ }"
+				class="btn btn-primary primaryBtn" type="submit"
+				style="margin-bottom: 10px;"> 엑셀 다운로드 </a>
+		</div>
+		<!-- 리스트 -->
 		<table class="table">
 			<thead>
 				<!-- productCode, productName, productType, weight, size, price, unit, content -->
@@ -356,11 +356,14 @@ div.right {
 				</c:forEach>
 			</tbody>
 		</table>
+		
 	</div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-<script type="text/javascript">
+<script>
+function myFunction() {
+
+	var str = document.getElementById("demo").value; 
 
 
 //전체 기간 선택

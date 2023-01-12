@@ -1,8 +1,9 @@
-package com.sharedOne.controller.report;
+/*package com.sharedOne.controller.report;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.util.HSSFColor;
@@ -39,8 +40,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sharedOne.domain.master.ProductDto;
 import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.order.OrderItemDto;
+import com.sharedOne.domain.report.OrderReportDto;
+import com.sharedOne.domain.report.PageInfo;
 import com.sharedOne.domain.report.ReportDto;
 import com.sharedOne.service.master.lnhProductService;
+import com.sharedOne.service.report.HmsReportService;
 import com.sharedOne.service.report.lnhReportService;
 
 @Controller
@@ -52,6 +56,8 @@ public class lnhReportController {
 	@Autowired
 	private lnhReportService service;
 	
+	@Autowired
+	private HmsReportService hmsService;
 	
 	@GetMapping("monthlyReport")
 	public void getMontlyReport(
@@ -276,3 +282,4 @@ public class lnhReportController {
 	}
 
 }
+

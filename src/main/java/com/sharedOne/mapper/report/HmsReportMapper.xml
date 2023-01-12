@@ -3,41 +3,99 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.sharedOne.mapper.report.HmsReportMapper">
-
+ <mapper namespace="com.sharedOne.mapper.report.HmsReportMapper">
+	  
 	<select id="countPage" resultType="int">
 	SELECT COUNT(*) FROM Order_header
 	</select>
 	
-	<select id="orderList" resultType="com.sharedOne.domain.order.OrderHeaderDto">
+	<select id="orderList" resultType="com.sharedOne.domain.report.OrderReportDto">
 	SELECT 
-		orderId, 
-		orderCode,
-		inserted,		
-		deliveryDate,
-		modified,
-		writer,
-		buyerCode,
-		status
+		h.orderId, 
+		h.inserted,	
+		h.modified,	
+		h.deliveryDate,
+		h.writer,
+		h.buyerCode,
+		h.status,
+		h.message,
+		h.comment,
+		
+		i.productCode,
+		i.finalPrice,
+		i.quantity,
+		i.sum,
+		
+		p.productName,
+	    p.productType,
+	    p.size
 	FROM 
-		Order_header 
+		Order_item i
+	LEFT JOIN Order_header h ON i.orderId = h.orderId
+	LEFT JOIN Product p ON i.productCode = p.productCode
+	
 	WHERE
+	(
 	<trim prefixOverrides="OR">
-		<if test="orderS == 'selectAll' or orderS == 'selectOrderCode'">
-		OR orderCode LIKE #{orderQ} 
+		<if test="orderQ != '' or productCode != ''">
+		OR i.productCode LIKE #{orderQ} 
 		</if>
 		
-		<if test="orderS == 'selectAll' or orderS == 'selectBuyerCode'">
-		OR 	buyerCode LIKE #{orderQ} 
+		<if test="orderQ != '' or productName != ''">
+		OR p.productName LIKE #{orderQ} 
 		</if>
 		
-		<if test="orderS == 'selectAll' or orderS == 'selectWriter'">
-		OR 	writer    LIKE #{orderQ} 
+		<if test="orderQ != '' or productType != ''">
+		OR p.productType LIKE #{orderQ} 
+		</if>
+		
+		<if test="orderQ != '' or size != ''">
+		OR p.size LIKE #{orderQ} 
 		</if>
 	</trim>
-	ORDER BY orderId DESC		<!-- orderId 등록이 최신 기준으로 -->
+ 	)
+	<if test="productCode != '' ">
+ 		AND i.productCode = #{productCode}
+ 	</if>
+ 	<if test="productName != '' ">
+ 		AND p.productName = #{productName}
+ 	</if>
+ 	<if test="productType != '' ">
+ 		AND p.productType = #{productType}
+ 	</if>
+ 	<if test="size != '' ">
+ 		AND p.size = #{size}
+ 	</if>
+ 	<if test="startDateTime != '' or endDateTime != ''">
+ 		AND DATE(h.inserted) BETWEEN #{startDateTime} AND #{endDateTime}
+ 	</if>
+ 	
+ 	
+ 	<if test="Today != '' ">
+ 		AND DATE(h.inserted) BETWEEN DATE_ADD(NOW(), INTERVAL) AND NOW()
+ 	</if>
+ 	<if test="Week != '' ">
+ 		AND DATE(h.inserted) BETWEEN DATE_ADD(NOW(), INTERVAL -1 WEEK ) AND NOW()
+ 	</if>
+ 	<if test="Fifteen_Day != '' ">
+ 		AND DATE(h.inserted) BETWEEN DATE_ADD(NOW(), INTERVAL -15 DAY ) AND NOW()
+ 	</if>
+ 	<if test="One_Month != '' ">
+ 		AND DATE(h.inserted) BETWEEN DATE_ADD(NOW(), INTERVAL -1 MONTH ) AND NOW()
+ 	</if>
+ 	<if test="Three_Month != '' ">
+ 		AND DATE(h.inserted) BETWEEN DATE_ADD(NOW(), INTERVAL -3 MONTH ) AND NOW()
+ 	</if>
+ 	<if test="One_Year != '' ">
+ 		AND DATE(h.inserted) BETWEEN DATE_ADD(NOW(), INTERVAL -12 MONTH ) AND NOW()
+ 	</if>
+ 	
+ 	
+	ORDER BY h.orderId DESC		<!-- orderId 등록이 최신 기준으로 -->
+	
 	<!-- LIMIT #{offset}, #{records} -->
 	</select>
+	
 	<select id="productCatalog" resultType="com.sharedOne.domain.master.ProductDto">
 		SELECT
 			productCode,
@@ -61,7 +119,7 @@
 			       size LIKE #{productQ} 
 		ORDER BY productCode DESC
 	</select>
-</mapper>
+ </mapper>
   
   
   

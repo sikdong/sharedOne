@@ -1,6 +1,10 @@
 package com.sharedOne.service.order;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,10 +40,34 @@ public class YdsOrderService {
 		return mapper.getBuyerNames();
 	}
 
-	public List<ProductDto> searchProduct(String allProductInfo, String tableBuyerCode) {
+	public List<ProductDto> searchProduct(String allProductInfo, String tableBuyerCode, String deliveryDate) {
 		// TODO Auto-generated method stub
 		allProductInfo = "%" + allProductInfo + "%";
-		return mapper.searchProduct(allProductInfo, tableBuyerCode);
+		LocalDate parsedDeliveryDate = LocalDate.parse(deliveryDate, DateTimeFormatter.ISO_DATE);
+		System.out.println("parsedDeliveryDate " + parsedDeliveryDate);
+		List<ProductDto> dates = mapper.getPriceDate(allProductInfo,tableBuyerCode);
+		System.out.println("dates " + dates);
+		List<ProductDto> pddList = new ArrayList<>();
+		for (ProductDto date : dates) { 
+			LocalDate fromDate = date.getFromDate();
+			System.out.println("fromDate " + fromDate);
+			LocalDate endDate = date.getEndDate();
+			System.out.println("endDate " + endDate);
+			if((fromDate.isEqual(parsedDeliveryDate) || fromDate.isBefore(parsedDeliveryDate))
+					&&(endDate.isEqual(parsedDeliveryDate) || endDate.isAfter(parsedDeliveryDate))){
+					
+				pddList = mapper.searchProduct(allProductInfo, tableBuyerCode,
+													  fromDate, endDate);
+				
+			}
+		}
+		System.out.println("리턴 전");
+		if(pddList.size() != 0) {
+			
+			return pddList;
+		} else {
+			return null;
+		}
 	}
 
 
@@ -47,11 +75,16 @@ public class YdsOrderService {
 		// TODO Auto-generated method stub
 		/* YdsProductDto yds = mapper.addTempProductOrder(data); */
 		List<String> productCodes = (List<String>) data.get("productCodes");
+		List<String> fromDates = (List<String>)data.get("fromDates");
+		List<String> endDates = (List<String>)data.get("endDates");
 		String buyerCode = (String) data.get("buyerCode");
 		List<YdsProductDto> ypd = new ArrayList<>();
 		
-		for(String productCode : productCodes ) {
-			 ypd.add(mapper.addTempProductOrder(productCode, buyerCode));
+		for(int i = 0; i < productCodes.size(); i++ ) {
+			String productCode = productCodes.get(i);
+			String fromDate = fromDates.get(i);
+			String endDate = endDates.get(i);
+			 ypd.add(mapper.addTempProductOrder(productCode, buyerCode, fromDate, endDate));
 			}
 		return ypd;
 		
@@ -62,29 +95,40 @@ public class YdsOrderService {
 	public void insertOrder(YdsOrderDto yod) {
 		OrderHeaderDto ohd = new OrderHeaderDto();
 		  OrderItemDto oid = new OrderItemDto();
-	
+		  ohd.setWriter(yod.getWriter());
 		  ohd.setBuyerCode(yod.getBuyerCode());
 		  ohd.setDeliveryDate(yod.getDeliveryDate());
 		  ohd.setMessage(yod.getMessage());
+		  ohd.setStatus(yod.getStatus());
 		  mapper.insertOrderHeader(ohd);
 		  int generatedId = ohd.getOrderId();
-		  
+		  String date = mapper.getDate(generatedId);
+		  String year = date.substring(0, 4);
+		  System.out.println(year);
+		  mapper.createOrderCode(generatedId, year);
 		  List<String> productCodes = yod.getProductCode();
 		  System.out.println("코드는" + productCodes);
 		  List<Integer> quantities = yod.getQuantity();
-		  List<Integer> salePrices = yod.getSalePrice();
+		  List<Integer> finalPrices = yod.getFinalPrice();
+		  List<Integer> sums = yod.getSum();
 		  for(int i = 0; i < productCodes.size(); i++) {
 			  oid.setProductCode(productCodes.get(i));
-			  oid.setSalePrice(salePrices.get(i));
+			  oid.setFinalPrice(finalPrices.get(i));
 			  oid.setQuantity(quantities.get(i));
+			  oid.setSum(sums.get(i));
 			  System.out.println("오더 목록 " + i + "번째는" +oid);
-			  mapper.insertOrderItem(oid, generatedId);
+			  mapper.insertOrderItem(generatedId,oid);
 		  }
 		  
 		  
 		  
 		  
 	}
-	
+
+	public YdsOrderDto modifyOrder(int orderId) {
+		// TODO Auto-generated method stub
+		return mapper.modifyOrder(orderId);
+	}
+
 	
 }

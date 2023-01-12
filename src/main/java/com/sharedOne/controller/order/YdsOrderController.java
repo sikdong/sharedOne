@@ -1,12 +1,15 @@
 package com.sharedOne.controller.order;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,86 +33,77 @@ import com.sharedOne.service.order.YdsOrderService;
 @RequestMapping("order")
 @RequiredArgsConstructor
 public class YdsOrderController {
-	
+
 	private final YdsOrderService service;
 
-	
 	@GetMapping("register")
-	public void searchBuyer(Model model, @RequestParam(required = false) String buyerInfo ){
-	List<BuyerDto> buyers = service.searchBuyer(buyerInfo);
-	List<BuyerDto> buyerNames = service.getBuyerNames();
-	model.addAttribute("buyers", buyers);
-	model.addAttribute("buyerNames", buyerNames);
-		
+	public void searchBuyer(Model model, @RequestParam(required = false) String buyerInfo) {
+		List<BuyerDto> buyers = service.searchBuyer(buyerInfo);
+		List<BuyerDto> buyerNames = service.getBuyerNames();
+		model.addAttribute("buyers", buyers);
+		model.addAttribute("buyerNames", buyerNames);
+
 	}
-	
-	
+
 	@GetMapping("searchAllBuyerInfo/{allBuyerInfoInput}")
 	@ResponseBody
-	public List<BuyerDto> searchAllBuyer(@PathVariable String allBuyerInfoInput){
+	public List<BuyerDto> searchAllBuyer(@PathVariable String allBuyerInfoInput) {
 		return service.searchBuyer(allBuyerInfoInput);
 	}
-	
+
 	@GetMapping("searchbuyerName/{buyerName}")
 	@ResponseBody
-	public List<BuyerDto> searchbuyerName(@PathVariable String buyerName){
+	public List<BuyerDto> searchbuyerName(@PathVariable String buyerName) {
 		return service.searchBuyer(buyerName);
 	}
-	
+
 	@GetMapping("searchcountry/{country}")
 	@ResponseBody
-	public List<BuyerDto> searchcountry(@PathVariable String country){
+	public List<BuyerDto> searchcountry(@PathVariable String country) {
 		return service.searchBuyer(country);
 	}
-	
+
 	@GetMapping("searchbuyerCode/{buyerCode}")
 	@ResponseBody
-	public List<BuyerDto> searchbuyerCode(@PathVariable String buyerCode){
+	public List<BuyerDto> searchbuyerCode(@PathVariable String buyerCode) {
 		return service.searchBuyer(buyerCode);
 	}
-	
-	@GetMapping("searchAllProductInfo/{allProductInfo}/{tableBuyerCode}")
+
+	@GetMapping("searchAllProductInfo/{allProductInfo}/{tableBuyerCode}/{deliveryDate}")
 	@ResponseBody
-	public List<ProductDto> searchAllProductInfo(@PathVariable String allProductInfo, 
-			@PathVariable String tableBuyerCode){
-		System.out.println(tableBuyerCode);
-		System.out.println(allProductInfo);
-		return service.searchProduct(allProductInfo, tableBuyerCode);
-		
+	public List<ProductDto> searchAllProductInfo(@PathVariable String allProductInfo,
+			@PathVariable String tableBuyerCode, @PathVariable String deliveryDate) {
+		System.out.println("controller");
+		return service.searchProduct(allProductInfo, tableBuyerCode,deliveryDate);
+
 	}
 
+	@GetMapping("tempSave")
+	public void tempSave() {
 
-	  /*@GetMapping("list") 
-	  public void orderList(Model model, String orderCode ) {
-	  List <OrderHeaderDto> headerList = orderService.selectOrderHeaderList(); List
-	 <OrderItemDto> itemListByOrderCode =
-	 orderService.selectOrderItemListByOrderCode(orderCode);
-	 
-	 model.addAttribute("headerList", headerList); model.addAttribute("itemList",
-	 itemListByOrderCode); }*/
-	  
-	  @GetMapping("modify")
-	  public void modifyOrder() {
-		  
-	  }
-	  
-	  @PostMapping("register")
-	  public void insertOrder(YdsOrderDto yod){
-		  System.out.println("오더 목록 : " + yod);
-		  service.insertOrder(yod);
-	  }
-	  
-	 @PostMapping("addTempProductOrder")
-	 @ResponseBody
-	 public List<YdsProductDto> addTempProductOrder(@RequestBody Map<String,Object> data) {
-		 System.out.println(data);
-			/*
-			 * List<String> tt = data.get("productCodes"); System.out.println("tt" + tt);
-			 */
-		 
-			/* return service.addTempProductOrder(ypd); */
-		 return service.addTempProductOrder(data);
-	 }
-	 
-	
+	}
+
+	@GetMapping("modify")
+	public void modifyOrder(@RequestParam int orderId, Model model) {
+		YdsOrderDto yod = service.modifyOrder(orderId);
+		model.addAttribute("order", yod);
+	}
+
+	@PostMapping("register")
+	public void insertOrder(YdsOrderDto yod, Authentication at) {
+		if (at != null) {
+			yod.setWriter(at.getName());
+		}
+		if (yod.getProductCode() != null) {
+
+			service.insertOrder(yod);
+		}
+	}
+
+	@PostMapping("addTempProductOrder")
+	@ResponseBody
+	public List<YdsProductDto> addTempProductOrder(@RequestBody Map<String, Object> data) {
+		return service.addTempProductOrder(data);
+	}
+
 }
