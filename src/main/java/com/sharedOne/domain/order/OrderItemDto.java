@@ -18,11 +18,12 @@ public class OrderItemDto {
 	private List <ProductDto> product;
 	private String productCode;
 	private String productName;
+	private String productType;
 	private String unit;
 	private int price;
 	
 	private List <SalePriceDto> salePriceDto;
-	private int salePrice;
+	private int finalPrice;
 	private int discountRate;
 	private LocalDate fromDate;
 	private LocalDate endDate;

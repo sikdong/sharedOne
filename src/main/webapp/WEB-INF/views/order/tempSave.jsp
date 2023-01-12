@@ -161,7 +161,7 @@
 					<div class="row d-flex">
 						<div class="col-sm-5">
 							<div class="input-group" style="margin-top: 15px !important;">
-								<input required name="deliveryDate" type="date" id="deliveryDate"
+								<input value="2023-01-01" name="deliveryDate" type="date" id="d1Id"
 									class="form-control">
 							</div>
 						</div>
@@ -284,7 +284,7 @@
 						<th>규격</th>
 						<th>단위</th>
 						<th>단가</th>
-						<th style="width : 120px;">판매가</th>
+						<th style="width : 120px;">단가</th>
 						<th style="width : 80px;">수량</th>
 						<th style="width : 150px;">합계액</th>
 					</tr>
@@ -511,14 +511,12 @@
 		})
 	})
 	
+	
 	<%-- 전체 제품 검색 --%>
 	document.querySelector("#allProductInfoBtn").addEventListener("click", function(){
 		const allProductInfo = document.querySelector("#allProductInfo").value;
-		const tableBuyerCode = document.querySelector("input[name='buyerCode']:checked").value;
-		const deliveryDate = document.querySelector("#deliveryDate").value;
-		if(deliveryDate != ''){
-			
-		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode+"/"+deliveryDate)
+		const tableBuyerCode = document.querySelector("#tableBuyerCode").innerHTML;
+		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode)
 		.then(res => res.json())
 		.then(list => {
 			document.querySelector("#productTable").innerHTML = "";
@@ -534,7 +532,6 @@
 				<th scope="col">무게</th>
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
-				<th scope="col">판매가</th>
 			</tr>
 		</thead>
 		<tbody id="productBody">
@@ -543,13 +540,13 @@
 	</table>`
 		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
 		for(const item of list){
-			if(item.buyerCode == tableBuyerCode){
+			if(item.buyerCode == tableBuyerCode || item.buyerCode == null){
 			const productTableItem =
 				
 			`<tr>
 				<th>
 					<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
-						id="productCheckBox" name="productCode" value="\${item.productCode}">
+						id="productCheckBox" name="productCode" value="\${item.productCode}" data-sale-price="\${item.salePrice}">
 				</th>
 				<td>\${item.productCode }</td>
 				<td>\${item.productType }</td>
@@ -558,7 +555,6 @@
 				<td>\${item.weight }kg</td>
 				<td>\${item.unit }</td>
 				<td>\${item.price }</td>
-				<td>\${item.salePrice }</td>
 			</tr>`
 			
 			document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
@@ -566,18 +562,13 @@
 			}
 			
 		})
-		} else {
-			alert("납기 요청일을 입력해주세요")
-		}
 	})
 	
 	<%--제품명 검색 --%>
 	document.querySelector("#productNameBtn").addEventListener("click", function(){
 		const allProductInfo = document.querySelector("#productNameInput").value;
 		const tableBuyerCode = document.querySelector("#tableBuyerCode").innerHTML;
-		const deliveryDate = document.querySelector("#deliveryDate").value;
-		if(deliveryDate != ''){
-		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode+"/"+deliveryDate)
+		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode)
 		.then(res => res.json())
 		.then(list => {
 			document.querySelector("#productTable").innerHTML = "";
@@ -593,7 +584,6 @@
 				<th scope="col">무게</th>
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
-				<th scope="col">판매가</th>
 			</tr>
 		</thead>
 		<tbody id="productBody">
@@ -601,7 +591,7 @@
 	</table>`
 		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
 		for(const item of list){
-			if(item.buyerCode == tableBuyerCode){
+			if(item.buyerCode == tableBuyerCode || item.buyerCode == null){
 				const productTableItem =
 					
 				`<tr>
@@ -616,23 +606,17 @@
 					<td>\${item.weight }kg</td>
 					<td>\${item.unit }</td>
 					<td>\${item.price }</td>
-					<td>\${item.salePrice }</td>
 				</tr>`
 				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
 					}
 			}
 		})
-		} else {
-			alert("납기 요청일을 입력해주세요")
-		}
 	})
 	<%--제품코드로 검색 --%>
 	document.querySelector("#productCodeBtn").addEventListener("click", function(){
 		const allProductInfo = document.querySelector("#productCodeInput").value;
 		const tableBuyerCode = document.querySelector("#tableBuyerCode").innerHTML;
-		const deliveryDate = document.querySelector("#deliveryDate").value;
-		if(deliveryDate != ''){
-		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode+"/"+deliveryDate)
+		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode)
 		.then(res => res.json())
 		.then(list => {
 			document.querySelector("#productTable").innerHTML = "";
@@ -648,7 +632,6 @@
 				<th scope="col">무게</th>
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
-				<th scope="col">판매가</th>
 			</tr>
 		</thead>
 		<tbody id="productBody">
@@ -656,7 +639,7 @@
 	</table>`
 		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
 		for(const item of list){
-			if(item.buyerCode == tableBuyerCode){
+			if(item.buyerCode == tableBuyerCode || item.buyerCode == null){
 				const productTableItem =
 					
 				`<tr>
@@ -671,24 +654,18 @@
 					<td>\${item.weight }kg</td>
 					<td>\${item.unit }</td>
 					<td>\${item.price }</td>
-					<td>\${item.salePrice }</td>
 				</tr>`
 				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
 					}
 			}
 		})
-		} else {
-			alert("납기 요청일을 입력해주세요")
-		}
 	})
 	
 	<%--제품그룹로 검색 --%>
 	document.querySelector("#productTypeBtn").addEventListener("click", function(){
 		const allProductInfo = document.querySelector("#productTypeInput").value;
 		const tableBuyerCode = document.querySelector("#tableBuyerCode").innerHTML;
-		const deliveryDate = document.querySelector("#deliveryDate").value;
-		if(deliveryDate != ''){
-		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode+"/"+deliveryDate)
+		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode)
 		.then(res => res.json())
 		.then(list => {
 			document.querySelector("#productTable").innerHTML = "";
@@ -704,7 +681,6 @@
 				<th scope="col">무게</th>
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
-				<th scope="col">판매가</th>
 			</tr>
 		</thead>
 		<tbody id="productBody">
@@ -712,7 +688,7 @@
 	</table>`
 		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
 		for(const item of list){
-			if(item.buyerCode == tableBuyerCode){
+			if(item.buyerCode == tableBuyerCode || item.buyerCode == null){
 				const productTableItem =
 					
 				`<tr>
@@ -728,23 +704,20 @@
 					<td>\${item.weight }kg</td>
 					<td>\${item.unit }</td>
 					<td>\${item.price }</td>
-					<td>\${item.salePrice }</td>
 				</tr>`
 				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
 				}
 			}
 		})
-		} else {
-			alert("납기 요청일을 입력해주세요")
-		}
 	})
 		
 	let i = 1
  	<%--상세정보에 추가 --%>
 	document.querySelector("#addOrder").addEventListener("click", function() {
 		
+		const query = 'input[name="productCode"]:checked';
 		const buyerCode = document.querySelector('input[name="buyerCode"]:checked').value;
-		const productCode = document.querySelectorAll('input[name="productCode"]:checked');
+		const productCode = document.querySelectorAll(query);
 			
 		let productCodes = [];
 		productCode.forEach((el) => {
@@ -777,14 +750,14 @@
               <td>\${da.price}원</td>
               <td>
 	              <input class="form-control" 
-	              type="number" id="finalPrice\${i}" 
-	              onclick = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
-	              onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
-	              name="finalPrice" value="\${da.salePrice}">
+	              type="number" id="salePrice\${i}" 
+	              onclick = "document.querySelector('#sum\${i}').value = document.querySelector('#salePrice\${i}').value * document.querySelector('#quantity\${i}').value"
+	              onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#salePrice\${i}').value * document.querySelector('#quantity\${i}').value"
+	              name="salePrice" value="\${da.salePrice}">
               </td>
               <td><input 
-              onclick = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value" 
-	          onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
+              onclick = "document.querySelector('#sum\${i}').value = document.querySelector('#salePrice\${i}').value * document.querySelector('#quantity\${i}').value" 
+	          onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#salePrice\${i}').value * document.querySelector('#quantity\${i}').value"
 	              
               id="quantity\${i}" class="form-control" type="number" name="quantity" value=""></td>
               <td><input type="number" id="sum\${i}" name="sum" class="form-control" /></td>

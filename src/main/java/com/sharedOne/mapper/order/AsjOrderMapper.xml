@@ -15,12 +15,11 @@
  			h.writer,
  			h.status,
  			h.message,
- 			m.name, 
+ 			h.writer, 
  			b.buyerCode,
  			b.buyerName
  		FROM
  			Order_header h
- 		LEFT JOIN Member m ON m.id = h.writer
  		LEFT JOIN Buyer b ON b.buyerCode = h.buyerCode
  		
  		<!-- keyword,orderCode,buyerCode,writer,status -->
@@ -35,7 +34,7 @@
 			OR b.buyerCode LIKE #{keyword}
 			</if>
 			<if test="keyword != '' or writer != '' ">
-			OR m.name LIKE #{keyword}
+			OR h.writer LIKE #{keyword}
 			</if>
 			<if test="keyword != '' or status != '' ">
 			OR h.status LIKE #{keyword}
@@ -50,7 +49,7 @@
  		AND b.buyerCode = #{buyerCode }
  		</if>
  		<if test="writer != '' ">
- 		AND m.name = #{writer }
+ 		AND h.writer = #{writer }
  		</if>
  		<if test="status != '' ">
  		AND h.status = #{status }
@@ -67,24 +66,25 @@
 			i.itemId,
 			i.quantity,
 			i.sum,
-			i.orderCode,
+			h.orderCode,
 			
 			pd.productCode,
 			pd.productName,
+			pd.productType,
 			pd.unit,
 			pd.price,	
 			
-			sp.salePrice,
-			sp.discountRate,
-			sp.fromDate,
-			sp.endDate
+			i.finalPrice
+			
+			
  		FROM
  			Order_item i
+		LEFT JOIN Order_header h ON h.orderId = i.orderId
  		LEFT JOIN Product pd ON pd.productCode = i.productCode
- 		LEFT JOIN SalePrice sp ON sp.priceId = i.priceId
+ 		
  		
  		WHERE
- 			i.orderCode = #{orderCode }
+ 			h.orderCode = #{orderCode }
  	</select>
  <!-- 	<resultMap type="com.sharedOne.domain.order.OrderItemDto" id="itemMap">
  		<id column="itemId" property="itemId"/>

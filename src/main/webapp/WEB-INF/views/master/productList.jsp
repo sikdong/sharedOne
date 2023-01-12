@@ -69,10 +69,10 @@
  	
 	.table{border-collapse:collapse; width:100%}
 	.table thead{float:left; width:1300px;}
-	.table thead th{display:auto; width:1300px;}
+	.table thead th{display:auto; width:1300px; text-align: center;}
 	.table tbody{overflow-y:auto; overflow-x:hidden; float:left; width:1300px; height:550px;}
 	.table tbody tr{display:table; width:1300px;}
-	.table td{width:1300px; text-align: left;}
+	.table td{width:1300px; text-align: center;}
  	
 </style>
 
@@ -181,14 +181,17 @@
 			<table class="table">
 			   	 <thead>
 					 <tr>
-						<th style="max-width: 800px;">제품코드</th>
-						<th>제품명</th>
-						<th>타입</th>
-						<th>무게(g)</th>
-						<th>규격(Inch)</th>
-						<th>단위(EA)</th>
-						<th>원가</th>
-						<th>원가기간</th>
+
+						<th style="max-width: 800px;width: 220px;">제품코드</th>
+
+                  <th style="width: 300px;">제품명</th>
+                  <th style="width: 220px;">타입</th>
+                  <th style="width: 130px;">무게(g)</th>
+                  <th style="width: 130px;">규격(Inch)</th>
+                  <th style="width: 100px;">단위(EA)</th>
+                  <th style="width: 150px;">원가</th>
+                  <th style="width: 300px;">원가기간</th>
+
 					 </tr>
 				 </thead>
 				<tbody class = "scorllBox">			
@@ -197,14 +200,25 @@
 							<c:param name="code" value="${product.productCode }"></c:param>
 						</c:url>
 					<tr onclick="window.open('${getLink}','제품정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
-							<td style="max-width: 500px;">${product.productCode }</td>
+
+<%-- 							<td style="max-width: 500px;">${product.productCode }</td>
 							<td>${product.productName }</td>
 							<td>${product.productType }</td>
 							<td>${product.weight }</td>
 							<td>${product.size }</td>
 							<td>${product.unit }</td>
 							<td>${product.price }</td>
-							<td>${product.fromDate } ~ ${product.endDate }</td>
+							<td>${product.fromDate } ~ ${product.endDate }</td> --%>
+							
+							<td style="max-width: 500px; word-break:break-all;width: 220px;">${product.productCode }</td>
+                     <td style="word-break:break-all;width: 300px;">${product.productName }</td>
+                     <td style="word-break:break-all;width: 220px;">${product.productType }
+                     <td style="word-break:break-all;width: 130px;">${product.weight }</td>
+                     <td style="word-break:break-all;width: 130px;">${product.size }</td>
+                     <td style="word-break:break-all;width: 100px;">${product.unit }</td>
+                     <td style="word-break:break-all;width: 150px;">${product.price }</td>
+                     <td style="word-break:break-all;width: 300px;">${product.fromDate } ~ ${product.endDate }</td>
+							
 						</tr>
 					</c:forEach>
 				</tbody>

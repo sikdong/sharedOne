@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sharedOne.domain.master.BuyerDto;
 import com.sharedOne.domain.master.ProductDto;
@@ -70,17 +72,54 @@ public class AsjSalePriceController {
 			
 	}
 	
+	
+	@GetMapping("getPrice")
+	@ResponseBody
+	public int selectPriceByProductCode(String productCode) {
+		//System.out.println("ajax 단가 얻기 productCode : " + productCode);
+		int price = asjSalePriceService.selectPriceByProductCode(productCode);
+		return price;
+	}
+	
+	@GetMapping("salePriceRegister")
+	public void register(Model model, SalePriceDto saleInfo, RedirectAttributes rttr) {
+		List<BuyerDto> buyerList = buyerService.selectBuyerList();
+		model.addAttribute("buyerList", buyerList);
+		
+		List <ProductDto> productList = productService.selectProductList();	
+		model.addAttribute("productList", productList);
+		
+		System.out.println("ajax buyerCode : "+saleInfo.getBuyerCode());
+		/* ajax SalePrice 의 productCode 중복확인 */
+		String buyerCode = saleInfo.getBuyerCode();
+		List<SalePriceDto> salePriceListByBuyerCode = asjSalePriceService.selectSalePriceListByBuyerCode(buyerCode);
+		//System.out.println(salePriceListByBuyerCode);
+		rttr.addFlashAttribute("list", salePriceListByBuyerCode);
+	}
+	@PostMapping("salePriceRegister")
+	public void register( SalePriceDto sale ) {
+		System.out.println(sale);
+		int cnt = asjSalePriceService.register(sale);
+		System.out.println(cnt);
+	}
+	
+	
+	
+	
 	@GetMapping("salePriceModify")
 	public void salePriceGet(Model model, int priceId) {
 		SalePriceDto sale = asjSalePriceService.selectSaleByPriceId(priceId);
 		model.addAttribute("sale", sale);
-	}
-	@PostMapping("salePriceModify")
-	public String salePriceUpdate(@ModelAttribute SalePriceDto saleInfo ) {
-		//System.out.println("### postMapping::" + saleInfo);
 		
-		asjSalePriceService.updateSalePriceByPriceId(saleInfo);
-		return "redirect:/master/salePriceModify?priceId="+saleInfo.getPriceId();
+	}
+	
+	@PostMapping("salePriceModify")
+	public void salePriceUpdate( @ModelAttribute SalePriceDto saleInfo   ) {
+		System.out.println("# ajax saleInfo : " + saleInfo);
+
+		int cnt = asjSalePriceService.updateSalePriceByPriceId(saleInfo);
+		System.out.println("### cnt : " + cnt);
+		
 	}
 	
 	

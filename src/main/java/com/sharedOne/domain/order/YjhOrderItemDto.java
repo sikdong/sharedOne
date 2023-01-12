@@ -17,7 +17,7 @@ public class YjhOrderItemDto {
 	private int size;
 	private String unit;
 	
-	private int salePrice;
+	private int finalPrice;
 	private int priceId;
 	
 	private int orderId;
