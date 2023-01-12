@@ -7,8 +7,10 @@ public interface YjhMemberMapper {
 
 	MemberDto selectById(String username);
 
-	int insertMember(MemberDto member);
+	void insertMember(MemberDto member);
 
-	int insertRanks(RanksDto rank);
+	void insertRanks(RanksDto rank);
+
+	MemberDto getEmail(String email);
 
 }
