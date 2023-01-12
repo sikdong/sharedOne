@@ -161,7 +161,7 @@
 					<div class="row d-flex">
 						<div class="col-sm-5">
 							<div class="input-group" style="margin-top: 15px !important;">
-								<input required name="deliveryDate" type="date" id="deliveryDate"
+								<input name="deliveryDate" type="date" id="deliveryDate"
 									class="form-control">
 							</div>
 						</div>
@@ -784,7 +784,7 @@
               <td>\${da.price}원</td>
               <td>
 	              <input class="form-control" 
-	              type="number" id="finalPrice\${i}" 
+	              type="text" id="finalPrice\${i}" 
 	              onclick = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
 	              onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
 	              name="finalPrice" value="\${da.salePrice}">
@@ -793,7 +793,7 @@
               onclick = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value" 
 	          onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
 	              
-              id="quantity\${i}" class="form-control" type="number" name="quantity" value=""></td>
+              id="quantity\${i}" class="form-control" type="text" name="quantity" value=""></td>
               <td><input type="number" id="sum\${i}" name="sum" class="form-control" /></td>
               <td style="display : flex; justify-content : center;">
                   <button onclick="document.querySelector('#tr\${i}').innerHTML = '';" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>

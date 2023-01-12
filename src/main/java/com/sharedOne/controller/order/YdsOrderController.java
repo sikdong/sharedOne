@@ -94,10 +94,9 @@ public class YdsOrderController {
 		if (at != null) {
 			yod.setWriter(at.getName());
 		}
-		if (yod.getProductCode() != null) {
-
+			System.out.println("yod = " + yod);
 			service.insertOrder(yod);
-		}
+		
 	}
 
 	@PostMapping("addTempProductOrder")
