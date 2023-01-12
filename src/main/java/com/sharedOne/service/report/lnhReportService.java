@@ -28,7 +28,7 @@ public class lnhReportService {
 	
 	public Map<String, Integer> salesByBuyer(String orderQ, List<String> buyerCodes) {
 		Map<String, Integer> salesByBuyer = new HashMap<>();
-		
+		orderQ = "%" + orderQ + "%";
 		for (String buyerCode : buyerCodes ) {
 			salesByBuyer.put(buyerCode, mapper.salesByBuyer(orderQ, buyerCode));
 		}
@@ -42,7 +42,7 @@ public class lnhReportService {
 
 	public Map<String, Integer> salesByWriter(String orderQ, List<String> writerList) {
 		Map<String, Integer> salesByWriter = new HashMap<>();
-		
+		orderQ = "%" + orderQ + "%";
 		for (String writer : writerList) {
 			salesByWriter.put(writer, mapper.salesByWriter(orderQ, writer));
 		}
