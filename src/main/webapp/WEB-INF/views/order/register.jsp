@@ -549,7 +549,8 @@
 			`<tr>
 				<th>
 					<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
-						id="productCheckBox" name="productCode" value="\${item.productCode}">
+						id="productCheckBox-\${item.productCode}" name="productCode" value="\${item.productCode}"
+						data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
 				</th>
 				<td>\${item.productCode }</td>
 				<td>\${item.productType }</td>
@@ -561,7 +562,6 @@
 				<td>\${item.salePrice }</td>
 				<td>\${item.fromDate}~\${item.endDate}</td>
 			</tr>`
-			
 			document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
 				}
 	
@@ -595,6 +595,7 @@
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
 				<th scope="col">판매가</th>
+				<th scope="col">판매 기간</th>
 			</tr>
 		</thead>
 		<tbody id="productBody">
@@ -602,7 +603,6 @@
 	</table>`
 		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
 		for(const item of list){
-			if(item.buyerCode == tableBuyerCode){
 				const productTableItem =
 					
 				`<tr>
@@ -618,10 +618,10 @@
 					<td>\${item.unit }</td>
 					<td>\${item.price }</td>
 					<td>\${item.salePrice }</td>
+					<td>\${item.fromDate}~\${item.endDate}</td>
 				</tr>`
 				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
 					}
-			}
 		})
 		} else {
 			alert("납기 요청일을 입력해주세요")
@@ -650,6 +650,7 @@
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
 				<th scope="col">판매가</th>
+				<th scope="col">판매 기간</th>
 			</tr>
 		</thead>
 		<tbody id="productBody">
@@ -657,7 +658,6 @@
 	</table>`
 		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
 		for(const item of list){
-			if(item.buyerCode == tableBuyerCode){
 				const productTableItem =
 					
 				`<tr>
@@ -673,10 +673,10 @@
 					<td>\${item.unit }</td>
 					<td>\${item.price }</td>
 					<td>\${item.salePrice }</td>
+					<td>\${item.fromDate}~\${item.endDate}</td>
 				</tr>`
 				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
 					}
-			}
 		})
 		} else {
 			alert("납기 요청일을 입력해주세요")
@@ -706,6 +706,7 @@
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
 				<th scope="col">판매가</th>
+				<th scope="col">판매 기간</th>
 			</tr>
 		</thead>
 		<tbody id="productBody">
@@ -713,7 +714,6 @@
 	</table>`
 		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
 		for(const item of list){
-			if(item.buyerCode == tableBuyerCode){
 				const productTableItem =
 					
 				`<tr>
@@ -730,10 +730,10 @@
 					<td>\${item.unit }</td>
 					<td>\${item.price }</td>
 					<td>\${item.salePrice }</td>
+					<td>\${item.fromDate}~\${item.endDate}</td>
 				</tr>`
 				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
 				}
-			}
 		})
 		} else {
 			alert("납기 요청일을 입력해주세요")
@@ -748,13 +748,19 @@
 		const productCode = document.querySelectorAll('input[name="productCode"]:checked');
 			
 		let productCodes = [];
+		let fromDates = [];
+		let endDates = [];
 		productCode.forEach((el) => {
 			productCodes.push(el.value);
-			})
+			fromDates.push(el.dataset.fromDate)
+			endDates.push(el.dataset.endDate)	
+		})
 		
 		const data = {
 				'productCodes' : productCodes,
-				'buyerCode' : buyerCode
+				'buyerCode' : buyerCode,
+				'fromDates' : fromDates,
+				'endDates' : endDates
 		}
 		
 		fetch(path+"/order/addTempProductOrder/", {

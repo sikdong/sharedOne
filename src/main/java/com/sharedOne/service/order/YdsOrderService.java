@@ -75,11 +75,16 @@ public class YdsOrderService {
 		// TODO Auto-generated method stub
 		/* YdsProductDto yds = mapper.addTempProductOrder(data); */
 		List<String> productCodes = (List<String>) data.get("productCodes");
+		List<String> fromDates = (List<String>)data.get("fromDates");
+		List<String> endDates = (List<String>)data.get("endDates");
 		String buyerCode = (String) data.get("buyerCode");
 		List<YdsProductDto> ypd = new ArrayList<>();
 		
-		for(String productCode : productCodes ) {
-			 ypd.add(mapper.addTempProductOrder(productCode, buyerCode));
+		for(int i = 0; i < productCodes.size(); i++ ) {
+			String productCode = productCodes.get(i);
+			String fromDate = fromDates.get(i);
+			String endDate = endDates.get(i);
+			 ypd.add(mapper.addTempProductOrder(productCode, buyerCode, fromDate, endDate));
 			}
 		return ypd;
 		

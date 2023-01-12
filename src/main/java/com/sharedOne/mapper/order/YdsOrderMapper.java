@@ -13,7 +13,6 @@ import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.order.OrderItemDto;
 import com.sharedOne.domain.order.YdsOrderDto;
 
-
 @Component
 public interface YdsOrderMapper {
 
@@ -21,9 +20,9 @@ public interface YdsOrderMapper {
 
 	List<BuyerDto> getBuyerNames();
 
-	List<ProductDto> searchProduct(@Param("allProductInfo") String allProductInfo, 
-			@Param("tableBuyerCode") String tableBuyerCode, 
-			@Param("fromDate") LocalDate fromDate, @Param("endDate") LocalDate endDate);
+	List<ProductDto> searchProduct(@Param("allProductInfo") String allProductInfo,
+			@Param("tableBuyerCode") String tableBuyerCode, @Param("fromDate") LocalDate fromDate,
+			@Param("endDate") LocalDate endDate);
 
 	List<YdsProductDto> addTempProductOrder(List<YdsProductDto> ypd);
 
@@ -31,8 +30,8 @@ public interface YdsOrderMapper {
 
 	void insertOrderItem(@Param("generatedId") int generatedId, @Param("oid") OrderItemDto oid);
 
-	YdsProductDto addTempProductOrder(@Param("productCode") String productCode, 
-			@Param("buyerCode") String buyerCode);
+	YdsProductDto addTempProductOrder(@Param("productCode") String productCode, @Param("buyerCode") String buyerCode,
+			String fromDate, String endDate);
 
 	void createOrderCode(@Param("generatedId") int generatedId, @Param("year") String year);
 
@@ -42,5 +41,5 @@ public interface YdsOrderMapper {
 
 	List<ProductDto> getPriceDate(String allProductInfo, String tableBuyerCode);
 
-	
+
 }
