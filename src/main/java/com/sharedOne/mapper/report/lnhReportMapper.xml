@@ -20,7 +20,7 @@
 			h.status,
 			h.message
 		FROM
-			Order_header h LEFT JOIN Order_item i ON h.orderCode = i.orderCode
+			Order_header h LEFT JOIN Order_item i ON h.orderId = i.orderId
 			
 		WHERE	h.orderCode LIKE #{orderQ} 
 		   OR  	  i.productCode LIKE #{orderQ} 
@@ -63,16 +63,16 @@
 	<select id="thisYearSales" resultType="com.sharedOne.domain.report.ReportDto">
 	SELECT MONTH(h.inserted) as month,
 		sum(i.sum) as thisSales
-	FROM Order_header h LEFT JOIN Order_item i ON h.orderCode = i.orderCode
+	FROM Order_header h LEFT JOIN Order_item i ON h.orderId = i.orderId
 	WHERE year(inserted) = year(now()) 
 	GROUP BY month
 	
 	</select>
 	
 	<!-- 검색 결과 바이어 별 매출 -->
-	<select id="salesByBuyer" resultType="int">
+	<select id="salesByBuyer" resultType="integer">
 		SELECT sum(i.sum) salesByBuyer 
-		FROM Order_header h LEFT JOIN Order_item i ON h.orderCode = i.orderCode
+		FROM Order_header h LEFT JOIN Order_item i ON h.orderId = i.orderId
 		
 		WHERE	(h.orderCode LIKE #{orderQ} 
 		   OR  	  i.productCode LIKE #{orderQ} 
@@ -90,9 +90,9 @@
 	
 	</select>
 	
-		<select id="salesByWriter" resultType="int">
+		<select id="salesByWriter" resultType="integer">
 		SELECT sum(i.sum) salesByWriter 
-		FROM Order_header h LEFT JOIN Order_item i ON h.orderCode = i.orderCode
+		FROM Order_header h LEFT JOIN Order_item i ON h.orderId = i.orderId
 		
 		WHERE	(h.orderCode LIKE #{orderQ} 
 		   OR  	  i.productCode LIKE #{orderQ} 

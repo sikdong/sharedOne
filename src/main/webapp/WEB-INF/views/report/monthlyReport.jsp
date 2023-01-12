@@ -153,7 +153,7 @@ div.right {
  	.table{border-collapse:collapse; width:100%; table-layout:fixed}
 	.table thead{float:left; width:1300px;}
 	.table thead th{display:auto; width:1300px; text-align: center;}
-	.table tbody{overflow-y:auto; overflow-x:hidden; float:left; width:1300px; height:550px;}
+	.table tbody{overflow-y:auto; overflow-x:auto; float:left; width:1300px; height:550px;}
 	.table tbody tr{display:table; width:1300px;}
 	.table td{word-wrap:break-word; width:1300px; text-align: center;}
 
@@ -306,14 +306,13 @@ div.right {
 			<thead>
 				<!-- productCode, productName, productType, weight, size, price, unit, content -->
 				<tr>
-					<th style="width: 220px;">주문서 ID</th>
-					<th style="width: 220px;">바이어코드</th>
-					<th style="width: 220px;">제품코드</th>
-					<th style="width: 150px;">판매가</th>
-					<th style="width: 130px;">수량</th>
+					<th style="width: 150px;">주문서 ID</th>
+					<th style="width: 130px;">바이어코드</th>
+					<th style="width: 100px;">제품코드</th>
+					<th style="width: 130px;">판매가</th>
+					<th style="width: 100px;">수량</th>
 					<th style="width: 200px;">합계</th>
 					<th style="width: 200px;">등록일</th>
-					<th style="width: 200px;">수정일</th>
 					<th style="width: 200px;">납기일</th>
 					<th style="width: 150px;">담당자</th>
 					<th style="width: 150px;">상태</th>
@@ -324,14 +323,13 @@ div.right {
 				<c:forEach items="${orderList }" var="order">
 					<c:if test="${fn:length(order.orderItem) == 1 }">
 						<tr>
-							<td style="width: 220px;">${order.orderCode }</td>
-							<td style="width: 220px;">${order.buyerCode }</td>
-							<td style="width: 220px;">${order.orderItem[0].productCode }</td>
-							<td style="width: 150px;">${order.orderItem[0].finalPrice }</td>
-							<td style="width: 130px;">${order.orderItem[0].quantity }</td>
+							<td style="width: 150px;">${order.orderCode }</td>
+							<td style="width: 130px;">${order.buyerCode }</td>
+							<td style="width: 100px;">${order.orderItem[0].productCode }</td>
+							<td style="width: 130px;">${order.orderItem[0].finalPrice }</td>
+							<td style="width: 100px;">${order.orderItem[0].quantity }</td>
 							<td style="width: 200px;">${order.orderItem[0].sum }</td>
 							<td style="width: 250px;">${order.inserted }</td>
-							<td style="width: 250px;">${order.modified }</td>
 							<td style="width: 250px;">${order.deliveryDate }</td>
 							<td style="width: 150px;">${order.writer }</td>
 							<td style="width: 200px;">${order.status }</td>
@@ -341,14 +339,13 @@ div.right {
 					<c:if test="${fn:length(order.orderItem) != 1 }">
 						<c:forEach items="${order.orderItem }" var="item">
 							<tr>
-								<td style="width: 220px;">${order.orderCode }</td>
-								<td style="width: 220px;">${order.buyerCode }</td>
-								<td style="width: 220px;">${item.productCode }</td>
-								<td style="width: 150px;">${item.finalPrice }</td>
-								<td style="width: 130px;">${item.quantity }</td>
+								<td style="width: 150px;">${order.orderCode }</td>
+								<td style="width: 130px;">${order.buyerCode }</td>
+								<td style="width: 100px;">${item.productCode }</td>
+								<td style="width: 130px;">${item.finalPrice }</td>
+								<td style="width: 100px;">${item.quantity }</td>
 								<td style="width: 200px;">${item.sum }</td>
 								<td style="width: 250px;">${order.inserted }</td>
-								<td style="width: 250px;">${order.modified }</td>
 								<td style="width: 250px;">${order.deliveryDate }</td>
 								<td style="width: 150px;">${order.writer }</td>
 								<td style="width: 200px;">${order.status }</td>

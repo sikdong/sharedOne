@@ -16,9 +16,9 @@ public interface lnhReportMapper {
 
 	List<ReportDto> thisYearSales();
 
-	int salesByBuyer(@Param("orderQ") String orderQ, @Param("buyerCode") String buyerCode);
+	Integer salesByBuyer(@Param("orderQ") String orderQ, @Param("buyerCode") String buyerCode);
 
-	int salesByWriter(@Param("orderQ") String orderQ, @Param("writer") String writer);
+	Integer salesByWriter(@Param("orderQ") String orderQ, @Param("writer") String writer);
 
 
 }

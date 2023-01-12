@@ -145,6 +145,7 @@ public class lnhReportController {
 				sheet.setColumnWidth(6, (sheet.getColumnWidth(6))+(short)2048); // 6번째 컬럼 넓이 조절
 				sheet.setColumnWidth(7, (sheet.getColumnWidth(7))+(short)2048); // 7번째 컬럼 넓이 조절
 				sheet.setColumnWidth(8, (sheet.getColumnWidth(8))+(short)2048); // 8번째 컬럼 넓이 조절
+				sheet.setColumnWidth(11, (sheet.getColumnWidth(11))+(short)5000); // 8번째 컬럼 넓이 조절
 				cellStyle.setAlignment(HorizontalAlignment.CENTER);
 				
 				Font fontTitle = workbook.createFont();
@@ -200,9 +201,12 @@ public class lnhReportController {
 						 String inserted = sdf.format(cell6);
 						 row.createCell(6).setCellValue(inserted);
 						 
-						 Date cell7 = java.sql.Date.valueOf(board1.getModified());
-						 String modified = sdf.format(cell7);
-						 row.createCell(7).setCellValue(modified);
+						 if(board1.getModified()!=null) {
+							 Date cell7 = java.sql.Date.valueOf(board1.getModified());
+							 String modified = sdf.format(cell7);
+							 row.createCell(7).setCellValue(modified);
+							 
+						 }
 						 
 						 Date cell8 = java.sql.Date.valueOf(board1.getDeliveryDate());
 						 String deliveryDate = sdf.format(cell8);
@@ -229,9 +233,12 @@ public class lnhReportController {
 							 String inserted = sdf.format(cell6);
 							 row.createCell(6).setCellValue(inserted);
 							
-							 Date cell7 = java.sql.Date.valueOf(board1.getModified());
-							 String modified = sdf.format(cell7);
-							 row.createCell(7).setCellValue(modified);
+							 if(board1.getModified()!=null) {
+								 Date cell7 = java.sql.Date.valueOf(board1.getModified());
+								 String modified = sdf.format(cell7);
+								 row.createCell(7).setCellValue(modified);
+								 
+							 }
 							 
 							 Date cell8 = java.sql.Date.valueOf(board1.getDeliveryDate());
 							 String deliveryDate = sdf.format(cell8);
