@@ -63,6 +63,7 @@
 				OR p.productType LIKE #{allProductInfo})
 		AND (s.fromDate = #{fromDate} AND s.endDate = #{endDate})
 		AND s.buyerCode = #{tableBuyerCode}
+		ORDER BY p.productName
 	</select>
 	
 	<select id="addTempProductOrder" resultType="com.sharedOne.domain.master.YdsProductDto">
@@ -132,6 +133,34 @@
 	
 	</select>
 
+	<select id="modifyOrderHeader" resultType="com.sharedOne.domain.order.OrderHeaderDto">
+	SELECT
+		b.buyerName,
+		oh.deliveryDate,
+		oh.modified,
+		oh.message
+	FROM Order_header oh
+	LEFT JOIN Buyer b ON b.buyerCode = oh.buyerCode
+	WHERE orderId = #{orderId}
+	
+	
+	</select>
+	
+ 	<select id="modifyOrderItem" resultType="com.sharedOne.domain.order.OrderItemDto">
+	SELECT
+		oi.productCode,
+		p.productType,
+		p.productName,
+		p.unit,
+		p.size,
+		p.price,
+		oi.finalPrice,
+		oi.quantity,
+		oi.sum
+	FROM Product p
+	LEFT JOIN Order_item oi ON p.productCode = oi.productCode
+	WHERE oi.orderId = #{orderId} 
+	</select> 
 
 
 </mapper>

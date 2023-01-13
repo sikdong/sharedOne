@@ -20,6 +20,7 @@ public class OrderItemDto {
 	private String productName;
 	private String productType;
 	private String unit;
+	private String size;
 	private int price;
 	
 	private List <SalePriceDto> salePriceDto;

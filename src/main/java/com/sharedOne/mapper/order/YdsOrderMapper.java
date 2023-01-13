@@ -37,8 +37,11 @@ public interface YdsOrderMapper {
 
 	String getDate(int generatedId);
 
-	YdsOrderDto modifyOrder(int orderId);
 
 	List<ProductDto> getPriceDate(String allProductInfo, String tableBuyerCode);
+
+	OrderHeaderDto modifyOrderHeader(int orderId);
+
+	List<OrderItemDto> modifyOrderItem(int orderId);
 
 }
