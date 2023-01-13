@@ -88,7 +88,7 @@
 </style>
 <body>   
     <div class="insert-body mt-5 ">
-    	<form id="registerForm' action="" method="post">
+    	<form id="registerForm" name ="registerfrm" action="" method="post">
 	        <div class="container-md">
 	            <div class="row">
 	                <div class="col mt-1">
@@ -159,7 +159,7 @@
 	                    </div>
 	                <hr />
 	                <div>
-	                    <input id="registerBtn" class="btn registerBtn" type="submit" value="등록"/>
+	                    <input id="registerBtn" class="btn registerBtn" type="submit" value="등록" onclick="registerCheck()">
 	                </div>
 	              
 	            </div>
@@ -169,104 +169,83 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <script>
     
-    //등록버튼 누르면 등록 실행 후 창 닫기
-    document.querySelector("#registerBtn").addEventListener("click", function() {
-    	document.querySelector("#registerForm").submit();
-    	window.opener.location.reload();    //부모창 reload
-    	window.close();    //현재 팝업창 Close
-    	
-    })
-    
-    const ctx = "${pageContext.request.contextPath}";
-    
-    var availableBuyerCode = false;
-    var availableBusinessNumber = false;
-    
-    function enableSubmitButton() {
-    	const button = document.querySelector("#registerBtn");
-    	if (availableBuyerCode && availableBusinessNumber) {
-    		button.removeAttribute("disabled")
-    	} else {
-    		button.setAttribute("disabled", "");
-    	}
-    }
-    
-  //BuyerCode input 변경시 submit 버튼 비활성화
-    document.querySelector("#buyerCode").addEventListener("keyup", function() {
-    	availableBuyerCode = false;
-    	enableSubmitButton();
-    });
-    
-  //BusinessNumber input 변경시 submit 버튼 비활성화
-    document.querySelector("#businessNum").addEventListener("keyup", function() {
-    	availableBusinessNumber = false;
-    	enableSubmitButton();
-    });
-  
-    //바이어코드 중복확인
-    document.querySelector("#buyerCodeExist").addEventListener("click", function() {
-    	availableBuyerCode = false;
-    	// 입력된 바이어코드를
-    	const buyerCode = document.querySelector("#buyerCode").value;
-    	
-    	// fetch 요청 보내고
-    	fetch(ctx + "/master/existbuyerCode/" + buyerCode)
-    		.then(res => res.json())
-    		.then(data => {
-    			// 응답 받아서 메세지 출력
-    			document.querySelector("#buyerCodeText1").innerText = data.message;
-    			
-    			if (data.status == "not exist") {
-    				availableBuyerCode = true;
-    				enableSubmitButton();
-    			}
-    		}); 
-    	
-    });
-  
-  //사업자번호 중복확인
-    document.querySelector("#businessNumberExist").addEventListener("click", function() {
-    	availableBusinessNumber = false;
-    	// 입력된 사업자번호을
-    	const businessNumber = document.querySelector("#businessNum").value;
-    	
-    	// fetch 요청 보내고
-    	fetch(ctx + "/master/existbusinessNum/" + businessNumber)
-    		.then(res => res.json())
-    		.then(data => {
-    			// 응답 받아서 메세지 출력
-    			document.querySelector("#businessNumberText1").innerText = data.message;
-    			
-    			if (data.status == "not exist") {
-    				availableBusinessNumber = true;
-    				enableSubmitButton();
-    			}
-    		}); 
-    	
-    });
-    
-        function comma(str) {
-        str = String(str);
-        return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-        }
-
-        function uncomma(str) {
-            str = String(str);
-            return str.replace(/[^\d]+/g, '');
-        } 
-        
-        function inputNumberFormat(obj) {
-            obj.value = comma(uncomma(obj.value));
-        }
-        
-        function inputOnlyNumberFormat(obj) {
-            obj.value = onlynumber(uncomma(obj.value));
-        }
-        
-        function onlynumber(str) {
-            str = String(str);
-            return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1');
-        }
+	    //등록버튼 누르면 등록 실행 후 창 닫기
+	    function registerCheck() { 
+    	document.registerfrm.submit();
+        window.opener.location.reload();
+    	setTimeout(function() {
+    		window.close();
+            }, 30);  
+        }   
+	    
+	    const ctx = "${pageContext.request.contextPath}";
+	    
+	    var availableBuyerCode = false;
+	    var availableBusinessNumber = false;
+	    
+	    function enableSubmitButton() {
+	    	const button = document.querySelector("#registerBtn");
+	    	if (availableBuyerCode && availableBusinessNumber) {
+	    		button.removeAttribute("disabled")
+	    	} else {
+	    		button.setAttribute("disabled", "");
+	    	}
+	    }
+	    
+	  //BuyerCode input 변경시 submit 버튼 비활성화
+	    document.querySelector("#buyerCode").addEventListener("keyup", function() {
+	    	availableBuyerCode = false;
+	    	enableSubmitButton();
+	    });
+	    
+	  //BusinessNumber input 변경시 submit 버튼 비활성화
+	    document.querySelector("#businessNum").addEventListener("keyup", function() {
+	    	availableBusinessNumber = false;
+	    	enableSubmitButton();
+	    });
+	  
+	    //바이어코드 중복확인
+	    document.querySelector("#buyerCodeExist").addEventListener("click", function() {
+	    	availableBuyerCode = false;
+	    	// 입력된 바이어코드를
+	    	const buyerCode = document.querySelector("#buyerCode").value;
+	    	
+	    	// fetch 요청 보내고
+	    	fetch(ctx + "/master/existbuyerCode/" + buyerCode)
+	    		.then(res => res.json())
+	    		.then(data => {
+	    			// 응답 받아서 메세지 출력
+	    			document.querySelector("#buyerCodeText1").innerText = data.message;
+	    			
+	    			if (data.status == "not exist") {
+	    				availableBuyerCode = true;
+	    				enableSubmitButton();
+	    			}
+	    		}); 
+	    	
+	    });
+	  
+	  //사업자번호 중복확인
+	    document.querySelector("#businessNumberExist").addEventListener("click", function() {
+	    	availableBusinessNumber = false;
+	    	// 입력된 사업자번호을
+	    	const businessNumber = document.querySelector("#businessNum").value;
+	    	
+	    	// fetch 요청 보내고
+	    	fetch(ctx + "/master/existbusinessNum/" + businessNumber)
+	    		.then(res => res.json())
+	    		.then(data => {
+	    			// 응답 받아서 메세지 출력
+	    			document.querySelector("#businessNumberText1").innerText = data.message;
+	    			
+	    			if (data.status == "not exist") {
+	    				availableBusinessNumber = true;
+	    				enableSubmitButton();
+	    			}
+	    		}); 
+	    	
+	    });
+	    
     </script>
 
 </body>

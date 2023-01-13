@@ -28,7 +28,7 @@ public class OrderHeaderDto {
 	private List <OrderItemDto> orderItem;
 	
 	
-	private List <SalePriceDto> itemPrice;
+	/* private List <SalePriceDto> itemPrice; */
 	//private int salePrice;
 	
 	/* Order에 들어갈 자료는 무엇이 있을까

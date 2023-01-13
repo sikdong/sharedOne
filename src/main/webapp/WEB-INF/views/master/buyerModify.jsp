@@ -119,7 +119,7 @@
 <body>
 	<div class="insert-body mt-5 ">
 		<div class="container-md">
-			<form id="modifyForm" action="" method="post">
+			<form id="modifyForm" name="modifyfrm" action="" method="post">
 			<input type="hidden" name="buyerCode" value="${buyer.buyerCode}"> 
 				<div class="row">
 					<div class="col mt-1">
@@ -174,7 +174,7 @@
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
-							<label for="inputPhone" class="col-form-label" >선적비용부담회사</label>
+							<label for="inputdeliveryCompany" class="col-form-label" >선적비용부담회사</label>
 
 							<div class="col-sm-5">
 								<select id="deliveryCompany" name="deliveryCompany" class="form-control"
@@ -186,7 +186,7 @@
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
-							<label for="inputPhone" class="col-form-label" >담당자</label> 
+							<label for="inputManager" class="col-form-label" >담당자</label> 
 							<div class="col-sm-5">
 								<input id="manager" type="text" class="form-control" name ="manager" value="${buyer.manager }"
 									placeholder="${buyer.manager }" />
@@ -196,7 +196,7 @@
 					<hr />
 
 					<!-- 수정버튼 -->
-					<input id="modifyBtn" class="btn" type="submit" value="수정">
+					<input id="modifyBtn" class="btn" type="submit" value="수정" onclick="modifyCheck()">
 				</div>
 			</form>
 		</div>
@@ -249,11 +249,10 @@
     	
     });
   
-  //삭제확인 버튼 클릭하면 삭제 form 전송
-
+    //삭제확인 버튼 클릭하면 삭제 form 전송
     function removeCheck() {
 	  
-	 	if (confirm("정말 삭제하시겠습니까??") == true) { 
+	 	if (confirm("정말 삭제하시겠습니까?") == true) { 
 	 		document.removefrm.submit();
 	 		window.opener.location.reload();    //부모창 reload
 	 		setTimeout(function() {   
@@ -264,6 +263,15 @@
 	     }
 
 	}
+    //수정 버튼 클릭하면 수정 form 전송
+    function modifyCheck() { 
+    	document.modifyfrm.submit();
+        window.opener.location.reload();
+    	setTimeout(function() {
+    		window.close();
+            }, 10);  
+        }  
+
 
     
         function comma(str) {

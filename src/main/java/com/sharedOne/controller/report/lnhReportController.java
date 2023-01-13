@@ -3,6 +3,7 @@ package com.sharedOne.controller.report;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.util.HSSFColor;
@@ -39,82 +40,102 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sharedOne.domain.master.ProductDto;
 import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.order.OrderItemDto;
+import com.sharedOne.domain.report.OrderReportDto;
+import com.sharedOne.domain.report.PageInfo;
 import com.sharedOne.domain.report.ReportDto;
 import com.sharedOne.service.master.lnhProductService;
+import com.sharedOne.service.report.HmsReportService;
 import com.sharedOne.service.report.lnhReportService;
 
 @Controller
 @RequestMapping("report")
 public class lnhReportController {
-
 	@Autowired
 	private lnhProductService productService;
 	
 	@Autowired
 	private lnhReportService service;
 	
+	@Autowired
+	private HmsReportService hmsService;
 	
 	@GetMapping("monthlyReport")
-	public void getMontlyReport(@RequestParam(name = "orderQ", defaultValue = "") String orderQ, Model model) {
-		System.out.println(orderQ);
+	public void getMontlyReport(
+			@RequestParam(name = "orderQ", defaultValue = "") String orderQ,
+			@RequestParam(name="orderCode", defaultValue="") String orderCode,
+			@RequestParam(name="productCode", defaultValue="") String productCode,
+			@RequestParam(name="writer", defaultValue="") String writer,
+			@RequestParam(name="status", defaultValue="") String status,
+			@RequestParam(name="fromDate", defaultValue="") String fromDate,
+			@RequestParam(name="endDate", defaultValue="") String endDate,
+			Model model) {
+		
+		//검색 결과 리스트
+		List<OrderHeaderDto> orderList = service.orderList(orderQ, orderCode, productCode, writer, status, fromDate, endDate);
+		
 		
 		//조건 검색 제품 리스트
 		List <ProductDto> productList = productService.selectProductList();
 		
-		Set <String> setTypes = new HashSet<>();
-		for( ProductDto product : productList) {
-			setTypes.add(product.getProductType());
+		Set <String> setWriters = new HashSet<>();
+		for( OrderHeaderDto writer1 : orderList) {
+			setWriters.add(writer1.getWriter());
 		}
-		Set <Integer> setSizes = new HashSet<>();
-		for( ProductDto product : productList) {
-			setSizes.add(product.getSize());
+		Set <String> setStatus = new HashSet<>();
+		for( OrderHeaderDto status1 : orderList) {
+			setStatus.add(status1.getStatus());
 		}
 		
-		model.addAttribute("types", setTypes);
-		model.addAttribute("sizes", setSizes);
+		model.addAttribute("writers", setWriters);
+		model.addAttribute("status", setStatus);
 		
 		model.addAttribute("productList", productList);
 		
-		// business logic 작동
 		
 		//올해 매출 그래프(디폴트)
 		List<ReportDto> thisYearSales = service.thisYearSales();
 		
 			
-			//검색 결과 리스트
-			List<OrderHeaderDto> orderList = service.orderList(orderQ);
-			
-			//검색결과 바이어 리스트
-			List<String> buyerList = new ArrayList<>();
-			for (int i = 0; i < orderList.size(); i++) {
-				buyerList.add(orderList.get(i).getBuyerCode());
-			}
-			
-			Map<String, Integer> buyerSales = service.salesByBuyer(orderQ, buyerList);
+		// 검색결과 바이어 리스트, 직원 리스트
+		List<String> buyerList = new ArrayList<>();
+		List<String> writerList = new ArrayList<>();
+		for (int i = 0; i < orderList.size(); i++) {
+			buyerList.add(orderList.get(i).getBuyerCode());
+			writerList.add(orderList.get(i).getWriter());
+		}
 
-		
-			System.out.println("오더리스트 사이즈: " + orderList.size());
-			
-			  
-			System.out.println("바이어 별 매출 "+buyerSales);
-			 
-			
-			System.out.println("컨트롤러: " + orderList);
+		Map<String, Integer> buyerSales = service.salesByBuyer(orderQ, orderCode, productCode, writer, status, fromDate,
+				endDate, buyerList);
+		Map<String, Integer> writerSales = service.salesByWriter(orderQ, orderCode, productCode, status, fromDate,
+				endDate, writerList);
 
-			System.out.println("월별매출"+thisYearSales);
-			
-			// add attribute
-			model.addAttribute("orderList", orderList); // c:forEach items = orderList
-			model.addAttribute("buyerSales", buyerSales);
-		
+		System.out.println("오더리스트 사이즈: " + orderList.size());
 
-		model.addAttribute("thisYearSales",thisYearSales);
+		System.out.println("월별매출" + thisYearSales);
+		System.out.println("바이어 별 매출 " + buyerSales);
+		System.out.println("직원 별 매출" + writerSales);
+
+		System.out.println("컨트롤러: " + orderList);
+
+		// add attribute
+		model.addAttribute("orderList", orderList); // c:forEach items = orderList
+		model.addAttribute("buyerSales", buyerSales);
+		model.addAttribute("writerSales", writerSales);
+
+		model.addAttribute("thisYearSales", thisYearSales);
 	}
 	
 	//엑셀 다운로드
 	@RequestMapping("excelDown")
 	@ResponseBody
-	public void excelDown(HttpServletResponse response,	@RequestParam(name = "orderQ", defaultValue = "") String orderQ) throws IOException {
+	public void excelDown(HttpServletResponse response,	
+			@RequestParam(name = "orderQ", defaultValue = "") String orderQ,
+			@RequestParam(name="orderCode", defaultValue="") String orderCode,
+			@RequestParam(name="productCode", defaultValue="") String productCode,
+			@RequestParam(name="writer", defaultValue="") String writer,
+			@RequestParam(name="status", defaultValue="") String status,
+			@RequestParam(name="fromDate", defaultValue="") String fromDate,
+			@RequestParam(name="endDate", defaultValue="") String endDate) throws IOException {
 		
 		
 		 try (Workbook workbook = new XSSFWorkbook()) {
@@ -187,7 +208,7 @@ public class lnhReportController {
 						 row.createCell(0).setCellValue(board1.getOrderCode());
 						 row.createCell(1).setCellValue(board1.getBuyerCode());
 						 row.createCell(2).setCellValue(board1.getOrderItem().get(0).getProductCode());
-						 row.createCell(3).setCellValue(board1.getOrderItem().get(0).getFinalPrice());
+						 row.createCell(3).setCellValue(board1.getOrderItem().get(0).getSalePrice());
 						 row.createCell(4).setCellValue(board1.getOrderItem().get(0).getQuantity());
 						 row.createCell(5).setCellValue(board1.getOrderItem().get(0).getSum());
 
@@ -217,7 +238,7 @@ public class lnhReportController {
 							 row.createCell(0).setCellValue(board1.getOrderCode());
 							 row.createCell(1).setCellValue(board1.getBuyerCode());
 							 row.createCell(2).setCellValue(board2.getProductCode());
-							 row.createCell(3).setCellValue(board2.getFinalPrice());
+							 row.createCell(3).setCellValue(board2.getSalePrice());
 							 row.createCell(4).setCellValue(board2.getQuantity());
 							 row.createCell(5).setCellValue(board2.getSum());
 							 Date cell6 = java.sql.Date.valueOf(board1.getInserted());
@@ -252,6 +273,7 @@ public class lnhReportController {
 
 			}
 
-		}
+	}
 
 }
+
