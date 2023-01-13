@@ -37,6 +37,11 @@
 		background-color: #D3D3D3;
 		cursor: pointer;
 	}
+	
+	#registerBtn {
+		margin-left: 30px;
+		margin-bottom: 10px;
+	}
 
 	.scrollBox {
 		width: 100%;
@@ -53,6 +58,7 @@
 	.table .trtr:hover {
  		font-weight: bold;
  		background-color: #c7c9c2;
+ 		cursor : pointer;
  	}
  	
  	.primaryBtn {
@@ -83,7 +89,6 @@
 <my:side_bar active=""></my:side_bar>
 
 <div class="container-sm mt-4" style="width: 77vw; margin-left: 20%;">
-	<h4>제품 관리</h4>
 	<div class="row d-flex">
 		
 		<!-- *좌측* 검색 조건 설명란 -->
@@ -103,7 +108,7 @@
 				<div class="row d-flex">
 					<div class="col-sm-6 mb-4">
 						<div class="input-group">
-							<input name="keyword" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
+							<input name="keyword" value="${param.keyword }" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
 			        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
@@ -112,7 +117,7 @@
 				<div class="row d-flex">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions1" placeholder="제품코드">
+							<input name="productCode" value="${param.productCode }" type="text" id="" class="form-control" list="datalistOptions1" placeholder="제품코드">
 							<datalist id="datalistOptions1">
 								<c:forEach items="${product }" var="product">
 									<option value="${product.productCode }">
@@ -123,7 +128,7 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품명">
+							<input name="productName" value="${param.productName }" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품명">
 							<datalist id="datalistOptions2">
 								<c:forEach items="${product }" var="product">
 									<option value="${product.productName }">
@@ -132,20 +137,10 @@
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>	
 					</div>
+
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions3" placeholder="제품타입">
-							<datalist id="datalistOptions3">
-								<c:forEach items="${types }" var="type">
-									<option value="${type }">
-								</c:forEach>
-							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-						</div>
-					</div>
-					<div class="col-sm-3">
-						<div class="input-group">
-							<input name="" value="" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="제품규격 Inch">
+							<input name="size" value="${param.size }" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="제품규격 Inch">
 							<datalist id="datalistOptions4">
 								<c:forEach items="${sizes }" var="size">
 									<option value="${size }">
@@ -154,7 +149,14 @@
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
-				</div><!-- 2nd row 끝 -->
+
+						<div class="col-sm-2">
+							<div style="text-align: justify;">
+								<a class="btn btn-outline-primary primaryBtn" type="submit"
+									href="/master/productList">검색 조건 초기화</a>
+							</div>
+						</div>
+					</div><!-- 2nd row 끝 -->
 
 				<div class="row mt-4">
 					<div class="col-sm-4"></div>
@@ -182,15 +184,15 @@
 			   	 <thead>
 					 <tr>
 
-						<th style="max-width: 800px;width: 220px;">제품코드</th>
+					<th style="max-width: 800px;width: 220px;">제품코드</th>
 
                   <th style="width: 300px;">제품명</th>
                   <th style="width: 220px;">타입</th>
                   <th style="width: 130px;">무게(g)</th>
                   <th style="width: 130px;">규격(Inch)</th>
                   <th style="width: 100px;">단위(EA)</th>
-                  <th style="width: 150px;">원가</th>
-                  <th style="width: 300px;">원가기간</th>
+                  <th style="width: 150px;">단가</th>
+                  <th style="width: 300px;">단가기간</th>
 
 					 </tr>
 				 </thead>
@@ -199,18 +201,9 @@
 						<c:url value="/master/productModify" var="getLink">
 							<c:param name="code" value="${product.productCode }"></c:param>
 						</c:url>
-					<tr onclick="window.open('${getLink}','제품정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
+					<tr title="${product.productName } 정보 수정하기" onclick="window.open('${getLink}','제품정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
 
-<%-- 							<td style="max-width: 500px;">${product.productCode }</td>
-							<td>${product.productName }</td>
-							<td>${product.productType }</td>
-							<td>${product.weight }</td>
-							<td>${product.size }</td>
-							<td>${product.unit }</td>
-							<td>${product.price }</td>
-							<td>${product.fromDate } ~ ${product.endDate }</td> --%>
-							
-							<td style="max-width: 500px; word-break:break-all;width: 220px;">${product.productCode }</td>
+					<td style="max-width: 500px; word-break:break-all;width: 220px;">${product.productCode }</td>
                      <td style="word-break:break-all;width: 300px;">${product.productName }</td>
                      <td style="word-break:break-all;width: 220px;">${product.productType }
                      <td style="word-break:break-all;width: 130px;">${product.weight }</td>

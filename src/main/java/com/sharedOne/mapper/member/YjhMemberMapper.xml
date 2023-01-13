@@ -5,24 +5,37 @@
   
 <mapper namespace="com.sharedOne.mapper.member.YjhMemberMapper">
 
+	<select id="getEmail" resultType="com.sharedOne.domain.member.MemberDto">
+		SELECT id,
+			   password,
+			   name,
+			   email,
+			   phone
+	    FROM Member 
+	    WHERE email = #{email};
+	
+	</select>
+
 	<insert id="insertRanks">
-		INSERT INTO Ranks(id, rank)
-		VALUES (#{id}, #{rank});
+		INSERT INTO Ranks(memberId, rank)
+		VALUES (#{memberId}, #{rank});
 	</insert>
 
-	<insert id="insertMember">
-		INSERT INTO Member(id, password, name, email, phone)
-		VALUES (#{id}, #{password}, #{name}, #{email}, #{phone});
+	<insert id="insertMember" useGeneratedKeys="true" keyProperty="memberId">
+		insert into Member (id, password, name, email, phone)
+		values((select concat(cast(today as char),"-", right(concat('000' , rowCount + 1),  4)) as newMemberId from Member as m,(select concat(substr(date_format(now(), '%Y'), 3, 4)) as today,(select memberId from Member order by memberId desc limit 1) as rowCount FROM dual) d group by newMemberId),
+		#{password}, #{name}, #{email}, #{phone});
 	</insert>
 	
 	<select id="selectById" resultMap="memberMap">
-		SELECT m.id id,
+		SELECT id,
+			   m.memberId memberId,
 			   password,
 			   name,
 			   email,
 			   phone,
 			   r.rank rank
-	    FROM Member m LEFT JOIN Ranks r ON m.id = r.id 
+	    FROM Member m LEFT JOIN Ranks r ON m.memberId = r.memberId 
 	    WHERE m.id = #{id};
 	</select>
 	

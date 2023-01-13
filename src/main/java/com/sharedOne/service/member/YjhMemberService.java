@@ -16,19 +16,36 @@ public class YjhMemberService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	public int insertMember(MemberDto member) {
+	public void insertMember(MemberDto member, RanksDto rank) {
 		
 		String pw = member.getPassword();
 		
 		member.setPassword(passwordEncoder.encode(pw));
 		
-		return mapper.insertMember(member);
+		String email = member.getEmail() + "@order.com";
+		
+		member.setEmail(email);
+		
+		mapper.insertMember(member);
+		
+		int getMemberId = member.getMemberId();
+		
+		rank.setMemberId(getMemberId);
+		
+		mapper.insertRanks(rank);
 	}
 	
-	public int insertRanks(RanksDto rank) {
+	/*
+	 * public void insertRanks(RanksDto rank) {
+	 * 
+	 * mapper.insertRanks(rank);
+	 * 
+	 * }
+	 */
+
+	public MemberDto checkEmail(String email) {
 		
-		return mapper.insertRanks(rank);
-		
+		return mapper.getEmail(email);
 	}
 
 }

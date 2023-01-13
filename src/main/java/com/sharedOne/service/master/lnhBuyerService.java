@@ -44,8 +44,11 @@ public class lnhBuyerService {
 	public BuyerDto getByBuyerCode(String buyerCode) {
 		return buyerMapper.selectByBuyerCode(buyerCode);
 	}
-	public List<BuyerDto> searchBuyerList(String keyword) {
-		return buyerMapper.searchBuyerList("%" + keyword + "%");
+	public List<BuyerDto> searchBuyerList(String keyword, String buyerCode, String buyerName, String country) {
+		
+		keyword = "%" + keyword + "%";
+		
+		return buyerMapper.searchBuyerList(keyword, buyerCode, buyerName, country);
 	}
 
 }

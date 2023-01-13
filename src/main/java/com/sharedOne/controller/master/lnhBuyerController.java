@@ -28,7 +28,12 @@ public class lnhBuyerController {
 	private lnhBuyerService buyerService;
 
 	@GetMapping("buyerList")
-	public void buyerList(@RequestParam(name = "keyword", defaultValue = "") String keyword,Model model) {
+	public void buyerList(
+			@RequestParam(name = "keyword", defaultValue = "") String keyword,
+			@RequestParam(name = "buyerCode", defaultValue = "") String buyerCode,
+			@RequestParam(name = "buyerName", defaultValue = "") String buyerName,
+			@RequestParam(name = "country", defaultValue = "") String country,
+			Model model) {
 		List<BuyerDto> buyer1 = buyerService.selectBuyerList();
 
 		Set<String> setCountries = new HashSet<>();
@@ -40,7 +45,7 @@ public class lnhBuyerController {
 			setManagers.add(buyer.getManager());
 		}
 		
-		List<BuyerDto> searhResult = buyerService.searchBuyerList(keyword);
+		List<BuyerDto> searhResult = buyerService.searchBuyerList(keyword, buyerCode, buyerName, country);
 		
 		System.out.println(keyword);
 		System.out.println(searhResult);
@@ -59,20 +64,10 @@ public class lnhBuyerController {
 	}
 
 	@PostMapping("buyerRegister")
-	public void register(BuyerDto buyer, RedirectAttributes rttr) {
+	public void register(BuyerDto buyer) {
 		buyerService.register(buyer);
 	}
 
-	// 새 창으로 띄우는 경우
-	/*
-	 * @GetMapping("buyerGet") public void get(
-	 * 
-	 * @RequestParam(name = "code") String buyerCode, Authentication auth, Model
-	 * model) { BuyerDto buyer = buyerService.get(buyerCode);
-	 * model.addAttribute("buyer", buyer);
-	 * 
-	 * }
-	 */
 
 	@GetMapping("buyerModify") // @은 외부 빈, #은 메소드의 파라미터
 	/* @PreAuthorize("@Security.checkWriter(authentication.name, #buyerCode)") */
@@ -85,11 +80,8 @@ public class lnhBuyerController {
 
 	@PostMapping("buyerModify")
 	/* @PreAuthorize("@Security.checkWriter(authentication.name, #buyerCode)") */
-	public String modify(BuyerDto buyer) {
+	public void modify(BuyerDto buyer) {
 		buyerService.update(buyer);
-		String code = buyer.getBuyerCode();
-
-		return "redirect:/master/buyerModify?code=" + code;
 	}
 	
 	@GetMapping("existbuyerCode/{buyerCode}")

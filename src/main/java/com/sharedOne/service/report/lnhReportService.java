@@ -1,6 +1,5 @@
 package com.sharedOne.service.report;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sharedOne.domain.order.OrderHeaderDto;
-import com.sharedOne.domain.order.OrderItemDto;
 import com.sharedOne.domain.report.ReportDto;
 import com.sharedOne.mapper.report.lnhReportMapper;
 
@@ -19,23 +17,50 @@ public class lnhReportService {
 	@Autowired
 	private lnhReportMapper mapper;
 
-	public List<OrderHeaderDto> orderList(String orderQ) { 
+	public List<OrderHeaderDto> orderList(String orderQ, String orderCode, String productCode, String writer, String status, String fromDate, String endDate) { 
 		
-		return mapper.orderList("%" + orderQ + "%");
+		orderQ = "%" + orderQ + "%";
+		
+		return mapper.orderList(orderQ, orderCode, productCode, writer, status, fromDate, endDate);
+	}
+	//올해 매출
+	public List<ReportDto> thisYearSales() {
+		return mapper.thisYearSales();
 	}
 	
-	public Map<String, Integer> salesByBuyer(String orderQ, List<String> buyerCodes) {
+	//검색 결과 바이어 별 매출
+	public Map<String, Integer> salesByBuyer(String orderQ, String orderCode, String productCode,
+											String writer, String status, String fromDate, String endDate, List<String> buyerCodes) {
 		Map<String, Integer> salesByBuyer = new HashMap<>();
-		
+		orderQ = "%" + orderQ + "%";
+		//바이어 코드 별 매출
 		for (String buyerCode : buyerCodes ) {
-			salesByBuyer.put(buyerCode, mapper.salesByBuyer(orderQ, buyerCode));
+			Integer BuyerSale = mapper.salesByBuyer(orderQ, orderCode, productCode, writer, status, fromDate, endDate, buyerCode);
+			//매출이 없는 경우
+			if (BuyerSale == null) {
+				BuyerSale = 0;
+			}
+			salesByBuyer.put(buyerCode, BuyerSale);
 		}
 		return salesByBuyer;
 		
 	}
-
-	public List<ReportDto> thisYearSales() {
-		return mapper.thisYearSales();
+	//검색 결과 직원 별 매출
+	public Map<String, Integer> salesByWriter(String orderQ, String orderCode, String productCode, 
+												String status, String fromDate, String endDate, List<String> writerList) {
+		Map<String, Integer> salesByWriter = new HashMap<>();
+		orderQ = "%" + orderQ + "%";
+		//직원 별 매출
+		for (String writer : writerList) {
+			Integer writerSale = mapper.salesByWriter(orderQ, orderCode, productCode, writer, status, fromDate, endDate);
+			//매출이 없는 경우
+			if(writerSale == null) {
+				writerSale = 0;
+			}
+			salesByWriter.put(writer, writerSale);
+		}
+		
+		return salesByWriter;
 	}
 
 }
