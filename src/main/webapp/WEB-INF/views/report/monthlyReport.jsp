@@ -358,10 +358,6 @@ div.right {
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
-function myFunction() {
-
-	var str = document.getElementById("demo").value; 
-
 
 //전체 기간 선택
 $('input[name=fromDate]').prop("disabled", true);
@@ -375,7 +371,7 @@ $('#checkedAllDate').click(function(){
 		$('input[name=fromDate]').removeAttr("disabled");
 		$('input[name=endDate]').removeAttr("disabled");
 	}
-})
+
 
 
 </script>

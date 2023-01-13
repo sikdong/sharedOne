@@ -47,6 +47,11 @@
     .rowdiv{
         justify-content: space-around;
     }
+    .inputDiv{
+	    position: absolute;
+	    right: 20px;
+    }
+    
     .col-form-label{
         font-weight: 600;
     }
@@ -63,6 +68,10 @@
 	    background-color: white !important;
  		border-color: #1d5c83 !important;
  		color: #1d5c83 !important;
+    }
+    #buyerCodeExist, #businessNumberExist {
+    	margin-left: 50px;
+    
     }
     
     #businessNumberExist:hover, #buyerCodeExist:hover {
@@ -83,6 +92,7 @@
 	    border-radius: 5px; 
 	    background: #1d5c83;
 	    margin-bottom: 25px;
+	    margin-right: 25px;
     }
     
 </style>
@@ -100,48 +110,53 @@
 	                    <div class="container-sm content-size">
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputCode" class="col-form-label">바이어 코드</label>
-	                            <div class="col-sm-5">
+	                            <div class="col-sm-7 inputDiv">
 	                                <input id="buyerCode" name="buyerCode" type="text" class="form-control" placeholder="바이어코드를 입력하세요."/>
-	                                <button class="btn" type="button" id="buyerCodeExist">확인</button>
 	                            </div>
+	                            <div class="check">
 	                            <div id="buyerCodeText1" class="form-text">바이어코드 확인을 해주세요.</div>
+	                                <button class="btn" type="button" id="buyerCodeExist">확인</button>
+	                            
+	                            </div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputName" class="col-form-label">바이어명</label>
-	                            <div class="col-sm-5">
+	                            <div class="col-sm-7 inputDiv">
 	                                <input id="buyerName" name="buyerName" type="text" class="form-control" placeholder="바이어명을 입력하세요."/>
 	                            </div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputAddress" class="col-form-label">주소</label>
-	                            <div class="col-sm-5">
+	                            <div class="col-sm-7 inputDiv">
 	                                <input id="buyerAddress" name="address" type="text" class="form-control" placeholder="주소를 입력하세요."/>
 	                            </div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputCountry" class="col-form-label">국가</label>
-	                            <div class="col-sm-5">
+	                            <div class="col-sm-7 inputDiv">
 	                                <input id="buyerCountry" name="country" type="text" class="form-control" placeholder="국가를 입력하세요."/>
 	                            </div>
 	                        </div> 
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputBusinessNum" class="col-form-label">사업자번호</label>
-	                            <div class="col-sm-5">
+	                            <div class="col-sm-7 inputDiv">
 	                                <input id="businessNum" name="businessNumber" type="text" class="form-control" placeholder="사업자번호를 입력하세요."/>
+	                            </div>
+	                            <div class="check">
+	                            <div id="businessNumberText1" class="form-text">사업자번호 확인을 해주세요.</div>
 	                                <button class="btn" type="button" id="businessNumberExist">확인</button>
 	                            </div>
-	                            <div id="businessNumberText1" class="form-text">사업자번호 확인을 해주세요.</div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputPhone" class="col-form-label">연락처</label>
-	                            <div class="col-sm-5">
+	                            <div class="col-sm-7 inputDiv">
 	                                <input id="buyerPhone" name="phone" type="text" class="form-control" placeholder="연락처를 입력하세요."/>
 	                            </div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 								<label for="inputPhone" class="col-form-label" >선적비용부담회사</label>
 	
-								<div class="col-sm-5">
+								<div class="col-sm-7 inputDiv">
 									<select id="deliveryCompany" name="deliveryCompany" class="form-control"
 										style="padding-left: 8px;">
 										<option selected>선적 비용 부담 회사를 선택하세요.</option>
@@ -152,7 +167,7 @@
 							</div>
 	                         <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputPhone" class="col-form-label">담당자</label>
-	                            <div class="col-sm-5">
+	                            <div class="col-sm-7 inputDiv">
 	                                <input id="manager" name="manager" type="text" class="form-control" placeholder="담당자를 입력하세요."/>
 	                            </div>
 	                        </div>                      

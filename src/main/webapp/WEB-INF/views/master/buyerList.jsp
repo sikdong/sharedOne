@@ -174,7 +174,7 @@
 	<h4>바이어목록</h4>
 	<div class="col-sm-9"></div>
 	<c:url value="/master/buyerRegister" var="registerLink"></c:url>
-		<button id="registerBtn" class="btn btn-outline-primary primaryBtn" onclick="window.open('${registerLink}','바이어정보','width=500,height=1000,left=700,top=200,location=no,status=no,scrollbars=yes');">바이어등록</button>
+		<button id="registerBtn" class="btn btn-outline-primary primaryBtn" onclick="window.open('${registerLink}','바이어정보','width=600,height=660,left=700,top=200,location=no,status=no,scrollbars=yes');">바이어등록</button>
 	</div>
 	<!-- 리스트 -->
 	<table class="table table-hover container">
@@ -195,7 +195,7 @@
 			<c:url value="/master/buyerModify" var="getLink">
 					<c:param name="code" value="${buyer.buyerCode }"></c:param>
 				</c:url>
-				<tr title="${buyer.buyerName } 정보 수정하기" onclick="window.open('${getLink}','바이어정보','width=500,height=1000,left=700,top=200,location=no,status=no,scrollbars=yes');" class="trtr">
+				<tr title="${buyer.buyerName } 정보 수정하기" onclick="window.open('${getLink}','바이어정보','width=600,height=660,left=700,top=200,location=no,status=no,scrollbars=yes');" class="trtr">
 <%-- 				<tr onclick="location.href='${getLink}'" class="trtr"> --%>
 					<td style="width: 100px;">${buyer.buyerCode }</td>
 					<td style="width: 150px;">${buyer.buyerName }</td>

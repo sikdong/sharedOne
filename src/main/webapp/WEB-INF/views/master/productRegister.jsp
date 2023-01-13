@@ -43,6 +43,10 @@
     .rowdiv{
         justify-content: space-around;
     }
+    .inputDiv{
+	    position: absolute;
+	    right: 20px;
+    }
     .col-form-label{
         font-weight: 600;
     }
@@ -59,6 +63,7 @@
 	    background-color: white !important;
  		border-color: #1d5c83 !important;
  		color: #1d5c83 !important;
+ 		margin-left: 70px;
     }
     
     #productNameExist:hover {
@@ -95,21 +100,23 @@
 	                    <div class="container-sm content-size">
 	                    	<div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputCode" class="col-form-label">제품 코드</label>
-	                            <div class="col-sm-5">
+	                            <div class="col-sm-7 inputDiv inputDiv">
 	                                <input id="productCode" name="productCode" type="text" class="form-control" placeholder="제품코드를 입력하세요."/>
 	                            </div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputName" class="col-form-label">제품명</label>
-	                            <div class="col-sm-5">
+	                            <div class="col-sm-7 inputDiv inputDiv"">
 	                                <input id="productName" name="productName"  type="text" class="form-control" placeholder="제품명을 입력하세요."/>
-	                                <button class="btn" type="button" id="productNameExist">확인</button>
 	                            </div>
-	                            <div id="productNameText1" class="form-text">제품명 확인을 해주세요.</div>
+	                            <div class="check">
+		                            <div id="productNameText1" class="form-text">제품명 확인을 해주세요.</div>
+		                                <button class="btn" type="button" id="productNameExist">확인</button>
+	                            </div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputProductType" class="col-form-label">제품 종류</label>
-	                            <div class="col-sm-5">
+	                            <div class="col-sm-7 inputDiv inputDiv"">
 	                                    <select id="productType" name="productType" class="form-control" style="padding-left: 8px;" >
 	                                      <option selected>제품 종류를 선택 하세요.</option>
 	                                      <option name="GATE 밸브">GATE 밸브</option>
@@ -122,45 +129,45 @@
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputName" class="col-form-label">무게</label>
-	                            <div class="col-sm-5">
+	                            <div class="col-sm-7 inputDiv">
 	                                <input id="productWeight" name= "weight" type="text" class="form-control" placeholder="무게를 입력하세요."/>
 	                            </div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputName" class="col-form-label">규격</label>
-	                            <div class="col-sm-5">
+	                            <div class="col-sm-7 inputDiv">
 	                                <input id="productSize" name="size" type="text" class="form-control" placeholder="규격을 입력하세요."/>
 	                            </div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputName" class="col-form-label">단위</label>
-	                            <div class="col-sm-5">
+	                            <div class="col-sm-7 inputDiv">
 	                                <input id="productUnit" name="unit" type="text" class="form-control" placeholder="제품단위를 입력하세요."/>
 	                            </div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputProductPrice" class="col-form-label">단가</label>
-	                            <div class="col-sm-5">
+	                            <div class="col-sm-7 inputDiv">
 	                                <input id="productPrice" name="price" type="text" class="form-control" placeholder="단가를 입력하세요."/>
 	                            </div>
 		                        </div>
 	
 							<div class="mb-2 row mt-2 rowdiv">
 								<label for="inputPriceStartDate" class="col-form-label">단가 시작일</label>
-								<div class="col-sm-5">
+								<div class="col-sm-7 inputDiv">
 									<input id="productStartDate" name ="fromDate" type="date" class="form-control" />
 								</div>
 							</div>
 							<div class="mb-2 row mt-2 rowdiv">
 								<label for="inputPriceEndDate" class="col-form-label">단가 종료일</label>
-								<div class="col-sm-5">
+								<div class="col-sm-7 inputDiv">
 									<input id="productEndDate" name ="endDate" type="date" class="form-control" />
 								</div>
 							</div>
 	
 							<div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputName" class="col-form-label">제품 설명</label>
-	                            <div class="col-sm-5">
+	                            <div class="col-sm-7 inputDiv">
 	                                <input id="productContent" name="content" type="text" class="form-control" placeholder="제품설명을 입력하세요."/>
 	                            </div>
 	                        </div>                   
