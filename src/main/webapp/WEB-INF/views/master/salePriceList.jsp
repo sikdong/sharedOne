@@ -60,7 +60,73 @@
  		background-color: #1d5c83 !important;
  		color: white !important;
  	}
- 	
+ 	.price-input{
+ 		margin: 20px 20px;
+ 		width: 80%;
+ 		display: flex;
+ 		
+ 	}
+ 	.price-input span{
+ 		margin: auto;
+ 	}
+ 	.price-input .field{
+ 		height: 40px;
+ 		margin: auto;
+ 		display: flex;
+ 		align-content: center;
+ 	}
+ 	.field input{
+ 		width: 50%;
+ 		height: 100%;
+ 		align-content: center;
+ 		margin-left: 10px; 
+ 		border: 1px solid #999;
+ 		border-radius: 5px;
+ 		outline: none;
+ 		text-align: center;
+ 		font-size: 19px;
+ 		-moz-appearance: textfield;
+ 		
+ 	}
+ 	.separator{
+ 		margin: auto;
+ 	}
+ 	.slider{
+ 		height : 5px;
+ 		border-radius: 5px ;
+ 		position : relative;
+ 		background: #ddd;
+ 	}
+ 	.slider .progress{
+ 		height : 5px;
+ 		border-radius: 5px;
+ 		position : absolute;
+ 		left : 0%;
+ 		right : 0%;
+ 		background: #1479FB;
+ 	}
+ 	.range-input{
+ 		position: relative;
+ 	}
+ 	.range-input input{
+ 		top : -5px;
+ 		height : 5px;
+ 		width : 100%;
+ 		background: none;
+ 		position: absolute;
+ 		pointer-events: none; 
+ 		-webkit-appearance : none;
+ 	}
+ 	input[type="range"]::-webkit-slider-thumb{
+ 		pointer-events: auto; 
+ 		
+ 	}
+ 	input[type="range"]::-moz-range-thumb{
+ 		pointer-events: auto; 
+ 		-moz-appearance : none;
+ 		border: none;
+ 		
+ 	}
 </style>
 
 
@@ -99,13 +165,13 @@
 		
 		<!-- *우측* 검색 필터 -->
 		<div class="col-sm-10 mt-1">
-			<form action="" method="get"><!-- form get? post?  -->		
+			<form id="form"><!-- form ajax  -->		
 				<!-- 검색필터 1st row : 전체 검색. -->
 				<div class="row d-flex  mb-1">
 					<div class="col-sm-6 mb-4">
 						<div class="input-group">
 							<input name="q" value="${param.q }" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
-			        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+			        		<button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
 				</div><!-- 1st row 끝 -->
@@ -120,7 +186,7 @@
 								</c:forEach>
 							</datalist>
 									
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
 					<div class="col-sm-3">
@@ -133,7 +199,7 @@
 								</c:forEach>
 							</datalist>
 
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>	
 					</div>			
 				</div><!-- 2nd row 끝 -->
@@ -147,7 +213,7 @@
 									<option value="${buyer.buyerCode }">${buyer.buyerCode }</option>
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
 					<div class="col-sm-3">
@@ -158,7 +224,7 @@
 									<option value="${buyer.buyerName }">${buyer.buyerName }</option>
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
 					<div class="col-sm-3">
@@ -169,18 +235,32 @@
 									<option value="${country }">${country }</option>
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
 				</div><!-- 3rd row 끝 -->
 				<!-- 검색필터 4th row : 단가 선택  -->
 				<div class="row d-flex mb-3">
-					<div class="col-sm-9">
-						<div class="">
-							<span>Min</span>
-							<input type="number" name="min" value="10" >
-							<span>Max</span>
-							<input type="number" name="max" value="100" >
+					<div class="col-sm-9">				
+						<div class="slider">
+							<div class="progress">
+							
+							</div>
+						</div>
+						<div class="range-input">
+							<input type="range" id="min" value="0" min="0" max="100000" step="10000">			
+							<input type="range" id="max" value="100000" min="0" max="100000" step="10000">
+						</div>
+						<div class="price-input">
+							<div class="field">
+								<span>Min</span>
+								<input type="number" class="input-min" name="priceMin" value="0" >
+							</div>
+							<div class="separator">-</div>
+							<div class="field">
+								<span>Max</span>
+								<input type="number" class="input-max" name="priceMax" value="100000" >
+							</div>	
 						</div>
 					</div>
 				</div><!-- 4th row 끝 -->
@@ -194,9 +274,9 @@
 					</div>
 					<div class="col-sm-5">
 						<div class="input-group">
-							<input name="d1" value="${nowDate }" type="date" id="" class="form-control">
+							<input name="d1" value="" type="date" id="" class="form-control">
 							<span class="input-group-text">~</span>
-			        		<input name="d2" value="${addMonth }" type="date" id="" class="form-control">
+			        		<input name="d2" value="" type="date" id="" class="form-control">
 						</div>
 					</div>
 				</div><!-- 5th row 끝 -->
@@ -204,7 +284,7 @@
 					<div class="col-sm-4"></div>
 					<div class="col-sm-4">
 						<div style="text-align: justify;">
-							<button class="btn btn-oneline-primary primaryBtn" type="submit">선택 조건 검색</button>
+							<button id="selectedSearchBtn" class="btn btn-oneline-primary primaryBtn" type="button">선택 조건 검색</button>
 						</div>
 					</div>
 				</div>
@@ -219,7 +299,7 @@
 		<div class="col-sm-10"></div>
 		<c:url value="/master/salePriceRegister" var="getLink"></c:url>
 		
-		<button onclick="window.open('${getLink}','가격등록','width=500,height=500,left=400,top=100,bottom=300,location=no,status=no,scrollbars=yes');" class="btn btn-oneline-primary primaryBtn" >가격등록</button>
+		<button type="button" onclick="window.open('${getLink}','가격등록','width=500,height=500,left=400,top=100,bottom=300,location=no,status=no,scrollbars=yes');" class="btn btn-oneline-primary primaryBtn" >가격등록</button>
 				
 	</div>
 	
@@ -247,8 +327,8 @@
 					<th>비고</th>
 				</tr>
 			</thead>		
-			<tbody>
-				<c:forEach items="${allSalePriceList }" var="item" varStatus="st">
+			<tbody id="tbody">
+				<%-- <c:forEach items="${allSalePriceList }" var="item" varStatus="st">
 					<tr id="tr${item.priceId }" class="listHover">
 						<td><input type="checkbox" name="checkbox" id="checkbox${item.priceId }"></td>
 						<td>${st.count }</td>
@@ -265,10 +345,10 @@
 							<c:url value="/master/salePriceModify" var="modifyLink">
 								<c:param name="priceId" value="${item.priceId }"/>
 							</c:url>
-							<button id="modify${item.priceId }" type="button" onclick="window.open('${modifyLink}','가격수정','width=500,height=500,left=400,top=100,bottom=300,location=no,status=no,scrollbars=yes');" class="btn btn-outline-secondary" >수정</button>
+							<button id="modify${item.priceId }" type="button" class="btn btn-outline-secondary" >수정</button>
 						</td>
 					</tr>
-				</c:forEach>
+				</c:forEach> --%>
 			</tbody>
 		</table>
 	</div><!-- scrollBox 끝 -->
@@ -276,6 +356,112 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
+const ctx = "${pageContext.request.contextPath}";
+search();
+checkDate();
+/* checkBox(); */
+
+/* 검색 => ajax 테이블 조회 */
+  
+function search(){
+	
+	$('input, #selectedSearchBtn').on('keyup click input',function(){
+		/* q, productCode, productName, buyerCode, buyerName, country, priceMin, priceMax */
+		const q = $('input[name=q]').val();
+		const productCode = $('input[name=productCode]').val();
+		const productName = $('input[name=productName]').val();
+		const buyerCode = $('input[name=buyerCode]').val();
+		const buyerName = $('input[name=buyerName]').val();
+		const country = $('input[name=country]').val();
+		const priceMin = $('input[name=priceMin]').val();
+		const priceMax = $('input[name=priceMax]').val();
+		const fromDate = $('input[name=d1]').val();
+		const endDate = $('input[name=d2]').val();
+		
+		const data = {q, productCode, productName, buyerCode, buyerName, country, priceMin, priceMax, fromDate, endDate };
+		$.ajax({
+			url : "/master/salePriceListAjax",
+			method : "GET",
+			data : (data),
+			dataType : "json"
+		})
+		.done(function(list){
+			$('#tbody').empty();
+			
+			$.each(list, function(idx, item){
+				console.log(item);
+				let number = idx + 1;
+				
+				$('#tbody').append(
+					'<tr id="tr' +item.priceId+ '" class="listHover">' +
+						'<td><input type="checkbox" name="checkbox" id="checkbox' +item.priceId+ '"></td>'+
+						'<td>' +number+ '</td>'+
+						'<td>' +item.productCode+ '</td>'+
+						'<td>' +item.productName+ '</td>'+
+						'<td>' +item.buyerCode+ '</td>'+
+						'<td>' +item.country+ '</td>'+
+						'<td>' +item.buyerName+ '</td>'+
+						'<td>' +item.price+ '</td>'+
+						'<td>' +item.salePrice+ '</td>'+
+						'<td>' +item.discountRate+'%</td>'+
+						'<td>' +item.fromDate+ '~' +item.endDate+ '</td>'+
+						'<td>' + 
+							'<button id="modify' + item.priceId+ '" type="button" class="btn btn-outline-secondary" >수정</button>'+
+						'</td>'+	
+					'</tr>'
+				);
+				
+				/* 수정버튼 누를때, 수정창 열기, 백그라운드 주기, 체크하기  */
+				$('#modify'+item.priceId).click(function(){
+					/* row 백그라운드 ,체크 해제하기, */
+					$('tr').removeClass();
+					$('[name=checkbox]').prop('checked', false);
+					
+					/* row 백그라운드 ,체크하기, */
+					$('#checkbox'+item.priceId ).prop('checked', true);
+					$('#tr'+item.priceId ).addClass("selectedRow");
+					
+					/* 수정창 열기 */
+					window.open('${ctx}'+'/master/salePriceModify?priceId='+item.priceId,'가격수정','width=500,height=500,left=400,top=100,bottom=300,location=no,status=no,scrollbars=yes');
+				})
+					
+			})
+		})
+	});
+} 
+
+/* 필터 가격 슬라이더 */
+$(function(){
+	$('#min').on("input", function(){		
+		let minVal = $(this).val();
+		/* console.log("minVal="+minVal);	 */	
+		$('input[name=priceMin]').attr('value', minVal);
+		$('.progress').css('left', (minVal /100000) * 100+"%");
+	})
+	$('#max').on("input", function(){		
+		let maxVal = $(this).val();
+		$('input[name=priceMax]').attr('value', maxVal);
+		/* console.log("maxVal="+maxVal); */	
+		/* console.log(100 -(maxVal /100000) *100+"%"); */
+		$('.progress').css('right', 100 - (maxVal /100000) * 100+"%");
+	})
+});
+/* 필터 가격 인풋 입력하면? 슬라이더 길이 변경 */
+$(function(){
+	$('input[name=priceMin]').on("input", function(){		
+		let minVal = $(this).val();
+		$('#min').attr('value', minVal);
+		$('.progress').css('left', (minVal /100000) * 100+"%");
+	})
+	$('input[name=priceMax]').on("input", function(){		
+		let maxVal = $(this).val();
+		$('#max').attr('value', maxVal);
+		$('.progress').css('right', 100 - (maxVal /100000) * 100+"%");
+	})
+});
+
+/* 필터 전체기간 체크 */
+function checkDate(){
 	$('input[name=d1]').prop("disabled", true);
 	$('input[name=d2]').prop("disabled", true);
 	$('#checkedAllDate').click(function(){
@@ -283,25 +469,17 @@
 			
 			$('input[name=d1]').prop("disabled", true);
 			$('input[name=d2]').prop("disabled", true);
+			$('input[name=d1]').attr("value", "");
+			$('input[name=d2]').attr("value", "");
 		}else{
 			$('input[name=d1]').removeAttr("disabled");
 			$('input[name=d2]').removeAttr("disabled");
+			$('input[name=d1]').attr('value', '${nowDate }')
+			$('input[name=d2]').attr('value', '${addMonth }')
 		}
 	})
-	
-		
-			
-	
+}	
 
-	<c:forEach items="${allSalePriceList}" var="item">
-		$('#modify${item.priceId }').click(function(){
-			$('tr').removeClass();
-			$('[name=checkbox]').prop("checked", false);
-			
-			$('#tr${item.priceId }').addClass("selectedRow");
-			$('#checkbox${item.priceId }').prop("checked", true);
-		})
-	</c:forEach>
 </script>
 	
 </body>

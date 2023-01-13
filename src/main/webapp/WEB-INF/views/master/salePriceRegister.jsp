@@ -152,7 +152,7 @@
                     <div class="mb-2 row mt-2 rowdiv">
                         <label for="" class="col-3 col-form-label">판매 종료일</label>
                         <div class="col-sm-5">
-                            <input name="endDate" value="" id="d2" type="date" class="form-control"/>
+                            <input name="endDate" value=""             id="d2" type="date" class="form-control"/>
                         </div>
                     </div>                        
                 </div>
@@ -161,6 +161,9 @@
 	     <div class="d-flex">
 	     	 <div class="col-10"></div>
 	         <button id="registerBtn" class="btn primaryBtn" type="submit" > 등록 </button>
+	     </div>
+	     <div class="d-flex">
+	     	<div id="message"></div>
 	     </div>
       </form>
    </div>
@@ -219,7 +222,34 @@ $(function(){
 	$('input[name=productCode]').keyup(function(){
 		const productCode = $.trim( $('input[name=productCode]').val() );
 		const buyerCode = $('input[name=buyerCode]').val();	
-		
+		const data = {buyerCode, productCode};
+		/* 바이어선택후 제품중복 등록 할때, 날짜 가져와서. 중복 체크하기   */
+		$.ajax({	
+			url:"/master/salePriceRegisterAjax",
+			method: "GET",
+			data: (data),
+			dataType: "json"
+		})
+		.done(function(dateList){
+			if (dateList != '') {		
+				$.each(dateList, function(idx, item){
+					let fromDate = item.fromDate;
+					let endDate = item.endDate;			
+					$('input[type=date]').on('input', function(){
+						$('#registerBtn').attr('disabled', false);
+						let d1 = $('#d1').val();
+						let d2 = $('#d2').val();
+						if ( (d1 < d2 && d2 < fromDate) || (endDate < d1 && d1 < d2) ) {
+							$('#message').css('color', 'green').text("해당 제품의 판매가 기간을 등록할 수 있습니다.");
+						} else{
+							$('#registerBtn').attr('disabled', true);
+							$('#message').css('color', 'red').text("해당 제품의 판매가 기간이 중복됩니다.");
+						}
+					})
+				})
+			}
+			
+		})
 		
 	});
 	$('input[name=salePrice]').keyup(function(){

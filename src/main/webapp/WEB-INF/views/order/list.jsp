@@ -351,7 +351,8 @@ function list(){
 				
 				$('tr').removeClass();
 				$('[name=checkbox]').prop('checked', false);
-			
+				
+				/* row 백그라운드 ,체크하기, */
 				$('#checkbox${h.orderCode}').prop('checked', true);
 				$('#tr${h.orderCode}').addClass("selectedRow");
 				
@@ -367,6 +368,7 @@ function list(){
 					$('#itemBody').empty();
 					
 					$('#codeConfirm').append('주문코드 : ${h.orderCode}');
+					
 					$.each(itemList, function(idx, item){
 						
 						/* ajax 자동할인율  price / finalPrice  */
@@ -375,10 +377,11 @@ function list(){
 						let dc = (1 - ( fp / pr )) * 100; 	
 						dc = parseFloat(dc).toFixed(0);
 						dc = Math.round(dc);
-						console.log(dc);
+						/* console.log(dc); */
 						
+						/* row 체크 풀기 */
 						$('#checkbox'+item.orderCode).removeAttr("checked"); 
-						console.log(item);
+						/* console.log(item); */
 						idx= idx+1;
 						
 						$('#itemBody')
