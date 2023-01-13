@@ -104,46 +104,41 @@ public class YdsOrderService {
 		String date = mapper.getDate(generatedId);
 		String year = date.substring(0, 4);
 		mapper.createOrderCode(generatedId, year);
-
+		
 		// 오더 아이템 파라미터 구성
 		OrderItemDto oid = new OrderItemDto();
 		System.out.println("null 이여도 사이즈는 몇개? " + yod.getQuantity().size());
 
 		// 상세 정보에 없는 경우
-		if (yod.getProductCode() != null) {
-			List<String> productCodes = yod.getProductCode();
-			for (int i = 0; i < productCodes.size(); i++) {
-				oid.setProductCode(productCodes.get(i));
-			}
-		} else {
+		System.out.println(yod.getProductCode() != null);
+		if (yod.getProductCode() == null) {
 			oid = null;
 			mapper.insertOrderItem(generatedId, oid);
+			System.out.println("false가 실행됨");
 		}
+		System.out.println("왜 여기로 안와?");
+		
+		List<Integer> quantities = yod.getQuantity();
+		List<Integer> finalPrices = yod.getFinalPrice();
+		List<Integer> sums = yod.getSum();
+		List<String> productCodes = yod.getProductCode();
 		for (int a = 0; a < yod.getQuantity().size(); a++) {
+			//수량 등록 된 상태
 			if (yod.getQuantity().get(a) != null) {
-				List<Integer> quantities = yod.getQuantity();
-				List<Integer> finalPrices = yod.getFinalPrice();
-				List<Integer> sums = yod.getSum();
-				for (int i = 0; i < quantities.size(); i++) {
-					oid.setFinalPrice(finalPrices.get(i));
-					oid.setQuantity(quantities.get(i));
-					oid.setSum(sums.get(i));
-					System.out.println("오더 목록 " + i + "번째는" + oid);
+				
+					oid.setFinalPrice(finalPrices.get(a));
+					oid.setQuantity(quantities.get(a));
+					oid.setSum(sums.get(a));
+					oid.setProductCode(productCodes.get(a));
 					mapper.insertOrderItem(generatedId, oid);
-				}
+					System.out.println(a+"번 실행됨"); 
 			} else {
-				List<Integer> quantities = new ArrayList<>();
-				List<Integer> sums = new ArrayList<>();
-				for (int i = 0; i < yod.getQuantity().size(); i++) {
-
-					quantities.add(i, 0);
-					sums.add(i, 0);
-				}
-				for (int i = 0; i < quantities.size(); i++) {
-
-					oid.setQuantity(quantities.get(i));
-					oid.setSum(sums.get(i));
-				}
+				// 수량 등록 안된 상태
+				System.out.println("여기로 오니?");
+				oid.setProductCode(productCodes.get(a));
+				oid.setFinalPrice(finalPrices.get(a));
+				oid.setQuantity(0);
+				oid.setSum(0);
 				mapper.insertOrderItem(generatedId, oid);
 			}
 		}
