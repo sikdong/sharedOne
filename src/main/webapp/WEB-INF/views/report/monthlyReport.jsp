@@ -275,7 +275,7 @@ div.right {
 		</div><!-- 우측 검색 조건 div 끝 -->
 	</div><!-- 좌측 + 우측 전체를 감싸는 d-flex 끝-->
 	
-
+	
 	<hr>
 	
 	<div class="mainBoard">
@@ -356,11 +356,14 @@ div.right {
 				</c:forEach>
 			</tbody>
 		</table>
+		
 	</div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-<script type="text/javascript">
+<script>
+function myFunction() {
+
+	var str = document.getElementById("demo").value; 
 
 
 //전체 기간 선택

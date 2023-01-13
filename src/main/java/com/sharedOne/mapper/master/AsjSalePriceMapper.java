@@ -15,4 +15,12 @@ public interface AsjSalePriceMapper {
 
 	int updateSalePriceByPriceId(int priceId, int salePrice, int discountRate, String fromDate, String endDate);
 
+	int selectPriceByProductCode(String productCode);
+
+	List<SalePriceDto> selectSalePriceListByBuyerCode(String buyerCode);
+
+	int register(SalePriceDto sale);
+
+
+
 }

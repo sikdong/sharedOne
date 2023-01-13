@@ -44,128 +44,144 @@
     .col-form-label{
         font-weight: 600;
     }
+   	.primaryBtn {
+ 		background-color: white !important;
+ 		border-color: #1d5c83 !important;
+ 		color: #1d5c83 !important;
+ 	}
+ 	
+ 	.primaryBtn:hover {
+ 		background-color: #1d5c83 !important;
+ 		color: white !important;
+ 	}
 </style>
 <body>   
-    <div class="insert-body mt-5 ">
-        <div class="container-md">
-	        <form id="modifyForm" action="" method="post">
-	            <div class="row">
-	                <div class="col mt-1">
-	                    <div class="mb-4">
-	                        <h1 style="font-size: 24px; font-weight:600">판매가격 수정</h1>
-	                    </div>					
-	                    <hr class="line" style="border: solid 1px #000" />
-                    </div>
-	                    
-                    <div class="container-sm content-size">
+  <div class="insert-body mt-5 ">
+     <div class="container-md">
+       <form id="" action="">
+           <div class="row">
+               <div class="col mt-1">
+                   <div class="mb-4">
+                       <h1 style="font-size: 24px; font-weight:600">판매가 수정</h1>
+                   </div>					
+                   <hr class="line" style="border: solid 1px #000" />
+                  </div>
+                   
+                  <div class="container-sm content-size">
+                		<input name="priceId" type="text" class="form-control" value="${sale.priceId }" disabled/>
+                      <div class="mb-2 row mt-2 rowdiv">
+                          <label for="" class="col-3 col-form-label">제품 코드</label>
+                          <div class="col-sm-5">
+                              <input name="productCode" type="text" class="form-control" value="${sale.productCode }" disabled/>
+                          </div>
+                      </div>
+                      <div class="mb-2 row mt-2 rowdiv">
+                          <label for="" class="col-3 col-form-label">바이어 코드</label>
+                          <div class="col-sm-5">
+                              <input name="buyerCode" type="text" class="form-control" value="${sale.buyerCode }" disabled/>                          
+                          </div>
+                      </div>
+                      <div class="mb-2 row mt-2 rowdiv">
+                        <label for="" class="col-3 col-form-label">단가</label>
+                        <div class="col-sm-5">
+			    			<input id="price" value="${sale.price }" type="text" class="form-control" placeholder="단가" readonly disabled>					     
+                        </div>
+                      </div>
+                      <div class="mb-2 row mt-2 rowdiv">
+                          <label for="" class="col-3 col-form-label">판매가</label>
+                          <div class="col-sm-5">
+                              <input name="salePrice" value="${sale.salePrice }" type="number" class="form-control" placeholder="판매가격을 입력하세요."/>
+                          </div>
+                      </div>
+                      <div class="mb-2 row mt-2 rowdiv">
+                          <label for="" class="col-3 col-form-label">할인율</label>
+                          <div class="col-sm-5">
+                              <input name="discountRate" value="${sale.discountRate }" class="form-control" placeholder="%" readonly/>
+                          </div>
+                      </div>
+                      <div class="mb-2 row mt-2 rowdiv">
+                          <label for="" class="col-3 col-form-label">시작일</label>
+                          <div class="col-sm-5">
+                              <input name="fromDate" value="${sale.fromDate }" type="date" class="form-control"/>
+                          </div>
+                      </div>
+                      <div class="mb-2 row mt-2 rowdiv">
+                          <label for="" class="col-3 col-form-label">종료일</label>
+                          <div class="col-sm-5">
+                              <input name="endDate" value="${sale.endDate }" type="date" class="form-control"/>
+                          </div>
+                      </div>                                
+                  </div>
+          	 </div>
+		</form>
                   
-                        <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputCode" class="col-3 col-form-label">제품 코드</label>
-                            <div class="col-sm-5">
-                                <input id="productCode" type="text" class="form-control" value="${sale.productCode }" disabled/>
-                            </div>
-                        </div>
-                        <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputBuyerName" class="col-3 col-form-label">바이어 코드</label>
-                            <div class="col-sm-5">
-                                <input id="buyerCode" type="text" class="form-control" value="${sale.buyerCode }" disabled/>                          
-                            </div>
-                        </div>
-                        <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputSalePrice" class="col-3 col-form-label">판매가격</label>
-                            <div class="col-sm-5">
-                                <input name="salePrice"  value="${sale.salePrice }" id="salePrice" type="number" class="form-control" placeholder="판매가격을 입력하세요."/>
-                            </div>
-                        </div>
-                        <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputPriceDiscount" class="col-3 col-form-label">할인율</label>
-                            <div class="col-sm-5">
-                                <input name="discountRate"  value="${sale.discountRate }" id="priceDiscount" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"  class="form-control" placeholder="할인율을 입력하세요."/>
-                            </div>
-                        </div>
-                        <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputPriceStartDate" class="col-3 col-form-label">시작일</label>
-                            <div class="col-sm-5">
-                                <input name="fromDate"  value="${sale.fromDate }" id="priceStartDate" type="date" class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="mb-2 row mt-2 rowdiv">
-                            <label for="inputPriceEndDate" class="col-3 col-form-label">종료일</label>
-                            <div class="col-sm-5">
-                                <input name="endDate"  value="${sale.endDate }" id="priceEndDate" type="date" class="form-control"/>
-                            </div>
-                        </div>                                
-                    </div>
-            	</div>
-			</form>
-                    
-            <hr/>
-                
-            <div>
-            	<input type="hidden" name="priceId" value="${sale.priceId }" disabled>
-                <button id="modifyBtn" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal"> 수정 </button>
-            </div>
-             
-            <form action="${pageContext.request.contextPath }/master/salePriceDelete" method="post">
-            	<input type="hidden" name="priceId" value="${sale.priceId }" disabled>
-	            <button id="deleteBtn" class="btn"> 삭제 </button>
-            </form>    
-        </div>
-    </div>
-	
-	<!-- Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	        수정하시겠습니까?
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-	        <button id="modifySubmitBtn" type="button" class="btn btn-primary">확인</button>
-	      </div>
-	    </div>
-	  </div>
+		<hr/>
+	    <div class="d-flex">
+		    <div class="col-9">
+		    </div>
+	        <button id="modifyBtn" class="btn primaryBtn"> 수정 </button>
+	    
+		    <form action="${pageContext.request.contextPath }/master/salePriceDelete" method="post">
+			    <input type="hidden" name="priceId" value="${sale.priceId }" disabled>
+			    <button id="deleteBtn" class="btn btn-outline-secondary"> 삭제 </button>
+		    </form>  
+		</div>   
 	</div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-	<script type="text/javascript">
-		const ctx = ${pageComtext.request.contextPath}
-		$(function(){
-			$("#modifySubmitBtn").click(function(){
-				$("#modifyForm").submit();
-				$(location).attr('href', '${ctx}/master/salePriceList')
-			});
-		});
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+const ctx = ${pageComtext.request.contextPath}
+
+/* 자동으로 할인율 넣기  */
+$('input[name=salePrice]').keyup(function(){
+	let sp = $('input[name=salePrice]').val();
+	let pr = $('#price').val();
+	/* console.log(pr); */
+	/* console.log(sp); */
 	
+	/* Math.round() 소수점 반올림하고, toFixed(0) 소숫점 제거  */
+	var dc = (1 - ( sp / pr )) * 100; 	
+	dc = parseFloat(dc).toFixed(0);
+	dc = Math.round(dc);
+	/* console.log(dc); */
+	$('input[name=discountRate]').attr('value', dc);
+})
 
-        function comma(str) {
-        str = String(str);
-        return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-        }
+/* 알림창 */
+$(function() {
+    $("#modifyBtn").click( function() {
+    	
+    	if(confirm("수정하시겠습니까?")){
+    		const priceId = $('input[name=priceId]').val();
+			const productCode = $('input[name=productCode]').val();
+			const buyerCode = $('input[name=buyerCode]').val();
+			const salePrice = $('input[name=salePrice]').val();
+			const discountRate = $('input[name=discountRate]').val();
+			const fromDate = $('input[name=fromDate]').val();
+			const endDate = $('input[name=endDate]').val();
 
-        function uncomma(str) {
-            str = String(str);
-            return str.replace(/[^\d]+/g, '');
-        } 
+			const data = { priceId, productCode, buyerCode, salePrice, discountRate, fromDate, endDate };
+			
+	    	$.ajax({
+	    		url : "/master/salePriceModify",
+	    		method : "POST",
+	    		data : (data),
+	    		dataType : "json"		    	
+	    	})	
+	    	window.opener.location.reload();
+	    	window.close();
+	    	
+	    	
+    	}else{
+    		return false;
+    	}	 
+    });
+});
+	
+	
         
-        function inputNumberFormat(obj) {
-            obj.value = comma(uncomma(obj.value));
-        }
-        
-        function inputOnlyNumberFormat(obj) {
-            obj.value = onlynumber(uncomma(obj.value));
-        }
-        
-        function onlynumber(str) {
-            str = String(str);
-            return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1');
-        }
-         
-    </script>
+</script>
 
 </body>
 </html>

@@ -40,13 +40,13 @@
 	.leftFilterDiv {
 		border-right-style: groove;
 	}
-	.scrollBox {
-		width : 100%;
-		height: 30%;
-	}
+	
 	.listHover:hover {
 		background-color: #D3D3D3;
 		cursor: pointer;
+	}
+	.selectedRow{
+		background-color: #D3D3D3;
 	}
 	.btn-p {
 		background-color: #345E87;
@@ -68,10 +68,19 @@
 		background: #f4eed9cb;
 		color: black;
 	}
-	.scrollBox {
-		width: 100%;
-		height: 400px;
-		box-sizing: border-box;
+	.scrollBoxHeader1 {
+		width: auto;
+		height: 500px;
+		overflow: scroll;
+	}
+	.scrollBoxHeader2 {
+		width: auto;
+		height: auto;
+		overflow: scroll;
+	}
+	.scrollBoxItem {
+		width: auto;
+		height : auto;
 		overflow: scroll;
 	}
 	 	
@@ -100,7 +109,7 @@
 <!-- ${addMonth}  -->
 <my:side_bar></my:side_bar>
 
-<div class="container-sm mt-4" style=" width: 77vw; margin-left: auto; ">
+<div class="container-sm mt-4 mb-4" style=" width: 77vw; margin-left: auto; ">
 	<h4>주문 관리</h4>
 	<div class="row d-flex">
 		<!-- *좌측* 검색 조건 설명란 -->
@@ -175,39 +184,7 @@
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
-				</div><!-- 2nd row 끝 -->
-				<!-- 검색필터 3rd row : 기간 선택 : 등록일 -->
-				<div class="row d-flex">
-					<div class="col-sm-2">
-						<div class="form-check"  style="margin-top: 10px;">
-						    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-							<label class="form-check-label" for="flexCheckDefault">등록일</label>
-						</div>
-					</div>
-					<div class="col-sm-5">
-						<div class="input-group">
-							<input name="d1" value="${nowDate }" type="date" id="d1" class="form-control">
-							<span class="input-group-text">~</span>
-			        		<input name="d2" value="${nowDate }" type="date" id="d2" class="form-control">
-						</div>
-					</div>
-				</div><!-- 3rd row 끝 -->
-				<!-- 검색필터 4th row : 기간 선택 : 수정일 -->
-				<div class="row d-flex">
-					<div class="col-sm-2">
-						<div class="form-check"  style="margin-top: 10px;">
-						    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" >
-							<label class="form-check-label" for="flexCheckDefault">수정일</label>
-						</div>
-					</div>
-					<div class="col-sm-5">
-						<div class="input-group">
-							<input name="d3" value="" type="date" id="d3" class="form-control">
-							<span class="input-group-text">~</span>
-			        		<input name="d4" value="" type="date" id="d4" class="form-control">
-						</div>
-					</div>
-				</div><!-- 4th row 끝 -->
+				</div><!-- 2nd row 끝 -->			
 				<!-- 검색필터 5th row : 기간 선택 : 납기요청일 -->
 				<div class="row d-flex">
 					<div class="col-sm-2">
@@ -218,9 +195,9 @@
 					</div>
 					<div class="col-sm-5">
 						<div class="input-group">
-							<input name="d5" value="" type="date" id="d5" class="form-control">
+							<input name="d1" value="${nowDate}" type="date" id="" class="form-control">
 							<span class="input-group-text">~</span>
-			        		<input name="d6" value="" type="date" id="d6" class="form-control">
+			        		<input name="d2" value="${addMonth}" type="date" id="" class="form-control">
 						</div>
 					</div>
 				</div><!-- 5th row 끝 -->
@@ -246,11 +223,16 @@
 		</form>
 	</div>		
 	<!-- Order_header -->
-	<div class="scrollBox">
+	<div id="sbh1" class="scrollBoxHeader1">
 		<table class="table">
 			<thead>
 				<tr>
+	                <th style="text-align: center; border-right: ridge;" scope="col" colspan="2">번호</th>
+	                <th style="text-align: center; " scope="col" colspan="9">주문정보</th>	                 
+                </tr> 
+                <tr>
 					<th>선택</th>
+                	<th>#</th>
 					<th>주문코드</th>
 					<th>바이어코드</th>
 					<th>바이어명</th>
@@ -263,30 +245,32 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${headerList }" var="h">
-					<tr class="listHover" id="header${h.orderCode }" >
-						<td><input type="checkbox" id="checkbox${h.orderCode }"></td>
-						<td>${h.orderCode }</td>	
+				<c:forEach items="${headerList }" var="h" varStatus="st">
+					<tr class="listHover" id="tr${h.orderCode }" >
+						
+						<td><input type="checkbox" name="checkbox" id="checkbox${h.orderCode }"></td>
+						<td>${st.count }</td>
+						<td><input type="hidden" name="id" value="">${h.orderCode }</td>	
 						<td>${h.buyerCode }</td>					
 						<td>${h.buyerName }</td>
 						<td>${h.deliveryDate }</td>
-						<td>${h.name }</td>
+						<td>${h.writer }</td>
 						<td>${h.inserted }</td>
 						<td>${h.modified }</td>
 						<td>
 							<c:choose>
 								<c:when test="${h.status == '임시저장'}">
-									<form action="">
+									<form action="${pageContext.request.contextPath }">
 										<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-secondary" >${h.status }</button>
 									</form>
 								</c:when>
 								<c:when test="${h.status == '승인요청'}">
-									<form action="${pageContext.request.contextPath }/order/orderSheet">
+									<form action="${pageContext.request.contextPath }/order/confirmOrderSheet">
 										<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-primary" >${h.status }</button>
 									</form>
 								</c:when>
 								<c:when test="${h.status == '승인완료'}">
-									<form action="${pageContext.request.contextPath }/order/companionSheet">
+									<form action="${pageContext.request.contextPath }/order/orderSheet">
 										<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-success" >${h.status }</button>
 									</form>
 								</c:when>
@@ -296,34 +280,20 @@
 									</form>
 								</c:when>
 								<c:when test="${h.status == '승인취소'}">
-									<form action="${pageContext.request.contextPath }/order/companionSheet">
+									<form action="${pageContext.request.contextPath }/order/orderSheet">
 										<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-secondary" >${h.status }</button>
 									</form>
 								</c:when>
 								<c:when test="${h.status == '거래종결'}">
-									<form action="${pageContext.request.contextPath }/order/companionSheet">
+									<form action="${pageContext.request.contextPath }/order/orderSheet">
 										<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-secondary" >${h.status }</button>
 									</form>
 								</c:when>
-							</c:choose>		
+							</c:choose>	
 						</td>
-						<c:if test="${empty param.orderCode }">
-							<td>
-							<!-- ?q=&orderCode=&buyerCode=&writer=&status=&d1=2023-01-09&d2=2023-01-09&d3=&d4=&d5=&d6= -->
-								<form action="" method="get">
-									
-									<button id="detailBtn${h.orderCode }" name="orderCode" value="${h.orderCode }" type="submit" class="btn btn-outline-secondary">주문상세</button>
-									
-								</form>
-							</td>
-						</c:if>
-						<c:if test="${not empty param.orderCode }">
-							<td>
-								<input type="hidden" name="" id="" value="${h.orderCode}">
-								<button id="backBtn${h.orderCode }" type="button" class="btn btn-outline-secondary">돌아가기</button>
-								
-							</td>
-						</c:if>
+						<td>
+							<button id="detailBtn${h.orderCode }" type="button" class="btn btn-outline-secondary">주문상세</button>
+						</td>				
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -331,77 +301,113 @@
 	</div>
 	
 	<hr>
-	<c:if test="${not empty param.orderCode }">
-		<div class="d-flex">
-			<div class="col-sm-4">
-				<h4>주문 상세</h4>
-				<span style="font-size: 15pt;">주문코드 : ${param.orderCode }</span>
+	
+	<div class="">
+		<h4>주문 상세</h4>
+		<p id="codeConfirm"></p>
+	</div>	
+	<div class="scrollBoxItem">
+		<table class="table">
+			<thead>
+				<tr>
+	                <th style="text-align: center; border-right: ridge;" scope="col">번호</th>
+	                <th style="text-align: center; border-right: ridge;" scope="col" colspan="4">제품정보</th>
+	                <th style="text-align: center;" scope="col" colspan="4">금액정보</th>     
+                </tr>        
+				<tr>
+					<th>#</th>
+					<th>제품코드</th>
+	                <th>제품그룹</th>
+					<th>제품명</th>	
+					<th>단가</th>
+					<th>판매가</th>
+					<th>할인율</th>
+					<th>수량</th>
+					<th>합계</th>	
+				</tr>
+			</thead>
+			<tbody id="itemBody">			
 				
-			</div>
-			<div class="col-sm-7"></div>
-			
-			<div class="col-sm-1">
-			<!-- 	<button id="" class="btn btn-oneline-primary primaryBtn"><span style="font-size: 12pt">주문서확인</span></button> -->
-			</div>
-		</div>	
-		
-		<div class="scrollBox">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>No.</th>
-						<th>제품명</th>	
-						<th>단가</th>
-						<th>공급가액</th>
-						<th>할인율</th>
-						<th>수량</th>
-						<th>합계</th>
-						
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${itemList }" var="item" varStatus="st">
-					<tr class="listHover">
-						<td>${st.count }</td>
-						<td>${item.productName }</td>			
-						<td>${item.price }</td>
-						<td>${item.salePrice }</td>
-						<td>${item.discountRate } %</td>
-						<td>
-							${item.quantity } ${item.unit }
-							<!-- <span><i class="fa-solid fa-pen-to-square"></i></span>  -->
-						</td>
-						<td>${item.sum }</td>
-					</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div><!-- scrollBox 끝 -->
-		<!-- <div id="detailContainerDiv"></div> -->
-	</c:if>
+			</tbody>
+		</table>
+	</div><!-- scrollBox 끝 -->
 </div><!-- container 끝  -->
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-	<script type="text/javascript">
-		const ctx = ${pageComtext.request.contextPath}
-		
-		console.log('backBtn${param.orderCode}');
-		
-		
-		$(function(){ 
-			$('#detailBtn${param.orderCode}').click(function(){
-				$('#checkbox${param.orderCode}').checked();
+<script type="text/javascript">
+const ctx = "${pageContext.request.contextPath}";
+
+list();
+	
+function list(){
+	/* btn 변수 담기 */
+	<c:forEach items="${headerList}" var="h">
+		let detailBtn${h.orderCode} = '${h.orderCode}';
+		/* console.log(detailBtn${h.orderCode}); */
+				
+		$(function (){			
+			$('#detailBtn${h.orderCode}').click(function(){
+				
+				$('tr').removeClass();
+				$('[name=checkbox]').prop('checked', false);
+			
+				$('#checkbox${h.orderCode}').prop('checked', true);
+				$('#tr${h.orderCode}').addClass("selectedRow");
+				
+				$.ajax({
+					url: "/order/itemList/${h.orderCode}",
+					data: {orderCode : "${h.orderCode}"},
+					type: "get",
+					dataType: "json"
+				})
+				.done(function(itemList){
+					
+					$('#codeConfirm').empty();
+					$('#itemBody').empty();
+					
+					$('#codeConfirm').append('주문코드 : ${h.orderCode}');
+					$.each(itemList, function(idx, item){
+						
+						/* ajax 자동할인율  price / finalPrice  */
+						let pr = item.price;
+						let fp = item.finalPrice;
+						let dc = (1 - ( fp / pr )) * 100; 	
+						dc = parseFloat(dc).toFixed(0);
+						dc = Math.round(dc);
+						console.log(dc);
+						
+						$('#checkbox'+item.orderCode).removeAttr("checked"); 
+						console.log(item);
+						idx= idx+1;
+						
+						$('#itemBody')
+						.append(		
+						'<tr class="listHover">'+	
+							'<td>'+idx+'</td>'+
+							'<td>'+item.productCode+'</td>'+
+							'<td>'+item.productType+'</td>'+
+							'<td>'+item.productName+'</td>'+
+							'<td>'+item.price+'</td>'+
+							'<td>'+item.finalPrice+'</td>'+
+							'<td>'+dc+'%</td>'+
+							'<td>'+item.quantity+item.unit+'</td>'+
+							'<td>'+item.sum+'</td>'+
+						'</tr>'
+						);
+					});
+				})	
 			})
 		})
-		
-		$(function(){ 
-			$('#backBtn${param.orderCode}').click(function(){
-				history.go(-1);
-			})
-		})
-		
-	</script>
+	</c:forEach>
+};	
+/* 해더리스트가 적을때, 스크롤 사이즈 줄이기 height:auto;  */
+if (${size} < 7) {
+	$('#sbh1').removeClass();
+}
+
+	
+</script>
 	
 </body>
 </html>
