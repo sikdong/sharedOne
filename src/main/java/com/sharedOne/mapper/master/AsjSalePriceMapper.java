@@ -9,7 +9,7 @@ import com.sharedOne.domain.master.SalePriceDto;
 @Mapper
 public interface AsjSalePriceMapper {
 	
-	List<SalePriceDto> selectAllSalePriceItemList(String keyword, String productCode, String productName, String buyerCode, String buyerName, String country);
+	List<SalePriceDto> selectAllSalePriceItemList(String keyword, String productCode, String productName, String buyerCode, String buyerName, String country, int priceMin, int priceMax, String fromDate, String endDate);
 
 	SalePriceDto selectSaleByPriceId(int priceId);
 
@@ -17,9 +17,9 @@ public interface AsjSalePriceMapper {
 
 	int selectPriceByProductCode(String productCode);
 
-	List<SalePriceDto> selectSalePriceListByBuyerCode(String buyerCode);
-
 	int register(SalePriceDto sale);
+
+	List<SalePriceDto> selectDateListByBuyerCodeAndProductCode(String buyerCode, String productCode);
 
 
 

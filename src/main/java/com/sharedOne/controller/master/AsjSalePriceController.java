@@ -5,18 +5,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sharedOne.domain.master.BuyerDto;
 import com.sharedOne.domain.master.ProductDto;
@@ -40,26 +36,38 @@ public class AsjSalePriceController {
 	@Autowired
 	private lnhBuyerService buyerService;
 	
-	@GetMapping("salePriceList")
-	public void salePriceList(
+	@GetMapping("salePriceListAjax")
+	@ResponseBody
+	public List <SalePriceDto> salePriceListAjax(
 			Model model, 
-			@RequestParam(name="q", defaultValue="") String keyword,
-			@RequestParam(name="productCode", defaultValue="") String productCode,
-			@RequestParam(name="productName", defaultValue="") String productName,
-			@RequestParam(name="buyerCode", defaultValue="") String buyerCode,
-			@RequestParam(name="buyerName", defaultValue="") String buyerName,
-			@RequestParam(name="country", defaultValue="") String country
+			String q,
+			String productCode,
+			String productName,
+			String buyerCode,
+			String buyerName,
+			String country,
+			int priceMin,
+			int priceMax,
+			String fromDate,
+			String endDate
 			) {
-		//System.out.println("@@@   : " + keyword);
+		System.out.println( q+productCode+productName+buyerCode+buyerName+country);
+		List <SalePriceDto> allSalePriceList 
+			= asjSalePriceService.selectAllSalePriceItemList(q, productCode, productName, buyerCode, buyerName, country, priceMin, priceMax, fromDate, endDate);	
+
+		System.out.println(allSalePriceList);
 		
-		List <SalePriceDto> allSalePriceList = asjSalePriceService.selectAllSalePriceItemList(keyword, productCode, productName, buyerCode, buyerName, country);	
-		model.addAttribute("allSalePriceList", allSalePriceList);
+		return allSalePriceList;
 		
+	}
+	
+	@GetMapping("salePriceList")
+	public void salePriceList(Model model) {
 			
+		/* 필터에 데이타리스트 넣어주기 (제품코드,제품명, 바이어코드,바이어명, 국가) */
 		List <ProductDto> productList = productService.selectProductList();	
 		model.addAttribute("productList", productList);
-		
-			
+				
 		List<BuyerDto> buyerList = buyerService.selectBuyerList();
 		model.addAttribute("buyerList", buyerList);
 		
@@ -69,7 +77,7 @@ public class AsjSalePriceController {
 			setCountry.add(buyerCountry);
 		}
 		model.addAttribute("countryList", setCountry);
-			
+		
 	}
 	
 	
@@ -82,35 +90,50 @@ public class AsjSalePriceController {
 	}
 	
 	@GetMapping("salePriceRegister")
-	public void register(Model model, SalePriceDto saleInfo, RedirectAttributes rttr) {
+	public void register(Model model, SalePriceDto saleInfo) {
 		List<BuyerDto> buyerList = buyerService.selectBuyerList();
 		model.addAttribute("buyerList", buyerList);
 		
 		List <ProductDto> productList = productService.selectProductList();	
 		model.addAttribute("productList", productList);
-		
-		System.out.println("ajax buyerCode : "+saleInfo.getBuyerCode());
+			
+	}
+	@GetMapping("salePriceRegisterAjax")
+	@ResponseBody
+	public List<SalePriceDto> salePriceRegisterAjax( SalePriceDto saleInfo) {
 		/* ajax SalePrice 의 productCode 중복확인 */
 		String buyerCode = saleInfo.getBuyerCode();
-		List<SalePriceDto> salePriceListByBuyerCode = asjSalePriceService.selectSalePriceListByBuyerCode(buyerCode);
-		//System.out.println(salePriceListByBuyerCode);
-		rttr.addFlashAttribute("list", salePriceListByBuyerCode);
+		String productCode = saleInfo.getProductCode();
+		
+		List<SalePriceDto> dateListByBuyerCodeAndProductCode = asjSalePriceService.selectDateListByBuyerCodeAndProductCode(buyerCode, productCode);
+		System.out.println("바이어의 제품들..의 날짜를 구해야해 !! : "+dateListByBuyerCodeAndProductCode);	
+		return dateListByBuyerCodeAndProductCode;
 	}
+	
 	@PostMapping("salePriceRegister")
 	public void register( SalePriceDto sale ) {
-		System.out.println(sale);
+		//System.out.println(sale);
 		int cnt = asjSalePriceService.register(sale);
 		System.out.println(cnt);
 	}
 	
 	
-	
-	
 	@GetMapping("salePriceModify")
 	public void salePriceGet(Model model, int priceId) {
 		SalePriceDto sale = asjSalePriceService.selectSaleByPriceId(priceId);
-		model.addAttribute("sale", sale);
+		model.addAttribute("sale", sale);	
+	}
+	@GetMapping("salePriceModifyAjax")
+	@ResponseBody
+	public List<SalePriceDto> salePriceModifyAjax( SalePriceDto saleInfo) {
+		/* ajax SalePrice 의 productCode 중복확인 */
+		String buyerCode = saleInfo.getBuyerCode();
+		String productCode = saleInfo.getProductCode();
 		
+		System.out.println("!@#!@#!@#"+buyerCode);
+		
+		List<SalePriceDto> sale = asjSalePriceService.selectDateListByBuyerCodeAndProductCode(buyerCode, productCode);
+		return sale;
 	}
 	
 	@PostMapping("salePriceModify")

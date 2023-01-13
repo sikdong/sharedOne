@@ -68,7 +68,7 @@
                   </div>
                    
                   <div class="container-sm content-size">
-                		<input name="priceId" type="text" class="form-control" value="${sale.priceId }" disabled/>
+                		<input name="priceId" type="hidden" class="form-control" value="${sale.priceId }" disabled/>
                       <div class="mb-2 row mt-2 rowdiv">
                           <label for="" class="col-3 col-form-label">제품 코드</label>
                           <div class="col-sm-5">
@@ -100,15 +100,15 @@
                           </div>
                       </div>
                       <div class="mb-2 row mt-2 rowdiv">
-                          <label for="" class="col-3 col-form-label">시작일</label>
+                          <label for="" class="col-3 col-form-label">판매가 시작일</label>
                           <div class="col-sm-5">
-                              <input name="fromDate" value="${sale.fromDate }" type="date" class="form-control"/>
+                              <input id="d1" name="fromDate" value="${sale.fromDate }" type="date" class="form-control"/>
                           </div>
                       </div>
                       <div class="mb-2 row mt-2 rowdiv">
-                          <label for="" class="col-3 col-form-label">종료일</label>
+                          <label for="" class="col-3 col-form-label">판매가 종료일</label>
                           <div class="col-sm-5">
-                              <input name="endDate" value="${sale.endDate }" type="date" class="form-control"/>
+                              <input id="d2" name="endDate" value="${sale.endDate }" type="date" class="form-control"/>
                           </div>
                       </div>                                
                   </div>
@@ -125,13 +125,18 @@
 			    <input type="hidden" name="priceId" value="${sale.priceId }" disabled>
 			    <button id="deleteBtn" class="btn btn-outline-secondary"> 삭제 </button>
 		    </form>  
-		</div>   
+		</div>
+		<div class="d-flex">
+			<div id="message"></div>
+		</div>
 	</div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
-const ctx = ${pageComtext.request.contextPath}
+const ctx = "${pageComtext.request.contextPath}";
+
+dateCheck();
 
 /* 자동으로 할인율 넣기  */
 $('input[name=salePrice]').keyup(function(){
@@ -148,10 +153,48 @@ $('input[name=salePrice]').keyup(function(){
 	$('input[name=discountRate]').attr('value', dc);
 })
 
-/* 알림창 */
+/* 판매가 기간 중복체크 */
+ 
+function dateCheck(){
+	$('input[type=date]').on('input', function(){
+		const productCode = $('input[name=productCode]').val();
+		const buyerCode = $('input[name=buyerCode]').val();	
+		const data = {buyerCode, productCode};
+		console.log(productCode);
+		/* 날짜 가져와서. 중복 체크하기   */
+		$.ajax({	
+			url:"/master/salePriceModifyAjax",
+			method: "GET",
+			data: (data),
+			dataType: "json"
+		})
+		.done(function(dateList){
+			if (dateList != '') {		
+				$.each(dateList, function(idx, item){
+					console.log(item);
+					let fromDate = item.fromDate;
+					let endDate = item.endDate;			
+					
+						$('#modifyBtn').attr('disabled', false);
+						let d1 = $('#d1').val();
+						let d2 = $('#d2').val();
+						if ( (d1 < d2 && d2 < fromDate) || (endDate < d1 && d1 < d2) /*  || (fromDate < d1 && d2 < endDate) */ ) {
+							$('#message').css('color', 'green').text("수정 가능합니다.");
+						} else{
+							$('#modifyBtn').attr('disabled', true);
+							$('#message').css('color', 'red').text("해당 제품의 판매가 기간이 중복됩니다.");
+						}
+					
+				})
+			}
+			
+		})
+		
+	});
+} 
+/* 수정 알람 -> 수정하기 */
 $(function() {
-    $("#modifyBtn").click( function() {
-    	
+    $("#modifyBtn").click( function() {	
     	if(confirm("수정하시겠습니까?")){
     		const priceId = $('input[name=priceId]').val();
 			const productCode = $('input[name=productCode]').val();
@@ -168,7 +211,7 @@ $(function() {
 	    		method : "POST",
 	    		data : (data),
 	    		dataType : "json"		    	
-	    	})	
+	    	})
 	    	window.opener.location.reload();
 	    	window.close();
 	    	

@@ -51,20 +51,43 @@
 		)	 	
 	 	
  		<if test="productCode != '' ">
- 		AND p.productCode = #{productCode }
+ 			AND p.productCode LIKE #{productCode }
  		</if>
  		<if test="productName != '' ">
- 		AND p.productName = #{productName }
+ 			AND p.productName LIKE #{productName }
  		</if>
  		<if test="buyerCode != '' ">
- 		AND b.buyerCode = #{buyerCode }
+ 			AND b.buyerCode LIKE #{buyerCode }
  		</if>
  		<if test="buyerName != '' ">
- 		AND b.buyerName = #{buyerName }
+ 			AND b.buyerName LIKE #{buyerName }
  		</if>
  		<if test="country != '' ">
- 		AND b.country = #{country }
+ 			AND b.country LIKE #{country }
  		</if>
+		<if test="priceMin !='' or priceMax !=''">
+			AND sp.salePrice BETWEEN #{priceMin} AND #{priceMax}
+		</if>
+		<choose>
+			<when test="fromDate == '' and  endDate == '' ">
+				
+			</when>
+			<when test="fromDate != '' ">
+				AND sp.fromDate BETWEEN #{fromDate} AND #{endDate}
+			</when>
+			<when test="endDate != '' ">
+				AND sp.endDate BETWEEN #{fromDate} AND #{endDate} 
+			</when>
+			<when test="fromDate !='' and endDate !=''">
+				AND 
+					sp.fromDate  <![CDATA[ < ]]> #{fromDate} 
+					AND
+					sp.endDate <![CDATA[ > ]]> #{endDate} 
+			</when>
+		</choose>
+		
+ 		
+ 		
  		
 		ORDER BY p.productCode ASC;
 	</select> 		
@@ -78,13 +101,17 @@
 			productCode = #{productCode}	
 	</select>
 	
-	<select id="selectSalePriceListByBuyerCode" resultType="com.sharedOne.domain.master.SalePriceDto">
+	<select id="selectDateListByBuyerCodeAndProductCode" resultType="com.sharedOne.domain.master.SalePriceDto">
 		SELECT
-			productCode
+			buyerCode,
+			productCode,
+			fromDate,
+			endDate
 		FROM
 			SalePrice
 		WHERE
-			buyerCode = #{buyerCode }		
+			buyerCode = #{buyerCode }
+		AND productCode = #{productCode }		
 	</select>
 	
 	<select id="selectSaleByPriceId" resultType="com.sharedOne.domain.master.SalePriceDto">
