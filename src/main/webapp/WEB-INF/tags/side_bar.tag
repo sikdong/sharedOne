@@ -101,7 +101,7 @@
               <ul>
                 <li>
                     <div class="li-div">
-                        <a href="#" class="rounded" style="color: #e3e3e3;">바이어 관리</a>
+                        <a href="/master/buyerList" class="rounded" style="color: #e3e3e3;">바이어 관리</a>
                     </div>
                 </li>
                 <li>
@@ -151,18 +151,10 @@
                 <ul>
                     <li>
                         <div class="li-div">
-                            <a href="#" class="rounded" style="color: #e3e3e3;">월별 리포트</a>
+                            <a href="/report/monthlyReport" class="rounded" style="color: #e3e3e3;">리포트</a>
                         </div>
                     </li>
-                    <li>
-                        <div class="li-div">
-                            <a href="#" class="rounded" style="color: #e3e3e3;">영업 리포트</a>
-                        </div>
-                    </li><li>
-                        <div class="li-div">
-                            <a href="#" class="rounded" style="color: #e3e3e3;">바이어 리포트</a>
-                        </div>
-                    </li>
+
                   </ul>
             </div>
           </li>

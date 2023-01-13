@@ -7,11 +7,12 @@ import lombok.Data;
 @Data
 public class MemberDto {
 	
+	private int memberId;
 	private String id;
 	private String password;
 	private String name;
 	private String email;
 	private String phone;
 	
-	private List<String> Auth;
+	private List<String> rank;
 }

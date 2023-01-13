@@ -36,16 +36,14 @@ public class CustomUserDetailsService implements UserDetailsService{
 		
 		List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
 		
-		if(member.getAuth() != null) {
-			for(String Auth : member.getAuth()) {
-				authorityList.add(new SimpleGrantedAuthority(Auth));
+		if(member.getRank() != null) {
+			for(String rank : member.getRank()) {
+				authorityList.add(new SimpleGrantedAuthority(rank));
 			}
 		}
 		
-		String encodedPw = passwordEncoder.encode(member.getPassword());
-		
-		User user = new User(member.getId(), encodedPw, authorityList);
-		
+		User user = new User(member.getId(), member.getPassword(), authorityList);
+		System.out.println(user);
 		return user;
 	}
 

@@ -16,11 +16,11 @@ public class ProductDto {
 	private int price;
 	private String unit;
 	private String content;
-	private LocalDate inserted;
+	private String inserted;
 
-	private LocalDate modified;
-	private LocalDate fromDate;
-	private LocalDate endDate;
+	private String modified;
+	private String fromDate;
+	private String endDate;
 
 	private String buyerCode;
 	

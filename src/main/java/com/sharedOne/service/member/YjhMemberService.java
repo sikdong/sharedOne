@@ -1,10 +1,10 @@
 package com.sharedOne.service.member;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.sharedOne.domain.member.AuthDto;
+import com.sharedOne.domain.member.RanksDto;
 import com.sharedOne.domain.member.MemberDto;
 import com.sharedOne.mapper.member.YjhMemberMapper;
 
@@ -13,15 +13,39 @@ public class YjhMemberService {
 
 	@Autowired YjhMemberMapper mapper;	
 	
-	public int insertMember(MemberDto member) {
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
-		return mapper.insertMember(member);
+	public void insertMember(MemberDto member, RanksDto rank) {
+		
+		String pw = member.getPassword();
+		
+		member.setPassword(passwordEncoder.encode(pw));
+		
+		String email = member.getEmail() + "@order.com";
+		
+		member.setEmail(email);
+		
+		mapper.insertMember(member);
+		
+		int getMemberId = member.getMemberId();
+		
+		rank.setMemberId(getMemberId);
+		
+		mapper.insertRanks(rank);
 	}
 	
-	public int insertAuth(AuthDto auth) {
+	/*
+	 * public void insertRanks(RanksDto rank) {
+	 * 
+	 * mapper.insertRanks(rank);
+	 * 
+	 * }
+	 */
+
+	public MemberDto checkEmail(String email) {
 		
-		return mapper.insertAuth(auth);
-		
+		return mapper.getEmail(email);
 	}
 
 }

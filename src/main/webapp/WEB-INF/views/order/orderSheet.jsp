@@ -68,8 +68,12 @@
         <div class="row">
             <div class="row mt-5" style="text-align: center;">     
                  <div id="rvbtn_group" style="text-align: right;">
-                 	<button type="button" class="btn" id="print" style="border: gray 2px solid; font-weight: bold; float:left; font-size:x-large; padding:0px;" onclick="content_print();">&nbsp&nbsp<i class='bx bx-printer'></i>&nbsp&nbsp</button>
-                             
+                 	<c:url value="/order/excelConvert" var="excelLink"></c:url>
+                 	<button type="button" class="btn" id="print" style="border: gray 2px solid; font-weight: bold; float:left; font-size:x-large; padding:0px; width: 65px;" onclick="content_print();">&nbsp&nbsp<i class='bx bx-printer'></i>&nbsp&nbsp</button>
+					<form action="${excelLink }" method="get">
+						<input name="orderId" value="${orderHeader.orderId }" class="form-control" type="hidden">
+	                    <button type="submit" class="btn" id="excelConverBtn" style="width: 65px; margin-left:5px; border: gray 2px solid; font-weight: bold; float:left; font-size:x-large; padding:0px;">&nbsp&nbsp<i class="fa-regular fa-file-excel"></i>&nbsp&nbsp</button>         
+					</form>
                 </div>
             </div>
         </div>
@@ -139,7 +143,7 @@
 	                    <th class="d-n-th" style="background-color: #eeeeee;">제품명</th>
 	                    <th class="d-n-th" style="background-color: #eeeeee;">규격</th>
 	                    <th class="d-n-th" style="background-color: #eeeeee;">단위</th>
-	                    <th class="d-n-th" style="background-color: #eeeeee;">단가</th>
+	                    <th class="d-n-th" style="background-color: #eeeeee;">판매가</th>
 	                    <th class="d-n-th" style="background-color: #eeeeee;">수량</th>
 	                    <th class="d-n-th" style="background-color: #eeeeee;">합계액</th>
 	                  </tr>  
@@ -152,7 +156,7 @@
 		                    <td>${item.productName }</td>
 		                    <td>${item.size }</td>
 		                    <td>${item.unit }</td>
-		                    <td class="salePrice"><fmt:formatNumber value="${item.salePrice}" type="currency" currencySymbol="￦"/></td>	              
+		                    <td class="finalPrice"><fmt:formatNumber value="${item.finalPrice}" type="currency" currencySymbol="￦"/></td>	              
 		                    <td class="quantity">${item.quantity }</td>
 		                    <td class="sum"><fmt:formatNumber value="${item.sum }" type="currency" currencySymbol="￦"/></td>
 		                  </tr>	               
@@ -183,7 +187,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <script>
-
+/* 엑셀 파일로 다운로드 */
+$(document).ready(function(){
+	$("#excelConverBtn").on('click',function(){
+		location.href="/order/excelConvert/${orderHeader.orderId}";
+	});
+});
+/* 프린터 출력 */
 function content_print(){
     
     var initBody = document.body.innerHTML;

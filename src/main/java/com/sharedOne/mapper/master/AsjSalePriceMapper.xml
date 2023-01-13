@@ -4,6 +4,13 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="com.sharedOne.mapper.master.AsjSalePriceMapper">
+
+ 	<!-- priceId, productCode, buyerCode, salePrice, discountRate, memo, fromDate, endDate -->
+ 	<insert id="register">
+ 		INSERT INTO SalePrice ( buyerCode, productCode, salePrice, discountRate, fromDate, endDate )
+ 		VALUES ( #{buyerCode}, #{productCode}, #{salePrice}, #{discountRate}, #{fromDate}, #{endDate} )
+ 	</insert>
+
  	<!-- 아이템 : id, 제품코드, 제품명,바이어코드, 바이어명, 국가, 원가, 단가, 할인율, 단가기간, -->
 	<select id="selectAllSalePriceItemList" resultType="com.sharedOne.domain.master.SalePriceDto">
 	 	SELECT 
@@ -44,36 +51,68 @@
 		)	 	
 	 	
  		<if test="productCode != '' ">
- 		AND p.productCode = #{productCode }
+ 			AND p.productCode LIKE #{productCode }
  		</if>
  		<if test="productName != '' ">
- 		AND p.productName = #{productName }
+ 			AND p.productName LIKE #{productName }
  		</if>
  		<if test="buyerCode != '' ">
- 		AND b.buyerCode = #{buyerCode }
+ 			AND b.buyerCode LIKE #{buyerCode }
  		</if>
  		<if test="buyerName != '' ">
- 		AND b.buyerName = #{buyerName }
+ 			AND b.buyerName LIKE #{buyerName }
  		</if>
  		<if test="country != '' ">
- 		AND b.country = #{country }
+ 			AND b.country LIKE #{country }
  		</if>
+		<if test="priceMin !='' or priceMax !=''">
+			AND sp.salePrice BETWEEN #{priceMin} AND #{priceMax}
+		</if>
+		<choose>
+			<when test="fromDate == '' and  endDate == '' ">
+				
+			</when>
+			<when test="fromDate != '' ">
+				AND sp.fromDate BETWEEN #{fromDate} AND #{endDate}
+			</when>
+			<when test="endDate != '' ">
+				AND sp.endDate BETWEEN #{fromDate} AND #{endDate} 
+			</when>
+			<when test="fromDate !='' and endDate !=''">
+				AND 
+					sp.fromDate  <![CDATA[ < ]]> #{fromDate} 
+					AND
+					sp.endDate <![CDATA[ > ]]> #{endDate} 
+			</when>
+		</choose>
+		
+ 		
+ 		
  		
 		ORDER BY p.productCode ASC;
 	</select> 		
-	<!-- <resultMap type="com.sharedOne.domain.master.SalePriceDto" id="itemMap">
-		<id column="priceId" property="priceId"/>
-		<result column="salePrice" property="salePrice"/>
-		<result column="discountRate" property="discountRate"/>
-		<result column="fromDate" property="fromDate"/>
-		<result column="endDate" property="endDate"/>
-		<result column="buyerCode" property="buyerCode"/>
-		<collection property="product" ofType="com.sharedOne.domain.master.ProductDto">
-			<result column="productCode" property="productCode"/>
-			<result column="productName" property="productName"/>
-			<result column="price" property="price"/>
-		</collection>
-	</resultMap> -->
+	
+	<select id="selectPriceByProductCode" resultType="int">
+		SELECT
+			price
+		FROM
+			Product
+		WHERE
+			productCode = #{productCode}	
+	</select>
+	
+	<select id="selectDateListByBuyerCodeAndProductCode" resultType="com.sharedOne.domain.master.SalePriceDto">
+		SELECT
+			buyerCode,
+			productCode,
+			fromDate,
+			endDate
+		FROM
+			SalePrice
+		WHERE
+			buyerCode = #{buyerCode }
+		AND productCode = #{productCode }		
+	</select>
 	
 	<select id="selectSaleByPriceId" resultType="com.sharedOne.domain.master.SalePriceDto">
 		SELECT 

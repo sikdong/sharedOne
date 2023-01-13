@@ -25,17 +25,22 @@
 <!-- 구글 열차트 -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-// Load Charts and the corechart and barchart packages.
+
 google.charts.load('current', {'packages':['corechart']});
 
-// Draw the line chart and bar chart when Charts is loaded.
-<c:if test="${param.orderQ eq null }">
+var paramList = new Array(); 
+var paramList = ["${param.orderQ}", "${param.orderCode}", "${param.productCode}", "${param.writer}", "${param.status}", "${param.fromDate}", "${param.endDate}"];
+
+//검색 조건 없으면 올해 매출 그래프, 있으면 바이어 별 & 직원 별 매출 그래프
+if (paramList == ",,,,,,") {
 	google.charts.setOnLoadCallback(drawChart);
-</c:if>
-<c:if test="${param.orderQ ne null }">
+}else {
+	
 google.charts.setOnLoadCallback(drawBuyerChart);
 google.charts.setOnLoadCallback(drawWriterChart);
-</c:if>	
+}
+
+
 function drawChart() {
 	
   var data = new google.visualization.DataTable();
@@ -80,12 +85,9 @@ function drawWriterChart() {
 	  var data = new google.visualization.DataTable();
 	  data.addColumn('string', '직원');
 	  data.addColumn('number', '매출');
-	  <c:forEach items="${thisYearSales}" var="sales">
+	  <c:forEach items="${writerSales}" var="writerSales">
 		  data.addRows([
-		    [${sales.month }+'월', ${sales.thisSales}]
-		  <c:if test="${not empty thisYearSales.size() }">
-			,
-		</c:if>
+		    ['${writerSales.key }', ${writerSales.value}]
 			]);
 	  </c:forEach>
 	  var options = {title:'담당 직원 별 매출 현황',
@@ -115,7 +117,7 @@ div.mainBoard {
 	margin-top: 20px;
 	margin-bottom: 10px;
 	width: 100%;
-	height: 1000px;
+	height: 500px;
 	
 }
 
@@ -155,10 +157,10 @@ div.right {
  	
  	.table{border-collapse:collapse; width:100%; table-layout:fixed}
 	.table thead{float:left; width:1300px;}
-	.table thead th{display:auto; width:1300px; text-align: left;}
-	.table tbody{overflow-y:auto; overflow-x:hidden; float:left; width:1300px; height:550px;}
+	.table thead th{display:auto; width:1300px; text-align: center;}
+	.table tbody{overflow-y:auto; overflow-x:auto; float:left; width:1300px; height:550px;}
 	.table tbody tr{display:table; width:1300px;}
-	.table td{word-wrap:break-word; width:1300px; height: auto;}
+	.table td{word-wrap:break-word; width:1300px; text-align: center;}
 
 </style>
 
@@ -178,7 +180,7 @@ div.right {
 				<p class="filterText ">조건 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
 			</div>
 			<div class="mb-5">
-				<p class="filterText ">기간 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex. 주문일 / 납기일 등등... ) -->
+				<p class="filterText ">납기 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex. 주문일 / 납기일 등등... ) -->
 			</div>
 		</div><!-- 좌측 조건 설명 div 끝 -->
 		
@@ -189,14 +191,7 @@ div.right {
 				<div class="row d-flex">
 					<div class="col-sm-6 mb-4">
 						<div class="input-group">
-							<!-- Select -->
-							<select name="orderS" id="" class="form-select">
-								<option value="selectAll">전체검색</option>
-								<option value="selectOrderCode">주문서번호</option>
-								<option value="selectBuyerCode">바이어 코드</option>
-								<option value="selectWriter">담당자</option>
-							</select>
-							<input name="orderQ" value="" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
+							<input name="orderQ" value="${param.orderQ }" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
 			        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>	
 						</div>
 					</div>
@@ -205,10 +200,10 @@ div.right {
 				<div class="row d-flex">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions1" placeholder="제품코드">
+							<input name="orderCode" value="${param.orderCode }"  type="text" id="" class="form-control" list="datalistOptions1" placeholder="주문서 ID">
 							<datalist id="datalistOptions1">
-								<c:forEach items="${productList }" var="product">
-									<option value="${product.productCode }">
+								<c:forEach items="${orderList }" var="order">
+									<option value="${order.orderCode}">${order.orderCode}</option>
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -216,10 +211,10 @@ div.right {
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품명">
+							<input name="productCode" value="${param.productCode }" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품코드">
 							<datalist id="datalistOptions2">
 								<c:forEach items="${productList }" var="product">
-									<option value="${product.productName }">
+									<option value="${product.productCode}">${product.productCode }</option>
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -227,10 +222,10 @@ div.right {
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" id="" class="form-control" list="datalistOptions3" placeholder="제품타입">
+							<input name="writer" value="${param.writer }" type="text" id="" class="form-control" list="datalistOptions3" placeholder="담당자">
 							<datalist id="datalistOptions3">
-								<c:forEach items="${types }" var="type">
-									<option value="${type }">
+								<c:forEach items="${writers }" var="writer">
+									<option value="${writer }">${writer }</option>
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -238,10 +233,10 @@ div.right {
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="" value="" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="제품규격 Inch">
+							<input name="status" value="${param.status }" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="상태">
 							<datalist id="datalistOptions4">
-								<c:forEach items="${sizes }" var="size">
-									<option value="${size }">
+								<c:forEach items="${status }" var="status">
+									<option value="${status }">${status }</option>
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -252,28 +247,21 @@ div.right {
 				<div class="row d-flex">
 					<div class="col-sm-2">
 						<div class="form-check"  style="margin-top: 10px;">
-						    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+						    <input class="form-check-input" type="checkbox" value="" id="checkedAllDate" checked>
 							<label class="form-check-label" for="flexCheckDefault">전체기간</label>
 						</div>
 					</div>
-					<div class="col-sm-5">
+					<div class="col-sm-7">
 						<div class="input-group">
-							<input name="d1" value="${nowDate }" type="date" id="d1Id" class="form-control">
-							<span class="input-group-text">~</span>
-			        		<input name="d2" value="${nowDate }" type="date" id="d2Id" class="form-control">
+							<input name="fromDate" value="${param.fromDate }" type="date" id="d1" class="form-control">
+							<span class="input-group-text" style="padding-left: 20px; padding-right: 20px;">~</span>
+			        		<input name="endDate" value="${param.endDate }" type="date" id="d2" class="form-control">
 						</div>
 					</div>
-					<div class="col-sm-5 d-flex">
-						
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">오늘</button>		
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1주 </button>	
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">15일</button>		
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">3개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">6개월</button>
-						<button type="button" id="" class="btn btn-outline-secondary" style="font-size: 12pt">1년</button>	
-						
+					<div class="col-sm-2">
+							<a class="btn btn-outline-primary primaryBtn" type="submit" href="/report/monthlyReport">검색 조건 초기화</a>
 					</div>
+
 				</div><!-- 3rd row 끝 -->
 				<div class="row mt-4">
 					<div class="col-sm-4"></div>
@@ -287,7 +275,7 @@ div.right {
 		</div><!-- 우측 검색 조건 div 끝 -->
 	</div><!-- 좌측 + 우측 전체를 감싸는 d-flex 끝-->
 	
-
+	
 	<hr>
 	
 	<div class="mainBoard">
@@ -305,75 +293,93 @@ div.right {
 
 		<h4>주문목록</h4>
 
-			<div style="float: right;">
-				<c:set var="ctx" value="${pageContext.request.contextPath}" />
-				<a href="${ctx }/report/excelDown?orderQ=${param.orderQ }"
-					class="btn btn-primary primaryBtn" type="submit"
-					style="margin-bottom: 10px;"> 엑셀 다운로드 </a>
-			</div>
-			<!-- 리스트 -->
+		<div style="float: right;">
+			<c:set var="ctx" value="${pageContext.request.contextPath}" />
+			<a href="${ctx }/report/excelDown?orderQ=${param.orderQ }"
+				class="btn btn-primary primaryBtn" type="submit"
+				style="margin-bottom: 10px;"> 엑셀 다운로드 </a>
+		</div>
+		<!-- 리스트 -->
 		<table class="table">
 			<thead>
 				<!-- productCode, productName, productType, weight, size, price, unit, content -->
 				<tr>
-					<th style="width: 9%;">주문서 ID</th>
-					<th>바이어코드</th>
-					<th>제품코드</th>
-					<th>단가</th>
-					<th>수량</th>
-					<th>합계</th>
-					<th style="width: 9%;">등록일</th>
-					<th style="width: 9%;">수정일</th>
-					<th style="width: 9%;">납기일</th>
-					<th>담당자</th>
-					<th>상태</th>
-					<th>메세지</th>
+					<th style="width: 150px;">주문서 ID</th>
+					<th style="width: 130px;">바이어코드</th>
+					<th style="width: 100px;">제품코드</th>
+					<th style="width: 130px;">판매가</th>
+					<th style="width: 100px;">수량</th>
+					<th style="width: 200px;">합계</th>
+					<th style="width: 200px;">등록일</th>
+					<th style="width: 200px;">납기일</th>
+					<th style="width: 150px;">담당자</th>
+					<th style="width: 150px;">상태</th>
+					<th style="width: 130px;">메세지</th>
 				</tr>
 			</thead>
 			<tbody>
+			<!-- 오더 아이템이 1개 이하 -->
 				<c:forEach items="${orderList }" var="order">
-					<c:if test="${fn:length(order.orderItem) == 1 }">
+					<c:if test="${fn:length(order.orderItem) < 2 }">
 						<tr>
-							<td style="width: 9%;">${order.orderCode }</td>
-							<td>${order.buyerCode }</td>
-							<td>${order.orderItem[0].productCode }</td>
-							<td>${order.orderItem[0].salePrice }</td>
-							<td>${order.orderItem[0].quantity }</td>
-							<td>${order.orderItem[0].sum }</td>
-							<td style="width: 9%;">${order.inserted }</td>
-							<td style="width: 9%;">${order.modified }</td>
-							<td style="width: 9%;">${order.deliveryDate }</td>
-							<td>${order.writer }</td>
-							<td>${order.status }</td>
-							<td>${order.message }</td>
+							<td style="width: 150px;">${order.orderCode }</td>
+							<td style="width: 130px;">${order.buyerCode }</td>
+							<td style="width: 100px;">${order.orderItem[0].productCode }</td>
+							<td style="width: 130px;">${order.orderItem[0].finalPrice }</td>
+							<td style="width: 100px;">${order.orderItem[0].quantity }</td>
+							<td style="width: 200px;">${order.orderItem[0].sum }</td>
+							<td style="width: 250px;">${order.inserted }</td>
+							<td style="width: 250px;">${order.deliveryDate }</td>
+							<td style="width: 150px;">${order.writer }</td>
+							<td style="width: 200px;">${order.status }</td>
+							<td style="width: 130px;">${order.message }</td>
 						</tr>
 					</c:if>
-					<c:if test="${fn:length(order.orderItem) != 1 }">
+			<!-- 오더 아이템이 여러개 -->
+					<c:if test="${fn:length(order.orderItem) >= 2 }">
 						<c:forEach items="${order.orderItem }" var="item">
 							<tr>
-								<td style="width: 9%;">${order.orderCode }</td>
-								<td>${order.buyerCode }</td>
-								<td>${item.productCode }</td>
-								<td>${item.salePrice }</td>
-								<td>${item.quantity }</td>
-								<td>${item.sum }</td>
-								<td style="width: 9%;">${order.inserted }</td>
-								<td style="width: 9%;">${order.modified }</td>
-								<td style="width: 9%;">${order.deliveryDate }</td>
-								<td>${order.writer }</td>
-								<td>${order.status }</td>
-								<td>${order.message }</td>
+								<td style="width: 150px;">${order.orderCode }</td>
+								<td style="width: 130px;">${order.buyerCode }</td>
+								<td style="width: 100px;">${item.productCode }</td>
+								<td style="width: 130px;">${item.finalPrice }</td>
+								<td style="width: 100px;">${item.quantity }</td>
+								<td style="width: 200px;">${item.sum }</td>
+								<td style="width: 250px;">${order.inserted }</td>
+								<td style="width: 250px;">${order.deliveryDate }</td>
+								<td style="width: 150px;">${order.writer }</td>
+								<td style="width: 200px;">${order.status }</td>
+								<td style="width: 130px;">${order.message }</td>
 							</tr>
 						</c:forEach>
 					</c:if>
 				</c:forEach>
 			</tbody>
 		</table>
+		
 	</div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-<script type="text/javascript">
+<script>
+function myFunction() {
+
+	var str = document.getElementById("demo").value; 
+
+
+//전체 기간 선택
+$('input[name=fromDate]').prop("disabled", true);
+$('input[name=endDate]').prop("disabled", true);
+$('#checkedAllDate').click(function(){
+	if($('#checkedAllDate').is(':checked') ){
+		
+		$('input[name=fromDate]').prop("disabled", true);
+		$('input[name=endDate]').prop("disabled", true);
+	}else{
+		$('input[name=fromDate]').removeAttr("disabled");
+		$('input[name=endDate]').removeAttr("disabled");
+	}
+})
+
 
 </script>
 	

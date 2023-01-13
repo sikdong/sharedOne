@@ -13,11 +13,16 @@ public class AsjSalePriceService {
 	@Autowired
 	private AsjSalePriceMapper asjSalePriceMapper;
 
-	public List<SalePriceDto> selectAllSalePriceItemList(String keyword ,String productCode, String productName, String buyerCode, String buyerName, String country) {
+	public List<SalePriceDto> selectAllSalePriceItemList(String keyword ,String productCode, String productName, String buyerCode, String buyerName, String country, int priceMin, int priceMax, String fromDate, String endDate) {
 		
 		keyword = "%"+keyword+"%";
+		productCode = "%"+productCode+"%"; 
+		productName = "%"+productName+"%";
+		buyerCode = "%"+buyerCode+"%";
+		buyerName = "%"+buyerName+"%";
+		country = "%"+country+"%";
 		
-		return asjSalePriceMapper.selectAllSalePriceItemList(keyword, productCode, productName, buyerCode, buyerName, country);
+		return asjSalePriceMapper.selectAllSalePriceItemList(keyword, productCode, productName, buyerCode, buyerName, country, priceMin, priceMax, fromDate, endDate);
 	}
 
 	public SalePriceDto selectSaleByPriceId(int priceId) {
@@ -38,6 +43,21 @@ public class AsjSalePriceService {
 		int cnt = asjSalePriceMapper.updateSalePriceByPriceId(priceId, salePrice, discountRate, fromDate, endDate);
 		
 		return cnt;
+	}
+
+	public int selectPriceByProductCode(String productCode) {
+		return asjSalePriceMapper.selectPriceByProductCode(productCode);
+		
+	}
+
+	public List<SalePriceDto> selectDateListByBuyerCodeAndProductCode(String buyerCode, String productCode) {
+		return asjSalePriceMapper.selectDateListByBuyerCodeAndProductCode(buyerCode, productCode);
+		
+	}
+
+	public int register(SalePriceDto sale) {
+		return asjSalePriceMapper.register(sale);
+		
 	}
 
 }

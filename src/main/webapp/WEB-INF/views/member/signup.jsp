@@ -50,7 +50,7 @@
     .col-form-label{
         font-weight: 600;
     }
-    #businessNumberExist, #buyerCodeExist {
+    #emailIdCheckBtn,#registerBtn{
     	line-height: 10px;
     	margin-top: 10px;
     	text-align: inherit;
@@ -65,26 +65,15 @@
  		color: #1d5c83 !important;
     }
     
-    #businessNumberExist:hover, #buyerCodeExist:hover {
+    #emailIdCheckBtn:hover, #registerBtn:hover{
  		background-color: #1d5c83 !important;
  		color: white !important;
  	}
-    
-    .registerBtn {
-    	line-height: 10px;
-    	float: right !important; 
-	    text-align: center !important;
-	    font-size: 15px; 
-	    font-weight: 600; 
-	    width: 60px; 
-	    height: 30px; 
-	    color: white; 
-	    border: none; 
-	    border-radius: 5px; 
-	    background: #1d5c83;
-	    margin-bottom: 25px;
+ 
+    .inputDiv{
+    position: absolute; 
+    right: 157px;
     }
-    
 </style>
 <body>   
     <div class="insert-body mt-5 ">    	
@@ -98,50 +87,53 @@
 	                    <hr class="line" style="border: solid 1px #000" />
 	                    </div>
 	                    <div class="container-sm content-size">
-	                        <div class="mb-2 row mt-2 rowdiv">
-	                            <label for="inputId" class="col-form-label">사원 번호</label>
-	                            <div class="col-sm-5">
-	                                <input id="memberId" name="id" type="text" class="form-control" placeholder="사원번호를 입력하세요."/>
-	                                <button class="btn" type="button" id="buyerCodeExist">확인</button>
+	                    	<!-- <div class="mb-2 row mt-2 rowdiv">
+	                            <label for="inputId" class="col-form-label">아이디</label>
+	                            <div class="col-sm-5 inputDiv">
+	                                <input id="memberId" name="id" type="text" class="form-control" placeholder="아이디를 입력하세요."/>
 	                            </div>
-	                            <div id="buyerCodeText1" class="form-text">사원 번호를 확인을 해주세요.</div>
+	                        </div> -->
+	                    	<div class="mb-2 row mt-2 rowdiv">
+	                            <label for="inputName" class="col-form-label">이름</label>
+	                            <div class="col-sm-5 inputDiv">
+	                                <input id="memberName" name="name" type="text" class="form-control" placeholder="이름을 입력하세요."/>
+	                            </div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputPassword" class="col-form-label">비밀번호</label>
-	                            <div class="col-sm-5">
+	                            <div class="col-sm-5 inputDiv">
 	                                <input id="passwordInput1" name="password" type="password" class="form-control" placeholder="비밀번호 입력하세요."/>
 	                            </div>	                            
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputPassword" class="col-form-label">비밀번호 확인</label>
-	                            <div class="col-sm-5">
+	                            <div class="col-sm-5 inputDiv">
 	                                <input id="passwordInput2" type="password" class="form-control" placeholder="비밀번호 확인"/>
-	                            </div>	                            
-	                        </div>
-	                        <div class="mb-2 row mt-2 rowdiv">
-	                            <label for="inputName" class="col-form-label">이름</label>
-	                            <div class="col-sm-5">
-	                                <input id="memberName" name="name" type="text" class="form-control" placeholder="이름을 입력하세요."/>
 	                            </div>
-	                        </div>
+	                            <div id="passwordText" class="form-text" style="text-align: center;"></div>	                            
+	                        </div>	                        
 	                        <div class="mb-2 row mt-2 rowdiv">
-	                            <label for="inputEmail" class="col-form-label">이메일</label>
-	                            <div class="col-sm-5">
-	                                <input id="memberEmail" name="email" type="text" class="form-control" placeholder="주소를 입력하세요."/>
+	                            <label for="inputEmailId" class="col-form-label">이메일ID</label>
+	                            <div class="col-sm-5 inputDiv">
+	                                <input id="inputEmailId" name="email" type="text" class="form-control" placeholder="이메일 ID를 입력해주세요."/>
 	                            </div>
+	                            <div class="col-sm-5 " style="position: absolute; text-align: right; right: 100px; top: 43.5vh;  width: 65px;">	                                
+	                                <button class="btn" type="button" id="emailIdCheckBtn" style="height: 38px;"disabled>확인</button>
+	                            </div>
+	                            <div id="emailIdText" class="form-text" style="text-align: center;"></div>
 	                        </div>
 	                         <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputPhone" class="col-form-label">연락처</label>
-	                            <div class="col-sm-5">
+	                            <div class="col-sm-5 inputDiv">
 	                                <input id="memberPhone" name="phone" type="text" class="form-control" placeholder="연락처를 입력하세요."/>
 	                            </div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 								<label for="inputAuth" class="col-form-label" >직급</label>
-									<div class="col-sm-5">
-										<select id="memberAuth" name="Auth" class="form-control"
+									<div class="col-sm-5 inputDiv">
+										<select id="memberRank" name="rank" class="form-control"
 											style="padding-left: 8px;">
-											<option selected>직급을 선택하세요.</option>
+											<option name="select" selected>직급을 선택하세요.</option>
 											<option name ="팀장" >팀장</option>
 											<option name ="차장">차장</option>
 											<option name ="과장">과장</option>
@@ -153,30 +145,61 @@
 							</div>                      
 	                    </div>
 	                <hr />
-	              </form>
-	                <div>
-	                    <input id="registerBtn" class="btn registerBtn" value="등록"/>
-	                </div>
+	              </form>	              	
 	            </div>
+	            <div class="col-sm-5 " style="position: absolute; text-align: right; margin-left:265px">	                                
+	                    <button class="btn registerBtn" type="button" id="registerBtn" style="height: 38px;" disabled>등록</button>
+	                </div>
 	        </div>
       </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <script>
-	    
+	
+   
+    
     //등록버튼 누르면 등록 실행 후 창 닫기
-    document.querySelector("#registerBtn").addEventListener("click", function() {
-    	
-    	document.querySelector("#memberForm").submit();
-    	
-    	setTimeout("window.close()", 3000);
-    	
-    	    //현재 팝업창 Close
-    	
-    })
+    $(function() {
+
+        $("#registerBtn").click( function() {
+             $('#memberForm').submit();
+             setTimeout(function() {   
+                 window.close();
+              }, 100);
+          });
+    });
     
     const ctx = "${pageContext.request.contextPath}";  
+    var availableName = false;
+    var availablePassword = false;
+    var availableEmailId = false;
+    var availablePhone = false;
+    var availableRank = false;
+ 	// 등록버튼 활성/비활성
+    function enableRegisterButton(){
+    	
+    	const registerButton = document.querySelector("#registerBtn");
+    		
+    	if(availablePassword && availableEmailId && availablePhone && availableName && availableRank){
+    		//등록 버튼 활성화
+    		registerButton.removeAttribute("disabled")
+    	}  else {
+    		//등록 버튼 비활성화
+    		registerButton.setAttribute("disabled", "");
+    	}
+    }
+ 	
+	/*이름 입력했는지 안했는지 */
+    memberName.addEventListener("keyup", checkName);
+ 	
+	function checkName(){
+ 		
+ 		if (document.querySelector("#memberName").value != null){
+ 			availableName = true;
+ 		} 
+ 	}
+  
     
- 	// 새 비밀번호 일치여부 및 비밀번호 정규 표현식 적용
+ 	// 비밀번호 일치여부 및 비밀번호 정규 표현식 적용
     const passwordInput1 = document.querySelector("#passwordInput1");
     const passwordInput2 = document.querySelector("#passwordInput2");
     const passwordText = document.querySelector("#passwordText");
@@ -187,19 +210,102 @@
     function matchPassword(){
     	availablePassword = false;
     	if(!passwordCheck.test(passwordInput1.value)|| (passwordInput1.value).length<8){
-    		passwordText.innerText = "비밀번호는 영문자,숫자로 구성된 8글자 이상으로 조합하시오."	
+    		passwordText.innerText = "비밀번호는 영문자,숫자로 구성된 8글자 이상으로 조합하시오."
+    		passwordText.style.color="red";
     	} else {
     			
     		if(passwordInput1.value == passwordInput2.value){
     			passwordText.innerText = "암호가 일치합니다."
+    			passwordText.style.color="green";
     			availablePassword = true;
     		} else {
-    			passwordText.innerText = "암호가 일치하지 않습니다."		
+    			passwordText.innerText = "암호가 일치하지 않습니다."	
+    			passwordText.style.color="red";
     		}
     	}
-    		
-    	enableModifyButton();
+    	enableRegisterButton()
     }
+    
+    const inputEmailId = document.querySelector("#inputEmailId");
+    const emailIdText = document.querySelector("#emailIdText");
+    const emailIdCheck = /(?=.*[0-9])(?=.*[a-z]).{5,15}/;
+    
+
+    function checkEmailId(){
+    	
+    	if(!emailIdCheck.test(inputEmailId.value)||((inputEmailId.value).length<5)&&((inputEmailId.value).length>15)){
+    		
+    		emailIdText.innerText = "이메일 아이디는 영문자,숫자로 구성된 5글자 이상 15글자 이하로 조합하시오."
+        	emailIdText.style.color="red";
+    		//확인 버튼 비활성화
+    		emailIdCheckBtn.setAttribute("disabled", "");
+    		
+    	} else if(emailIdCheck.test(inputEmailId.value)||((inputEmailId.value).length>4)&&((inputEmailId.value).length<16)){
+    		
+    		emailIdText.innerText = "이메일 아이디 중복확인 버튼을 눌러주세요."
+    		emailIdText.style.color="green";
+    		//확인 버튼 활성화
+    		emailIdCheckBtn.removeAttribute("disabled")
+    	}
+    	enableRegisterButton()
+    }
+    
+    inputEmailId.addEventListener("keyup", checkEmailId);
+    
+ 	// 이메일ID 중복확인 버튼 클릭하면 일어나는일
+    emailIdCheckBtn.addEventListener("click", function(){
+    	availableEmailId = false;
+    		
+    	const email = inputEmailId.value;
+    		
+    	fetch(`\${ctx}/member/checkEmail`,{
+    		method : "post",
+    		headers : {
+    			"Content-Type" : "application/json"
+    		},
+    		body : JSON.stringify({email})
+    	})
+    	   .then(res => res.json())
+    	   .then(data => {
+    		   emailIdText.innerText = data.message;
+    		   if(data.status == "Approval"){
+    			   availableEmailId = true;
+    		   }
+    			   
+    		   enableRegisterButton();
+    	   })	
+    })
+    
+    const memberPhone = document.querySelector("#memberPhone");
+    memberPhone.addEventListener("keyup", checkPhone);
+	
+ 	function checkPhone(){
+ 	
+ 	const checkPhoneNumber =  /01[016789]-[^0][0-9]{2,3}-[0-9]{3,4}/;
+ 	
+ 		if (checkPhoneNumber.test(memberPhone.value)){
+ 			availablePhone = true;
+ 			memberPhone.style.color="black";
+ 		} else {
+ 			availablePhone = false;
+ 			memberPhone.style.color="red";
+ 		}
+ 		enableRegisterButton();
+ 	}
+	
+ 	memberRank.addEventListener("change", checkRank);
+ 	
+	function checkRank(){
+ 		
+	 	if (document.querySelector("select#memberRank option:checked").value == "직급을 선택하세요."){
+	 		availableRank = false;
+	 	} else {
+	 		availableRank = true;
+	 	}
+	 	
+ 	enableRegisterButton();
+ 	
+ 	} 
     
     </script>
 

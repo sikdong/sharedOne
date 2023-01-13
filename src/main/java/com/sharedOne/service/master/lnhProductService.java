@@ -21,8 +21,11 @@ public class lnhProductService {
 		
 	}
 	
-	public List<ProductDto> searchProductList(String keyword) {
-		return productMapper.searchProductList("%" + keyword + "%");
+	public List<ProductDto> searchProductList(String keyword, String productCode, String productName, String size) {
+		
+		keyword = "%" + keyword + "%";
+
+		return productMapper.searchProductList(keyword, productCode, productName, size);
 	}
 	
 	//제품 등록
