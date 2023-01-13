@@ -138,146 +138,140 @@ public class lnhReportController {
 			@RequestParam(name="endDate", defaultValue="") String endDate) throws IOException {
 		
 		
-		try (Workbook workbook = new XSSFWorkbook()) {
+		 try (Workbook workbook = new XSSFWorkbook()) {
+			 
+			 Sheet sheet = workbook.createSheet("레포트");
+			 int rowNo = 0;
+			 
+			 CellStyle headStyle = workbook.createCellStyle();
+	            headStyle.setFillForegroundColor(HSSFColor.HSSFColorPredefined.LIGHT_BLUE.getIndex());
+	            headStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	            Font font = workbook.createFont();
+	            font.setFontName(HSSFFont.FONT_ARIAL); // 폰트 스타일
+	            font.setColor(HSSFColor.HSSFColorPredefined.WHITE.getIndex()); // 폰트 색 지정
+	            font.setFontHeightInPoints((short) 13); // 폰트 크기
+	            headStyle.setFont(font);
+	            
+	            //셀병합
+				sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 11)); //첫행, 마지막행, 첫열, 마지막열 병합
+				
+				//테이블 셀 스타일
+				CellStyle cellStyle = workbook.createCellStyle();
+				sheet.setColumnWidth(0, (sheet.getColumnWidth(0))+(short)2048); // 0번째 컬럼 넓이 조절
+				sheet.setColumnWidth(6, (sheet.getColumnWidth(6))+(short)2048); // 6번째 컬럼 넓이 조절
+				sheet.setColumnWidth(7, (sheet.getColumnWidth(7))+(short)2048); // 7번째 컬럼 넓이 조절
+				sheet.setColumnWidth(8, (sheet.getColumnWidth(8))+(short)2048); // 8번째 컬럼 넓이 조절
+				cellStyle.setAlignment(HorizontalAlignment.CENTER);
+				
+				Font fontTitle = workbook.createFont();
+				fontTitle.setColor(HSSFColor.HSSFColorPredefined.LIGHT_BLUE.getIndex());
+				fontTitle.setFontName(HSSFFont.FONT_ARIAL);
+				fontTitle.setBold(true);
+				fontTitle.setFontHeightInPoints((short)20); // 폰트 크기
+				cellStyle.setFont(fontTitle ); // cellStyle에 font를 적용
+			
+				// 타이틀 생성
+				Row xssfRow = sheet.createRow(rowNo++); // 행 객체 추가
+				Cell xssfCell = xssfRow.createCell((short) 0); // 추가한 행에 셀 객체 추가
+				xssfCell.setCellStyle(cellStyle); // 셀에 스타일 지정
+				xssfCell.setCellValue("레포트"); // 데이터 입력
+				
+				sheet.createRow(rowNo++);
+				xssfRow = sheet.createRow(rowNo++);  // 빈행 추가
+			 
+				Row headerRow = sheet.createRow(rowNo++);
+				headerRow.createCell(0).setCellValue("주문서 ID");
+				headerRow.createCell(1).setCellValue("바이어코드");
+				headerRow.createCell(2).setCellValue("제품코드");
+				headerRow.createCell(3).setCellValue("단가");
+				headerRow.createCell(4).setCellValue("수량");
+				headerRow.createCell(5).setCellValue("합계");
+				headerRow.createCell(6).setCellValue("등록일");
+				headerRow.createCell(7).setCellValue("수정일");
+				headerRow.createCell(8).setCellValue("납기일");
+				headerRow.createCell(9).setCellValue("담당자");
+				headerRow.createCell(10).setCellValue("상태");
+				headerRow.createCell(11).setCellValue("메세지");
+			 
+			 for(int i=0; i<=11; i++){
+	                headerRow.getCell(i).setCellStyle(headStyle);
+	            }
+			 
+			 List<OrderHeaderDto> list = service.orderList(orderQ);
+			 
+			 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			  
+				 for (OrderHeaderDto board1 : list) {
+					 //오더 아이템이 하나만 있는 경우
+					 if(board1.getOrderItem().size() ==1) {
+						 Row row = sheet.createRow(rowNo++);
+						 row.createCell(0).setCellValue(board1.getOrderCode());
+						 row.createCell(1).setCellValue(board1.getBuyerCode());
+						 row.createCell(2).setCellValue(board1.getOrderItem().get(0).getProductCode());
+						 row.createCell(3).setCellValue(board1.getOrderItem().get(0).getSalePrice());
+						 row.createCell(4).setCellValue(board1.getOrderItem().get(0).getQuantity());
+						 row.createCell(5).setCellValue(board1.getOrderItem().get(0).getSum());
 
-			Sheet sheet = workbook.createSheet("레포트");
-			int rowNo = 0;
-
-			CellStyle headStyle = workbook.createCellStyle();
-			headStyle.setFillForegroundColor(HSSFColor.HSSFColorPredefined.LIGHT_BLUE.getIndex());
-			headStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-			Font font = workbook.createFont();
-			font.setFontName(HSSFFont.FONT_ARIAL); // 폰트 스타일
-			font.setColor(HSSFColor.HSSFColorPredefined.WHITE.getIndex()); // 폰트 색 지정
-			font.setFontHeightInPoints((short) 13); // 폰트 크기
-			headStyle.setFont(font);
-
-			// 셀병합
-			sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 11)); // 첫행, 마지막행, 첫열, 마지막열 병합
-
-			// 테이블 셀 스타일
-			CellStyle cellStyle = workbook.createCellStyle();
-			sheet.setColumnWidth(0, (sheet.getColumnWidth(0)) + (short) 2048); // 0번째 컬럼 넓이 조절
-			sheet.setColumnWidth(6, (sheet.getColumnWidth(6)) + (short) 2048); // 6번째 컬럼 넓이 조절
-			sheet.setColumnWidth(7, (sheet.getColumnWidth(7)) + (short) 2048); // 7번째 컬럼 넓이 조절
-			sheet.setColumnWidth(8, (sheet.getColumnWidth(8)) + (short) 2048); // 8번째 컬럼 넓이 조절
-			sheet.setColumnWidth(11, (sheet.getColumnWidth(11)) + (short) 5000); // 8번째 컬럼 넓이 조절
-			cellStyle.setAlignment(HorizontalAlignment.CENTER);
-
-			Font fontTitle = workbook.createFont();
-			fontTitle.setColor(HSSFColor.HSSFColorPredefined.LIGHT_BLUE.getIndex());
-			fontTitle.setFontName(HSSFFont.FONT_ARIAL);
-			fontTitle.setBold(true);
-			fontTitle.setFontHeightInPoints((short) 20); // 폰트 크기
-			cellStyle.setFont(fontTitle); // cellStyle에 font를 적용
-
-			// 타이틀 생성
-			Row xssfRow = sheet.createRow(rowNo++); // 행 객체 추가
-			Cell xssfCell = xssfRow.createCell((short) 0); // 추가한 행에 셀 객체 추가
-			xssfCell.setCellStyle(cellStyle); // 셀에 스타일 지정
-			xssfCell.setCellValue("리포트"); // 데이터 입력
-
-			sheet.createRow(rowNo++);
-			xssfRow = sheet.createRow(rowNo++); // 빈행 추가
-
-			Row headerRow = sheet.createRow(rowNo++);
-			headerRow.createCell(0).setCellValue("주문서 ID");
-			headerRow.createCell(1).setCellValue("바이어코드");
-			headerRow.createCell(2).setCellValue("제품코드");
-			headerRow.createCell(3).setCellValue("판매가");
-			headerRow.createCell(4).setCellValue("수량");
-			headerRow.createCell(5).setCellValue("합계");
-			headerRow.createCell(6).setCellValue("등록일");
-			headerRow.createCell(7).setCellValue("수정일");
-			headerRow.createCell(8).setCellValue("납기일");
-			headerRow.createCell(9).setCellValue("담당자");
-			headerRow.createCell(10).setCellValue("상태");
-			headerRow.createCell(11).setCellValue("메세지");
-
-			for (int i = 0; i <= 11; i++) {
-				headerRow.getCell(i).setCellStyle(headStyle);
-			}
-
-			// 검색 결과 리스트
-			List<OrderHeaderDto> list = service.orderList(orderQ, orderCode, productCode, writer, status, fromDate,
-					endDate);
-
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-			for (OrderHeaderDto board1 : list) {
-				// 오더 아이템이 하나만 있는 경우
-				if (board1.getOrderItem().size() == 1) {
-					Row row = sheet.createRow(rowNo++);
-					row.createCell(0).setCellValue(board1.getOrderCode());
-					row.createCell(1).setCellValue(board1.getBuyerCode());
-					row.createCell(2).setCellValue(board1.getOrderItem().get(0).getProductCode());
-					row.createCell(3).setCellValue(board1.getOrderItem().get(0).getFinalPrice());
-					row.createCell(4).setCellValue(board1.getOrderItem().get(0).getQuantity());
-					row.createCell(5).setCellValue(board1.getOrderItem().get(0).getSum());
-
-					Date cell6 = java.sql.Date.valueOf(board1.getInserted());
-					String inserted = sdf.format(cell6);
-					row.createCell(6).setCellValue(inserted);
-
-					if (board1.getModified() != null) {
-						Date cell7 = java.sql.Date.valueOf(board1.getModified());
-						String modified = sdf.format(cell7);
-						row.createCell(7).setCellValue(modified);
-
-					}
-
-					Date cell8 = java.sql.Date.valueOf(board1.getDeliveryDate());
-					String deliveryDate = sdf.format(cell8);
-					row.createCell(8).setCellValue(deliveryDate);
-
-					row.createCell(9).setCellValue(board1.getWriter());
-					row.createCell(10).setCellValue(board1.getStatus());
-					row.createCell(11).setCellValue(board1.getMessage());
+						 Date cell6 = java.sql.Date.valueOf(board1.getInserted());
+						 String inserted = sdf.format(cell6);
+						 row.createCell(6).setCellValue(inserted);
+						 
+						 Date cell7 = java.sql.Date.valueOf(board1.getModified());
+						 String modified = sdf.format(cell7);
+						 row.createCell(7).setCellValue(modified);
+						 
+						 Date cell8 = java.sql.Date.valueOf(board1.getDeliveryDate());
+						 String deliveryDate = sdf.format(cell8);
+						 row.createCell(8).setCellValue(deliveryDate);
+						 
+						 row.createCell(9).setCellValue(board1.getWriter());
+						 row.createCell(10).setCellValue(board1.getStatus());
+						 row.createCell(11).setCellValue(board1.getMessage());
+					 }
+					 //오더 아이템이 여러개 인 경우
+					 if(board1.getOrderItem().size() !=1) {
+						 List<OrderItemDto> itemList = new ArrayList<>();
+						 
+						 itemList = board1.getOrderItem();
+						 for (OrderItemDto board2 : itemList) {
+							 Row row = sheet.createRow(rowNo++);
+							 row.createCell(0).setCellValue(board1.getOrderCode());
+							 row.createCell(1).setCellValue(board1.getBuyerCode());
+							 row.createCell(2).setCellValue(board2.getProductCode());
+							 row.createCell(3).setCellValue(board2.getSalePrice());
+							 row.createCell(4).setCellValue(board2.getQuantity());
+							 row.createCell(5).setCellValue(board2.getSum());
+							 Date cell6 = java.sql.Date.valueOf(board1.getInserted());
+							 String inserted = sdf.format(cell6);
+							 row.createCell(6).setCellValue(inserted);
+							
+							 Date cell7 = java.sql.Date.valueOf(board1.getModified());
+							 String modified = sdf.format(cell7);
+							 row.createCell(7).setCellValue(modified);
+							 
+							 Date cell8 = java.sql.Date.valueOf(board1.getDeliveryDate());
+							 String deliveryDate = sdf.format(cell8);
+							 row.createCell(8).setCellValue(deliveryDate);
+							 
+							 row.createCell(9).setCellValue(board1.getWriter());
+							 row.createCell(10).setCellValue(board1.getStatus());
+							 row.createCell(11).setCellValue(board1.getMessage());
+						 }
+						 
+					 }
+					 
 				}
-				// 오더 아이템이 여러개 인 경우
-				if (board1.getOrderItem().size() != 1) {
-					List<OrderItemDto> itemList = new ArrayList<>();
-
-					itemList = board1.getOrderItem();
-					for (OrderItemDto board2 : itemList) {
-						Row row = sheet.createRow(rowNo++);
-						row.createCell(0).setCellValue(board1.getOrderCode());
-						row.createCell(1).setCellValue(board1.getBuyerCode());
-						row.createCell(2).setCellValue(board2.getProductCode());
-						row.createCell(3).setCellValue(board2.getFinalPrice());
-						row.createCell(4).setCellValue(board2.getQuantity());
-						row.createCell(5).setCellValue(board2.getSum());
-						Date cell6 = java.sql.Date.valueOf(board1.getInserted());
-						String inserted = sdf.format(cell6);
-						row.createCell(6).setCellValue(inserted);
-
-						if (board1.getModified() != null) {
-							Date cell7 = java.sql.Date.valueOf(board1.getModified());
-							String modified = sdf.format(cell7);
-							row.createCell(7).setCellValue(modified);
-
-						}
-
-						Date cell8 = java.sql.Date.valueOf(board1.getDeliveryDate());
-						String deliveryDate = sdf.format(cell8);
-						row.createCell(8).setCellValue(deliveryDate);
-
-						row.createCell(9).setCellValue(board1.getWriter());
-						row.createCell(10).setCellValue(board1.getStatus());
-						row.createCell(11).setCellValue(board1.getMessage());
-					}
-
-				}
+			 
+			 
+			 
+			 response.setContentType("ms-vnd/excel");
+			 response.setHeader("Content-Disposition", "attachment;filename=report.xls");
+			 
+			 workbook.write(response.getOutputStream());
+			 workbook.close();
+			 
 
 			}
-
-			response.setContentType("ms-vnd/excel");
-			response.setHeader("Content-Disposition", "attachment;filename=report.xls");
-
-			workbook.write(response.getOutputStream());
-			workbook.close();
-
-		}
 
 	}
 
