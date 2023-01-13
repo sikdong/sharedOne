@@ -144,9 +144,16 @@ public class YdsOrderService {
 		}
 	}
 
-	public YdsOrderDto modifyOrder(int orderId) {
+
+	public OrderHeaderDto modifyOrderHeader(int orderId) {
 		// TODO Auto-generated method stub
-		return mapper.modifyOrder(orderId);
+		return mapper.modifyOrderHeader(orderId);
 	}
+
+	public List<OrderItemDto> modifyOrderItem(int orderId) {
+		// TODO Auto-generated method stub
+		return mapper.modifyOrderItem(orderId);
+	}
+	
 
 }

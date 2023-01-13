@@ -78,15 +78,15 @@ public class YdsOrderController {
 
 	}
 
-	@GetMapping("tempSave")
-	public void tempSave() {
-
-	}
 
 	@GetMapping("modify")
 	public void modifyOrder(@RequestParam int orderId, Model model) {
-		YdsOrderDto yod = service.modifyOrder(orderId);
-		model.addAttribute("order", yod);
+		OrderHeaderDto ohd = service.modifyOrderHeader(orderId);
+		List<OrderItemDto> oid = service.modifyOrderItem(orderId);
+		System.out.println("오더 헤더는 " + ohd);
+		System.out.println("오더 아이템은 " + oid);
+		model.addAttribute("orderHeader", ohd);
+		model.addAttribute("orderItems", oid);
 	}
 
 	@PostMapping("list")

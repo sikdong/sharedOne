@@ -6,6 +6,12 @@
 <html>
 <head>
 <style>
+.form-style {
+	border : 1px solid #ced4da; 
+	width : 100%;
+}
+
+
 .leftFilterDiv {
 	border-right-style: groove;
 }
@@ -281,7 +287,7 @@
 						<th>제품코드</th>
 						<th>제품그룹</th>
 						<th>제품명</th>
-						<th>규격</th>
+						<th>규격(inch)</th>
 						<th>단위</th>
 						<th>단가</th>
 						<th style="width : 120px;">판매가</th>
@@ -530,8 +536,8 @@
 				<th scope="col">제품코드</th>
 				<th scope="col">제품그룹</th>
 				<th scope="col">제품명</th>
-				<th scope="col">규격</th>
-				<th scope="col">무게</th>
+				<th scope="col">규격(inch)</th>
+				<th scope="col">무게(kg)</th>
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
 				<th scope="col">판매가</th>
@@ -555,8 +561,8 @@
 				<td>\${item.productCode }</td>
 				<td>\${item.productType }</td>
 				<td>\${item.productName }</td>
-				<td>\${item.size }inch</td>
-				<td>\${item.weight }kg</td>
+				<td>\${item.size }</td>
+				<td>\${item.weight }</td>
 				<td>\${item.unit }</td>
 				<td>\${item.price }</td>
 				<td>\${item.salePrice }</td>
@@ -590,8 +596,8 @@
 				<th scope="col">제품코드</th>
 				<th scope="col">제품그룹</th>
 				<th scope="col">제품명</th>
-				<th scope="col">규격</th>
-				<th scope="col">무게</th>
+				<th scope="col">규격(inch)</th>
+				<th scope="col">무게(kg)</th>
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
 				<th scope="col">판매가</th>
@@ -608,13 +614,14 @@
 				`<tr>
 					<th>
 						<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
-							id="flexCheckDefault" name="productCode" value="\${item.productCode}">
+							id="flexCheckDefault" name="productCode" value="\${item.productCode}"
+								data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
 					</th>
 					<td>\${item.productCode }</td>
 					<td>\${item.productType }</td>
 					<td>\${item.productName }</td>
-					<td>\${item.size }inch</td>
-					<td>\${item.weight }kg</td>
+					<td>\${item.size }</td>
+					<td>\${item.weight }</td>
 					<td>\${item.unit }</td>
 					<td>\${item.price }</td>
 					<td>\${item.salePrice }</td>
@@ -645,8 +652,8 @@
 				<th scope="col">제품코드</th>
 				<th scope="col">제품그룹</th>
 				<th scope="col">제품명</th>
-				<th scope="col">규격</th>
-				<th scope="col">무게</th>
+				<th scope="col">규격(inch)</th>
+				<th scope="col">무게(kg)</th>
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
 				<th scope="col">판매가</th>
@@ -663,13 +670,14 @@
 				`<tr>
 					<th>
 						<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
-							id="flexCheckDefault" name="productCode" value="\${item.productCode}">
+							id="flexCheckDefault" name="productCode" value="\${item.productCode}"
+								data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
 					</th>
 					<td>\${item.productCode }</td>
 					<td>\${item.productType }</td>
 					<td>\${item.productName }</td>
-					<td>\${item.size }inch</td>
-					<td>\${item.weight }kg</td>
+					<td>\${item.size }</td>
+					<td>\${item.weight }</td>
 					<td>\${item.unit }</td>
 					<td>\${item.price }</td>
 					<td>\${item.salePrice }</td>
@@ -701,8 +709,8 @@
 				<th scope="col">제품코드</th>
 				<th scope="col">제품그룹</th>
 				<th scope="col">제품명</th>
-				<th scope="col">규격</th>
-				<th scope="col">무게</th>
+				<th scope="col">규격(inch)</th>
+				<th scope="col">무게(kg)</th>
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
 				<th scope="col">판매가</th>
@@ -720,13 +728,14 @@
 					<th>
 						<input class="form-radio-input" type="checkbox"
 						style="width : 20px; height : 20px;"
-							id="flexCheckDefault" name="productCode" value="\${item.productCode}">
+							id="flexCheckDefault" name="productCode" value="\${item.productCode}"
+								data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
 					</th>
 					<td>\${item.productCode }</td>
 					<td>\${item.productType }</td>
 					<td>\${item.productName }</td>
-					<td>\${item.size }inch</td>
-					<td>\${item.weight }kg</td>
+					<td>\${item.size }</td>
+					<td>\${item.weight }</td>
 					<td>\${item.unit }</td>
 					<td>\${item.price }</td>
 					<td>\${item.salePrice }</td>
@@ -783,7 +792,7 @@
               <td>\${da.unit}</td>
               <td>\${da.price}원</td>
               <td>
-	              <input class="form-control" 
+	              <input class="form-style" 
 	              type="number" id="finalPrice\${i}" 
 	              onclick = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
 	              onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
@@ -793,8 +802,8 @@
               onclick = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value" 
 	          onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
 	              
-              id="quantity\${i}" class="form-control" type="number" name="quantity" value=""></td>
-              <td><input type="number" id="sum\${i}" name="sum" class="form-control" /></td>
+              id="quantity\${i}" class="form-style" type="number" name="quantity" value=""></td>
+              <td><input type="number" id="sum\${i}" name="sum" class="form-style" /></td>
               <td style="display : flex; justify-content : center;">
                   <button onclick="document.querySelector('#tr\${i}').innerHTML = '';" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
               </td>
