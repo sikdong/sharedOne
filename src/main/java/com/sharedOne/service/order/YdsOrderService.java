@@ -45,13 +45,13 @@ public class YdsOrderService {
 		LocalDate parsedDeliveryDate = LocalDate.parse(deliveryDate, DateTimeFormatter.ISO_DATE);
 		System.out.println("parsedDeliveryDate " + parsedDeliveryDate);
 		List<ProductDto> dates = mapper.getPriceDate(allProductInfo, tableBuyerCode);
-		System.out.println("dates " + dates);
+		System.out.println("dates = " +  dates);
 		List<ProductDto> pddList = new ArrayList<>();
 		for (ProductDto date : dates) {
-			LocalDate fromDate = date.getFromDate();
-			System.out.println("fromDate " + fromDate);
-			LocalDate endDate = date.getEndDate();
-			System.out.println("endDate " + endDate);
+			String fd = date.getFromDate();
+			String ed = date.getEndDate();
+			LocalDate fromDate = LocalDate.parse(fd, DateTimeFormatter.ISO_DATE);
+			LocalDate endDate = LocalDate.parse(ed, DateTimeFormatter.ISO_DATE);
 			if ((fromDate.isEqual(parsedDeliveryDate) || fromDate.isBefore(parsedDeliveryDate))
 					&& (endDate.isEqual(parsedDeliveryDate) || endDate.isAfter(parsedDeliveryDate))) {
 
