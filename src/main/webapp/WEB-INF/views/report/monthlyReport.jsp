@@ -295,7 +295,7 @@ div.right {
 
 			<div style="float: right;">
 				<c:set var="ctx" value="${pageContext.request.contextPath}" />
-				<a href="${ctx }/report/excelDown?orderQ=${param.orderQ }"
+				<a href="${ctx }/report/excelDown?orderQ=${param.orderQ }&orderCode=${param.orderCode}&productCode=${param.productCode}&writer=${param.writer}&status=${param.status}&fromDate=${param.fromDate}&endDate=${param.endDate}"
 					class="btn btn-primary primaryBtn" type="submit"
 					style="margin-bottom: 10px;"> 엑셀 다운로드 </a>
 			</div>
