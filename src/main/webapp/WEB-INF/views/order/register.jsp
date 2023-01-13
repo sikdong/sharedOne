@@ -68,7 +68,7 @@
 	<c:set value="${pageContext.request.contextPath }" var="path"></c:set>
 	<my:side_bar></my:side_bar>
 	<div class="root">
-	<form action="" method="POST" id="orderForm">
+	<form action="${path }/order/list" method="POST" id="orderForm">
 		<input type="hidden" name="status" id="status" />
 		<div style="font-size: 30px;">
 			<strong>주문서 등록</strong>
@@ -161,7 +161,7 @@
 					<div class="row d-flex">
 						<div class="col-sm-5">
 							<div class="input-group" style="margin-top: 15px !important;">
-								<input required name="deliveryDate" type="date" id="deliveryDate"
+								<input name="deliveryDate" type="date" id="deliveryDate"
 									class="form-control">
 							</div>
 						</div>

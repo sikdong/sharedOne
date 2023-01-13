@@ -89,15 +89,14 @@ public class YdsOrderController {
 		model.addAttribute("order", yod);
 	}
 
-	@PostMapping("register")
+	@PostMapping("list")
 	public void insertOrder(YdsOrderDto yod, Authentication at) {
 		if (at != null) {
 			yod.setWriter(at.getName());
 		}
-		if (yod.getProductCode() != null) {
-
+			System.out.println("yod = " + yod);
 			service.insertOrder(yod);
-		}
+		
 	}
 
 	@PostMapping("addTempProductOrder")

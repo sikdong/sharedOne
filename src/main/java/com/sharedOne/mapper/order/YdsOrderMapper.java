@@ -41,5 +41,4 @@ public interface YdsOrderMapper {
 
 	List<ProductDto> getPriceDate(String allProductInfo, String tableBuyerCode);
 
-
 }
