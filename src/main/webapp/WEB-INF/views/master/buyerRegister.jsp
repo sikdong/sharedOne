@@ -175,7 +175,7 @@
         window.opener.location.reload();
     	setTimeout(function() {
     		window.close();
-            }, 30);  
+            }, 100);  
         }   
 	    
 	    const ctx = "${pageContext.request.contextPath}";

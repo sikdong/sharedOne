@@ -309,12 +309,11 @@ div.right {
 					<th style="width: 100px;">제품코드</th>
 					<th style="width: 130px;">판매가</th>
 					<th style="width: 100px;">수량</th>
-					<th style="width: 200px;">합계</th>
-					<th style="width: 200px;">등록일</th>
-					<th style="width: 200px;">납기일</th>
+					<th style="width: 150px;">합계</th>
+					<th style="width: 250px;">등록일</th>
+					<th style="width: 250px;">납기일</th>
 					<th style="width: 150px;">담당자</th>
 					<th style="width: 150px;">상태</th>
-					<th style="width: 130px;">메세지</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -327,12 +326,11 @@ div.right {
 							<td style="width: 100px;">${order.orderItem[0].productCode }</td>
 							<td style="width: 130px;">${order.orderItem[0].finalPrice }</td>
 							<td style="width: 100px;">${order.orderItem[0].quantity }</td>
-							<td style="width: 200px;">${order.orderItem[0].sum }</td>
+							<td style="width: 150px;">${order.orderItem[0].sum }</td>
 							<td style="width: 250px;">${order.inserted }</td>
 							<td style="width: 250px;">${order.deliveryDate }</td>
 							<td style="width: 150px;">${order.writer }</td>
 							<td style="width: 200px;">${order.status }</td>
-							<td style="width: 130px;">${order.message }</td>
 						</tr>
 					</c:if>
 			<!-- 오더 아이템이 여러개 -->
@@ -344,12 +342,11 @@ div.right {
 								<td style="width: 100px;">${item.productCode }</td>
 								<td style="width: 130px;">${item.finalPrice }</td>
 								<td style="width: 100px;">${item.quantity }</td>
-								<td style="width: 200px;">${item.sum }</td>
+								<td style="width: 150px;">${item.sum }</td>
 								<td style="width: 250px;">${order.inserted }</td>
 								<td style="width: 250px;">${order.deliveryDate }</td>
 								<td style="width: 150px;">${order.writer }</td>
 								<td style="width: 200px;">${order.status }</td>
-								<td style="width: 130px;">${order.message }</td>
 							</tr>
 						</c:forEach>
 					</c:if>

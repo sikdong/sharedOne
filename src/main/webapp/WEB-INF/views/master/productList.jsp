@@ -175,7 +175,7 @@
 		<h4>제품목록</h4>
 		<div class="col-sm-10"></div>
 		<c:url value="/master/productRegister" var="registerLink"></c:url>
-		<button id="registerBtn" class="btn btn-outline-primary primaryBtn" onclick="window.open('${registerLink}','제품등록','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');">제품등록</button>
+		<button id="registerBtn" class="btn btn-outline-primary primaryBtn" onclick="window.open('${registerLink}','제품등록','width=500,height=1000,left=600,top=100,location=no,status=no,scrollbars=yes');">제품등록</button>
 	</div>
 	<!-- 리스트 -->
 
@@ -188,9 +188,9 @@
 
                   <th style="width: 300px;">제품명</th>
                   <th style="width: 220px;">타입</th>
-                  <th style="width: 130px;">무게(g)</th>
+                  <th style="width: 130px;">무게(Kg)</th>
                   <th style="width: 130px;">규격(Inch)</th>
-                  <th style="width: 100px;">단위(EA)</th>
+                  <th style="width: 100px;">단위</th>
                   <th style="width: 150px;">단가</th>
                   <th style="width: 300px;">단가기간</th>
 
@@ -201,7 +201,7 @@
 						<c:url value="/master/productModify" var="getLink">
 							<c:param name="code" value="${product.productCode }"></c:param>
 						</c:url>
-					<tr title="${product.productName } 정보 수정하기" onclick="window.open('${getLink}','제품정보','width=500,height=500,left=400,top=300,location=no,status=no,scrollbars=yes');" class="trtr">
+					<tr title="${product.productName } 정보 수정하기" onclick="window.open('${getLink}','제품정보','width=500,height=1000,left=600,top=100,location=no,status=no,scrollbars=yes');" class="trtr">
 
 					<td style="max-width: 500px; word-break:break-all;width: 220px;">${product.productCode }</td>
                      <td style="word-break:break-all;width: 300px;">${product.productName }</td>
