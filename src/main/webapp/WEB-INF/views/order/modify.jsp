@@ -145,7 +145,7 @@
 				<label for="staticEmail" class="col-form-label" style="min-width : 50px; margin-left : 3%">바이어명</label>
 				<div class="ml-3">
 					<input type="text" class="form-control" value="${orderHeader.buyerName }"
-						id="staticEm77vwail">
+						id="buyerNameInput">
 				</div>
 			</div>
 			<div  class="form-width" style="margin-left : 10%">
@@ -265,7 +265,7 @@
                         <td>${orderItem.price }</td>
                         <td style="width : 150px;"><input type="number" name="finalPrice" class="form-style" value="${orderItem.finalPrice }"/></td>
                         <td style="width : 100px;"><input type="number" name="quantity" class="form-style" value="${orderItem.quantity }"/></td>
-                        <td style="width : 180px;"><input type="number" name="sum" class="form-style" /></td>
+                        <td style="width : 180px;"><input type="number" value="${orderItem.finalPrice * orderItem.quantity}"name="sum" class="form-style" /></td>
                         <td style="display : flex; justify-content : center;">
                         	<button class="btn button btn-sm" style="margin-left : 2px; background : #1d5c83; color : white;">삭제</button>
                         </td>
@@ -332,7 +332,7 @@
 			`<tr>
 				<th> 
 					<input class="form-radio-input" type="radio" style="width : 20px; height : 20px;"
-						id="flexCheckDefault" name="buyerCode" value="\${item.buyerCode}">
+						name="buyerCode" value="\${item.buyerName}" onclick="transferValue(event)">
 				</th>
 				<td id="tableBuyerCode">\${item.buyerCode }</td>
 				<td>\${item.buyerName }</td>
@@ -345,9 +345,16 @@
 			</tr>`
 			document.querySelector("#buyerBody").insertAdjacentHTML("beforeend", buyerTableItem)
 			}
+		
 		})
+		
 	})
 	
+	
+	function transferValue(event) {
+		document.querySelector("#buyerNameInput").value = event.target.value;
+		document.querySelector("#buyerTable").innerHTML = "";
+	}
 	<%-- 바이어명 검색 --%>
 		document.querySelector("#buyerNameBtn").addEventListener("click", function(){
 		const buyerName = document.querySelector("#buyerName").value;
@@ -801,7 +808,6 @@
 	}
 	
 	  document.getElementById('modified').value = new Date().toISOString().substring(0, 10)
-	
 	
 	</script>
 </body>
