@@ -16,4 +16,5 @@ public class YdsOrderDto {
 	private String writer;
 	private String status;
 	private String inserted;
+	private String modified;
 }
