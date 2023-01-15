@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -91,7 +92,8 @@
 	    margin-right: 10px; 
     }
 </style>
-<body>   
+<body>
+<sec:authorize access="isAuthenticated()">   
     <div class="insert-body mt-5 ">
 		<div class="container-md">
 			<form id="modifyForm" name="modifyfrm" action="" method="post">
@@ -199,12 +201,12 @@
 
 			<form action="/master/productRemove" name="removefrm" method="post">
 				<input type="hidden" name="code" value="${product.productCode}">
-				<input id= "removeBtn" class="btn" type="submit" value="삭제" onclick="removeCheck()">
+				<input id= "removeBtn" class="btn" value="삭제" onclick="removeCheck()">
 			</form>
 
 		</div>
-
 	</div>
+</sec:authorize>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <script>
     //삭제확인 버튼 클릭하면 삭제 form 전송

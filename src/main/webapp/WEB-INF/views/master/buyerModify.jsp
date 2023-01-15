@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,8 +65,13 @@
     	position:relative;
     }
     
+    .check {
+    	margin-bottom: 15px;
+    }
+    
     #buyerCodeExist, #businessNumberExist {
-    	margin-left: 50px;
+    	position: absolute;
+    	left: 233px;
     
     }
 
@@ -126,6 +132,7 @@
     
 </style>
 <body>
+<sec:authorize access="isAuthenticated()">
 	<div class="insert-body mt-5 ">
 		<div class="container-md">
 			<form id="modifyForm" name="modifyfrm" action="" method="post">
@@ -213,10 +220,10 @@
 		</div>
 			<form id="removeForm" name="removefrm" action="/master/buyerRemove" method="post">
 				<input type="hidden" name="code" value="${buyer.buyerCode}">
-		    <input id="removeBtn" class="btn" type="submit" value="삭제" onclick="removeCheck()">
+		    <input id="removeBtn" class="btn" value="삭제" onclick="removeCheck()">
 			</form>
 	</div>
-
+</sec:authorize>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <script>

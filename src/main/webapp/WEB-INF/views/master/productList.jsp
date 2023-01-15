@@ -87,7 +87,7 @@
 <body>
 
 <my:side_bar active=""></my:side_bar>
-
+<sec:authorize access="isAuthenticated()">
 <div class="container-sm mt-4" style="width: 77vw; margin-left: 20%;">
 	<div class="row d-flex">
 		
@@ -219,7 +219,7 @@
 		</div>
 	</div>
 	
-
+</sec:authorize>
 
 
 <script type="text/javascript">

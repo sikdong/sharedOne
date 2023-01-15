@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 
@@ -90,6 +91,7 @@
 <body>
 
 <my:side_bar active=""></my:side_bar>
+<sec:authorize access="isAuthenticated()">
 <div class="container-sm mt-4" style="width: 77vw; margin-left: 20%;">
 	<div class="row d-flex">
 		
@@ -174,7 +176,7 @@
 	<h4>바이어목록</h4>
 	<div class="col-sm-9"></div>
 	<c:url value="/master/buyerRegister" var="registerLink"></c:url>
-		<button id="registerBtn" class="btn btn-outline-primary primaryBtn" onclick="window.open('${registerLink}','바이어정보','width=600,height=660,left=700,top=200,location=no,status=no,scrollbars=yes');">바이어등록</button>
+		<button id="registerBtn" class="btn btn-outline-primary primaryBtn" onclick="window.open('${registerLink}','바이어정보','width=600,height=660,left=700,top=200,resizale=no,location=no,status=no,scrollbars=yes');">바이어등록</button>
 	</div>
 	<!-- 리스트 -->
 	<table class="table table-hover container">
@@ -195,7 +197,7 @@
 			<c:url value="/master/buyerModify" var="getLink">
 					<c:param name="code" value="${buyer.buyerCode }"></c:param>
 				</c:url>
-				<tr title="${buyer.buyerName } 정보 수정하기" onclick="window.open('${getLink}','바이어정보','width=600,height=660,left=700,top=200,location=no,status=no,scrollbars=yes');" class="trtr">
+				<tr title="${buyer.buyerName } 정보 수정하기" onclick="window.open('${getLink}','바이어정보','width=600,height=660,left=700,top=200,resizale=no,location=no,status=no,scrollbars=yes');" class="trtr">
 <%-- 				<tr onclick="location.href='${getLink}'" class="trtr"> --%>
 					<td style="width: 100px;">${buyer.buyerCode }</td>
 					<td style="width: 150px;">${buyer.buyerName }</td>
@@ -210,7 +212,7 @@
 		</tbody>
 	</table>
 </div>
-
+</sec:authorize>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script type="text/javascript">
 

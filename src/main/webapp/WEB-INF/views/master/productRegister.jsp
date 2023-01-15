@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,8 +51,13 @@
     .col-form-label{
         font-weight: 600;
     }
+    .check {
+    	margin-bottom: 15px;
+    }
     
     #productNameExist {
+        position: absolute;
+    	left: 235px;
     	line-height: 10px;
     	margin-top: 10px;
 	    font-size: 15px; 
@@ -63,7 +69,6 @@
 	    background-color: white !important;
  		border-color: #1d5c83 !important;
  		color: #1d5c83 !important;
- 		margin-left: 70px;
     }
     
     #productNameExist:hover {
@@ -86,7 +91,8 @@
 	    margin-bottom: 25px;
     }
 </style>
-<body>   
+<body>
+<sec:authorize access="isAuthenticated()">   
     <div class="insert-body mt-5 ">
     	<form action="" name= "registerfrm" method="post">
 	        <div class="container-md">
@@ -174,13 +180,14 @@
 	                    </div>
 	                <hr />
 	                <div>
-	                    <input id="registerBtn" class="btn registerBtn" type="submit" value="등록" onclick="registerCheck()">
+	                    <input id="registerBtn" class="btn registerBtn" type="submit" value="등록" onclick="registerCheck()" disabled>
 	                </div>
 	              
 	            </div>
 	        </div>
     	</form>
       </div>
+</sec:authorize>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <script>
     const ctx = "${pageContext.request.contextPath}";
