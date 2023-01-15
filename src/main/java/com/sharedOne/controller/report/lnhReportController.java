@@ -201,6 +201,8 @@ public class lnhReportController {
 			// 검색 결과 리스트
 			List<OrderHeaderDto> list = service.orderList(orderQ, orderCode, productCode, writer, status, fromDate,
 					endDate);
+			
+			System.out.println("엑셀 데이터"+ list);
 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
