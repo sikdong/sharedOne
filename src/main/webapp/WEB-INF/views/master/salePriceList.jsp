@@ -365,7 +365,7 @@ checkDate();
   
 function search(){
 	
-	$('input, #selectedSearchBtn').on('keyup click input',function(){
+	$('input, #selectedSearchBtn').on('keyup click input' ,function(){
 		/* q, productCode, productName, buyerCode, buyerName, country, priceMin, priceMax */
 		const q = $('input[name=q]').val();
 		const productCode = $('input[name=productCode]').val();
