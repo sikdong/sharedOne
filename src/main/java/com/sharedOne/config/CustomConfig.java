@@ -24,7 +24,9 @@ public class CustomConfig {
 
 		http.formLogin().loginPage("/member/login");
 		http.logout().logoutUrl("/member/logout");
+		http.exceptionHandling().accessDeniedPage("/member/denied");				
 		http.csrf().disable();
+		
 		return http.build();
 	}
 }

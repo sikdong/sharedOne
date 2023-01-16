@@ -223,8 +223,8 @@ label{
                     <div class="panel-body">
                         <form action="#" id="loginForm" method="post">
                             <div class="form-group">
-                                <label class="control-label" for="username" id="userId">아이디</label>
-                                <input type="text" placeholder="아이디를 입력해주세요." title="아이디를 입력해주세요." required="" value="" name="username" id="username" class="form-control">
+                                <label class="control-label" for="userId" id="userId">사원번호</label>
+                                <input type="text" placeholder="사원번호를 입력해주세요." title="사원번호를 입력해주세요." required="" value="" name="username" id="username" class="form-control">
                                
                             </div>
                             <div class="form-group">

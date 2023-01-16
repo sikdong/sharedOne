@@ -6,10 +6,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sharedOne.domain.member.RanksDto;
@@ -29,17 +31,34 @@ public class YjhMemberController {
 		
 	}
 	
+	@GetMapping("complete")
+	 public void signComplete(@RequestParam(name="id") String id, Model model) {
+		System.out.println(id);
+		model.addAttribute("id",id);
+	}
+	@GetMapping("denied")
+	  public void showAccessDeniedPage() {
+		
+	  }
+	
 	@GetMapping("signup")
-	/* @PreAuthorize("hasAuthority('팀장')") */
+	@PreAuthorize("hasAuthority('팀장')")
 	public void signup() {
 	}
 	
 	@PostMapping("signup")
-	/* @PreAuthorize("hasAuthority('팀장')") */
-	public void signup(MemberDto member , RanksDto rank) {
+	@PreAuthorize("hasAuthority('팀장')")
+	public String signup(MemberDto member , RanksDto rank) {
 		
 		service.insertMember(member,rank);
-
+		
+		String email = member.getEmail();
+		
+		member = service.checkEmail(email);
+		
+		String id = member.getId();
+		
+		return "redirect:/member/complete?id=" + id;
 	}
 	
 	// 회원정보수정 이메일 중복확인

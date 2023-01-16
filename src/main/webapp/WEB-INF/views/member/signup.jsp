@@ -162,9 +162,6 @@
 
         $("#registerBtn").click( function() {
              $('#memberForm').submit();
-             setTimeout(function() {   
-                 window.close();
-              }, 100);
           });
     });
     

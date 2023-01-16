@@ -34,14 +34,6 @@ public class YjhMemberService {
 		
 		mapper.insertRanks(rank);
 	}
-	
-	/*
-	 * public void insertRanks(RanksDto rank) {
-	 * 
-	 * mapper.insertRanks(rank);
-	 * 
-	 * }
-	 */
 
 	public MemberDto checkEmail(String email) {
 		

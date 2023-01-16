@@ -69,10 +69,10 @@
             <div class="row mt-5" style="text-align: center;">     
                  <div id="rvbtn_group" style="text-align: right;">
                  	<c:url value="/order/excelConvert" var="excelLink"></c:url>
-                 	<button type="button" class="btn" id="print" style="border: gray 2px solid; font-weight: bold; float:left; font-size:x-large; padding:0px; width: 65px;" onclick="content_print();">&nbsp&nbsp<i class='bx bx-printer'></i>&nbsp&nbsp</button>
+                 	<button title="프린트" type="button" class="btn" id="print" style="border: gray 2px solid; font-weight: bold; float:left; font-size:x-large; padding:0px; width: 65px;" onclick="content_print();">&nbsp&nbsp<i class='bx bx-printer'></i>&nbsp&nbsp</button>
 					<form action="${excelLink }" method="get">
 						<input name="orderId" value="${orderHeader.orderId }" class="form-control" type="hidden">
-	                    <button type="submit" class="btn" id="excelConverBtn" style="width: 65px; margin-left:5px; border: gray 2px solid; font-weight: bold; float:left; font-size:x-large; padding:0px;">&nbsp&nbsp<i class="fa-regular fa-file-excel"></i>&nbsp&nbsp</button>         
+	                    <button title="엑셀다운" type="submit" class="btn" id="excelConverBtn" style="width: 65px; margin-left:5px; border: gray 2px solid; font-weight: bold; float:left; font-size:x-large; padding:0px;">&nbsp&nbsp<i class="fa-regular fa-file-excel"></i>&nbsp&nbsp</button>         
 					</form>
                 </div>
             </div>
