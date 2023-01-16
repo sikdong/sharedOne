@@ -65,8 +65,7 @@
     <div class="container order-report-content">
         <div class="row">
             <div class="row mt-5" style="text-align: center;">     
-                 <div id="rvbtn_group" style="text-align: right;">
-                 	<button type="button" class="btn" id="print" style="border: gray 2px solid; font-weight: bold; float:left; font-size:x-large; padding:0px;" onclick="content_print();">&nbsp&nbsp<i class='bx bx-printer'></i>&nbsp&nbsp</button>
+                 <div id="rvbtn_group" style="text-align: right;">                 	
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#confirmModal" style="border: gray 2px solid; font-weight: bold;">수정</button>
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#returnModal" style="border: gray 2px solid; font-weight: bold;">종결</button>               
                 </div>
@@ -212,19 +211,6 @@
       </div>
     </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
-<script>
 
-function content_print(){
-    
-    var initBody = document.body.innerHTML;
-    window.onbeforeprint = function(){
-        document.body.innerHTML = document.getElementById('printDiv').innerHTML;
-    }
-    window.onafterprint = function(){
-        document.body.innerHTML = initBody;
-    }
-    window.print();    
-}           
-</script>
 </body>
 </html>
