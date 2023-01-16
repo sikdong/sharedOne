@@ -115,19 +115,19 @@
 									<div class="col-sm-3 mb-4">
 										<div class="input-group" >
 											<input name="" type="search" id="buyerName" class="form-control" list="datalistOptions1" placeholder="바이어명">
-											<button class="btn btn-outline-secondary" id="buyerNameBtn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+											<button class="btn btn-outline-secondary" id="buyerNameBtn" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
 										</div>
 									</div>
 									<div class="col-sm-3">
 										<div class="input-group">
 											<input name="" value="" type="text" id="buyerCode" class="form-control" list="datalistOptions2" placeholder="바이어코드">
-											<button class="btn btn-outline-secondary" id="buyerCodeBtn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+											<button class="btn btn-outline-secondary" id="buyerCodeBtn" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
 										</div>	
 									</div>
 									<div class="col-sm-3">
 										<div class="input-group">
 											<input name="" value="" type="text" id="country" class="form-control" list="datalistOptions3" placeholder="국가">
-											<button class="btn btn-outline-secondary" id="countryBtn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+											<button class="btn btn-outline-secondary" id="countryBtn" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
 										</div>
 									</div>
 								</div><!-- 2nd row 끝 -->
@@ -397,8 +397,8 @@
 			
 			`<tr>
 				<th>
-					<input class="form-radio-input" type="radio" style="width : 20px; height : 20px;"
-						id="flexCheckDefault" name="buyerName" onclick="transferValue(event)">
+				<input class="form-radio-input" type="radio" style="width : 20px; height : 20px;"
+					name="buyerCode" value="\${item.buyerName}" onclick="transferValue(event)">
 				</th>
 				<td id="tableBuyerCode">\${item.buyerCode }</td>
 				<td>\${item.buyerName }</td>
@@ -445,8 +445,8 @@
 			
 			`<tr>
 				<th>
-					<input class="form-radio-input" type="radio" style="width : 20px; height : 20px;"
-						id="flexCheckDefault" name="buyerName" onclick="transferValue(event)">
+				<input class="form-radio-input" type="radio" style="width : 20px; height : 20px;"
+					name="buyerCode" value="\${item.buyerName}" onclick="transferValue(event)">
 				</th>
 				<td id="tableBuyerCode">\${item.buyerCode }</td>
 				<td>\${item.buyerName }</td>
@@ -493,8 +493,8 @@
 			
 			`<tr>
 				<th> 
-					<input class="form-radio-input" type="radio" style="width : 20px; height : 20px;"
-						id="flexCheckDefault" name="buyerName">
+				<input class="form-radio-input" type="radio" style="width : 20px; height : 20px;"
+					name="buyerCode" value="\${item.buyerName}" onclick="transferValue(event)">
 				</th>
 				<td id="tableBuyerCode">\${item.buyerCode }</td>
 				<td>\${item.buyerName }</td>
@@ -513,7 +513,7 @@
 	<%-- 전체 제품 검색 --%>
 	document.querySelector("#allProductInfoBtn").addEventListener("click", function(){
 		const allProductInfo = document.querySelector("#allProductInfo").value;
-		const tableBuyerCode = document.querySelector("input[name='buyerCode']:checked").value;
+		const tableBuyerCode = document.querySelector("#buyerNameInput").value;
 		const deliveryDate = document.querySelector("#deliveryDate").value;
 		if(deliveryDate != ''){
 			

@@ -207,7 +207,7 @@
 					<div class="row d-flex">
 						<div class="col-sm-6 mb-4">
 							<div class="input-group">
-								<input name="buyerInfo" id="allProductInfo" class="form-control"
+								<input id="allProductInfo" class="form-control"
 									type="Search" placeholder="전체검색" aria-label="Search">
 								<button type="button" class="btn btn-outline-secondary"
 									style="cursor: pointer" id="allProductInfoBtn">
@@ -312,6 +312,18 @@
 				style="background: #1d5c83; color: white;">닫기</a>
 		</form>
 	</div>
+		
+	<div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+	  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+	    <div class="toast-header">
+	      <button type="button" style="right : 0 !important" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+	    </div>
+	    <div class="toast-body" style="text-align : center;">
+	      <p style="font-size : 20px">납기 요청일을 입력해 주세요</p>
+	    </div>
+	  </div>
+	</div>
+
 	<br />
 	<br />
 	<br />
@@ -323,6 +335,8 @@
 		integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
 		crossorigin="anonymous"></script>
 	<script>
+	
+	
 	const path = "${pageContext.request.contextPath}"
 	
 	<%-- 전체 검색 --%>
@@ -574,7 +588,10 @@
 			
 		})
 		} else {
-			alert("납기 요청일을 입력해주세요")
+			const toastLiveExample = document.getElementById('liveToast')
+			const toast = new bootstrap.Toast(toastLiveExample)
+
+		    toast.show()
 		}
 	})
 	
