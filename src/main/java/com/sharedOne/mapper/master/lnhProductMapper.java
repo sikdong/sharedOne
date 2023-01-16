@@ -25,4 +25,6 @@ public interface lnhProductMapper {
 
 	ProductDto selectProductName(String productName);
 
+	ProductDto selectProductCode(String productCode);
+
 }

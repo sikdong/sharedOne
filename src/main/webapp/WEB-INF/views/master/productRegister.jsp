@@ -55,7 +55,7 @@
     	margin-bottom: 15px;
     }
     
-    #productNameExist {
+    #productNameExist, #productCodeExist {
         position: absolute;
     	left: 235px;
     	line-height: 10px;
@@ -71,7 +71,7 @@
  		color: #1d5c83 !important;
     }
     
-    #productNameExist:hover {
+    #productNameExist:hover, #productCodeExist:hover {
  		background-color: #1d5c83 !important;
  		color: white !important;
  	}
@@ -109,7 +109,11 @@
 	                            <div class="col-sm-7 inputDiv inputDiv">
 	                                <input id="productCode" name="productCode" type="text" class="form-control" placeholder="제품코드를 입력하세요."/>
 	                            </div>
-	                        </div>
+								<div class="check">
+									<div id="productCodeText1" class="form-text">제품코드 확인을 해주세요.</div>
+									<button class="btn" type="button" id="productCodeExist">확인</button>
+								</div>
+							</div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputName" class="col-form-label">제품명</label>
 	                            <div class="col-sm-7 inputDiv inputDiv"">
@@ -192,6 +196,8 @@
     <script>
     const ctx = "${pageContext.request.contextPath}";
     
+    var availableProductCode = false;
+    
     var availableProductName = false;
     
   //등록버튼 누르면 등록 실행 후 창 닫기
@@ -216,7 +222,28 @@
     document.querySelector("#productName").addEventListener("keyup", function() {
     	availableProductName = false;
     	enableSubmitButton();
-    });    
+    });
+  
+    //제품코드 중복확인
+    document.querySelector("#productCodeExist").addEventListener("click", function() {
+    	availableProductCode = false;
+    	// 입력된 제품코드를
+    	const productCode = document.querySelector("#productCode").value;
+    	
+    	// fetch 요청 보내고
+    	fetch(ctx + "/master/existproductCode/" + productCode)
+    		.then(res => res.json())
+    		.then(data => {
+    			// 응답 받아서 메세지 출력
+    			document.querySelector("#productCodeText1").innerText = data.message;
+    			
+    			if (data.status == "not exist") {
+    				availableProductCode = true;
+    				enableSubmitButton();
+    			}
+    		}); 
+    	
+    });
 
     //제품명 중복확인
     document.querySelector("#productNameExist").addEventListener("click", function() {

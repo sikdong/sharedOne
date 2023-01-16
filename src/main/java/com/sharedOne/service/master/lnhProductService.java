@@ -43,14 +43,18 @@ public class lnhProductService {
 		productMapper.update(product);
 	}
 	
-	public ProductDto getByProductName(String productName) {
-		return productMapper.selectProductName(productName);
-	}
 	//삭제
 	public void remove(String productCode) {
 		productMapper.delete(productCode);
 	}
 
+	public ProductDto getByProductCode(String productCode) {
+		return productMapper.selectProductCode(productCode);
+	}
+
+	public ProductDto getByProductName(String productName) {
+		return productMapper.selectProductName(productName);
+	}
 	
 
 }
