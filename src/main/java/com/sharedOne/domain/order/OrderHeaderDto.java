@@ -27,6 +27,8 @@ public class OrderHeaderDto {
 	
 	private List <OrderItemDto> orderItem;
 	
+	private String id;
+	
 	
 	/* private List <SalePriceDto> itemPrice; */
 	//private int salePrice;

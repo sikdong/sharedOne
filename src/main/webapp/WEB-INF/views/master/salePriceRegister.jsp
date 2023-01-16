@@ -260,6 +260,7 @@ $(function(){
 
 /* input 알림창 */
 $(function(){
+	$('#registerBtn').prop('disabled', true);
 	$('#registerBtn').click(function(){
 		if( $('input[name=buyerCode]').val() =='' ){
 			$('#from').submit(function(e){
@@ -291,6 +292,7 @@ $(function(){
 			})
 			alert("판매 종료일을 입력하세요.");
 		}
+		
 	})
 })
 

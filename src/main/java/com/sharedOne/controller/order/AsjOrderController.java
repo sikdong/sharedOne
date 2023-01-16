@@ -31,12 +31,14 @@ public class AsjOrderController {
 			@RequestParam(name="buyerCode", defaultValue="") String buyerCode,
 			@RequestParam(name="orderCode", defaultValue="") String orderCode,
 			@RequestParam(name="writer", defaultValue="") String writer,
-			@RequestParam(name="status", defaultValue="") String status
+			@RequestParam(name="status", defaultValue="") String status,
+			@RequestParam(name="d1", defaultValue="") String d1,
+			@RequestParam(name="d2", defaultValue="") String d2
 			) {
 		
 		//System.out.println(keyword + buyerCode + orderCode + writer + status);
 		
-		List<OrderHeaderDto> headerList = orderService.selectOrderHeaderList(keyword,buyerCode,orderCode,writer,status); 	
+		List<OrderHeaderDto> headerList = orderService.selectOrderHeaderList(keyword,buyerCode,orderCode,writer,status,d1,d2); 	
 		model.addAttribute("headerList", headerList); 		
 		
 //		List<OrderItemDto> itemListByOrderCode = orderService.selectOrderItemListByOrderCode(orderCode);

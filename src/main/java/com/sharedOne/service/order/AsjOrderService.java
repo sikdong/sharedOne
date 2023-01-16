@@ -15,11 +15,11 @@ public class AsjOrderService {
 	@Autowired
 	private AsjOrderMapper asjOrderMapper;
 
-	public List <OrderHeaderDto> selectOrderHeaderList(String keyword, String buyerCode, String orderCode, String writer, String status) {
+	public List <OrderHeaderDto> selectOrderHeaderList(String keyword, String buyerCode, String orderCode, String writer, String status, String d1, String d2) {
 		
 		keyword = "%"+keyword+"%";
 		
-		return asjOrderMapper.selectOrderHeaderList(keyword,buyerCode,orderCode,writer,status);
+		return asjOrderMapper.selectOrderHeaderList(keyword,buyerCode,orderCode,writer,status,d1,d2);
 	}
 
 	public List<OrderItemDto> selectOrderItemListByOrderCode(String orderCode) {
