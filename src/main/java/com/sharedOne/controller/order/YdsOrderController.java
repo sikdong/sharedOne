@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sharedOne.domain.master.BuyerDto;
 import com.sharedOne.domain.master.ProductDto;
@@ -89,20 +90,33 @@ public class YdsOrderController {
 		model.addAttribute("orderItems", oid);
 	}
 
-	@PostMapping("list")
-	public void insertOrder(YdsOrderDto yod, Authentication at) {
+	@PostMapping("register")
+	public String insertOrder(YdsOrderDto yod, Authentication at, RedirectAttributes rttr) {
 		if (at != null) {
 			yod.setWriter(at.getName());
 		}
 			System.out.println("yod = " + yod);
 			service.insertOrder(yod);
-		
+		return "redirect:/order/list";
 	}
 
 	@PostMapping("addTempProductOrder")
 	@ResponseBody
 	public List<YdsProductDto> addTempProductOrder(@RequestBody Map<String, Object> data) {
 		return service.addTempProductOrder(data);
+	}
+	
+	@PostMapping("modify")
+	public String updateOrder(YdsOrderDto yod,
+			@RequestParam int orderId,
+			Authentication at, RedirectAttributes rttr) {
+		System.out.println("orderId = " + orderId);
+		if (at != null) {
+			yod.setWriter(at.getName());
+		}
+			System.out.println("yod = " + yod);
+			service.updateOrder(yod,orderId);
+		return "redirect:/order/list";
 	}
 
 }

@@ -44,4 +44,8 @@ public interface YdsOrderMapper {
 
 	List<OrderItemDto> modifyOrderItem(int orderId);
 
+	void updateOrderHeader(@Param("ohd") OrderHeaderDto ohd, @Param("orderId") int orderId);
+
+	void updateOrderItem(@Param("oid") OrderItemDto oid, @Param("orderId") int orderId);
+
 }
