@@ -10,7 +10,7 @@ import com.sharedOne.domain.order.OrderItemDto;
 @Mapper
 public interface AsjOrderMapper {
 
-	List<OrderHeaderDto> selectOrderHeaderList(String keyword, String buyerCode, String orderCode, String writer, String status);
+	List<OrderHeaderDto> selectOrderHeaderList(String keyword, String buyerCode, String orderCode, String writer, String status, String d1, String d2);
 
 	List<OrderItemDto> selectOrderItemListByOrderCode(String orderCode);
 

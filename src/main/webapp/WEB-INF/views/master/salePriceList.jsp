@@ -254,12 +254,12 @@
 						<div class="price-input">
 							<div class="field">
 								<span>Min</span>
-								<input type="number" class="input-min" name="priceMin" value="0" >
+								<input type="number" class="input-min" name="priceMin" value="0" readonly>
 							</div>
 							<div class="separator">-</div>
 							<div class="field">
 								<span>Max</span>
-								<input type="number" class="input-max" name="priceMax" value="100000" >
+								<input type="number" class="input-max" name="priceMax" value="100000" readonly>
 							</div>	
 						</div>
 					</div>
@@ -328,27 +328,7 @@
 				</tr>
 			</thead>		
 			<tbody id="tbody">
-				<%-- <c:forEach items="${allSalePriceList }" var="item" varStatus="st">
-					<tr id="tr${item.priceId }" class="listHover">
-						<td><input type="checkbox" name="checkbox" id="checkbox${item.priceId }"></td>
-						<td>${st.count }</td>
-						<td>${item.productCode }</td>
-						<td>${item.productName }</td>
-						<td>${item.buyerCode }</td>
-						<td>${item.country }</td>
-						<td>${item.buyerName }</td>
-						<td>${item.price }</td>
-						<td>${item.salePrice }</td>
-						<td>${item.discountRate }%</td>
-						<td>${item.fromDate } ~ ${item.endDate }</td>
-						<td>
-							<c:url value="/master/salePriceModify" var="modifyLink">
-								<c:param name="priceId" value="${item.priceId }"/>
-							</c:url>
-							<button id="modify${item.priceId }" type="button" class="btn btn-outline-secondary" >수정</button>
-						</td>
-					</tr>
-				</c:forEach> --%>
+				
 			</tbody>
 		</table>
 	</div><!-- scrollBox 끝 -->
@@ -461,16 +441,15 @@ $(function(){
 });
 
 /* 필터 전체기간 체크 */
-function checkDate(){
+function checkDate(){	
 	$('input[name=d1]').prop("disabled", true);
 	$('input[name=d2]').prop("disabled", true);
 	$('#checkedAllDate').click(function(){
-		if($('#checkedAllDate').is(':checked') ){
-			
+		if($('#checkedAllDate').is(':checked') ){	
+			$('input[name=d1]').attr('value', '');
+			$('input[name=d2]').attr('value', '');		
 			$('input[name=d1]').prop("disabled", true);
 			$('input[name=d2]').prop("disabled", true);
-			$('input[name=d1]').attr("value", "");
-			$('input[name=d2]').attr("value", "");
 		}else{
 			$('input[name=d1]').removeAttr("disabled");
 			$('input[name=d2]').removeAttr("disabled");

@@ -121,7 +121,7 @@
 				<p class="filterText ">조건 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
 			</div>
 			<div class="mb-5">
-				<p class="filterText ">기간 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex. 주문일 / 납기일 등등... ) -->
+				<p class="filterText ">납기요청일 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex. 주문일 / 납기일 등등... ) -->
 			</div>
 		</div><!-- 좌측 조건 설명 div 끝 -->
 		
@@ -189,15 +189,15 @@
 				<div class="row d-flex">
 					<div class="col-sm-2">
 						<div class="form-check"  style="margin-top: 10px;">
-						    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" >
-							<label class="form-check-label" for="flexCheckDefault">납기요청일</label>
+						    <input class="form-check-input" type="checkbox" value="" id="checkedAllDate" ${empty param.d1 && empty param.d2 ? 'checked' : '' }>
+							<label class="form-check-label" for="flexCheckDefault">전체기간</label>
 						</div>
 					</div>
 					<div class="col-sm-5">
 						<div class="input-group">
-							<input name="d1" value="${nowDate}" type="date" id="" class="form-control">
+							<input name="d1" value="${param.d1 }" type="date" id="d1" class="form-control" ${empty param.d1 && empty param.d2 ? 'disabled' : '' }>
 							<span class="input-group-text">~</span>
-			        		<input name="d2" value="${addMonth}" type="date" id="" class="form-control">
+			        		<input name="d2" value="${param.d2 }" type="date" id="d2" class="form-control" ${empty param.d1 && empty param.d2 ? 'disabled' : '' }>
 						</div>
 					</div>
 				</div><!-- 5th row 끝 -->
@@ -267,6 +267,7 @@
 								<c:when test="${h.status == '승인요청'}">
 									<c:url value="/order/confirmOrderSheet" var="confirmOrderSheetLink">
 										<c:param name="orderId" value="${h.orderId }"/>
+										<c:param name="id" value="${h.writer }"/>
 									</c:url>
 										<button type="submit" class="btn btn-primary" 
 										onclick="window.open('${confirmOrderSheetLink}','주문서','width=800,height=1000,left=500,top=100,location=no,status=no,scrollbars=yes');"
@@ -277,6 +278,7 @@
 								<c:when test="${h.status == '승인완료'}">
 									<c:url value="/order/orderSheet" var="orderSheetLink">
 										<c:param name="orderId" value="${h.orderId }"/>
+										<c:param name="id" value="${h.writer }"/>
 									</c:url>							
 									<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-success" 
 									onclick="window.open('${orderSheetLink}','주문서','width=800,height=1000,left=500,top=100,location=no,status=no,scrollbars=yes');"
@@ -287,6 +289,7 @@
 								<c:when test="${h.status == '요청반려'}">									
 									<c:url value="/order/companionSheet" var="companionSheetLink">
 										<c:param name="orderId" value="${h.orderId }"/>
+										<c:param name="id" value="${h.writer }"/>
 									</c:url>
 									<button type="submit" class="btn btn-danger" 
 									onclick="window.open('${companionSheetLink}','주문서','width=800,height=1000,left=500,top=100,location=no,status=no,scrollbars=yes');"
@@ -297,17 +300,18 @@
 								<c:when test="${h.status == '승인취소'}">
 									<c:url value="/order/orderSheet" var="orderSheetLink">
 										<c:param name="orderId" value="${h.orderId }"/>
+										<c:param name="id" value="${h.writer }"/>
 									</c:url>			
 									<button type="submit" class="btn btn-secondary"
 									onclick="window.open('${orderSheetLink}','주문서','width=800,height=1000,left=500,top=100,location=no,status=no,scrollbars=yes');" 
 									>
 										${h.status }
-									</button>
-									
+									</button>			
 								</c:when>
 								<c:when test="${h.status == '거래종결'}">
 									<c:url value="/order/orderSheet" var="orderSheetLink">
 										<c:param name="orderId" value="${h.orderId }"/>
+										<c:param name="id" value="${h.writer }"/>
 									</c:url>	
 									<button type="submit" class="btn btn-secondary" 
 									onclick="window.open('${orderSheetLink}','주문서','width=800,height=1000,left=500,top=100,location=no,status=no,scrollbars=yes');" 
@@ -366,6 +370,7 @@
 const ctx = "${pageContext.request.contextPath}";
 
 list();
+checkDate();
 	
 function list(){
 	/* btn 변수 담기 */
@@ -431,10 +436,31 @@ function list(){
 		})
 	</c:forEach>
 };	
+
 /* 해더리스트가 적을때, 스크롤 사이즈 줄이기 height:auto;  */
 if (${size} < 7) {
 	$('#sbh1').removeClass();
 }
+
+/* 필터 전체기간 체크 */
+function checkDate(){	
+	$('#checkedAllDate').click(function(){
+		if($('#checkedAllDate').is(':checked') ){	
+			$('input[name=d1]').attr('value', '');
+			$('input[name=d2]').attr('value', '');		
+			$('input[name=d1]').prop("disabled", true);
+			$('input[name=d2]').prop("disabled", true);
+			
+		}else{
+			$('#checkedAllDate').prop('checked', false);
+			$('input[name=d1]').removeAttr("disabled");
+			$('input[name=d2]').removeAttr("disabled");
+			$('input[name=d1]').attr('value', '${nowDate }')
+			$('input[name=d2]').attr('value', '${addMonth }')
+		}
+	})
+}
+
 
 	
 </script>
