@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 
 <!DOCTYPE html>
 <html>
@@ -168,6 +169,7 @@ div.right {
 </head>
 <body>
 <my:side_bar active=""></my:side_bar>
+<sec:authorize access="isAuthenticated()">
 <div class="container-sm mt-4" style="width: 77vw; margin-left: 20%;">
 	<div class="row d-flex" id ="searchBox">
 		
@@ -177,10 +179,10 @@ div.right {
 				<p class="filterText ">전체 검색</p>
 			</div>
 			<div class="mb-5">
-				<p class="filterText ">조건 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
+				<p class="filterText ">조건 선택</p>
 			</div>
 			<div class="mb-5">
-				<p class="filterText ">납기 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex. 주문일 / 납기일 등등... ) -->
+				<p class="filterText ">납기 선택</p>
 			</div>
 		</div><!-- 좌측 조건 설명 div 끝 -->
 		
@@ -356,6 +358,7 @@ div.right {
 		
 	</div>
 </div>
+</sec:authorize>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
 
