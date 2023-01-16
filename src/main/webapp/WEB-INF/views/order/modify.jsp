@@ -145,13 +145,13 @@
 				<label for="staticEmail" class="col-form-label" style="min-width : 50px; margin-left : 3%">바이어명</label>
 				<div class="ml-3">
 					<input type="text" class="form-control" value="${orderHeader.buyerName }"
-						id="staticEm77vwail">
+						name="buyerCode" id="buyerNameInput">
 				</div>
 			</div>
 			<div  class="form-width" style="margin-left : 10%">
 				<label for="inputPassword" class="col-form-label" style="min-width : 50px; margin-left : 3%">납기요청일</label>
 				<div class="ml-3">
-					<input type="date" value="${orderHeader.deliveryDate }" class="form-control" id="deliveryDate">
+					<input type="date" value="${orderHeader.deliveryDate }" class="form-control" name="deliveryDate" id="deliveryDate">
 				</div>
 			</div>
 			<div  class="form-width" style="margin-left : 10%">
@@ -255,19 +255,19 @@
                     </thead>
                     <tbody class="table-group-divider" id="tempOrderTable">
                     <c:forEach items="${orderItems }" var="orderItem" varStatus="status">
-                      <tr>
+                      <tr id="table${status.index }">
                         <th scope="row">${status.count }</th>
-                        <td>${orderItem.productCode }</td>
+                        <td>${orderItem.productCode }<input type="hidden" name="productCode"/></td>
                         <td>${orderItem.productType }</td>
                         <td>${orderItem.productName }</td>
                         <td>${orderItem.size }</td>
                         <td>${orderItem.unit }</td>
                         <td>${orderItem.price }</td>
-                        <td style="width : 150px;"><input type="number" name="finalPrice" class="form-style" value="${orderItem.finalPrice }"/></td>
-                        <td style="width : 100px;"><input type="number" name="quantity" class="form-style" value="${orderItem.quantity }"/></td>
-                        <td style="width : 180px;"><input type="number" name="sum" class="form-style" /></td>
+                        <td style="width : 150px;"><input type="number" name="finalPrice" onclick="makeSumforfinalPrice(event)" onchange="makeSumforfinalPrice(event)" class="form-style" value="${orderItem.finalPrice }" id="finalPrice${status.index }"/></td>
+                        <td style="width : 100px;"><input type="number" name="quantity" onclick="makeSumforquantity(event)" onchange=" makeSumforquantity(event)" class="form-style" id="quantity${status.index }" value="${orderItem.quantity }"/></td>
+                        <td style="width : 180px;"><input type="number" value="${orderItem.finalPrice * orderItem.quantity}" id="sum${status.index}"name="sum" class="form-style" /></td>
                         <td style="display : flex; justify-content : center;">
-                        	<button class="btn button btn-sm" style="margin-left : 2px; background : #1d5c83; color : white;">삭제</button>
+                        	<button type="button" onclick="document.querySelector('#table${status.index}').innerHTML ='';" class="btn button btn-sm" style="margin-left : 2px; background : #1d5c83; color : white;">삭제</button>
                         </td>
                       </tr>
                     </c:forEach>
@@ -300,6 +300,17 @@
 	<script>
 	const path = "${pageContext.request.contextPath}"
 	
+	function makeSumforfinalPrice(event){
+		const quantity = event.target.parentElement.nextElementSibling.firstElementChild
+		const finalPrice = event.target
+		event.target.parentElement.nextElementSibling.nextElementSibling.firstElementChild.value=finalPrice.value*quantity.value;
+  	}
+
+	function makeSumforquantity(event){
+		const quantity = event.target
+		const finalPrice = quantity.parentElement.previousElementSibling.firstElementChild
+		quantity.parentElement.nextElementSibling.firstElementChild.value=finalPrice.value*quantity.value;
+	}
 	<%-- 전체 검색 --%>
 	document.querySelector("#allBuyerInfoBtn").addEventListener("click", function(){
 		const allBuyerInfoInput = document.querySelector("#allBuyerInfoInput").value;
@@ -332,7 +343,7 @@
 			`<tr>
 				<th> 
 					<input class="form-radio-input" type="radio" style="width : 20px; height : 20px;"
-						id="flexCheckDefault" name="buyerCode" value="\${item.buyerCode}">
+						name="buyerCode" value="\${item.buyerName}" onclick="transferValue(event)">
 				</th>
 				<td id="tableBuyerCode">\${item.buyerCode }</td>
 				<td>\${item.buyerName }</td>
@@ -345,9 +356,16 @@
 			</tr>`
 			document.querySelector("#buyerBody").insertAdjacentHTML("beforeend", buyerTableItem)
 			}
+		
 		})
+		
 	})
 	
+	
+	function transferValue(event) {
+		document.querySelector("#buyerNameInput").value = event.target.value;
+		document.querySelector("#buyerTable").innerHTML = "";
+	}
 	<%-- 바이어명 검색 --%>
 		document.querySelector("#buyerNameBtn").addEventListener("click", function(){
 		const buyerName = document.querySelector("#buyerName").value;
@@ -380,7 +398,7 @@
 			`<tr>
 				<th>
 					<input class="form-radio-input" type="radio" style="width : 20px; height : 20px;"
-						id="flexCheckDefault" name="buyerName">
+						id="flexCheckDefault" name="buyerName" onclick="transferValue(event)">
 				</th>
 				<td id="tableBuyerCode">\${item.buyerCode }</td>
 				<td>\${item.buyerName }</td>
@@ -428,7 +446,7 @@
 			`<tr>
 				<th>
 					<input class="form-radio-input" type="radio" style="width : 20px; height : 20px;"
-						id="flexCheckDefault" name="buyerName">
+						id="flexCheckDefault" name="buyerName" onclick="transferValue(event)">
 				</th>
 				<td id="tableBuyerCode">\${item.buyerCode }</td>
 				<td>\${item.buyerName }</td>
@@ -770,13 +788,13 @@
               <td>
 	              <input class="form-style" 
 	              type="number" id="finalPrice\${i}" 
-	              onclick = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
-	              onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
+	              onclick = "makeSumforfinalPrice(event)"
+	              onchange = "makeSumforfinalPrice(event)"
 	              name="finalPrice" value="\${da.salePrice}">
               </td>
               <td><input 
-              onclick = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value" 
-	          onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
+              onclick = "makeSumforquantity(event)" 
+	          onchange = "makeSumforquantity(event)" 
 	              
               id="quantity\${i}" class="form-style" type="number" name="quantity" value=""></td>
               <td><input type="number" id="sum\${i}" name="sum" class="form-style" /></td>
@@ -802,7 +820,7 @@
 	
 	  document.getElementById('modified').value = new Date().toISOString().substring(0, 10)
 	
-	
+	 
 	</script>
 </body>
 </html>

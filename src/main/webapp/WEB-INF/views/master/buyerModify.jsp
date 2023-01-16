@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,6 +46,11 @@
     .rowdiv{
         justify-content: space-around;
     }
+    
+    .inputDiv{
+	    position: absolute;
+	    right: 20px;
+    }
     .col-form-label{
         font-weight: 600;
         text-align: left;
@@ -59,6 +65,15 @@
     	position:relative;
     }
     
+    .check {
+    	margin-bottom: 15px;
+    }
+    
+    #buyerCodeExist, #businessNumberExist {
+    	position: absolute;
+    	left: 233px;
+    
+    }
 
     #businessNumberExist {
     	margin-top: 10px;
@@ -96,7 +111,7 @@
 	    border-radius: 5px; 
 	    background: #1d5c83;
 	    position: absolute;
-	    top: 836px;
+	    top: 508px;
 	    right: 75px;
     }
     
@@ -117,6 +132,7 @@
     
 </style>
 <body>
+<sec:authorize access="isAuthenticated()">
 	<div class="insert-body mt-5 ">
 		<div class="container-md">
 			<form id="modifyForm" name="modifyfrm" action="" method="post">
@@ -131,44 +147,46 @@
 					<div class="container-sm content-size">
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputCode" class="col-form-label">바이어 코드</label>
-							<div class="col-sm-5">
+							<div class="col-sm-7 inputDiv">
 								<input id="buyerCode" type="text" class="form-control" name ="buyerCode" value="${buyer.buyerCode }"
 									placeholder="${buyer.buyerCode }" disabled />
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputName" class="col-form-label">바이어명</label>
-							<div class="col-sm-5">
+							<div class="col-sm-7 inputDiv">
 								<input id="buyerName" type="text" class="form-control" name ="buyerName" value="${buyer.buyerName }"
 									placeholder="${buyer.buyerName }" />
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputAddress" class="col-form-label">주소</label>
-							<div class="col-sm-5">
+							<div class="col-sm-7 inputDiv">
 								<input id="buyerAddress" type="text" class="form-control" name ="address" value="${buyer.address }"
 									placeholder="${buyer.address }" />
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputCountry" class="col-form-label">국가</label>
-							<div class="col-sm-5">
+							<div class="col-sm-7 inputDiv">
 								<input id="buyerCountry" type="text" class="form-control" name ="country"  value="${buyer.country }"
 									placeholder="${buyer.country }" />
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputBusinessNum" class="col-form-label">사업자번호</label>
-							<div class="col-sm-5">
+							<div class="col-sm-7 inputDiv">
 								<input id="businessNum" type="text" class="form-control" name ="businessNumber"  value="${buyer.businessNumber }"
 									placeholder="${buyer.businessNumber }" />
-								<button class="btn" type="button" id="businessNumberExist">확인</button>
 							</div>
-							<div id="businessNumberText1" class="form-text">사업자번호 확인을 해주세요.</div>
+							<div class="check">
+								<div id="businessNumberText1" class="form-text">사업자번호 확인을 해주세요.</div>
+									<button class="btn" type="button" id="businessNumberExist">확인</button>
+							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputPhone" class="col-form-label">연락처</label>
-							<div class="col-sm-5">
+							<div class="col-sm-7 inputDiv">
 								<input id="buyerPhone" type="text" class="form-control" name ="phone"  value="${buyer.phone }"
 									placeholder="${buyer.phone }" />
 							</div>
@@ -176,7 +194,7 @@
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputdeliveryCompany" class="col-form-label" >선적비용부담회사</label>
 
-							<div class="col-sm-5">
+							<div class="col-sm-7 inputDiv">
 								<select id="deliveryCompany" name="deliveryCompany" class="form-control"
 									style="padding-left: 8px;">
 									<option selected>${buyer.deliveryCompany }</option>
@@ -187,7 +205,7 @@
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputManager" class="col-form-label" >담당자</label> 
-							<div class="col-sm-5">
+							<div class="col-sm-7 inputDiv">
 								<input id="manager" type="text" class="form-control" name ="manager" value="${buyer.manager }"
 									placeholder="${buyer.manager }" />
 							</div>
@@ -202,10 +220,10 @@
 		</div>
 			<form id="removeForm" name="removefrm" action="/master/buyerRemove" method="post">
 				<input type="hidden" name="code" value="${buyer.buyerCode}">
-		    <input id="removeBtn" class="btn" type="submit" value="삭제" onclick="removeCheck()">
+		    <input id="removeBtn" class="btn" value="삭제" onclick="removeCheck()">
 			</form>
 	</div>
-
+</sec:authorize>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <script>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,6 +44,10 @@
     .rowdiv{
         justify-content: space-around;
     }
+   	.inputDiv{
+	    position: absolute;
+	    right: 20px;
+    }
     .col-form-label{
         font-weight: 600;
     }
@@ -69,8 +74,8 @@
 	    border-radius: 5px; 
 	    background: #1d5c83;
 	    position: absolute;
-	    top: 939px;
-	    right: 75px;
+	    top: 560px;
+	    right: 85px;
     }
     
     #removeBtn {
@@ -84,9 +89,11 @@
 	    border-radius: 5px; 
 	    background: #1d5c83; 
 	    margin-bottom: 20px; 
+	    margin-right: 10px; 
     }
 </style>
-<body>   
+<body>
+<sec:authorize access="isAuthenticated()">   
     <div class="insert-body mt-5 ">
 		<div class="container-md">
 			<form id="modifyForm" name="modifyfrm" action="" method="post">
@@ -101,7 +108,7 @@
 					<div class="container-sm content-size">
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputCode" class="col-form-label">제품 코드</label>
-							<div class="col-sm-5">
+							<div class="col-sm-7 inputDiv">
 								<input id="productCode" type="text" class="form-control"
 									name="productCode" placeholder="${product.productCode }"
 									disabled />
@@ -109,13 +116,13 @@
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputName" class="col-form-label" >제품명</label>
-							<div class="col-sm-5">
+							<div class="col-sm-7 inputDiv">
 								<input id="productName" type="text" class="form-control" name="productName" value="${product.productName }" placeholder="${product.productName }" disabled />
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputProductType" class="col-form-label">제품종류</label>
-							<div class="col-sm-5">
+							<div class="col-sm-7 inputDiv">
 								<select id="productType" name="productType" class="form-control"
 									style="padding-left: 8px;" disabled>
 									<option selected>${product.productType }</option>
@@ -129,28 +136,28 @@
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputName" class="col-form-label">무게</label>
-							<div class="col-sm-5">
+							<div class="col-sm-7 inputDiv">
 								<input id="productName" name="weight" type="text" value="${product.weight }"
 									class="form-control" placeholder="${product.weight }" />
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputName" class="col-form-label">규격</label>
-							<div class="col-sm-5">
+							<div class="col-sm-7 inputDiv">
 								<input id="productName" name="size" type="text" value="${product.size }"
 									class="form-control" placeholder="${product.size }" />
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputName" class="col-form-label">단위</label>
-							<div class="col-sm-5">
+							<div class="col-sm-7 inputDiv">
 								<input id="productName" name="unit" type="text"
 									class="form-control" value="${product.unit }" placeholder="${product.unit }" />
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputProductPrice" class="col-form-label">단가</label>
-							<div class="col-sm-5">
+							<div class="col-sm-7 inputDiv">
 								<input id="productPrice" name="price"
 									type="text" class="form-control"
 									value="${product.price }"
@@ -162,7 +169,7 @@
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputPriceStartDate" class="col-form-label">단가
 								시작일</label>
-							<div class="col-sm-5">
+							<div class="col-sm-7 inputDiv">
 								<input id="productStartDate" name="fromDate" type="date"
 									class="form-control" value="${product.fromDate }"/>
 							</div>
@@ -170,7 +177,7 @@
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputPriceEndDate" class="col-form-label">단가
 								종료일</label>
-							<div class="col-sm-5">
+							<div class="col-sm-7 inputDiv">
 								<input id="productEndDate" name="endDate" type="date"
 									class="form-control" value="${product.endDate }"/>
 							</div>
@@ -178,7 +185,7 @@
 
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputName" class="col-form-label">제품 설명</label>
-							<div class="col-sm-5">
+							<div class="col-sm-7 inputDiv">
 								<input id="productName" name="content" type="text"
 									class="form-control" placeholder="${product.content }" />
 							</div>
@@ -194,12 +201,12 @@
 
 			<form action="/master/productRemove" name="removefrm" method="post">
 				<input type="hidden" name="code" value="${product.productCode}">
-				<input id= "removeBtn" class="btn" type="submit" value="삭제" onclick="removeCheck()">
+				<input id= "removeBtn" class="btn" value="삭제" onclick="removeCheck()">
 			</form>
 
 		</div>
-
 	</div>
+</sec:authorize>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <script>
     //삭제확인 버튼 클릭하면 삭제 form 전송
