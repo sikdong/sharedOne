@@ -58,7 +58,7 @@
 <body>   
   <div class="insert-body mt-5 ">
      <div class="container-md">
-       <form id="" action="">
+       <form id="form" action="">
            <div class="row">
                <div class="col mt-1">
                    <div class="mb-4">
@@ -119,7 +119,7 @@
 	    <div class="d-flex">
 		    <div class="col-9">
 		    </div>
-	        <button id="modifyBtn" class="btn primaryBtn"> 수정 </button>
+	        <button id="modifyBtn" class="btn primaryBtn" disabled> 수정 </button>
 	    
 		    <form action="${pageContext.request.contextPath }/master/salePriceDelete" method="post">
 			    <input type="hidden" name="priceId" value="${sale.priceId }" disabled>
@@ -194,41 +194,53 @@ function dateCheck(){
 } 
 /* 수정 알람 -> 수정하기 */
 $(function() {
-    $("#modifyBtn").click( function() {	
-    	if(confirm("수정하시겠습니까?")){
-    		const priceId = $('input[name=priceId]').val();
-			const productCode = $('input[name=productCode]').val();
-			const buyerCode = $('input[name=buyerCode]').val();
-			const salePrice = $('input[name=salePrice]').val();
-			const discountRate = $('input[name=discountRate]').val();
-			const fromDate = $('input[name=fromDate]').val();
-			const endDate = $('input[name=endDate]').val();
-
-			const data = { priceId, productCode, buyerCode, salePrice, discountRate, fromDate, endDate };
-			
-	    	$.ajax({
-	    		url : "/master/salePriceModify",
-	    		method : "POST",
-	    		data : (data),
-	    		dataType : "json"		    	
-	    	})
-	    	window.opener.location.reload();
-	    	window.close();
-	    	
-	    	
-    	}else{
-    		return false;
-    	}	 
-    });
-})
-
-$(function(){
-	$('input').on('keyup, input', function(){
-		$('#modifyBtn').prop('disabled', true);
-		
-	})
 	
+	if( $('input').val() != ''){
+		$('#modifyBtn').removeAttr("disabled");	
+		
+	    $("#modifyBtn").click( function() {	
+	    	if( $('input[name=salePrice]').val() == ''){
+				alert("판매가를 입력하세요.");
+				return false;
+			}
+	    	if( $('input[name=d1]').val() == ''){
+				alert("판매가 시작일을 입력하세요.");
+				return false;
+			}
+	    	if( $('input[name=d2]').val() == ''){
+				alert("판매가 종료일을 입력하세요.");
+				return false;
+			}
+
+	    	if(confirm("수정하시겠습니까?")){
+	    		const priceId = $('input[name=priceId]').val();
+				const productCode = $('input[name=productCode]').val();
+				const buyerCode = $('input[name=buyerCode]').val();
+				const salePrice = $('input[name=salePrice]').val();
+				const discountRate = $('input[name=discountRate]').val();
+				const fromDate = $('input[name=fromDate]').val();
+				const endDate = $('input[name=endDate]').val();
+	
+				const data = { priceId, productCode, buyerCode, salePrice, discountRate, fromDate, endDate };
+				
+		    	$.ajax({
+		    		url : "/master/salePriceModify",
+		    		method : "POST",
+		    		data : (data),
+		    		dataType : "json"		    	
+		    	})
+		    	window.opener.location.reload();
+		    	window.close();
+		    	
+		    	
+	    	}else{
+	    		return false;
+	    	}	 
+	    });
+	}
 })
+
+
 	
 	
         
