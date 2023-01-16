@@ -91,6 +91,7 @@ public class YdsOrderService {
 		OrderHeaderDto ohd = new OrderHeaderDto();
 		ohd.setWriter(yod.getWriter());
 		ohd.setBuyerCode(yod.getBuyerCode());
+		
 		if (yod.getDeliveryDate().isEmpty()) {
 
 			ohd.setDeliveryDate(null);
@@ -160,6 +161,9 @@ public class YdsOrderService {
 		OrderHeaderDto ohd = new OrderHeaderDto();
 		ohd.setWriter(yod.getWriter());
 		ohd.setBuyerCode(yod.getBuyerCode());
+		String modified = yod.getModified();
+		LocalDate parsedModified = LocalDate.parse(modified, DateTimeFormatter.ISO_DATE);
+		ohd.setModified(parsedModified);
 		if (yod.getDeliveryDate().isEmpty()) {
 
 			ohd.setDeliveryDate(null);
