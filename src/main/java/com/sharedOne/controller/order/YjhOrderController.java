@@ -195,10 +195,10 @@ public class YjhOrderController {
 	            titleStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 	            titleStyle.setFillForegroundColor(new XSSFColor(new byte[] {(byte) 172,(byte) 171,(byte) 171}, null));
 	            titleStyle.setFillPattern(FillPatternType.FINE_DOTS);
-	            titleStyle.setBorderTop(BorderStyle.THIN);
-	            titleStyle.setBorderBottom(BorderStyle.THIN);
-	            titleStyle.setBorderLeft(BorderStyle.THIN);
-	            titleStyle.setBorderRight(BorderStyle.THIN);
+	            //titleStyle.setBorderTop(BorderStyle.THIN);
+	            //titleStyle.setBorderBottom(BorderStyle.THIN);
+	            //titleStyle.setBorderLeft(BorderStyle.THIN);
+	            //titleStyle.setBorderRight(BorderStyle.THIN);
 	            
 	            XSSFCellStyle valueTitleStyle = (XSSFCellStyle)workbook.createCellStyle();
 	            valueTitleStyle.setAlignment(HorizontalAlignment.CENTER);
@@ -206,27 +206,27 @@ public class YjhOrderController {
 	            valueTitleStyle.setFillForegroundColor(new XSSFColor(new byte[] {(byte) 172,(byte) 171,(byte) 171}, null));
 	            valueTitleStyle.setFillPattern(FillPatternType.FINE_DOTS);
 	            valueTitleStyle.setFont(fontHead);
-	            valueTitleStyle.setBorderTop(BorderStyle.THIN);
-	            valueTitleStyle.setBorderBottom(BorderStyle.THIN);
-	            valueTitleStyle.setBorderLeft(BorderStyle.THIN);
-	            valueTitleStyle.setBorderRight(BorderStyle.THIN);
+	            //valueTitleStyle.setBorderTop(BorderStyle.THIN);
+	            //valueTitleStyle.setBorderBottom(BorderStyle.THIN);
+	            //valueTitleStyle.setBorderLeft(BorderStyle.THIN);
+	            //valueTitleStyle.setBorderRight(BorderStyle.THIN);
 	            
 	            XSSFCellStyle valueHeadStyle = (XSSFCellStyle)workbook.createCellStyle();
 	            valueHeadStyle.setFillForegroundColor(new XSSFColor(new byte[] {(byte) 212,(byte) 211,(byte) 211}, null));
 	            valueHeadStyle.setFillPattern(FillPatternType.FINE_DOTS);  	    
 	            valueHeadStyle.setAlignment(HorizontalAlignment.CENTER);
 	            valueHeadStyle.setFont(fontHead);
-	            valueHeadStyle.setBorderTop(BorderStyle.THIN);
-	            valueHeadStyle.setBorderBottom(BorderStyle.THIN);
-	            valueHeadStyle.setBorderLeft(BorderStyle.THIN);
-	            valueHeadStyle.setBorderRight(BorderStyle.THIN);
+	            //valueHeadStyle.setBorderTop(BorderStyle.THIN);
+	            //valueHeadStyle.setBorderBottom(BorderStyle.THIN);
+	            //valueHeadStyle.setBorderLeft(BorderStyle.THIN);
+	            //valueHeadStyle.setBorderRight(BorderStyle.THIN);
 	            
 	            CellStyle valueStyle = workbook.createCellStyle();
 	            valueStyle.setAlignment(HorizontalAlignment.CENTER);
-	            valueStyle.setBorderTop(BorderStyle.THIN);
-	            valueStyle.setBorderBottom(BorderStyle.THIN);
-	            valueStyle.setBorderLeft(BorderStyle.THIN);
-	            valueStyle.setBorderRight(BorderStyle.THIN);
+	            //valueStyle.setBorderTop(BorderStyle.THIN);
+	            //valueStyle.setBorderBottom(BorderStyle.THIN);
+	            //valueStyle.setBorderLeft(BorderStyle.THIN);
+	            //valueStyle.setBorderRight(BorderStyle.THIN);
 								
 				int rowNo = 0;
 			
@@ -356,10 +356,10 @@ public class YjhOrderController {
 				XSSFCellStyle footValueStyle = (XSSFCellStyle)workbook.createCellStyle();
 				footValueStyle.setAlignment(HorizontalAlignment.CENTER);
 				footValueStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-				footValueStyle.setBorderTop(BorderStyle.THIN);
-				footValueStyle.setBorderBottom(BorderStyle.THIN);
-				footValueStyle.setBorderLeft(BorderStyle.THIN);
-				footValueStyle.setBorderRight(BorderStyle.THIN);
+				//footValueStyle.setBorderTop(BorderStyle.THIN);
+				//footValueStyle.setBorderBottom(BorderStyle.THIN);
+				//footValueStyle.setBorderLeft(BorderStyle.THIN);
+				//footValueStyle.setBorderRight(BorderStyle.THIN);
 				
 				Row sumRow = sheet.createRow(rowNo++);
 				sumRow.createCell(0).setCellValue("총합");

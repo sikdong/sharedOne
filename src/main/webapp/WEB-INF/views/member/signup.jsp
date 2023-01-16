@@ -86,6 +86,7 @@
 	                    </div>					
 	                    <hr class="line" style="border: solid 1px #000" />
 	                    </div>
+	                    
 	                    <div class="container-sm content-size">
 	                    	<!-- <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputId" class="col-form-label">아이디</label>
@@ -112,12 +113,12 @@
 	                            </div>
 	                            <div id="passwordText" class="form-text" style="text-align: center;"></div>	                            
 	                        </div>	                        
-	                        <div class="mb-2 row mt-2 rowdiv">
+	                        <div class="mb-2 row mt-2 rowdiv">                       		
 	                            <label for="inputEmailId" class="col-form-label">이메일ID</label>
 	                            <div class="col-sm-5 inputDiv">
 	                                <input id="inputEmailId" name="email" type="text" class="form-control" placeholder="이메일 ID를 입력해주세요."/>
 	                            </div>
-	                            <div class="col-sm-5 " style="position: absolute; text-align: right; right: 100px; top: 43.5vh;  width: 65px;">	                                
+	                           <div class="col-sm-5 " style="position: absolute; text-align: right; right: 100px; top: 43.5vh;  width: 65px;">	                                
 	                                <button class="btn" type="button" id="emailIdCheckBtn" style="height: 38px;"disabled>확인</button>
 	                            </div>
 	                            <div id="emailIdText" class="form-text" style="text-align: center;"></div>

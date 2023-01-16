@@ -142,6 +142,7 @@
                 </ul>
             </div>
           </li>
+          <sec:authorize access="hasAuthority('팀장')">
           <li class="mb-1">
             <div class="row list-row">
                 <div class="list-head"><i class="fa-brands fa-wpforms"></i>&nbsp; 리포트</div>
@@ -159,6 +160,7 @@
             </div>
           </li>
           </sec:authorize>
+       </sec:authorize>
           <!-- authorize tag -->
          <sec:authorize access="hasAuthority('팀장')">
 	          <li class="mb-1">
