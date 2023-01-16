@@ -366,7 +366,7 @@ public class YjhOrderController {
 				sumRow.createCell(4).setCellValue("￦"+df.format((Integer)sumValue.getPriceSum()).toString());
 				sumRow.createCell(5).setCellValue(sumValue.getQuantitySum());
 				sumRow.createCell(6).setCellValue("￦"+df.format((Integer)sumValue.getSumTotal()).toString());
-				System.out.println("￦"+df.format((Integer)sumValue.getSumTotal()).toString().formatted(df));
+				//System.out.println("￦"+df.format((Integer)sumValue.getSumTotal()).toString().formatted(df));
 				footStyle.setWrapText(true);
 				footValueStyle.setWrapText(true);
 				

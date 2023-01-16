@@ -260,9 +260,12 @@
 						<td>
 							<c:choose>
 								<c:when test="${h.status == '임시저장'}">
-									<c:url value="" var="reRegister">
-									</c:url>
-										<button type="submit" class="btn btn-warning" style="color: white;">${h.status }</button>
+									<form action="${pageContext.request.contextPath }/order/modify">
+										<input type="hidden" name="orderId"  value="${h.orderId }">
+										<button type="submit" class="btn btn-warning" style="color: white;">
+											${h.status }
+										</button>
+									</form>
 								</c:when>
 								<c:when test="${h.status == '승인요청'}">
 									<c:url value="/order/confirmOrderSheet" var="confirmOrderSheetLink">
