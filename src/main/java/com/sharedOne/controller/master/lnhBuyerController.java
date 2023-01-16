@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,7 @@ public class lnhBuyerController {
 	private lnhBuyerService buyerService;
 
 	@GetMapping("buyerList")
+	@PreAuthorize("isAuthenticated()")
 	public void buyerList(
 			@RequestParam(name = "keyword", defaultValue = "") String keyword,
 			@RequestParam(name = "buyerCode", defaultValue = "") String buyerCode,
@@ -59,18 +61,20 @@ public class lnhBuyerController {
 	}
 
 	@GetMapping("buyerRegister")
+	@PreAuthorize("isAuthenticated()")
 	public void register() {
 
 	}
 
 	@PostMapping("buyerRegister")
+	@PreAuthorize("isAuthenticated()")
 	public void register(BuyerDto buyer) {
 		buyerService.register(buyer);
 	}
 
 
 	@GetMapping("buyerModify") // @은 외부 빈, #은 메소드의 파라미터
-	/* @PreAuthorize("@Security.checkWriter(authentication.name, #buyerCode)") */
+	@PreAuthorize("isAuthenticated()")
 	public void modify(@RequestParam(name = "code") String buyerCode, Model model) {
 
 		BuyerDto buyer = buyerService.get(buyerCode);
@@ -79,12 +83,13 @@ public class lnhBuyerController {
 	}
 
 	@PostMapping("buyerModify")
-	/* @PreAuthorize("@Security.checkWriter(authentication.name, #buyerCode)") */
+	@PreAuthorize("isAuthenticated()")
 	public void modify(BuyerDto buyer) {
 		buyerService.update(buyer);
 	}
 	
 	@GetMapping("existbuyerCode/{buyerCode}")
+	@PreAuthorize("isAuthenticated()")
 	@ResponseBody
 	public Map<String, Object> existbuyerCode(@PathVariable String buyerCode) {
 		Map<String, Object> map = new HashMap<>();
@@ -103,6 +108,7 @@ public class lnhBuyerController {
 	}
 	
 	@GetMapping("existbusinessNum/{businessNumber}")
+	@PreAuthorize("isAuthenticated()")
 	@ResponseBody
 	public Map<String, Object> existbusinessNum(@PathVariable String businessNumber) {
 		Map<String, Object> map = new HashMap<>();
@@ -122,7 +128,7 @@ public class lnhBuyerController {
 	
 
 	@PostMapping("buyerRemove")
-	/* @PreAuthorize("@Security.checkWriter(authentication.name, #buyerCode)") */
+	@PreAuthorize("isAuthenticated()")
 	public void remove(@RequestParam(name = "code") String buyerCode) {
 		buyerService.remove(buyerCode);
 	}

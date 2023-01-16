@@ -1,7 +1,6 @@
 package com.sharedOne.controller.report;
 
 import java.io.IOException;
-
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -23,7 +22,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +30,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,6 +61,7 @@ public class lnhReportController {
 	private HmsReportService hmsService;
 	
 	@GetMapping("monthlyReport")
+	@PreAuthorize("hasAuthority('팀장')")
 	public void getMontlyReport(
 			@RequestParam(name = "orderQ", defaultValue = "") String orderQ,
 			@RequestParam(name="orderCode", defaultValue="") String orderCode,
@@ -129,6 +129,7 @@ public class lnhReportController {
 	
 	//엑셀 다운로드
 	@RequestMapping("excelDown")
+	@PreAuthorize("hasAuthority('팀장')")
 	@ResponseBody
 	public void excelDown(HttpServletResponse response,	
 			@RequestParam(name = "orderQ", defaultValue = "") String orderQ,
@@ -203,8 +204,6 @@ public class lnhReportController {
 			// 검색 결과 리스트
 			List<OrderHeaderDto> list = service.orderList(orderQ, orderCode, productCode, writer, status, fromDate,
 					endDate);
-			
-			System.out.println("엑셀 데이터"+ list);
 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -283,6 +282,6 @@ public class lnhReportController {
 
 		}
 
-		}
+	}
 
 }
