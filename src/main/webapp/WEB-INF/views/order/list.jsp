@@ -266,6 +266,16 @@
 											${h.status }
 										</button>
 									</form>
+									<%-- <c:url value="/order/modify" var="modifyLink">
+										<c:param name="orderId" value="${h.orderId }"/>
+										
+									</c:url>
+									<button type="submit" class="btn btn-warning" 
+									onclick="window.open('${modifyLink}','주문서','width=1400,height=1000,left=500,top=100,location=no,status=no,scrollbars=yes');"
+									>
+										${h.status }
+									</button> --%>
+									
 								</c:when>
 								<c:when test="${h.status == '승인요청'}">
 									<c:url value="/order/confirmOrderSheet" var="confirmOrderSheetLink">
@@ -295,7 +305,7 @@
 										<c:param name="id" value="${h.writer }"/>
 									</c:url>
 									<button type="submit" class="btn btn-danger" 
-									onclick="window.open('${companionSheetLink}','주문서','width=800,height=1000,left=500,top=100,location=no,status=no,scrollbars=yes');"
+									onclick="window.open('${companionSheetLink}','주문서','width=1400,height=1000,left=500,top=100,location=no,status=no,scrollbars=yes');"
 									>
 										${h.status }
 									</button>
@@ -312,13 +322,8 @@
 									</button>			
 								</c:when>
 								<c:when test="${h.status == '거래종결'}">
-									<c:url value="/order/orderSheet" var="orderSheetLink">
-										<c:param name="orderId" value="${h.orderId }"/>
-										<c:param name="id" value="${h.writer }"/>
-									</c:url>	
-									<button type="submit" class="btn btn-secondary" 
-									onclick="window.open('${orderSheetLink}','주문서','width=800,height=1000,left=500,top=100,location=no,status=no,scrollbars=yes');" 
-									>
+									<!-- 거래종결은 주문서 안보이기 . 그냥 상세만 보세요 -->	
+									<button type="submit" class="btn btn-secondary">
 										${h.status }
 									</button>
 									

@@ -46,16 +46,16 @@
  		AND h.deliveryDate BETWEEN #{d1} AND #{d2}
  		</if>
  		<if test="orderCode != '' ">
- 		AND h.orderCode = #{orderCode }
+ 		AND h.orderCode LIKE #{orderCode }
  		</if>
  		<if test="buyerCode != '' ">
- 		AND b.buyerCode = #{buyerCode }
+ 		AND b.buyerCode LIKE #{buyerCode }
  		</if>
  		<if test="writer != '' ">
- 		AND h.writer = #{writer }
+ 		AND h.writer LIKE #{writer }
  		</if>
  		<if test="status != '' ">
- 		AND h.status = #{status }
+ 		AND h.status LIKE #{status }
  		</if>
  		
  		ORDER BY h.inserted DESC;
