@@ -18,12 +18,17 @@ public class AsjOrderService {
 	public List <OrderHeaderDto> selectOrderHeaderList(String keyword, String buyerCode, String orderCode, String writer, String status, String d1, String d2) {
 		
 		keyword = "%"+keyword+"%";
+		buyerCode = "%"+buyerCode+"%";
+		orderCode = "%"+orderCode+"%";
+		writer = "%"+writer+"%";
+		status = "%"+status+"%";
 		
 		return asjOrderMapper.selectOrderHeaderList(keyword,buyerCode,orderCode,writer,status,d1,d2);
 	}
 
 	public List<OrderItemDto> selectOrderItemListByOrderCode(String orderCode) {
 		System.out.println("$$$orderCode :" + orderCode);
+		
 		return asjOrderMapper.selectOrderItemListByOrderCode(orderCode);
 	}
 	

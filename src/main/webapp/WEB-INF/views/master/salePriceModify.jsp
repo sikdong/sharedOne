@@ -220,7 +220,15 @@ $(function() {
     		return false;
     	}	 
     });
-});
+})
+
+$(function(){
+	$('input').on('keyup, input', function(){
+		$('#modifyBtn').prop('disabled', true);
+		
+	})
+	
+})
 	
 	
         
