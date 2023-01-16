@@ -162,7 +162,7 @@
 	                            </div>
 		                        </div>
 	
-							<div class="mb-2 row mt-2 rowdiv">
+<!-- 							<div class="mb-2 row mt-2 rowdiv">
 								<label for="inputPriceStartDate" class="col-form-label">단가 시작일</label>
 								<div class="col-sm-7 inputDiv">
 									<input id="productStartDate" name ="fromDate" type="date" class="form-control" />
@@ -173,7 +173,7 @@
 								<div class="col-sm-7 inputDiv">
 									<input id="productEndDate" name ="endDate" type="date" class="form-control" />
 								</div>
-							</div>
+							</div> -->
 	
 							<div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputName" class="col-form-label">제품 설명</label>

@@ -192,7 +192,7 @@
                   <th style="width: 130px;">규격(Inch)</th>
                   <th style="width: 100px;">단위</th>
                   <th style="width: 150px;">단가</th>
-                  <th style="width: 300px;">단가기간</th>
+                  <th style="width: 150px;">비고</th>
 
 					 </tr>
 				 </thead>
@@ -201,7 +201,7 @@
 						<c:url value="/master/productModify" var="getLink">
 							<c:param name="code" value="${product.productCode }"></c:param>
 						</c:url>
-					<tr title="${product.productName } 정보 수정하기" onclick="window.open('${getLink}','제품정보','width=600,height=700,left=600,top=100,location=no,status=no,scrollbars=yes');" class="trtr">
+					<tr title="${product.productName } 정보 수정하기" class="trtr">
 
 					<td style="max-width: 500px; word-break:break-all;width: 220px;">${product.productCode }</td>
                      <td style="word-break:break-all;width: 300px;">${product.productName }</td>
@@ -210,7 +210,7 @@
                      <td style="word-break:break-all;width: 130px;">${product.size }</td>
                      <td style="word-break:break-all;width: 100px;">${product.unit }</td>
                      <td style="word-break:break-all;width: 150px;">${product.price }</td>
-                     <td style="word-break:break-all;width: 300px;">${product.fromDate } ~ ${product.endDate }</td>
+                     <td style="width: 150px;"><button id="modifyBtn" type="button" class="btn btn-outline-secondary" onclick="window.open('${getLink}','제품정보','width=600,height=700,left=600,top=100,location=no,status=no,scrollbars=yes');">수정</button></td>
 							
 						</tr>
 					</c:forEach>
