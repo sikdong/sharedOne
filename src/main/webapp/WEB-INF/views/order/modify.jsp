@@ -71,7 +71,7 @@
 <c:set value="${pageContext.request.contextPath }" var="path"></c:set>
 	<my:side_bar></my:side_bar>
 <div class="root">
-		<form action="${path }/order/list" method="POST" id="orderForm">
+		<form action="" method="POST" id="orderForm">
 		<input type="hidden" name="status" id="status" />
 		<div style="font-size: 30px;">
 			<strong>주문서 수정</strong>
@@ -142,10 +142,10 @@
 		
 		<div style="width : 77vw; display : flex;" class="mt-5">
 			<div class="form-width">
-				<label for="staticEmail" class="col-form-label" style="min-width : 50px; margin-left : 3%">바이어명</label>
+				<label for="staticEmail" class="col-form-label" style="min-width : 50px; margin-left : 3%">바이어코드</label>
 				<div class="ml-3">
-					<input type="text" class="form-control" value="${orderHeader.buyerName }"
-						name="buyerCode" id="buyerNameInput">
+					<input type="text" class="form-control" value="${orderHeader.buyerCode}"
+						name="buyerCode" id="buyerCodeInput">
 				</div>
 			</div>
 			<div  class="form-width" style="margin-left : 10%">
@@ -257,7 +257,7 @@
                     <c:forEach items="${orderItems }" var="orderItem" varStatus="status">
                       <tr id="table${status.index }">
                         <th scope="row">${status.count }</th>
-                        <td>${orderItem.productCode }<input type="hidden" name="productCode"/></td>
+                        <td>${orderItem.productCode }<input type="hidden" name="productCode" value="${orderItem.productCode }"/></td>
                         <td>${orderItem.productType }</td>
                         <td>${orderItem.productName }</td>
                         <td>${orderItem.size }</td>
@@ -276,7 +276,7 @@
                   <div style="width : 77vw;" class="mt-5">
 					<label for="inputPassword" class=" col-form-label">주문 시 특이사항</label>
 					<div class="ml-3">
-						<textarea rows="5" class="form-control" id="inputPassword" >${orderHeader.message }</textarea>
+						<textarea name="message" rows="5" class="form-control" id="inputPassword" >${orderHeader.message }</textarea>
 					</div>
 				  </div>
 		        <button type="button" style="margin-left: 40%; background: #1d5c83; color: white;"
@@ -343,7 +343,7 @@
 			`<tr>
 				<th> 
 					<input class="form-radio-input" type="radio" style="width : 20px; height : 20px;"
-						name="buyerCode" value="\${item.buyerName}" onclick="transferValue(event)">
+						name="buyerCode" value="\${item.buyerCode}" onclick="transferValue(event)">
 				</th>
 				<td id="tableBuyerCode">\${item.buyerCode }</td>
 				<td>\${item.buyerName }</td>
@@ -363,7 +363,7 @@
 	
 	
 	function transferValue(event) {
-		document.querySelector("#buyerNameInput").value = event.target.value;
+		document.querySelector("#buyerCodeInput").value = event.target.value;
 		document.querySelector("#buyerTable").innerHTML = "";
 	}
 	<%-- 바이어명 검색 --%>
@@ -398,7 +398,7 @@
 			`<tr>
 				<th>
 				<input class="form-radio-input" type="radio" style="width : 20px; height : 20px;"
-					name="buyerCode" value="\${item.buyerName}" onclick="transferValue(event)">
+					name="buyerCode" value="\${item.buyerCode}" onclick="transferValue(event)">
 				</th>
 				<td id="tableBuyerCode">\${item.buyerCode }</td>
 				<td>\${item.buyerName }</td>
@@ -446,7 +446,7 @@
 			`<tr>
 				<th>
 				<input class="form-radio-input" type="radio" style="width : 20px; height : 20px;"
-					name="buyerCode" value="\${item.buyerName}" onclick="transferValue(event)">
+					name="buyerCode" value="\${item.buyerCode}" onclick="transferValue(event)">
 				</th>
 				<td id="tableBuyerCode">\${item.buyerCode }</td>
 				<td>\${item.buyerName }</td>
@@ -513,7 +513,7 @@
 	<%-- 전체 제품 검색 --%>
 	document.querySelector("#allProductInfoBtn").addEventListener("click", function(){
 		const allProductInfo = document.querySelector("#allProductInfo").value;
-		const tableBuyerCode = document.querySelector("#buyerNameInput").value;
+		const tableBuyerCode = document.querySelector("#buyerCodeInput").value;
 		const deliveryDate = document.querySelector("#deliveryDate").value;
 		if(deliveryDate != ''){
 			
@@ -574,7 +574,7 @@
 	<%--제품명 검색 --%>
 	document.querySelector("#productNameBtn").addEventListener("click", function(){
 		const allProductInfo = document.querySelector("#productNameInput").value;
-		const tableBuyerCode = document.querySelector("#tableBuyerCode").innerHTML;
+		const tableBuyerCode = document.querySelector("#buyerCodeInput").value;
 		const deliveryDate = document.querySelector("#deliveryDate").value;
 		if(deliveryDate != ''){
 		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode+"/"+deliveryDate)
@@ -631,7 +631,7 @@
 	<%--제품코드로 검색 --%>
 	document.querySelector("#productCodeBtn").addEventListener("click", function(){
 		const allProductInfo = document.querySelector("#productCodeInput").value;
-		const tableBuyerCode = document.querySelector("#tableBuyerCode").innerHTML;
+		const tableBuyerCode = document.querySelector("#buyerCodeInput").value;
 		const deliveryDate = document.querySelector("#deliveryDate").value;
 		if(deliveryDate != ''){
 		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode+"/"+deliveryDate)
@@ -688,7 +688,7 @@
 	<%--제품그룹로 검색 --%>
 	document.querySelector("#productTypeBtn").addEventListener("click", function(){
 		const allProductInfo = document.querySelector("#productTypeInput").value;
-		const tableBuyerCode = document.querySelector("#tableBuyerCode").innerHTML;
+		const tableBuyerCode = document.querySelector("#buyerCodeInput").value;
 		const deliveryDate = document.querySelector("#deliveryDate").value;
 		if(deliveryDate != ''){
 		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode+"/"+deliveryDate)
@@ -747,7 +747,7 @@
  	<%--상세정보에 추가 --%>
 	document.querySelector("#addOrder").addEventListener("click", function() {
 		
-		const buyerCode = document.querySelector('input[name="buyerCode"]:checked').value;
+		const buyerCode = document.querySelector("#buyerCodeInput").value;
 		const productCode = document.querySelectorAll('input[name="productCode"]:checked');
 			
 		let productCodes = [];
@@ -785,19 +785,19 @@
               <td>\${da.size}</td>
               <td>\${da.unit}</td>
               <td>\${da.price}원</td>
-              <td>
+              <td style="width : 150px;">
 	              <input class="form-style" 
 	              type="number" id="finalPrice\${i}" 
 	              onclick = "makeSumforfinalPrice(event)"
 	              onchange = "makeSumforfinalPrice(event)"
 	              name="finalPrice" value="\${da.salePrice}">
               </td>
-              <td><input 
+              <td style="width : 100px;"><input 
               onclick = "makeSumforquantity(event)" 
 	          onchange = "makeSumforquantity(event)" 
 	              
               id="quantity\${i}" class="form-style" type="number" name="quantity" value=""></td>
-              <td><input type="number" id="sum\${i}" name="sum" class="form-style" /></td>
+              <td style="width : 180px;"><input type="number" id="sum\${i}" name="sum" class="form-style" /></td>
               <td style="display : flex; justify-content : center;">
                   <button onclick="document.querySelector('#tr\${i}').innerHTML = '';" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
               </td>

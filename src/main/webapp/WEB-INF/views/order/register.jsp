@@ -74,7 +74,7 @@
 	<c:set value="${pageContext.request.contextPath }" var="path"></c:set>
 	<my:side_bar></my:side_bar>
 	<div class="root">
-	<form action="${path }/order/list" method="POST" id="orderForm">
+	<form action="" method="POST" id="orderForm">
 		<input type="hidden" name="status" id="status" />
 		<div style="font-size: 30px;">
 			<strong>주문서 등록</strong>

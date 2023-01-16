@@ -155,4 +155,59 @@ public class YdsOrderService {
 		return mapper.modifyOrderItem(orderId);
 	}
 
+	public void updateOrder(YdsOrderDto yod, int orderId) {
+		// 오더 헤더 파라미터 구성
+		OrderHeaderDto ohd = new OrderHeaderDto();
+		ohd.setWriter(yod.getWriter());
+		ohd.setBuyerCode(yod.getBuyerCode());
+		if (yod.getDeliveryDate().isEmpty()) {
+
+			ohd.setDeliveryDate(null);
+		} else {
+			ohd.setDeliveryDate(yod.getDeliveryDate());
+		}
+		ohd.setMessage(yod.getMessage());
+		ohd.setStatus(yod.getStatus());
+		mapper.updateOrderHeader(ohd, orderId);
+
+		// 오더 아이템 파라미터 구성
+		OrderItemDto oid = new OrderItemDto();
+		/* System.out.println("null 이여도 사이즈는 몇개? " + yod.getQuantity().size()); */
+
+		// 상세 정보에 없는 경우
+		System.out.println(yod.getProductCode() != null);
+		if (yod.getProductCode() == null) {
+			oid = null;
+			mapper.updateOrderItem(oid, orderId);
+			System.out.println("false가 실행됨");
+		} else {
+			System.out.println("왜 여기로 안와?");
+
+			List<Integer> quantities = yod.getQuantity();
+			List<Integer> finalPrices = yod.getFinalPrice();
+			List<Integer> sums = yod.getSum();
+			List<String> productCodes = yod.getProductCode();
+			for (int a = 0; a < yod.getQuantity().size(); a++) {
+				// 수량 등록 된 상태
+				if (yod.getQuantity().get(a) != null) {
+
+					oid.setFinalPrice(finalPrices.get(a));
+					oid.setQuantity(quantities.get(a));
+					oid.setSum(sums.get(a));
+					oid.setProductCode(productCodes.get(a));
+					mapper.updateOrderItem(oid, orderId);
+					System.out.println(a + "번 실행됨");
+				} else {
+					// 수량 등록 안된 상태
+					System.out.println("여기로 오니?");
+					oid.setProductCode(productCodes.get(a));
+					oid.setFinalPrice(finalPrices.get(a));
+					oid.setQuantity(0);
+					oid.setSum(0);
+					mapper.updateOrderItem(oid, orderId);
+				}
+			}
+		}
+	}
+
 }
