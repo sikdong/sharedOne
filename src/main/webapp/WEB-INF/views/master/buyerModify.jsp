@@ -275,7 +275,7 @@
 	 		window.opener.location.reload();    //부모창 reload
 	 		setTimeout(function() {   
 	             window.close();
-	          }, 100);
+	          }, 500);
 	 	} else{
 	     return false;
 	     }

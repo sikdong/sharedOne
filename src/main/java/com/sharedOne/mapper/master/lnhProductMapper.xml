@@ -9,6 +9,10 @@
  	<select id="selectProductName" resultType="com.sharedOne.domain.master.ProductDto">
 		SELECT * FROM Product WHERE productName = #{productName}
 	</select>
+	
+	<select id="selectProductCode" resultType="com.sharedOne.domain.master.ProductDto">
+		SELECT * FROM Product WHERE productCode = #{productCode}
+	</select>
  
  	<select id="selectProductList" resultType="com.sharedOne.domain.master.ProductDto">
  	<!-- productCode, productName, productType, weight, size, price, unit, content, inserted -->

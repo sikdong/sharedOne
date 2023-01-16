@@ -105,17 +105,36 @@ public class lnhProductController {
 		return "redirect:/master/productList/productGet?code=" + code;
 	}
 	
+	@GetMapping("existproductCode/{productCode}")
+	@PreAuthorize("isAuthenticated()")
+	@ResponseBody
+	public Map<String, Object> existProductCode(@PathVariable String productCode) {
+		Map<String, Object> map = new HashMap<>();
+
+		ProductDto product = productService.getByProductCode(productCode);
+
+		if (product == null) {
+			map.put("status", "not exist");
+			map.put("message", "사용 가능한 제품코드입니다.");
+		} else {
+			map.put("status", "exist");
+			map.put("message", "이미 존재하는 제품코드입니다.");
+		}
+
+		return map;
+	}
+	
 	@GetMapping("existproductName/{productName}")
 	@PreAuthorize("isAuthenticated()")
 	@ResponseBody
-	public Map<String, Object> existbuyerCode(@PathVariable String productName) {
+	public Map<String, Object> existProductName(@PathVariable String productName) {
 		Map<String, Object> map = new HashMap<>();
 
 		ProductDto product = productService.getByProductName(productName);
 
 		if (product == null) {
 			map.put("status", "not exist");
-			map.put("message", "사용가능한 제품명입니다.");
+			map.put("message", "사용 가능한 제품명입니다.");
 		} else {
 			map.put("status", "exist");
 			map.put("message", "이미 존재하는 제품명입니다.");
@@ -129,7 +148,7 @@ public class lnhProductController {
 	public void remove(
 			@RequestParam(name = "code") String productCode) {
 		productService.remove(productCode);
-		
+		/* return "redirect:/master/removeConfirm"; */
 	}
 	
 }

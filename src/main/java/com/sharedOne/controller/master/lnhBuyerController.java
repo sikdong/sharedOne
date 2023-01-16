@@ -131,5 +131,6 @@ public class lnhBuyerController {
 	@PreAuthorize("isAuthenticated()")
 	public void remove(@RequestParam(name = "code") String buyerCode) {
 		buyerService.remove(buyerCode);
+		/* return "redirect:/master/removeConfirm"; */
 	}
 }
