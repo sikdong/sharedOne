@@ -256,7 +256,7 @@
                     <tbody class="table-group-divider" id="tempOrderTable">
                     <c:forEach items="${orderItems }" var="orderItem" varStatus="status">
                       <tr id="table${status.index }">
-                        <th scope="row">${status.count }</th>
+                        <th scope="row" class="oiNumber"></th>
                         <td>${orderItem.productCode }<input type="hidden" name="productCode" value="${orderItem.productCode }"/></td>
                         <td>${orderItem.productType }</td>
                         <td>${orderItem.productName }</td>
@@ -267,7 +267,7 @@
                         <td style="width : 100px;"><input type="number" name="quantity" onclick="makeSumforquantity(event)" onchange=" makeSumforquantity(event)" class="form-style" id="quantity${status.index }" value="${orderItem.quantity }"/></td>
                         <td style="width : 180px;"><input type="number" value="${orderItem.finalPrice * orderItem.quantity}" id="sum${status.index}"name="sum" class="form-style" /></td>
                         <td style="display : flex; justify-content : center;">
-                        	<button type="button" onclick="document.querySelector('#table${status.index}').innerHTML ='';" class="btn button btn-sm" style="margin-left : 2px; background : #1d5c83; color : white;">삭제</button>
+                        	<button type="button" onclick="document.querySelector('#table${status.index}').innerHTML ='', assignNumber();" class="btn button btn-sm" style="margin-left : 2px; background : #1d5c83; color : white;">삭제</button>
                         </td>
                       </tr>
                     </c:forEach>
@@ -778,7 +778,7 @@
 			for(const da of data){
 			const productOrderTable =
             `<tr id="tr\${i}">
-              <th scope="row">\${i}</th>
+              <th scope="row" class="oiNumber"></th>
               <td>\${da.productCode}<input type="hidden" name="productCode" value="\${da.productCode}"></td>
               <td>\${da.productType}</td>
               <td>\${da.productName}</td>
@@ -799,13 +799,14 @@
               id="quantity\${i}" class="form-style" type="number" name="quantity" value=""></td>
               <td style="width : 180px;"><input type="number" id="sum\${i}" name="sum" class="form-style" /></td>
               <td style="display : flex; justify-content : center;">
-                  <button onclick="document.querySelector('#tr\${i}').innerHTML = '';" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
+              	<button onclick="document.querySelector('#tr\${i}').innerHTML = '', assignNumber();" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
               </td>
             </tr>`
           	document.querySelector("#tempOrderTable").insertAdjacentHTML("beforeend", productOrderTable);
-			i++;			
+			i++;
 			}
 			document.querySelector("#productBody").innerHTML = "";
+			assignNumber();
 		})
 	}); 
 	
@@ -820,7 +821,19 @@
 	
 	  document.getElementById('modified').value = new Date().toISOString().substring(0, 10)
 	
-	 
+	 function assignNumber() {
+		if(document.querySelectorAll(".oiNumber")){
+			
+		const oiNumber = document.querySelectorAll(".oiNumber")
+		for(let i = 0; i < oiNumber.length; i++){
+			let a = i;
+			console.log(a);
+			oiNumber[i].innerHTML = ++a;
+			}
+	
+		}
+	}
+	 assignNumber()
 	</script>
 </body>
 </html>

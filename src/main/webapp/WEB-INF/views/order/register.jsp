@@ -283,7 +283,7 @@
 							scope="col" rowspan="2">삭제여부</th>
 					</tr>
 					<tr>
-						<th>#</th>
+						<th><input type="hidden" value=0 id="firstNum"/>#</th>
 						<th>제품코드</th>
 						<th>제품그룹</th>
 						<th>제품명</th>
@@ -765,8 +765,7 @@
 			alert("납기 요청일을 입력해주세요")
 		}
 	})
-		
-	let i = 1
+	let i=1;
  	<%--상세정보에 추가 --%>
 	document.querySelector("#addOrder").addEventListener("click", function() {
 		
@@ -801,7 +800,7 @@
 			for(const da of data){
 			const productOrderTable =
             `<tr id="tr\${i}">
-              <th scope="row">\${i}</th>
+              <th scope="row" class="oiNumber" id="oiNumber\${i}" data-order-number=''></th>
               <td>\${da.productCode}<input type="hidden" name="productCode" value="\${da.productCode}"></td>
               <td>\${da.productType}</td>
               <td>\${da.productName}</td>
@@ -822,13 +821,27 @@
               id="quantity\${i}" class="form-style" type="number" name="quantity" value=""></td>
               <td><input type="number" id="sum\${i}" name="sum" class="form-style" /></td>
               <td style="display : flex; justify-content : center;">
-                  <button onclick="document.querySelector('#tr\${i}').innerHTML = '';" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
+                  <button onclick="document.querySelector('#tr\${i}').innerHTML = '', assignNumber();" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
               </td>
             </tr>`
           	document.querySelector("#tempOrderTable").insertAdjacentHTML("beforeend", productOrderTable);
-			i++;			
+			i++
 			}
 			document.querySelector("#productBody").innerHTML = "";
+	            const oiNumber = document.querySelectorAll(".oiNumber")
+	            console.log(oiNumber)
+				for(let i = 0; i < oiNumber.length; i++){
+					if(i == 0){
+						let zeroNum = document.querySelector("#firstNum").value
+						console.log(zeroNum);
+						let firstNum = parseInt(zeroNum, 10);
+						oiNumber[i].innerHTML = ++firstNum;
+						
+					} else {
+						let previousNum = oiNumber[i-1].innerHTML
+						oiNumber[i].innerHTML = ++previousNum;
+					}
+				}
 		})
 	}); 
 	
@@ -841,7 +854,17 @@
 		document.querySelector("#orderForm").submit()
 	}
 	
+	function assignNumber() {
+		if(document.querySelectorAll(".oiNumber")){
+			
+		const oiNumber = document.querySelectorAll(".oiNumber")
+		for(let i = 0; i < oiNumber.length; i++){
+			let a = i;
+			oiNumber[i].innerHTML = ++a;
+			}
 	
+		}
+	}
 	
 	
 	</script>
