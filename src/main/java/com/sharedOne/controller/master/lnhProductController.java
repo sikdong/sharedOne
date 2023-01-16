@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,7 @@ public class lnhProductController {
 	private lnhProductService productService;
 	
 	@GetMapping("productList")
+	@PreAuthorize("isAuthenticated()")
 	public void productList(
 			@RequestParam(name = "keyword", defaultValue = "") String keyword, 
 			@RequestParam(name = "productCode", defaultValue = "") String productCode, 
@@ -59,11 +61,13 @@ public class lnhProductController {
 	}
 	
 	@GetMapping("productRegister")
+	@PreAuthorize("isAuthenticated()")
 	public void register() {
 		
 	}
 	
 	@PostMapping("productRegister")
+	@PreAuthorize("isAuthenticated()")
 	public void register(ProductDto product) {
 		productService.register(product);
 		
@@ -71,9 +75,9 @@ public class lnhProductController {
 	
 	//새 창으로 띄우는 경우 
 	@GetMapping("productGet")
+	@PreAuthorize("isAuthenticated()")
 	public void get(
 			@RequestParam(name = "code") String productCode,
-/*			Authentication auth,*/
 			Model model) {
 		ProductDto product = productService.get(productCode);
 		model.addAttribute("product", product);
@@ -82,7 +86,7 @@ public class lnhProductController {
 	
 	
 	@GetMapping("productModify") // @은 외부 빈, #은 메소드의 파라미터
-	/* @PreAuthorize("@Security.checkWriter(authentication.name, #productCode)") */
+	@PreAuthorize("isAuthenticated()")
 	public void modify(
 			@RequestParam(name = "code") String productCode,
 			Model model) {
@@ -93,7 +97,7 @@ public class lnhProductController {
 	}
 	
 	@PostMapping("productModify")
-	/* @PreAuthorize("@Security.checkWriter(authentication.name, #productCode)") */
+	@PreAuthorize("isAuthenticated()")
 	public String modify(ProductDto product) {
 		productService.update(product);
 		String code = product.getProductCode();
@@ -102,6 +106,7 @@ public class lnhProductController {
 	}
 	
 	@GetMapping("existproductName/{productName}")
+	@PreAuthorize("isAuthenticated()")
 	@ResponseBody
 	public Map<String, Object> existbuyerCode(@PathVariable String productName) {
 		Map<String, Object> map = new HashMap<>();
@@ -120,7 +125,7 @@ public class lnhProductController {
 	}
 	
 	@PostMapping("productRemove")
-	/* @PreAuthorize("@Security.checkWriter(authentication.name, #productCode)") */
+	@PreAuthorize("isAuthenticated()")
 	public void remove(
 			@RequestParam(name = "code") String productCode) {
 		productService.remove(productCode);
