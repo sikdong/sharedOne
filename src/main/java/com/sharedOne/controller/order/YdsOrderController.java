@@ -112,7 +112,7 @@ public class YdsOrderController {
 			Authentication at, RedirectAttributes rttr) {
 		System.out.println("orderId = " + orderId);
 		if (at != null) {
-			yod.setWriter(at.getName());
+			yod.setMemberId(at.getName());
 		}
 			System.out.println("yod = " + yod);
 			service.updateOrder(yod,orderId);

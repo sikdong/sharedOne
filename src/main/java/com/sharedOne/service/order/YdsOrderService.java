@@ -89,7 +89,7 @@ public class YdsOrderService {
 	public void insertOrder(YdsOrderDto yod) {
 		// 오더 헤더 파라미터 구성
 		OrderHeaderDto ohd = new OrderHeaderDto();
-		ohd.setWriter(yod.getWriter());
+		ohd.setMemberId(yod.getMemberId());
 		ohd.setBuyerCode(yod.getBuyerCode());
 		
 		if (yod.getDeliveryDate().isEmpty()) {
