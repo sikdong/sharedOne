@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +41,7 @@ public class YdsOrderController {
 	private final YdsOrderService service;
 
 	@GetMapping("register")
+	@PreAuthorize("isAuthenticated()")
 	public void searchBuyer(Model model, @RequestParam(required = false) String buyerInfo) {
 		List<BuyerDto> buyers = service.searchBuyer(buyerInfo);
 		List<BuyerDto> buyerNames = service.getBuyerNames();
@@ -76,18 +78,14 @@ public class YdsOrderController {
 	@ResponseBody
 	public List<ProductDto> searchAllProductInfo(@PathVariable String allProductInfo,
 			@PathVariable String tableBuyerCode, @PathVariable String deliveryDate) {
-		System.out.println("controller");
-		return service.searchProduct(allProductInfo, tableBuyerCode,deliveryDate);
+		return service.searchProduct(allProductInfo, tableBuyerCode, deliveryDate);
 
 	}
-
 
 	@GetMapping("modify")
 	public void modifyOrder(@RequestParam int orderId, Model model) {
 		OrderHeaderDto ohd = service.modifyOrderHeader(orderId);
 		List<OrderItemDto> oid = service.modifyOrderItem(orderId);
-		System.out.println("오더 헤더는 " + ohd);
-		System.out.println("오더 아이템은 " + oid);
 		model.addAttribute("orderHeader", ohd);
 		model.addAttribute("orderItems", oid);
 	}
@@ -97,8 +95,8 @@ public class YdsOrderController {
 		if (at != null) {
 			yod.setMemberId(at.getName());
 		}
-			System.out.println("yod = " + yod);
-			service.insertOrder(yod);
+		System.out.println("yod = " + yod);
+		service.insertOrder(yod);
 		return "redirect:/order/list";
 	}
 
@@ -107,28 +105,25 @@ public class YdsOrderController {
 	public List<YdsProductDto> addTempProductOrder(@RequestBody Map<String, Object> data) {
 		return service.addTempProductOrder(data);
 	}
-	
+
 	@PostMapping("modify")
-	public String updateOrder(YdsOrderDto yod,
-			@RequestParam int orderId,
-			RedirectAttributes rttr) {
+	public String updateOrder(YdsOrderDto yod, @RequestParam int orderId, RedirectAttributes rttr) {
 		System.out.println("orderId = " + orderId);
-			System.out.println("yod = " + yod);
-			service.updateOrder(yod,orderId);
+		System.out.println("yod = " + yod);
+		service.updateOrder(yod, orderId);
 		return "redirect:/order/list";
 	}
-	
+
 	@DeleteMapping("deleteOrder")
 	@ResponseBody
 	public Map<String, String> deleteOrder(@RequestBody Map<String, String> data, RedirectAttributes rttr) {
 		System.out.println(data);
 		Map<String, String> map = new HashMap<>();
 		int cnt = service.deleteOrder(data);
-		if(cnt == 1) {
+		if (cnt == 1) {
 			map.put("message", "주문이 삭제되었습니다");
 		}
 		return map;
 	}
-		
-	}
 
+}
