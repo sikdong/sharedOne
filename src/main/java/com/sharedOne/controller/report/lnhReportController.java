@@ -1,6 +1,7 @@
 package com.sharedOne.controller.report;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -206,6 +207,7 @@ public class lnhReportController {
 					endDate);
 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			DecimalFormat DF = new DecimalFormat("###,###");
 
 			for (OrderHeaderDto board1 : list) {
 				// 오더 아이템이 하나만 있는 경우
@@ -214,10 +216,9 @@ public class lnhReportController {
 					row.createCell(0).setCellValue(board1.getOrderCode());
 					row.createCell(1).setCellValue(board1.getBuyerCode());
 					row.createCell(2).setCellValue(board1.getOrderItem().get(0).getProductCode());
-					row.createCell(3).setCellValue(board1.getOrderItem().get(0).getFinalPrice());
+					row.createCell(3).setCellValue(DF.format((Integer)board1.getOrderItem().get(0).getFinalPrice()).toString());
 					row.createCell(4).setCellValue(board1.getOrderItem().get(0).getQuantity());
-					row.createCell(5).setCellValue(board1.getOrderItem().get(0).getSum());
-
+					row.createCell(5).setCellValue(DF.format((Integer)board1.getOrderItem().get(0).getSum()).toString());
 					Date cell6 = java.sql.Date.valueOf(board1.getInserted());
 					String inserted = sdf.format(cell6);
 					row.createCell(6).setCellValue(inserted);
@@ -247,9 +248,9 @@ public class lnhReportController {
 						row.createCell(0).setCellValue(board1.getOrderCode());
 						row.createCell(1).setCellValue(board1.getBuyerCode());
 						row.createCell(2).setCellValue(board2.getProductCode());
-						row.createCell(3).setCellValue(board2.getFinalPrice());
+						row.createCell(3).setCellValue(DF.format((Integer)board2.getFinalPrice()).toString());
 						row.createCell(4).setCellValue(board2.getQuantity());
-						row.createCell(5).setCellValue(board2.getSum());
+						row.createCell(5).setCellValue(DF.format((Integer)board2.getSum()).toString());
 						Date cell6 = java.sql.Date.valueOf(board1.getInserted());
 						String inserted = sdf.format(cell6);
 						row.createCell(6).setCellValue(inserted);
