@@ -88,7 +88,7 @@
 <div class="insert-body mt-5 ">
    <div class="container-md">
    
-      <form id="form" action="" method="post">
+      <form id="form">
          <div class="row">
              <div class="col mt-1">
                 <div class="mb-4">
@@ -158,24 +158,63 @@
                 </div>
             <hr/>        
          </div>
-	     <div class="d-flex">
-	     	 <div class="col-10"></div>
-	         <button id="registerBtn" class="btn primaryBtn" type="submit" > 등록 </button>
-	     </div>
-	     <div class="d-flex">
-	     	<div id="message"></div>
-	     </div>
-      </form>
+     </form>
+     
+     <div class="d-flex">
+     	 <div class="col-10"></div>
+         <button id="registerBtn" class="btn primaryBtn" type="button" > 등록 </button>
+     </div>
+     <div class="d-flex">
+     	<div id="message"></div>
+     </div>
+      
    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
 
+/* 인풋값 입력하면, 부모창에 검색 시키기  */
 $(function(){
-	$('#registerBtn').click(function(){
-		window.opener.location.reload();
+	$('input[name=buyerCode], input[name=productCode]').on('input', function(){
+		const buyerCode = $('input[name=buyerCode]').val();
+		const productCode = $('input[name=productCode]').val();
+		
+		$("#b1", parent.opener.document).val(buyerCode);
+		$("#p1", parent.opener.document).val(productCode);
+		$(opener.document).find("#selectedSearchBtn").click();		
 	})
+})
+/* 저장하기  */
+$(function() {
+		
+    $("#registerBtn").click( function() {			
+		const buyerCode = $('input[name=buyerCode]').val();
+		const productCode = $('input[name=productCode]').val();
+		const price = $('input[name=price]').val();
+		const salePrice = $('input[name=salePrice]').val();
+		const discountRate = $('input[name=discountRate]').val().slice(0, -1);
+		const fromDate = $('input[name=fromDate]').val();
+		const endDate = $('input[name=endDate]').val();
+
+		const data = { buyerCode, productCode, price, salePrice, discountRate, fromDate, endDate };
+		
+		$.ajax({
+    		url : "/master/salePriceRegister",
+    		method : "POST",
+    		data : (data),
+    		dataType : "json",
+    		success : function(){
+    	   		
+    			/* 부모창 */
+    	   		$("#b1", parent.opener.document).val(buyerCode);
+    			$("#p1", parent.opener.document).val(productCode);
+    			$(opener.document).find("#selectedSearchBtn").click();
+    		}
+    	})	
+    	
+    });
+	
 })
 
 /* 자동으로 단가 넣기  */
@@ -209,7 +248,7 @@ $('input[name=salePrice]').keyup(function(){
 	dc = parseFloat(dc).toFixed(0);
 	Math.round(dc);
 	/* console.log(dc); */
-	$('input[name=discountRate]').attr('value', dc);
+	$('input[name=discountRate]').attr('value', dc+"%");
 })
 
 /* trim 해서 자동으로 앞뒤 빈칸제거후 등록하도록.  */
@@ -240,57 +279,63 @@ $(function(){
 						let d1 = $('#d1').val();
 						let d2 = $('#d2').val();
 						if ( (d1 < d2 && d2 < fromDate) || (endDate < d1 && d1 < d2) ) {
-							$('#message').css('color', 'green').text("해당 제품의 판매가 기간을 등록할 수 있습니다.");
+							$('#message').css('color', 'green').text("해당 제품의 판매가를 등록할 수 있습니다.");
+							return true;
 						} else{
 							$('#registerBtn').attr('disabled', true);
 							$('#message').css('color', 'red').text("해당 제품의 판매가 기간이 중복됩니다.");
+							return false;
 						}
 					})
 				})
 			}
-			
 		})
-		
 	});
 	$('input[name=salePrice]').keyup(function(){
 		const salePrice = $.trim( $('input[name=salePrice]').val() );		
 	});
+	
+	
 })
 
 
 /* input 알림창 */
 $(function(){
-	$('#registerBtn').prop('disabled', true);
 	$('#registerBtn').click(function(){
 		if( $('input[name=buyerCode]').val() =='' ){
 			$('#from').submit(function(e){
 				e.preventDefault();
 			})
 			alert("바이어코드를 입력하세요.");
+			return false;
 		}
 		if($('input[name=productCode]').val() =='' ){
 			$('#from').submit(function(e){
 				e.preventDefault();
 			})
 			alert("제품코드를 입력하세요.");
+			return false;
 		}
 		if($('input[name=salePrice]').val() =='' ){
 			$('#from').submit(function(e){
 				e.preventDefault();
 			})
 			alert("판매가를 입력하세요.");
+			return false;
 		}
 		if($('input[name=fromDate]').val() =='' ){
 			$('#from').submit(function(e){
 				e.preventDefault();
 			})
 			alert("판매 시작일을 입력하세요.");
+			return false;
 		}
 		if($('input[name=endDate]').val() =='' ){
 			$('#from').submit(function(e){
 				e.preventDefault();
 			})
 			alert("판매 종료일을 입력하세요.");
+			return false;
 		}
 		
 	})

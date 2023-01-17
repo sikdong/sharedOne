@@ -21,6 +21,8 @@ public interface AsjSalePriceMapper {
 
 	List<SalePriceDto> selectDateListByBuyerCodeAndProductCode(String buyerCode, String productCode);
 
+	List<SalePriceDto> selectSalePriceListAll();
+
 
 
 }

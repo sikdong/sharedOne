@@ -60,4 +60,9 @@ public class AsjSalePriceService {
 		
 	}
 
+	public List<SalePriceDto> selectSalePriceListAll() {
+		
+		return asjSalePriceMapper.selectSalePriceListAll();
+	}
+
 }

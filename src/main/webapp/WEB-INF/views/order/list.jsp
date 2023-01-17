@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 
 
@@ -262,6 +262,7 @@
 								<c:when test="${h.status == '임시저장'}">
 									<form action="${pageContext.request.contextPath }/order/modify">
 										<input type="hidden" name="orderId"  value="${h.orderId }">
+										<input type="hidden" name="id"  value="${h.writer }">
 										<button type="submit" class="btn btn-warning" style="color: white;">
 											${h.status }
 										</button>
@@ -433,6 +434,7 @@ function list(){
 							'<td>'+item.productName+'</td>'+
 							'<td>'+item.price+'</td>'+
 							'<td>'+item.finalPrice+'</td>'+
+							
 							'<td>'+dc+'%</td>'+
 							'<td>'+item.quantity+item.unit+'</td>'+
 							'<td>'+item.sum+'</td>'+
