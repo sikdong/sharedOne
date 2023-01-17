@@ -62,8 +62,9 @@ public class lnhProductController {
 	
 	@GetMapping("productRegister")
 	@PreAuthorize("isAuthenticated()")
-	public void register() {
-		
+	public void register(@RequestParam(name = "productType", defaultValue = "") String productType, Model model) {
+		String lastProductCodeNum = productService.lastProductCodeNum(productType);
+		model.addAttribute("lastProductCodeNum",lastProductCodeNum);
 	}
 	
 	@PostMapping("productRegister")

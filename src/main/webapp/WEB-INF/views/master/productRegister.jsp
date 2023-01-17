@@ -38,7 +38,7 @@
         float: left;
         text-align: left;
     }
-    #productType{
+    #productType, #productWeight{
         -webkit-appearance: button;
     }
     .rowdiv{
@@ -107,7 +107,7 @@
 	                    	<div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputCode" class="col-form-label">제품 코드</label>
 	                            <div class="col-sm-7 inputDiv inputDiv">
-	                                <input id="productCode" name="productCode" type="text" class="form-control" placeholder="제품코드를 입력하세요."/>
+	                                <input id="productCode" name="productCode" type="text" class="form-control" placeholder=""  disabled/>
 	                            </div>
 								<div class="check">
 									<div id="productCodeText1" class="form-text">제품코드 확인을 해주세요.</div>
@@ -116,7 +116,7 @@
 							</div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputName" class="col-form-label">제품명</label>
-	                            <div class="col-sm-7 inputDiv inputDiv"">
+	                            <div class="col-sm-7 inputDiv inputDiv">
 	                                <input id="productName" name="productName"  type="text" class="form-control" placeholder="제품명을 입력하세요."/>
 	                            </div>
 	                            <div class="check">
@@ -125,28 +125,33 @@
 	                            </div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
-	                            <label for="inputProductType" class="col-form-label">제품 종류</label>
-	                            <div class="col-sm-7 inputDiv inputDiv"">
-	                                    <select id="productType" name="productType" class="form-control" style="padding-left: 8px;" >
-	                                      <option selected>제품 종류를 선택 하세요.</option>
-	                                      <option name="GATE 밸브">GATE 밸브</option>
-	                                      <option name="GLOBE 밸브">GLOBE 밸브</option>
-	                                      <option name="LUG 밸브">LUG 밸브</option>
-	                                      <option name="SWING 밸브">SWING 밸브</option>
-	                                      <option name="WAFER 밸브">WAFER 밸브</option>
-	                                    </select>
+	                            <label for="inputName" class="col-form-label">규격</label>
+	                            <div class="col-sm-7 inputDiv">
+	                                <input id="productSize" name="size" type="text" class="form-control" placeholder="규격을 입력하세요."/>
 	                            </div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputName" class="col-form-label">무게</label>
 	                            <div class="col-sm-7 inputDiv">
-	                                <input id="productWeight" name= "weight" type="text" class="form-control" placeholder="무게를 입력하세요."/>
+	                            	<select id="productWeight" name="weight" class="form-control" style="padding-left: 8px;" >
+	                                      <option selected>제품 무게를 선택 하세요.</option>
+	                                      <option name="150" value = "150">150 파운드</option>
+	                                      <option name="300" value = "300">300 파운드</option>
+	                                      <option name="600" value = "600">600 파운드</option>
+	                                </select>
 	                            </div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
-	                            <label for="inputName" class="col-form-label">규격</label>
-	                            <div class="col-sm-7 inputDiv">
-	                                <input id="productSize" name="size" type="text" class="form-control" placeholder="규격을 입력하세요."/>
+	                            <label for="inputProductType" class="col-form-label">제품 종류</label>
+	                            <div class="col-sm-7 inputDiv inputDiv"">
+	                                    <select id="productType" name="productType" class="form-control" style="padding-left: 8px;" >
+	                                      <option selected>제품 종류를 선택 하세요.</option>
+	                                      <option name="GATE 밸브" value = "GA">GATE 밸브</option>
+	                                      <option name="GLOBE 밸브" value = "GL">GLOBE 밸브</option>
+	                                      <option name="SWING 밸브" value = "SW">SWING 밸브</option>
+	                                      <option name="LUG 밸브" value = "LU">LUG 밸브</option>
+	                                      <option name="WAFER 밸브" value = "WA">WAFER 밸브</option>
+	                                    </select>
 	                            </div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
@@ -194,13 +199,59 @@
 </sec:authorize>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <script>
+
+    
+    //제품명 지정
+    var productSize = '';
+    var productWeight = '';
+    var productType = '';
+    
+	var productName =  $("#productName").val(productSize + productWeight + productType);
+	
+     $( "#productSize" ).keyup(function(){
+    	 productSize = $("#productSize").val();
+    	 $("#productName").val(productSize + productWeight + productType);
+     });
+     
+     $( "#productWeight" ).change(function(){
+    	 if($("#productWeight").val() == "150") {
+    		 productWeight = '-150';
+    	 }else if($("#productWeight").val() == "300") {
+    		 productWeight= '-300'; 
+    	 }else if($("#productWeight").val() == "600") {
+    		 productWeight = '-600';
+    	 }
+    	 $("#productName").val(productSize + productWeight + productType);
+     });
+    
+     $( "#productType" ).change(function(){
+    
+    	 if($("#productType").val() == "GA") {
+    		 productType = ' GATE RF';
+    	 }else if($("#productType").val() == "GL") {
+    		 productType = ' GLOBE RF'; 
+    	 }else if($("#productType").val() == "SW") {
+    		 productType = ' SWING RF';
+    	 }else if($("#productType").val() == "LU") {
+    		 productType = ' LUG RF';
+    	 }else if($("#productType").val() == "WA") {
+    		 productType = ' WAFER RF';
+    	 }
+    	 $("#productName").val(productSize + productWeight + productType);
+    });
+     
+     //제품코드 지정 (2자리까지)
+     $( "#productType" ).change(function(){
+             $("#productCode").val( $("#productType").val() +"00" +"${lastProductCodeNum +1 }" );
+         });
+    
+  //등록버튼 누르면 등록 실행 후 창 닫기
     const ctx = "${pageContext.request.contextPath}";
     
     var availableProductCode = false;
     
     var availableProductName = false;
     
-  //등록버튼 누르면 등록 실행 후 창 닫기
     function registerCheck() { 
 	document.registerfrm.submit();
     window.opener.location.reload();

@@ -55,6 +55,11 @@ public class lnhProductService {
 	public ProductDto getByProductName(String productName) {
 		return productMapper.selectProductName(productName);
 	}
+
+	public String lastProductCodeNum(String productType) {
+		productType = "%" + productType + "%";
+		return productMapper.lastProductCodeNum(productType);
+	}
 	
 
 }
