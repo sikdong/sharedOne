@@ -277,7 +277,7 @@
 		<div class="col-sm-10"></div>
 		<!-- 가격 등록 버튼 : 창모드 -->
 		<c:url value="/master/salePriceRegister" var="getLink"></c:url>
-		<button type="button" onclick="window.open('${getLink}','가격등록','width=500,height=500,left=400,top=100,bottom=300,location=no,status=no,scrollbars=yes');" class="btn btn-oneline-primary primaryBtn" >가격등록</button>			
+		<button type="button" onclick="window.open('${getLink}','가격등록','width=500,height=500,left=1500,top=100,bottom=300,location=no,status=no,scrollbars=yes');" class="btn btn-oneline-primary primaryBtn" >가격등록</button>			
 	</div>
 	
 	<div class="scrollBox">	
@@ -346,8 +346,8 @@ function listAll(){
 					'<td>' +item.buyerCode+ '</td>'+
 					'<td>' +item.country+ '</td>'+
 					'<td>' +item.buyerName+ '</td>'+
-					'<td>' +item.price+ '</td>'+
-					'<td>' +item.salePrice+ '</td>'+
+					'<td>' +addComma(String(item.price))+ '</td>'+
+					'<td>' +addComma(String(item.salePrice))+ '</td>'+
 					'<td>' +item.discountRate+'%</td>'+
 					'<td>' +item.fromDate+ '~' +item.endDate+ '</td>'+
 					'<td>' + 
@@ -359,7 +359,8 @@ function listAll(){
 			/* 수정버튼 누를때, 수정창 열기  */
 			$('#modify'+item.priceId).click(function(){
 				/* 자식창 열기 */
-				window.open('${ctx}'+'/master/salePriceModify?priceId='+item.priceId,'가격수정','width=500,height=500,left=400,top=100,bottom=300,location=no,status=no,scrollbars=yes');
+				window.open('${ctx}'+'/master/salePriceModify?priceId='+item.priceId,'가격수정',
+						'width=500,height=500,left=1500,top=100,bottom=300,location=no,status=no,scrollbars=yes');
 			})	
 		})
 	})
@@ -405,8 +406,8 @@ function search(){
 							'<td>' +item.buyerCode+ '</td>'+
 							'<td>' +item.country+ '</td>'+
 							'<td>' +item.buyerName+ '</td>'+
-							'<td>' +item.price+ '</td>'+
-							'<td>' +item.salePrice+ '</td>'+
+							'<td>' +addComma(String(item.price))+ '</td>'+
+							'<td>' +addComma(String(item.salePrice))+ '</td>'+
 							'<td>' +item.discountRate+'%</td>'+
 							'<td>' +item.fromDate+ '~' +item.endDate+ '</td>'+
 							'<td>' + 
@@ -417,9 +418,11 @@ function search(){
 					
 					/* 수정버튼 누를때, 수정창 열기, 백그라운드 주기, 체크하기  */
 					$('#modify'+item.priceId).click(function(){
-						
+						/* 수정창 열기 */
+						window.open('${ctx}'+'/master/salePriceModify?priceId='+item.priceId,'가격수정',
+								'width=500,height=500,left=1500,top=100,bottom=300,location=no,status=no,scrollbars=yes');
+						/* 선택된 자식 수정창의 priceId == 부모 테이블 속 row priceId => addClass 와 checked 하기 . */
 						/* row 백그라운드 ,체크 해제하기, */
-						
 						/* $('tr').removeClass();
 						$('[name=checkbox]').prop('checked', false); 
 						 */
@@ -429,12 +432,7 @@ function search(){
 						$('#checkbox'+item.priceId ).prop('checked', true);
 						$('#tr'+item.priceId ).addClass("selectedRow"); 
 						*/
-						
-						/* 수정창 열기 */
-						window.open('${ctx}'+'/master/salePriceModify?priceId='+item.priceId,'가격수정','width=500,height=500,left=400,top=100,bottom=300,location=no,status=no,scrollbars=yes');
-						/* 선택된 자식 수정창의 priceId == 부모 테이블 속 row priceId => addClass 와 checked 하기 . */
-					})
-						
+					})	
 				})
 			})
 		})
@@ -489,6 +487,18 @@ function checkDate(){
 		}
 	})
 }	
+
+/*천단위 add콤마 펑션*/
+function addComma(value){
+     value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+     return value; 
+}
+/*천단위 remove콤마 펑션*/
+function removeComma(value){
+     value = value.replace(/[^\d]+/g, "");
+     return value; 
+}
+
 
 </script>
 	

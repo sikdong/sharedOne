@@ -122,12 +122,8 @@
 	    <div class="d-flex">
 		    <div class="col-9">
 		    </div>
-	        <button id="modifyBtn" class="btn primaryBtn" > 수정 </button>
-	    
-		    <form action="${pageContext.request.contextPath }/master/salePriceDelete" method="post">
-			    <input type="hidden" name="priceId" value="${sale.priceId }" disabled>
-			    <button id="deleteBtn" class="btn btn-outline-secondary"> 삭제 </button>
-		    </form>  
+	        <button id="modifyBtn" class="btn primaryBtn" type="button" > 수정 </button>
+		    <button id="deleteBtn"class="btn btn-outline-secondary" type="button"> 삭제 </button>   
 		</div>
 		<div class="d-flex">
 			<div id="message"></div>
@@ -239,10 +235,11 @@ $(function() {
 	    		dataType : "json",
 	    		success : function(){
 	    			
+	    			alert("수정 되었습니다.");
 	    			$("#b1", parent.opener.document).val(buyerCode);
 	    			$("#p1", parent.opener.document).val(productCode);
 	    			$(opener.document).find("#selectedSearchBtn").click();	
-	   			
+	    			self.close();
 	    		}
 	    	})    	
 	   	
@@ -252,6 +249,44 @@ $(function() {
     	};	 
     });
 });
+
+/* 가격 삭제 */
+$(function(){
+	$('#deleteBtn').click(function(){
+		const priceId = $('input[name=priceId]').val();
+		const buyerCode = $('input[name=buyerCode]').val();
+		const productCode = $('input[name=productCode]').val();
+		if ( confirm("삭제하시겠습니까?")) {
+			$.ajax({
+				url : "/master/salePriceDelete",
+				method : "POST",
+				data : ({"priceId" : priceId}),
+				dataType : "json",
+				success : function(){
+					
+					alert("삭제 되었습니다.");
+					$("#b1", parent.opener.document).val(buyerCode);
+	    			$("#p1", parent.opener.document).val(productCode);
+	    			$(opener.document).find("#selectedSearchBtn").click();
+	    			self.close();
+				}		
+			})
+		}else{
+			return false;
+		}
+	})
+})
+
+/*천단위 add콤마 펑션*/
+function addComma(value){
+     value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+     return value; 
+}
+/*천단위 remove콤마 펑션*/
+function removeComma(value){
+     value = value.replace(/[^\d]+/g, "");
+     return value; 
+}
 
 	
 	

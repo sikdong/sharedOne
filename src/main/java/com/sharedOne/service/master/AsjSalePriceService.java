@@ -65,4 +65,10 @@ public class AsjSalePriceService {
 		return asjSalePriceMapper.selectSalePriceListAll();
 	}
 
+
+	public int deleteSalePriceInfoByPriceId(int priceId) {
+		return asjSalePriceMapper.deleteSalePriceInfoByPriceId(priceId);
+		
+	}
+
 }

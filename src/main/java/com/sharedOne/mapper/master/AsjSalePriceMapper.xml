@@ -167,4 +167,8 @@
 			priceId = #{priceId}	
 	</update>
  
+ 	<delete id="deleteSalePriceInfoByPriceId">
+ 	DELETE FROM SalePrice
+ 	WHERE priceId = #{priceId }
+ 	</delete>
  </mapper>

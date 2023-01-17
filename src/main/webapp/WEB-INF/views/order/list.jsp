@@ -141,35 +141,19 @@
 				<div class="row d-flex">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >
-							<input name="orderCode" value="${param.orderCode }" type="text" id="" class="form-control" list="datalistOptions1" placeholder="주문코드">
-							<datalist id="datalistOptions1">
-								<c:forEach items="${headerList }" var="h">
-									<option value="${h.orderCode }">
-								</c:forEach>
-							</datalist>
-							
+							<input name="orderCode" value="${param.orderCode }" type="text" id="" class="form-control" placeholder="주문코드">					
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="buyerCode" value="${param.buyerCode }" type="text" id="" class="form-control" list="datalistOptions2" placeholder="바이어코드">
-							<datalist id="datalistOptions2">
-								<c:forEach items="${buyerCodeList }" var="buyerCode">
-									<option value="${buyerCode }">
-								</c:forEach>
-							</datalist>
+							<input name="buyerCode" value="${param.buyerCode }" type="text" id="" class="form-control" placeholder="바이어코드">
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>	
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
 							<input name="writer" value="${param.writer }" type="text" id="" class="form-control" list="datalistOptions3" placeholder="작성자">
-							<datalist id="datalistOptions3">
-								<c:forEach items="${writerList }" var="writer">
-									<option value="${writer }">
-								</c:forEach>
-							</datalist>
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
@@ -469,6 +453,17 @@ function checkDate(){
 			$('input[name=d2]').attr('value', '${addMonth }')
 		}
 	})
+}
+
+/*천단위 add콤마 펑션*/
+function addComma(value){
+     value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+     return value; 
+}
+/*천단위 remove콤마 펑션*/
+function removeComma(value){
+     value = value.replace(/[^\d]+/g, "");
+     return value; 
 }
 
 

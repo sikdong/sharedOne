@@ -205,11 +205,12 @@ $(function() {
     		data : (data),
     		dataType : "json",
     		success : function(){
-    	   		
+    			alert("등록 되었습니다.");
     			/* 부모창 */
     	   		$("#b1", parent.opener.document).val(buyerCode);
     			$("#p1", parent.opener.document).val(productCode);
     			$(opener.document).find("#selectedSearchBtn").click();
+    			self.close();
     		}
     	})	
     	
@@ -340,6 +341,17 @@ $(function(){
 		
 	})
 })
+
+/*천단위 add콤마 펑션*/
+function addComma(value){
+     value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+     return value; 
+}
+/*천단위 remove콤마 펑션*/
+function removeComma(value){
+     value = value.replace(/[^\d]+/g, "");
+     return value; 
+}
 
 
     

@@ -159,15 +159,21 @@ public class AsjSalePriceController {
 	@PostMapping("salePriceModify")
 	@ResponseBody
 	public int salePriceUpdate( @ModelAttribute SalePriceDto saleInfo   ) {
-		System.out.println("# ajax saleInfo : " + saleInfo);
+		//System.out.println("# ajax saleInfo : " + saleInfo);
 
 		int cnt = asjSalePriceService.updateSalePriceByPriceId(saleInfo);
-		System.out.println("### cnt : " + cnt);
+		//System.out.println("### cnt : " + cnt);
 		// @ResponseBody return 아무거나 해둠... ajax success 를 위해서. 
 		return cnt;
-		
 	}
 	
+	@PostMapping("salePriceDelete")
+	@ResponseBody
+	public int delete(int priceId){
+		System.out.println("프라이스 아이디  : "+priceId);
+		int cnt = asjSalePriceService.deleteSalePriceInfoByPriceId(priceId);
+		return cnt; 
+	}
 	
 	
 }

@@ -23,6 +23,8 @@ public interface AsjSalePriceMapper {
 
 	List<SalePriceDto> selectSalePriceListAll();
 
+	int deleteSalePriceInfoByPriceId(int priceId);
+
 
 
 }
