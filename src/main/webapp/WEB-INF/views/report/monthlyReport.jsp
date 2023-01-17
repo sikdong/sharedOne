@@ -4,6 +4,7 @@
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> <%-- 컴마(,) 찍기 위해 --%>
 
 <!DOCTYPE html>
 <html>
@@ -326,9 +327,9 @@ div.right {
 							<td style="width: 150px;">${order.orderCode }</td>
 							<td style="width: 130px;">${order.buyerCode }</td>
 							<td style="width: 100px;">${order.orderItem[0].productCode }</td>
-							<td style="width: 130px;">${order.orderItem[0].finalPrice }</td>
+							<td style="width: 130px;"><fmt:formatNumber value="${order.orderItem[0].finalPrice}" pattern="#,###" /></td>
 							<td style="width: 100px;">${order.orderItem[0].quantity }</td>
-							<td style="width: 150px;">${order.orderItem[0].sum }</td>
+							<td style="width: 150px;"><fmt:formatNumber value="${order.orderItem[0].sum}" pattern="#,####" /></td>
 							<td style="width: 250px;">${order.inserted }</td>
 							<td style="width: 250px;">${order.deliveryDate }</td>
 							<td style="width: 150px;">${order.writer }</td>
@@ -342,9 +343,9 @@ div.right {
 								<td style="width: 150px;">${order.orderCode }</td>
 								<td style="width: 130px;">${order.buyerCode }</td>
 								<td style="width: 100px;">${item.productCode }</td>
-								<td style="width: 130px;">${item.finalPrice }</td>
+								<td style="width: 130px;"><fmt:formatNumber value="${item.finalPrice}" pattern="#,###" /></td>
 								<td style="width: 100px;">${item.quantity }</td>
-								<td style="width: 150px;">${item.sum }</td>
+								<td style="width: 150px;"><fmt:formatNumber value="${item.sum}" pattern="#,###" /></td>
 								<td style="width: 250px;">${order.inserted }</td>
 								<td style="width: 250px;">${order.deliveryDate }</td>
 								<td style="width: 150px;">${order.writer }</td>
@@ -374,10 +375,8 @@ $('#checkedAllDate').click(function(){
 		$('input[name=fromDate]').removeAttr("disabled");
 		$('input[name=endDate]').removeAttr("disabled");
 	}
-
-
+}
 
 </script>
-	
 </body>
 </html>
