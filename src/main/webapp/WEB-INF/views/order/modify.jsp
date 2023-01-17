@@ -140,7 +140,7 @@
 					<hr />
 					<div class="mt-5" id="buyerTable">
 				</div>
-		
+		<input type="hidden" value="${orderHeader.orderId}" id="orderId" />
 		<div style="width : 77vw; display : flex;" class="mt-5">
 			<div class="form-width">
 				<label for="staticEmail" class="col-form-label" style="min-width : 50px; margin-left : 3%">바이어코드</label>
@@ -266,9 +266,9 @@
                         <td><fmt:formatNumber value="${orderItem.price }" type="currency" currencySymbol="￦"/></td>
                         <td style="width : 150px;"><input type="number" name="finalPrice" onclick="makeSumforfinalPrice(event)" onchange="makeSumforfinalPrice(event)" class="form-style" value="${orderItem.finalPrice }" id="finalPrice${status.index }"/></td>
                         <td style="width : 100px;"><input type="number" name="quantity" onclick="makeSumforquantity(event)" onchange=" makeSumforquantity(event)" class="form-style" id="quantity${status.index }" value="${orderItem.quantity }"/></td>
-                        <td style="width : 180px;"><input type="number" value="${orderItem.finalPrice * orderItem.quantity}" id="sum${status.index}"name="sum" class="form-style" /></td>
+                        <td style="width : 180px;"><input type="number" readonly value="${orderItem.finalPrice * orderItem.quantity}" id="sum${status.index}"name="sum" class="form-style" /></td>
                         <td style="display : flex; justify-content : center;">
-                        	<button type="button" onclick="document.querySelector('#table${status.index}').innerHTML ='', assignNumber();" class="btn button btn-sm" style="margin-left : 2px; background : #1d5c83; color : white;">삭제</button>
+                        	<button type="button" data-product-code = "${orderItem.productCode }" onclick="document.querySelector('#table${status.index}').innerHTML ='', assignNumber(), deleteSavedTempOrder(event)" class="btn button btn-sm" style="margin-left : 2px; background : #1d5c83; color : white;">삭제</button>
                         </td>
                       </tr>
                     </c:forEach>
@@ -288,7 +288,19 @@
 				style="background: #1d5c83; color: white;">취소</a>
             	</form>
             </div>
-            <br />
+            
+            <div class="toast-container position-fixed bottom-0 end-0 p-3">
+			  <div id="deleteOrderToast" class="toast" role="alert" style="width : 300px !important;" aria-live="assertive" aria-atomic="true">
+			    <div class="toast-header">
+			      <strong class="me-auto">주문 삭제 여부</strong>
+			      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+			    </div>
+			    <div class="toast-body" id="deleteOrderMessage">
+			    	주문이 삭제되었습니다
+			    </div>
+			  </div>
+			</div>
+	        <br />
             <br />
             <br />
             <br />
@@ -798,9 +810,9 @@
 	          onchange = "makeSumforquantity(event)" 
 	              
               id="quantity\${i}" class="form-style" type="number" name="quantity" value=""></td>
-              <td style="width : 180px;"><input type="number" id="sum\${i}" name="sum" class="form-style" /></td>
+              <td style="width : 180px;"><input type="number" id="sum\${i}" readonly name="sum" class="form-style" /></td>
               <td style="display : flex; justify-content : center;">
-              	<button onclick="document.querySelector('#tr\${i}').innerHTML = '', assignNumber();" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
+              	<button onclick="document.querySelector('#tr\${i}').innerHTML = '', assignNumber(), showToast()" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
               </td>
             </tr>`
           	document.querySelector("#tempOrderTable").insertAdjacentHTML("beforeend", productOrderTable);
@@ -835,6 +847,32 @@
 		}
 	}
 	 assignNumber()
+	 
+	 function deleteSavedTempOrder(event){
+		 const orderId = document.querySelector("#orderId").value;
+		 const productCode = event.target.dataset.productCode;
+		 const data = {
+				 'orderId' : orderId,
+				 'productCode' : productCode
+		 }
+		 fetch(path+"/order/deleteOrder",{
+			 method : "DELETE", 
+			 headers : {
+				"Content-Type" : "application/json"
+				},
+			body : JSON.stringify(data)
+		 })
+		 .then(res => res.json())
+		 .then(data => {
+			 showToast();
+		 })
+	 }
+	 
+	 function showToast(){
+		 const deleteOrderToast = document.querySelector("#deleteOrderToast");
+		 const deleteToast = new bootstrap.Toast(deleteOrderToast);
+		 deleteToast.show();
+	 }
 	</script>
 </body>
 </html>

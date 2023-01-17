@@ -48,4 +48,8 @@ public interface YdsOrderMapper {
 
 	void updateOrderItem(@Param("oid") OrderItemDto oid, @Param("orderId") int orderId);
 
+	int deleteOrderItem(String productCode, String orderId);
+
+	List<String> selectProductCodes(int orderId);
+
 }

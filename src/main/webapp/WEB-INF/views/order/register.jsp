@@ -172,6 +172,7 @@
 									class="form-control">
 							</div>
 						</div>
+						<div style="color : red">* 필수 입력 항목입니다</div>
 					</div>
 				</div>
 				<!-- 우측 검색 조건 div 끝 -->
@@ -324,6 +325,18 @@
 	    </div>
 	  </div>
 	</div>
+	
+	<div class="toast-container position-fixed bottom-0 end-0 p-3">
+	  <div id="deleteOrderToast" class="toast" role="alert" style="width : 300px !important;" aria-live="assertive" aria-atomic="true">
+	    <div class="toast-header">
+	      <strong class="me-auto">주문 삭제 여부</strong>
+	      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+	    </div>
+	    <div class="toast-body" id="deleteOrderMessage">
+	    	주문이 삭제되었습니다
+	    </div>
+	  </div>
+	</div>
 
 	<br />
 	<br />
@@ -339,6 +352,12 @@
 	
 	
 	const path = "${pageContext.request.contextPath}"
+	
+	 function showToast(){
+		 const deleteOrderToast = document.querySelector("#deleteOrderToast");
+		 const deleteToast = new bootstrap.Toast(deleteOrderToast);
+		 deleteToast.show();
+	 }
 	
 	<%-- 전체 검색 --%>
 	document.querySelector("#allBuyerInfoBtn").addEventListener("click", function(){
@@ -820,9 +839,9 @@
 	          onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
 	              
               id="quantity\${i}" class="form-style" type="number" name="quantity" value=""></td>
-              <td><input type="number" id="sum\${i}" name="sum" class="form-style" /></td>
+              <td><input readonly type="number" id="sum\${i}" name="sum" class="form-style" /></td>
               <td style="display : flex; justify-content : center;">
-                  <button onclick="document.querySelector('#tr\${i}').innerHTML = '', assignNumber();" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
+                  <button onclick="document.querySelector('#tr\${i}').innerHTML = '', assignNumber(), showToast();" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
               </td>
             </tr>`
           	document.querySelector("#tempOrderTable").insertAdjacentHTML("beforeend", productOrderTable);
