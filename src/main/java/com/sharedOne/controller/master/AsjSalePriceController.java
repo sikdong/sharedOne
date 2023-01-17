@@ -36,6 +36,16 @@ public class AsjSalePriceController {
 	@Autowired
 	private lnhBuyerService buyerService;
 	
+	/* 목록 리셋  */
+	@GetMapping("salePriceListAjaxList")
+	@ResponseBody
+	public List<SalePriceDto> salePriceRegisterAjaxList() {
+		/* ajax SalePrice 의 처음 또는 리셋 리스트 */
+		List<SalePriceDto> salePriceListAll = asjSalePriceService.selectSalePriceListAll();
+		//System.out.println("salePriceListAll : "+salePriceListAll);	
+		return salePriceListAll;
+	}
+	
 	@GetMapping("salePriceListAjax")
 	@ResponseBody
 	public List <SalePriceDto> salePriceListAjax(
@@ -80,7 +90,6 @@ public class AsjSalePriceController {
 		
 	}
 	
-	
 	@GetMapping("getPrice")
 	@ResponseBody
 	public int selectPriceByProductCode(String productCode) {
@@ -98,31 +107,42 @@ public class AsjSalePriceController {
 		model.addAttribute("productList", productList);
 			
 	}
+	
+	
+	@PostMapping("salePriceRegister")
+	@ResponseBody
+	public List<SalePriceDto> register(  @ModelAttribute SalePriceDto saleInfo ) {
+		//System.out.println("########"+saleInfo	);
+		String buyerCode = saleInfo.getBuyerCode();
+		String productCode = saleInfo.getProductCode();
+		int cnt = asjSalePriceService.register(saleInfo);
+		System.out.println(cnt);
+		System.out.println("제너레이터 KEY : "+saleInfo.getPriceId());
+		
+		List<SalePriceDto> dateListByBuyerCodeAndProductCode = asjSalePriceService.selectDateListByBuyerCodeAndProductCode(buyerCode, productCode);
+		System.out.println("등록후 리스트 가져와 ! : "+dateListByBuyerCodeAndProductCode);
+		return dateListByBuyerCodeAndProductCode;
+		
+	}
+	
 	@GetMapping("salePriceRegisterAjax")
 	@ResponseBody
 	public List<SalePriceDto> salePriceRegisterAjax( SalePriceDto saleInfo) {
 		/* ajax SalePrice 의 productCode 중복확인 */
 		String buyerCode = saleInfo.getBuyerCode();
 		String productCode = saleInfo.getProductCode();
-		
+		System.out.println("!!"+buyerCode + productCode );
 		List<SalePriceDto> dateListByBuyerCodeAndProductCode = asjSalePriceService.selectDateListByBuyerCodeAndProductCode(buyerCode, productCode);
 		System.out.println("바이어의 제품들..의 날짜를 구해야해 !! : "+dateListByBuyerCodeAndProductCode);	
 		return dateListByBuyerCodeAndProductCode;
 	}
-	
-	@PostMapping("salePriceRegister")
-	public void register( SalePriceDto sale ) {
-		//System.out.println(sale);
-		int cnt = asjSalePriceService.register(sale);
-		System.out.println(cnt);
-	}
-	
 	
 	@GetMapping("salePriceModify")
 	public void salePriceGet(Model model, int priceId) {
 		SalePriceDto sale = asjSalePriceService.selectSaleByPriceId(priceId);
 		model.addAttribute("sale", sale);	
 	}
+	
 	@GetMapping("salePriceModifyAjax")
 	@ResponseBody
 	public List<SalePriceDto> salePriceModifyAjax( SalePriceDto saleInfo) {
@@ -137,14 +157,23 @@ public class AsjSalePriceController {
 	}
 	
 	@PostMapping("salePriceModify")
-	public void salePriceUpdate( @ModelAttribute SalePriceDto saleInfo   ) {
-		System.out.println("# ajax saleInfo : " + saleInfo);
+	@ResponseBody
+	public int salePriceUpdate( @ModelAttribute SalePriceDto saleInfo   ) {
+		//System.out.println("# ajax saleInfo : " + saleInfo);
 
 		int cnt = asjSalePriceService.updateSalePriceByPriceId(saleInfo);
-		System.out.println("### cnt : " + cnt);
-		
+		//System.out.println("### cnt : " + cnt);
+		// @ResponseBody return 아무거나 해둠... ajax success 를 위해서. 
+		return cnt;
 	}
 	
+	@PostMapping("salePriceDelete")
+	@ResponseBody
+	public int delete(int priceId){
+		System.out.println("프라이스 아이디  : "+priceId);
+		int cnt = asjSalePriceService.deleteSalePriceInfoByPriceId(priceId);
+		return cnt; 
+	}
 	
 	
 }

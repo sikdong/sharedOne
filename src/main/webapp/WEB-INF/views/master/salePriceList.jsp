@@ -150,11 +150,11 @@
 				<p class="filterText ">전체 검색</p>
 			</div>
 			<div class="mb-5">
-				<p class="filterText ">제품 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
+				<p class="filterText ">조건 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
 			</div>
-			<div class="mb-5">
-				<p class="filterText ">바이어 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... ) -->
-			</div>
+			<!-- <div class="mb-5">
+				<p class="filterText ">바이어 선택</p>( 각자 페이지에 따라 조건을 수정하세요! ex.바이어코드 / 바이어명 등등... )
+			</div> -->
 			<div class="mb-5">
 				<p class="filterText ">판매가 선택</p><!-- ( 각자 페이지에 따라 조건을 수정하세요! ex. 주문일 / 납기일 등등... ) -->
 			</div>
@@ -179,63 +179,41 @@
 				<div class="row d-flex mb-1">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >			
-							<input name="productCode" value="${param.productCode }" type="text" id="" class="form-control" list="datalistOptions1" placeholder="제품코드">
-							<datalist id="datalistOptions1">
-								<c:forEach items="${productList }" var="product">
-									<option value="${product.productCode }">${product.productCode }</option>
-								</c:forEach>
-							</datalist>
-									
+							<input name="productCode" value="${param.productCode }" type="text" id="p1" class="form-control" placeholder="제품코드">	
 							<button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-
-							<input name="productName" value="${param.productName }" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품명">
-							<datalist id="datalistOptions2">
-								<c:forEach items="${productList }" var="product">
-									<option value="${product.productName }">${product.productName }</option>
-								</c:forEach>
-							</datalist>
-
+							<input name="buyerCode" value="${param.buyerCode }" type="text" id="b1" class="form-control" placeholder="바이어코드">	
 							<button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
-						</div>	
+						</div>
 					</div>			
 				</div><!-- 2nd row 끝 -->
 				<!-- 검색필터 3rd row : 조건 검색 ( 각자 페이지의 따라 변경  ) -->
 				<div class="row d-flex mb-1">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group">
-							<input name="buyerCode" value="${param.buyerCode }" type="text" id="" class="form-control" list="datalistOptions3" placeholder="바이어코드">
-							<datalist id="datalistOptions3">
-								<c:forEach items="${buyerList }" var="buyer">
-									<option value="${buyer.buyerCode }">${buyer.buyerCode }</option>
-								</c:forEach>
-							</datalist>
+							<input name="productName" value="${param.productName }" type="hidden" id="" class="form-control" placeholder="제품명">	
+							<%-- 
 							<button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+							--%>
+						</div>	
+					</div>
+					<div class="col-sm-3">
+						<div class="input-group">
+							<input name="buyerName" value="${param.buyerName }" type="hidden" id="" class="form-control" placeholder="바이어명">
+							<%-- 
+							<button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+							--%>							
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="buyerName" value="${param.buyerName }" type="text" id="" class="form-control" list="datalistOptions4" placeholder="바이어명">
-							<datalist id="datalistOptions4">
-								<c:forEach items="${buyerList }" var="buyer">
-									<option value="${buyer.buyerName }">${buyer.buyerName }</option>
-								</c:forEach>
-							</datalist>
+							<input name="country" value="${param.country }" type="hidden" id="" class="form-control" placeholder="국가">					
+							<%--
 							<button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
-						</div>
-					</div>
-					<div class="col-sm-3">
-						<div class="input-group">
-							<input name="country" value="${param.country }" type="text" id="" class="form-control" list="datalistOptions5" placeholder="국가">
-							<datalist id="datalistOptions5">
-								<c:forEach items="${countryList }" var="country">
-									<option value="${country }">${country }</option>
-								</c:forEach>
-							</datalist>
-							<button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+							--%>
 						</div>
 					</div>
 				</div><!-- 3rd row 끝 -->
@@ -244,7 +222,7 @@
 					<div class="col-sm-9">				
 						<div class="slider">
 							<div class="progress">
-							
+							 <%-- 슬라이드 ui 만든 DIV.  --%>
 							</div>
 						</div>
 						<div class="range-input">
@@ -297,10 +275,9 @@
 	<div class="d-flex">	
 		<h4>가격 상세</h4>	
 		<div class="col-sm-10"></div>
+		<!-- 가격 등록 버튼 : 창모드 -->
 		<c:url value="/master/salePriceRegister" var="getLink"></c:url>
-		
-		<button type="button" onclick="window.open('${getLink}','가격등록','width=500,height=500,left=400,top=100,bottom=300,location=no,status=no,scrollbars=yes');" class="btn btn-oneline-primary primaryBtn" >가격등록</button>
-				
+		<button type="button" onclick="window.open('${getLink}','가격등록','width=500,height=500,left=1500,top=100,bottom=300,location=no,status=no,scrollbars=yes');" class="btn btn-oneline-primary primaryBtn" >가격등록</button>			
 	</div>
 	
 	<div class="scrollBox">	
@@ -337,77 +314,129 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
 const ctx = "${pageContext.request.contextPath}";
+
+if ($('#tbody').val() == '') {
+	listAll();	
+}
 search();
 checkDate();
-/* checkBox(); */
+
+/* 기본 전체 리스트 */
+function listAll(){
+	/* const priceId = $('input[name=priceId]').val(); */
+	$.ajax({
+		url : "/master/salePriceListAjaxList",
+		method : "GET",
+		/* data : ("priceId" : priceId), */
+		dataType : "json"
+	})
+	.done(function(list){
+		$('#tbody').empty();
+		
+		$.each(list, function(idx, item){
+			console.log(item);
+			let number = idx + 1;
+			
+			$('#tbody').append(
+				'<tr id="tr' +item.priceId+ '" class="listHover">' +
+					'<td><input type="checkbox" name="checkbox" id="checkbox' +item.priceId+ '"></td>'+
+					'<td>' +number+ '</td>'+
+					'<td>' +item.productCode+ '</td>'+
+					'<td>' +item.productName+ '</td>'+
+					'<td>' +item.buyerCode+ '</td>'+
+					'<td>' +item.country+ '</td>'+
+					'<td>' +item.buyerName+ '</td>'+
+					'<td>' +addComma(String(item.price))+ '</td>'+
+					'<td>' +addComma(String(item.salePrice))+ '</td>'+
+					'<td>' +item.discountRate+'%</td>'+
+					'<td>' +item.fromDate+ '~' +item.endDate+ '</td>'+
+					'<td>' + 
+						'<button id="modify' + item.priceId+ '" type="button" class="btn btn-outline-secondary" >수정</button>'+
+					'</td>'+	
+				'</tr>'
+			);
+			
+			/* 수정버튼 누를때, 수정창 열기  */
+			$('#modify'+item.priceId).click(function(){
+				/* 자식창 열기 */
+				window.open('${ctx}'+'/master/salePriceModify?priceId='+item.priceId,'가격수정',
+						'width=500,height=500,left=1500,top=100,bottom=300,location=no,status=no,scrollbars=yes');
+			})	
+		})
+	})
+} 
+
 
 /* 검색 => ajax 테이블 조회 */
-  
 function search(){
-	
-	$('input, #selectedSearchBtn').on('keyup click input' ,function(){
-		/* q, productCode, productName, buyerCode, buyerName, country, priceMin, priceMax */
-		const q = $('input[name=q]').val();
-		const productCode = $('input[name=productCode]').val();
-		const productName = $('input[name=productName]').val();
-		const buyerCode = $('input[name=buyerCode]').val();
-		const buyerName = $('input[name=buyerName]').val();
-		const country = $('input[name=country]').val();
-		const priceMin = $('input[name=priceMin]').val();
-		const priceMax = $('input[name=priceMax]').val();
-		const fromDate = $('input[name=d1]').val();
-		const endDate = $('input[name=d2]').val();
-		
-		const data = {q, productCode, productName, buyerCode, buyerName, country, priceMin, priceMax, fromDate, endDate };
-		$.ajax({
-			url : "/master/salePriceListAjax",
-			method : "GET",
-			data : (data),
-			dataType : "json"
-		})
-		.done(function(list){
-			$('#tbody').empty();
+	$(function(){
+		$('input, #selectedSearchBtn').on('keyup click input' ,function(){
+			/* q, productCode, productName, buyerCode, buyerName, country, priceMin, priceMax */
+			const q = $('input[name=q]').val();
+			const productCode = $('input[name=productCode]').val();
+			const productName = $('input[name=productName]').val();
+			const buyerCode = $('input[name=buyerCode]').val();
+			const buyerName = $('input[name=buyerName]').val();
+			const country = $('input[name=country]').val();
+			const priceMin = $('input[name=priceMin]').val();
+			const priceMax = $('input[name=priceMax]').val();
+			const fromDate = $('input[name=d1]').val();
+			const endDate = $('input[name=d2]').val();
 			
-			$.each(list, function(idx, item){
-				console.log(item);
-				let number = idx + 1;
+			const data = {q, productCode, productName, buyerCode, buyerName, country, priceMin, priceMax, fromDate, endDate };
+			$.ajax({
+				url : "/master/salePriceListAjax",
+				method : "GET",
+				data : (data),
+				dataType : "json"
+			})
+			.done(function(list){
+				$('#tbody').empty();
 				
-				$('#tbody').append(
-					'<tr id="tr' +item.priceId+ '" class="listHover">' +
-						'<td><input type="checkbox" name="checkbox" id="checkbox' +item.priceId+ '"></td>'+
-						'<td>' +number+ '</td>'+
-						'<td>' +item.productCode+ '</td>'+
-						'<td>' +item.productName+ '</td>'+
-						'<td>' +item.buyerCode+ '</td>'+
-						'<td>' +item.country+ '</td>'+
-						'<td>' +item.buyerName+ '</td>'+
-						'<td>' +item.price+ '</td>'+
-						'<td>' +item.salePrice+ '</td>'+
-						'<td>' +item.discountRate+'%</td>'+
-						'<td>' +item.fromDate+ '~' +item.endDate+ '</td>'+
-						'<td>' + 
-							'<button id="modify' + item.priceId+ '" type="button" class="btn btn-outline-secondary" >수정</button>'+
-						'</td>'+	
-					'</tr>'
-				);
-				
-				/* 수정버튼 누를때, 수정창 열기, 백그라운드 주기, 체크하기  */
-				$('#modify'+item.priceId).click(function(){
-					/* row 백그라운드 ,체크 해제하기, */
-					$('tr').removeClass();
-					$('[name=checkbox]').prop('checked', false);
+				$.each(list, function(idx, item){
+					console.log(item);
+					let number = idx + 1;
 					
-					/* row 백그라운드 ,체크하기, */
-					$('#checkbox'+item.priceId ).prop('checked', true);
-					$('#tr'+item.priceId ).addClass("selectedRow");
+					$('#tbody').append(
+						'<tr id="tr' +item.priceId+ '" class="listHover">' +
+							'<td><input type="checkbox" name="checkbox" id="checkbox' +item.priceId+ '"></td>'+
+							'<td>' +number+ '</td>'+
+							'<td>' +item.productCode+ '</td>'+
+							'<td>' +item.productName+ '</td>'+
+							'<td>' +item.buyerCode+ '</td>'+
+							'<td>' +item.country+ '</td>'+
+							'<td>' +item.buyerName+ '</td>'+
+							'<td>' +addComma(String(item.price))+ '</td>'+
+							'<td>' +addComma(String(item.salePrice))+ '</td>'+
+							'<td>' +item.discountRate+'%</td>'+
+							'<td>' +item.fromDate+ '~' +item.endDate+ '</td>'+
+							'<td>' + 
+								'<button id="modify' + item.priceId+ '" type="button" class="btn btn-outline-secondary" >수정</button>'+
+							'</td>'+	
+						'</tr>'
+					);
 					
-					/* 수정창 열기 */
-					window.open('${ctx}'+'/master/salePriceModify?priceId='+item.priceId,'가격수정','width=500,height=500,left=400,top=100,bottom=300,location=no,status=no,scrollbars=yes');
+					/* 수정버튼 누를때, 수정창 열기, 백그라운드 주기, 체크하기  */
+					$('#modify'+item.priceId).click(function(){
+						/* 수정창 열기 */
+						window.open('${ctx}'+'/master/salePriceModify?priceId='+item.priceId,'가격수정',
+								'width=500,height=500,left=1500,top=100,bottom=300,location=no,status=no,scrollbars=yes');
+						/* 선택된 자식 수정창의 priceId == 부모 테이블 속 row priceId => addClass 와 checked 하기 . */
+						/* row 백그라운드 ,체크 해제하기, */
+						/* $('tr').removeClass();
+						$('[name=checkbox]').prop('checked', false); 
+						 */
+						
+						/* row 백그라운드 ,체크하기, */
+						/*
+						$('#checkbox'+item.priceId ).prop('checked', true);
+						$('#tr'+item.priceId ).addClass("selectedRow"); 
+						*/
+					})	
 				})
-					
 			})
 		})
-	});
+	})
 } 
 
 /* 필터 가격 슬라이더 */
@@ -458,6 +487,18 @@ function checkDate(){
 		}
 	})
 }	
+
+/*천단위 add콤마 펑션*/
+function addComma(value){
+     value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+     return value; 
+}
+/*천단위 remove콤마 펑션*/
+function removeComma(value){
+     value = value.replace(/[^\d]+/g, "");
+     return value; 
+}
+
 
 </script>
 	

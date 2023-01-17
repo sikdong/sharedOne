@@ -54,6 +54,9 @@
  		background-color: #1d5c83 !important;
  		color: white !important;
  	}
+ 	.selectedRow{
+		background-color: #D3D3D3;
+	}
 </style>
 <body>   
   <div class="insert-body mt-5 ">
@@ -96,7 +99,7 @@
                       <div class="mb-2 row mt-2 rowdiv">
                           <label for="" class="col-3 col-form-label">할인율</label>
                           <div class="col-sm-5">
-                              <input name="discountRate" value="${sale.discountRate }" class="form-control" placeholder="%" readonly/>
+                              <input name="discountRate" value="${sale.discountRate }%" class="form-control" placeholder="%" readonly/>
                           </div>
                       </div>
                       <div class="mb-2 row mt-2 rowdiv">
@@ -119,12 +122,8 @@
 	    <div class="d-flex">
 		    <div class="col-9">
 		    </div>
-	        <button id="modifyBtn" class="btn primaryBtn" disabled> 수정 </button>
-	    
-		    <form action="${pageContext.request.contextPath }/master/salePriceDelete" method="post">
-			    <input type="hidden" name="priceId" value="${sale.priceId }" disabled>
-			    <button id="deleteBtn" class="btn btn-outline-secondary"> 삭제 </button>
-		    </form>  
+	        <button id="modifyBtn" class="btn primaryBtn" type="button" > 수정 </button>
+		    <button id="deleteBtn"class="btn btn-outline-secondary" type="button"> 삭제 </button>   
 		</div>
 		<div class="d-flex">
 			<div id="message"></div>
@@ -138,6 +137,18 @@ const ctx = "${pageComtext.request.contextPath}";
 
 dateCheck();
 
+
+/* 저장된 인풋값을 => 부모창에 검색 시키기  */
+ $(function(){
+	const buyerCode = $('input[name=buyerCode]').val();
+	const productCode = $('input[name=productCode]').val();
+	
+	$("#b1", parent.opener.document).val(buyerCode);
+	$("#p1", parent.opener.document).val(productCode);
+	$(opener.document).find("#selectedSearchBtn").click();		
+	
+})
+
 /* 자동으로 할인율 넣기  */
 $('input[name=salePrice]').keyup(function(){
 	let sp = $('input[name=salePrice]').val();
@@ -150,11 +161,10 @@ $('input[name=salePrice]').keyup(function(){
 	dc = parseFloat(dc).toFixed(0);
 	dc = Math.round(dc);
 	/* console.log(dc); */
-	$('input[name=discountRate]').attr('value', dc);
+	$('input[name=discountRate]').attr('value', dc+"%");
 })
 
 /* 판매가 기간 중복체크 */
- 
 function dateCheck(){
 	$('input[type=date]').on('input', function(){
 		const productCode = $('input[name=productCode]').val();
@@ -175,71 +185,108 @@ function dateCheck(){
 					let fromDate = item.fromDate;
 					let endDate = item.endDate;			
 					
-						$('#modifyBtn').attr('disabled', false);
-						let d1 = $('#d1').val();
-						let d2 = $('#d2').val();
-						if ( (d1 < d2 && d2 < fromDate) || (endDate < d1 && d1 < d2) /*  || (fromDate < d1 && d2 < endDate) */ ) {
-							$('#message').css('color', 'green').text("수정 가능합니다.");
-						} else{
-							$('#modifyBtn').attr('disabled', true);
-							$('#message').css('color', 'red').text("해당 제품의 판매가 기간이 중복됩니다.");
-						}
-					
+					$('#modifyBtn').attr('disabled', false);
+					let d1 = $('#d1').val();
+					let d2 = $('#d2').val();
+					if ( (d1 < d2 && d2 < fromDate) || (endDate < d1 && d1 < d2) /*  || (fromDate < d1 && d2 < endDate) */ ) {
+						$('#message').css('color', 'green').text("수정 가능합니다.");
+					} else{
+						$('#modifyBtn').attr('disabled', true);
+						$('#message').css('color', 'red').text("해당 제품의 판매가 기간이 중복됩니다.");
+					}		
 				})
-			}
-			
-		})
-		
+			}	
+		})	
 	});
 } 
-/* 수정 알람 -> 수정하기 */
-$(function() {
-	
-	if( $('input').val() != ''){
-		$('#modifyBtn').removeAttr("disabled");	
-		
-	    $("#modifyBtn").click( function() {	
-	    	if( $('input[name=salePrice]').val() == ''){
-				alert("판매가를 입력하세요.");
-				return false;
-			}
-	    	if( $('input[name=d1]').val() == ''){
-				alert("판매가 시작일을 입력하세요.");
-				return false;
-			}
-	    	if( $('input[name=d2]').val() == ''){
-				alert("판매가 종료일을 입력하세요.");
-				return false;
-			}
 
-	    	if(confirm("수정하시겠습니까?")){
-	    		const priceId = $('input[name=priceId]').val();
-				const productCode = $('input[name=productCode]').val();
-				const buyerCode = $('input[name=buyerCode]').val();
-				const salePrice = $('input[name=salePrice]').val();
-				const discountRate = $('input[name=discountRate]').val();
-				const fromDate = $('input[name=fromDate]').val();
-				const endDate = $('input[name=endDate]').val();
+/* 수정 confirm  -> 수정하기 */
+$(function() {
+    $("#modifyBtn").click( function() {	
+    	/* 인풋 빈칸 알림창 */
+    	if( $('input[name=salePrice]').val() == ''){
+    		alert("판매가를 입력하세요.");
+    		return false;
+    	}
+   	  	if( $('input[name=d1]').val() == ''){
+    		alert("판매가 시작일을 입력하세요.");
+    		return false;
+    	}
+   	  	if( $('input[name=d2]').val() == ''){
+    		alert("판매가 종료일을 입력하세요.");
+    		return false;
+    	} 
+    	if( confirm("수정하시겠습니까?") ){ 
+    		
+	   		const priceId = $('input[name=priceId]').val();
+			const productCode = $('input[name=productCode]').val();
+			const buyerCode = $('input[name=buyerCode]').val();
+			const salePrice = $('input[name=salePrice]').val();
+			const discountRate = $('input[name=discountRate]').val().slice(0, -1);
+			const fromDate = $('input[name=fromDate]').val();
+			const endDate = $('input[name=endDate]').val();
 	
-				const data = { priceId, productCode, buyerCode, salePrice, discountRate, fromDate, endDate };
+			const data = { priceId, productCode, buyerCode, salePrice, discountRate, fromDate, endDate };
 				
-		    	$.ajax({
-		    		url : "/master/salePriceModify",
-		    		method : "POST",
-		    		data : (data),
-		    		dataType : "json"		    	
-		    	})
-		    	window.opener.location.reload();
-		    	window.close();
-		    	
-		    	
-	    	}else{
-	    		return false;
-	    	}	 
-	    });
-	}
+	    	$.ajax({
+	    		url : "/master/salePriceModify",
+	    		method : "POST",
+	    		data : (data),
+	    		dataType : "json",
+	    		success : function(){
+	    			
+	    			alert("수정 되었습니다.");
+	    			$("#b1", parent.opener.document).val(buyerCode);
+	    			$("#p1", parent.opener.document).val(productCode);
+	    			$(opener.document).find("#selectedSearchBtn").click();	
+	    			self.close();
+	    		}
+	    	})    	
+	   	
+    	}else{
+    		alert("가격이 수정되지 않았습니다. ");
+    		return false;
+    	};	 
+    });
+});
+
+/* 가격 삭제 */
+$(function(){
+	$('#deleteBtn').click(function(){
+		const priceId = $('input[name=priceId]').val();
+		const buyerCode = $('input[name=buyerCode]').val();
+		const productCode = $('input[name=productCode]').val();
+		if ( confirm("삭제하시겠습니까?")) {
+			$.ajax({
+				url : "/master/salePriceDelete",
+				method : "POST",
+				data : ({"priceId" : priceId}),
+				dataType : "json",
+				success : function(){
+					
+					alert("삭제 되었습니다.");
+					$("#b1", parent.opener.document).val(buyerCode);
+	    			$("#p1", parent.opener.document).val(productCode);
+	    			$(opener.document).find("#selectedSearchBtn").click();
+	    			self.close();
+				}		
+			})
+		}else{
+			return false;
+		}
+	})
 })
 
+/*천단위 add콤마 펑션*/
+function addComma(value){
+     value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+     return value; 
+}
+/*천단위 remove콤마 펑션*/
+function removeComma(value){
+     value = value.replace(/[^\d]+/g, "");
+     return value; 
+}
 
 	
 	
