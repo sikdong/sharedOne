@@ -17,4 +17,5 @@ public class YdsOrderDto {
 	private String status;
 	private String inserted;
 	private String modified;
+	private String memberId;
 }

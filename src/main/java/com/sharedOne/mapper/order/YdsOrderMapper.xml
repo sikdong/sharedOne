@@ -89,9 +89,10 @@
 		buyerCode,
 		status,
 		message,
+		memberId,
 		writer
 	)
-	VALUES(#{deliveryDate}, #{buyerCode}, #{status} , #{message}, #{writer})
+	VALUES(#{deliveryDate}, #{buyerCode}, #{status} , #{message}, #{memberId}, (SELECT name FROM Member where id = #{memberId}))
 	
 	</insert>
 	
