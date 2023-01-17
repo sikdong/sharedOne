@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -262,7 +263,7 @@
                         <td>${orderItem.productName }</td>
                         <td>${orderItem.size }</td>
                         <td>${orderItem.unit }</td>
-                        <td>${orderItem.price }</td>
+                        <td><fmt:formatNumber value="${orderItem.price }" type="currency" currencySymbol="￦"/></td>
                         <td style="width : 150px;"><input type="number" name="finalPrice" onclick="makeSumforfinalPrice(event)" onchange="makeSumforfinalPrice(event)" class="form-style" value="${orderItem.finalPrice }" id="finalPrice${status.index }"/></td>
                         <td style="width : 100px;"><input type="number" name="quantity" onclick="makeSumforquantity(event)" onchange=" makeSumforquantity(event)" class="form-style" id="quantity${status.index }" value="${orderItem.quantity }"/></td>
                         <td style="width : 180px;"><input type="number" value="${orderItem.finalPrice * orderItem.quantity}" id="sum${status.index}"name="sum" class="form-style" /></td>

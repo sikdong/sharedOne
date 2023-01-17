@@ -93,7 +93,7 @@ public class YdsOrderController {
 	@PostMapping("register")
 	public String insertOrder(YdsOrderDto yod, Authentication at, RedirectAttributes rttr) {
 		if (at != null) {
-			yod.setWriter(at.getName());
+			yod.setMemberId(at.getName());
 		}
 			System.out.println("yod = " + yod);
 			service.insertOrder(yod);
