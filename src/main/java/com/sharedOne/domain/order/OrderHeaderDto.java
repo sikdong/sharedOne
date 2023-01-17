@@ -24,6 +24,7 @@ public class OrderHeaderDto {
 	private String comment;
 	private List <BuyerDto> buyer;
 	private String buyerName;
+	private String memberId;
 	
 	private List <OrderItemDto> orderItem;
 	

@@ -140,7 +140,8 @@
 		b.buyerCode,
 		oh.deliveryDate,
 		oh.modified,
-		oh.message
+		oh.message,
+		oh.orderId
 	FROM Order_header oh
 	LEFT JOIN Buyer b ON b.buyerCode = oh.buyerCode
 	WHERE orderId = #{orderId}
@@ -170,8 +171,7 @@
 		deliveryDate = #{ohd.deliveryDate},
 		buyerCode = #{ohd.buyerCode},
 		status = #{ohd.status},
-		message = #{ohd.message},
-		modified = #{ohd.modified}
+		message = #{ohd.message}
 	WHERE orderId = #{orderId}
 	
 	</update>
@@ -180,11 +180,24 @@
 	
 	UPDATE Order_item
 	SET
-		productCode = #{oid.productCode},
-		quantity = #{oid.quantity}
+		quantity = #{oid.quantity},
 		finalPrice = #{oid.finalPrice},
 		sum = #{oid.sum}
 	WHERE orderId = #{orderId} AND productCode = #{oid.productCode}
 	</update>
+	
+	<delete id="deleteOrderItem">
+	DELETE FROM Order_item
+	WHERE productCode = #{productCode} AND orderId= #{orderId}
+	
+	</delete>
+	
+	<select id="selectProductCodes" resultType="String">
+	SELECT
+		productCode
+	FROM Order_item
+	WHERE orderId=#{orderId}
+	</select>
+	
 
 </mapper>

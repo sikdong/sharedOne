@@ -1,6 +1,7 @@
 package com.sharedOne.controller.order;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -109,14 +111,24 @@ public class YdsOrderController {
 	@PostMapping("modify")
 	public String updateOrder(YdsOrderDto yod,
 			@RequestParam int orderId,
-			Authentication at, RedirectAttributes rttr) {
+			RedirectAttributes rttr) {
 		System.out.println("orderId = " + orderId);
-		if (at != null) {
-			yod.setWriter(at.getName());
-		}
 			System.out.println("yod = " + yod);
 			service.updateOrder(yod,orderId);
 		return "redirect:/order/list";
 	}
+	
+	@DeleteMapping("deleteOrder")
+	@ResponseBody
+	public Map<String, String> deleteOrder(@RequestBody Map<String, String> data, RedirectAttributes rttr) {
+		System.out.println(data);
+		Map<String, String> map = new HashMap<>();
+		int cnt = service.deleteOrder(data);
+		if(cnt == 1) {
+			map.put("message", "주문이 삭제되었습니다");
+		}
+		return map;
+	}
+		
+	}
 
-}
