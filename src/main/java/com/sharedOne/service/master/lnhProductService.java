@@ -56,8 +56,9 @@ public class lnhProductService {
 		return productMapper.selectProductName(productName);
 	}
 
-	public String lastProductCodeNum(String productType) {
+	public String lastProductCodeNum(String productType) { 
 		productType = "%" + productType + "%";
+		System.out.println("service: "+productType);
 		return productMapper.lastProductCodeNum(productType);
 	}
 	

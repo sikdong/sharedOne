@@ -90,8 +90,17 @@
 	    background: #1d5c83;
 	    margin-bottom: 25px;
     }
+    
+    #productName, #productCode {
+    	background-color: #F0F0F0;
+    }
+    #checkProductCode {
+    	visibility: hidden;
+    }
+    
 </style>
 <body>
+
 <sec:authorize access="isAuthenticated()">   
     <div class="insert-body mt-5 ">
     	<form action="" name= "registerfrm" method="post">
@@ -104,20 +113,11 @@
 	                    <hr class="line" style="border: solid 1px #000" />
 	                    </div>
 	                    <div class="container-sm content-size">
-	                    	<div class="mb-2 row mt-2 rowdiv">
-	                            <label for="inputCode" class="col-form-label">제품 코드</label>
-	                            <div class="col-sm-7 inputDiv inputDiv">
-	                                <input id="productCode" name="productCode" type="text" class="form-control" placeholder=""  disabled/>
-	                            </div>
-								<div class="check">
-									<div id="productCodeText1" class="form-text">제품코드 확인을 해주세요.</div>
-									<button class="btn" type="button" id="productCodeExist">확인</button>
-								</div>
-							</div>
+	                    	
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputName" class="col-form-label">제품명</label>
 	                            <div class="col-sm-7 inputDiv inputDiv">
-	                                <input id="productName" name="productName"  type="text" class="form-control" placeholder="제품명을 입력하세요."/>
+	                                <input id="productName" name="productName"  type="text" class="form-control" placeholder="규격, 무게, 제품 타입 선택"  readOnly/>
 	                            </div>
 	                            <div class="check">
 		                            <div id="productNameText1" class="form-text">제품명 확인을 해주세요.</div>
@@ -143,17 +143,27 @@
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputProductType" class="col-form-label">제품 종류</label>
-	                            <div class="col-sm-7 inputDiv inputDiv"">
+	                            <div class="col-sm-7 inputDiv inputDiv">
 	                                    <select id="productType" name="productType" class="form-control" style="padding-left: 8px;" >
 	                                      <option selected>제품 종류를 선택 하세요.</option>
-	                                      <option name="GATE 밸브" value = "GA">GATE 밸브</option>
-	                                      <option name="GLOBE 밸브" value = "GL">GLOBE 밸브</option>
-	                                      <option name="SWING 밸브" value = "SW">SWING 밸브</option>
-	                                      <option name="LUG 밸브" value = "LU">LUG 밸브</option>
-	                                      <option name="WAFER 밸브" value = "WA">WAFER 밸브</option>
+	                                      <option name="GATE 밸브" value = "GATE 밸브" ${param.productType == 'GATE 밸브' ? 'selected' : '' }>GATE 밸브</option>
+	                                      <option name="GLOBE 밸브" value = "GLOBE 밸브" ${param.productType == 'GLOBE 밸브' ? 'selected' : '' }>GLOBE 밸브</option>
+	                                      <option name="SWING 밸브" value = "SWING 밸브" ${param.productType == 'SWING 밸브' ? 'selected' : '' }>SWING 밸브</option>
+	                                      <option name="LUG 밸브" value = "LUG 밸브" ${param.productType == 'LUG 밸브' ? 'selected' : '' }>LUG 밸브</option>
+	                                      <option name="WAFER 밸브" value = "WAFER 밸브" ${param.productType == 'WAFER 밸브' ? 'selected' : '' }>WAFER 밸브</option>
 	                                    </select>
 	                            </div>
 	                        </div>
+	                        <div class="mb-2 row mt-2 rowdiv">
+	                            <label for="inputCode" class="col-form-label">제품 코드</label>
+	                            <div class="col-sm-7 inputDiv inputDiv">
+	                                <input id="productCode" name="productCode" type="text" class="form-control" placeholder="제품명 확인이 필요합니다"  readOnly/>
+	                            </div>
+								<div id ="checkProductCode" class="check">
+									<div id="productCodeText1" class="form-text">제품코드 확인을 해주세요.</div>
+									<button class="btn" type="button" id="productCodeExist">확인</button>
+								</div>
+							</div>
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputName" class="col-form-label">단위</label>
 	                            <div class="col-sm-7 inputDiv">
@@ -220,30 +230,30 @@
     		 productWeight= '-300'; 
     	 }else if($("#productWeight").val() == "600") {
     		 productWeight = '-600';
+    	 }else {
+    		 productWeight = '';
     	 }
     	 $("#productName").val(productSize + productWeight + productType);
      });
     
      $( "#productType" ).change(function(){
     
-    	 if($("#productType").val() == "GA") {
+    	 if($("#productType").val() == "GATE 밸브") {
     		 productType = ' GATE RF';
-    	 }else if($("#productType").val() == "GL") {
+    	 }else if($("#productType").val() == "GLOBE 밸브") {
     		 productType = ' GLOBE RF'; 
-    	 }else if($("#productType").val() == "SW") {
-    		 productType = ' SWING RF';
-    	 }else if($("#productType").val() == "LU") {
-    		 productType = ' LUG RF';
-    	 }else if($("#productType").val() == "WA") {
-    		 productType = ' WAFER RF';
+    	 }else if($("#productType").val() == "SWING 밸브") {
+    		 productType = ' S/CHECK RF';
+    	 }else if($("#productType").val() == "LUG 밸브") {
+    		 productType = ' TAPPED LUG';
+    	 }else if($("#productType").val() == "WAFER 밸브") {
+    		 productType = ' WAFER CHECK';
+    	 }else {
+    		 productType = ' ';
     	 }
     	 $("#productName").val(productSize + productWeight + productType);
     });
      
-     //제품코드 지정 (2자리까지)
-     $( "#productType" ).change(function(){
-             $("#productCode").val( $("#productType").val() +"00" +"${lastProductCodeNum +1 }" );
-         });
     
   //등록버튼 누르면 등록 실행 후 창 닫기
     const ctx = "${pageContext.request.contextPath}";
@@ -275,35 +285,18 @@
     	enableSubmitButton();
     });
   
-    //제품코드 중복확인
-    document.querySelector("#productCodeExist").addEventListener("click", function() {
-    	availableProductCode = false;
-    	// 입력된 제품코드를
-    	const productCode = document.querySelector("#productCode").value;
-    	
-    	// fetch 요청 보내고
-    	fetch(ctx + "/master/existproductCode/" + productCode)
-    		.then(res => res.json())
-    		.then(data => {
-    			// 응답 받아서 메세지 출력
-    			document.querySelector("#productCodeText1").innerText = data.message;
-    			
-    			if (data.status == "not exist") {
-    				availableProductCode = true;
-    				enableSubmitButton();
-    			}
-    		}); 
-    	
-    });
 
     //제품명 중복확인
     document.querySelector("#productNameExist").addEventListener("click", function() {
     	availableProductName = false;
-    	// 입력된 제품명을
+    	// 입력된 제품명
     	const productName = document.querySelector("#productName").value;
+    	// 제품타입
+    	const productType =  document.querySelector("#productType").value.substring(0,2);
+    	console.log(productType);
     	
     	// fetch 요청 보내고
-    	fetch(ctx + "/master/existproductName/" + productName)
+    	fetch(ctx + "/master/existproductName/" + productName +"/"+productType)
     		.then(res => res.json())
     		.then(data => {
     			// 응답 받아서 메세지 출력
@@ -311,6 +304,35 @@
     			
     			if (data.status == "not exist") {
     				availableProductName = true;
+    			     //제품코드 지정 (2자리까지)
+    			     
+    			    	 if(productType != '제품 종류를 선택 하세요.') {
+
+    			             $("#productCode").val(productType +data.lastProductCodeNum);
+    			             document.querySelector("#checkProductCode").style.visibility = 'visible';
+    			    	 }else {
+    			    		 $("#productCode").val('');
+    			    	 }
+    				/* enableSubmitButton(); */
+    			}
+    		}); 
+    	
+    });
+    
+    //제품코드 중복확인
+    document.querySelector("#productCodeExist").addEventListener("click", function() {
+    	availableProductCode = false;
+    	// 입력된 제품코드를
+    	const productCode = document.querySelector("#productCode").value;
+    	// fetch 요청 보내고
+    	fetch(ctx + "/master/existproductCode/" + productCode )
+    		.then(res => res.json())
+    		.then(data => {
+    			// 응답 받아서 메세지 출력
+    			document.querySelector("#productCodeText1").innerText = data.message;
+    			
+    			if (data.status == "not exist") {
+    				availableProductCode = true;
     				enableSubmitButton();
     			}
     		}); 
