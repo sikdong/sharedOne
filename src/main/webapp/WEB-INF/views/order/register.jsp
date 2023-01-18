@@ -353,6 +353,25 @@
 	
 	const path = "${pageContext.request.contextPath}"
 	
+	
+	function makeSumforfinalPrice(event){
+		const quantity = event.target.parentElement.nextElementSibling.firstElementChild
+		const finalPrice = event.target
+		let preSum = finalPrice.value*quantity.value;
+		let sum = preSum.toLocaleString();
+		event.target.parentElement.nextElementSibling.nextElementSibling.firstElementChild.value= sum;
+  	}
+
+	function makeSumforquantity(event){
+		const quantity = event.target
+		const finalPrice = quantity.parentElement.previousElementSibling.firstElementChild
+		let preSum = finalPrice.value*quantity.value;
+		let sum = preSum.toLocaleString();
+		quantity.parentElement.nextElementSibling.firstElementChild.value= sum
+	}
+	
+	
+	
 	 function showToast(){
 		 const deleteOrderToast = document.querySelector("#deleteOrderToast");
 		 const deleteToast = new bootstrap.Toast(deleteOrderToast);
@@ -844,20 +863,19 @@
               <td>\${da.size}</td>
               <td>\${da.unit}</td>
               <td>\${orderPrice}</td>
-              /* 뭐야 왜안돼? */
               <td>
 	              <input class="form-style" 
 	              type="number" id="finalPrice\${i}" 
-	              onclick = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
-	              onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
+	              onclick = "makeSumforfinalPrice(event)"
+	              onchange = "makeSumforfinalPrice(event)"
 	              name="finalPrice" value="\${da.salePrice}">
               </td>
               <td><input 
-              onclick = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value" 
-	          onchange = "document.querySelector('#sum\${i}').value = document.querySelector('#finalPrice\${i}').value * document.querySelector('#quantity\${i}').value"
+              onclick = "makeSumforquantity(event)" 
+	          onchange = "makeSumforquantity(event)"
 	              
               id="quantity\${i}" class="form-style" type="number" name="quantity" value=""></td>
-              <td><input readonly type="number" id="sum\${i}" name="sum" class="form-style" /></td>
+              <td><input readonly type="text" id="sum\${i}" name="sum" class="form-style" /></td>
               <td style="display : flex; justify-content : center;">
                   <button onclick="document.querySelector('#tr\${i}').innerHTML = '', assignNumber(), showToast();" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
               </td>
@@ -885,10 +903,18 @@
 	
 	function tempSave(){
 		document.querySelector("#status").value = '임시저장'
-		document.querySelector("#orderForm").submit()
+		let sum = document.querySelectorAll('input[name="sum"]');
+		sum.forEach((el) =>{
+			el.value = el.value.split(',').join("");	
+		})
+		document.querySelector("#orderForm").submit() 
 	}
 	function register(){
 		document.querySelector("#status").value = '승인요청'
+		let sum = document.querySelectorAll('input[name="sum"]');
+		sum.forEach((el) =>{
+		el.value = el.value.split(',').join("");	
+		})
 		document.querySelector("#orderForm").submit()
 	}
 	

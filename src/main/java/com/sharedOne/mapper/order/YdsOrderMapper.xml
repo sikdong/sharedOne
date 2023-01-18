@@ -63,7 +63,7 @@
 				OR p.productType LIKE #{allProductInfo})
 		AND (s.fromDate = #{fromDate} AND s.endDate = #{endDate})
 		AND s.buyerCode = #{tableBuyerCode}
-		ORDER BY p.productName
+		ORDER BY p.productCode
 	</select>
 	
 	<select id="addTempProductOrder" resultType="com.sharedOne.domain.master.YdsProductDto">
@@ -171,7 +171,8 @@
 		deliveryDate = #{ohd.deliveryDate},
 		buyerCode = #{ohd.buyerCode},
 		status = #{ohd.status},
-		message = #{ohd.message}
+		message = #{ohd.message},
+		inserted = #{ohd.modified}
 	WHERE orderId = #{orderId}
 	
 	</update>
