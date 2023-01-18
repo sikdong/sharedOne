@@ -190,6 +190,7 @@
 				<th>연락처</th>
 				<th>선적비용부담</th>
 				<th>대표</th>
+				<th>비고</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -197,16 +198,17 @@
 			<c:url value="/master/buyerModify" var="getLink">
 					<c:param name="code" value="${buyer.buyerCode }"></c:param>
 				</c:url>
-				<tr title="${buyer.buyerName } 정보 수정하기" onclick="window.open('${getLink}','바이어정보','width=600,height=660,left=700,top=200,resizale=no,location=no,status=no,scrollbars=yes');" class="trtr">
+				<tr title="${buyer.buyerName } 정보 수정하기" class="trtr">
 <%-- 				<tr onclick="location.href='${getLink}'" class="trtr"> --%>
 					<td style="width: 100px;">${buyer.buyerCode }</td>
-					<td style="width: 150px;">${buyer.buyerName }</td>
+					<td style="width: 140px;">${buyer.buyerName }</td>
 					<td style="width: 400px;">${buyer.address }</td>
 					<td>${buyer.country }</td>
-					<td style="width: 150px;">${buyer.businessNumber }</td>
-					<td style="width: 150px;">${buyer.phone }</td>
-					<td style="width: 150px;">${buyer.deliveryCompany }</td>
+					<td style="width: 140px;">${buyer.businessNumber }</td>
+					<td style="width: 140px;">${buyer.phone }</td>
+					<td style="width: 120px;">${buyer.deliveryCompany }</td>
 					<td>${buyer.manager }</td>
+					<td style="width: 100px;"><button id="modifyBtn" type="button" class="btn btn-outline-secondary" onclick="window.open('${getLink}','바이어정보','width=600,height=660,left=700,top=200,resizale=no,location=no,status=no,scrollbars=yes');">수정</button></td>
 				</tr>
 			</c:forEach>
 		</tbody>

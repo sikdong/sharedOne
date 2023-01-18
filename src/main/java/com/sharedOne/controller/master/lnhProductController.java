@@ -62,8 +62,12 @@ public class lnhProductController {
 	
 	@GetMapping("productRegister")
 	@PreAuthorize("isAuthenticated()")
-	public void register() {
-		
+	public void register(@RequestParam(name = "productType", defaultValue = "") String productType, Model model) {
+		/*
+		 * System.out.println(productType); String lastProductCodeNum =
+		 * productService.lastProductCodeNum(productType);
+		 * model.addAttribute("lastProductCodeNum",lastProductCodeNum);
+		 */
 	}
 	
 	@PostMapping("productRegister")
@@ -112,7 +116,8 @@ public class lnhProductController {
 		Map<String, Object> map = new HashMap<>();
 
 		ProductDto product = productService.getByProductCode(productCode);
-
+		System.out.println("제품코드 확인"+product);
+		
 		if (product == null) {
 			map.put("status", "not exist");
 			map.put("message", "사용 가능한 제품코드입니다.");
@@ -124,17 +129,28 @@ public class lnhProductController {
 		return map;
 	}
 	
-	@GetMapping("existproductName/{productName}")
+	
+	@GetMapping("existproductName/{productName}/{productType}")
 	@PreAuthorize("isAuthenticated()")
 	@ResponseBody
-	public Map<String, Object> existProductName(@PathVariable String productName) {
+	public Map<String, Object> existProductName(@PathVariable String productName,
+			@PathVariable String productType) {
 		Map<String, Object> map = new HashMap<>();
 
 		ProductDto product = productService.getByProductName(productName);
 
 		if (product == null) {
+			/* productType = productType.substring(0,2); */
+			System.out.println("제품타입"+productType);
+			String lastProductCodeNum = productService.lastProductCodeNum(productType);
+			System.out.println("최근번호: "+ lastProductCodeNum);
+			int lastNumber = Integer.parseInt(lastProductCodeNum) +1 ;
+			
+			String lastNum = String.format("%04d", lastNumber);
+
 			map.put("status", "not exist");
 			map.put("message", "사용 가능한 제품명입니다.");
+			map.put("lastProductCodeNum", lastNum);
 		} else {
 			map.put("status", "exist");
 			map.put("message", "이미 존재하는 제품명입니다.");

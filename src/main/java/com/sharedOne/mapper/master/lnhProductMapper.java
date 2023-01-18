@@ -27,4 +27,6 @@ public interface lnhProductMapper {
 
 	ProductDto selectProductCode(String productCode);
 
+	String lastProductCodeNum(String productType);
+
 }

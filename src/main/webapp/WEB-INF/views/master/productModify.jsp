@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -135,17 +136,17 @@
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
-							<label for="inputName" class="col-form-label">무게</label>
+							<label for="inputName" class="col-form-label">무게(lb)</label>
 							<div class="col-sm-7 inputDiv">
 								<input id="productName" name="weight" type="text" value="${product.weight }"
-									class="form-control" placeholder="${product.weight }" />
+									class="form-control" placeholder="${product.weight }" disabled/>
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
-							<label for="inputName" class="col-form-label">규격</label>
+							<label for="inputName" class="col-form-label">규격(Inch)</label>
 							<div class="col-sm-7 inputDiv">
 								<input id="productName" name="size" type="text" value="${product.size }"
-									class="form-control" placeholder="${product.size }" />
+									class="form-control" placeholder="${product.size }" disabled/>
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
@@ -160,13 +161,13 @@
 							<div class="col-sm-7 inputDiv">
 								<input id="productPrice" name="price"
 									type="text" class="form-control"
-									value="${product.price }"
-									placeholder="${product.price }" 
+									value="<fmt:formatNumber value="${product.price }"/>"
+									placeholder="<fmt:formatNumber value="${product.price }"/>" 
 									/>
 							</div>
 						</div>
 
-						<div class="mb-2 row mt-2 rowdiv">
+<%-- 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputPriceStartDate" class="col-form-label">단가
 								시작일</label>
 							<div class="col-sm-7 inputDiv">
@@ -181,7 +182,7 @@
 								<input id="productEndDate" name="endDate" type="date"
 									class="form-control" value="${product.endDate }"/>
 							</div>
-						</div>
+						</div> --%>
 
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputName" class="col-form-label">제품 설명</label>

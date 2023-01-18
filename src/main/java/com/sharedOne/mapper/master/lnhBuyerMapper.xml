@@ -71,13 +71,13 @@
 		)	 	
 	 	
  		<if test="buyerCode != '' ">
- 		AND buyerCode = #{buyerCode }
+ 		AND buyerCode LIKE #{buyerCode }
  		</if>
  		<if test="buyerName != '' ">
- 		AND buyerName = #{buyerName }
+ 		AND buyerName LIKE #{buyerName }
  		</if>
  		<if test="country != '' ">
- 		AND country = #{country }
+ 		AND country LIKE #{country }
  		</if>
 		ORDER BY buyerCode;
  	</select>
