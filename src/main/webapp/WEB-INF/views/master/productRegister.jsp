@@ -356,8 +356,6 @@
     
     function registerCheck() {
     	//단가 콤마 제거
-/*     	var price = document.querySelector("#productPrice").value;
-    	document.querySelector("#productPrice").value = uncomma(price); */
     	
 		var price = document.querySelector("#productPrice").value;
     	var registerdPrice = price.split(',').join("");
@@ -369,7 +367,7 @@
 		window.opener.location.reload();
 		setTimeout(function() {
 			window.close();
-		       }, 100);  
+		       }, 50);  
     } 
     
     //Input 알림창
@@ -381,37 +379,37 @@
 			})
 			alert("제품명이 입력되어야 합니다");
 		}
-		if($('input[name=productCode]').val() =='' ){
+		else if($('input[name=productCode]').val() =='' ){
 			$('#registerfrm').submit(function(e){
 				e.preventDefault();
 			})
 			alert("제품코드가 입력되어야 합니다");
 		}
-		if($('input[name=price]').val() =='' ){
+		else if($('input[name=price]').val() =='' ){
 			$('#registerfrm').submit(function(e){
 				e.preventDefault();
 			})
 			alert("단가를 입력하세요.");
 		}
-		if($('input[name=size]').val() =='' ){
+		else if($('input[name=size]').val() =='' ){
 			$('#registerfrm').submit(function(e){
 				e.preventDefault();
 			})
 			alert("규격을 입력하세요.");
 		}
-		if($('input[name=weight]').val() =='' ){
+		else if($('input[name=weight]').val() =='' ){
 			$('#registerfrm').submit(function(e){
 				e.preventDefault();
 			})
 			alert("무게를 선택 하세요.");
 		}
-		if($('input[name=unit]').val() =='' ){
+		else if($('input[name=unit]').val() =='' ){
 			$('#registerfrm').submit(function(e){
 				e.preventDefault();
 			})
 			alert("단위를 입력하세요.");
 		}
-		if($('input[name=productType]').val() =='' ){
+		else if($('input[name=productType]').val() =='' ){
 			$('#registerfrm').submit(function(e){
 				e.preventDefault();
 			})
