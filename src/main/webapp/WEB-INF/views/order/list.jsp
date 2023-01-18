@@ -4,7 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 
-
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Calendar" %>
@@ -99,7 +98,8 @@
 
 </head>
 <body>
-
+<!-- 로그인 아이디 -->
+<sec:authentication property="name" var="memberId"/>
 <!-- 현재 날짜 설정  -->
 <c:set value="<%=sf.format(nowDate)%>" var="nowDate"/>
 <!-- ${nowDate}  -->
@@ -246,7 +246,7 @@
 								<c:when test="${h.status == '임시저장'}">
 									<form action="${pageContext.request.contextPath }/order/modify">
 										<input type="hidden" name="orderId"  value="${h.orderId }">
-										<input type="hidden" name="id"  value="${h.writer }">
+										<input type="hidden" name="id"  value="${memberId }">
 										<button type="submit" class="btn btn-warning" style="color: white;">
 											${h.status }
 										</button>
