@@ -584,6 +584,10 @@
 	</table>`
 		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
 		for(const item of list){
+			const p = item.price
+			let price = p.toLocaleString();
+			const sp = item.salePrice
+			let salePrice = sp.toLocaleString();
 			const productTableItem =
 				
 			`<tr>
@@ -598,8 +602,8 @@
 				<td>\${item.size }</td>
 				<td>\${item.weight }</td>
 				<td>\${item.unit }</td>
-				<td>\${item.price }</td>
-				<td>\${item.salePrice }</td>
+				<td>\${price}</td>
+				<td>\${salePrice }</td>
 				<td>\${item.fromDate}~\${item.endDate}</td>
 			</tr>`
 			document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
@@ -646,24 +650,28 @@
 	</table>`
 		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
 		for(const item of list){
-				const productTableItem =
-					
-				`<tr>
-					<th>
-						<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
-							id="flexCheckDefault" name="productCode" value="\${item.productCode}"
-								data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
-					</th>
-					<td>\${item.productCode }</td>
-					<td>\${item.productType }</td>
-					<td>\${item.productName }</td>
-					<td>\${item.size }</td>
-					<td>\${item.weight }</td>
-					<td>\${item.unit }</td>
-					<td>\${item.price }</td>
-					<td>\${item.salePrice }</td>
-					<td>\${item.fromDate}~\${item.endDate}</td>
-				</tr>`
+			const p = item.price
+			let price = p.toLocaleString();
+			const sp = item.salePrice
+			let salePrice = sp.toLocaleString();
+			const productTableItem =
+				
+			`<tr>
+				<th>
+					<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
+						id="productCheckBox-\${item.productCode}" name="productCode" value="\${item.productCode}"
+						data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
+				</th>
+				<td>\${item.productCode }</td>
+				<td>\${item.productType }</td>
+				<td>\${item.productName }</td>
+				<td>\${item.size }</td>
+				<td>\${item.weight }</td>
+				<td>\${item.unit }</td>
+				<td>\${price}</td>
+				<td>\${salePrice }</td>
+				<td>\${item.fromDate}~\${item.endDate}</td>
+			</tr>`
 				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
 					}
 		})
@@ -702,24 +710,28 @@
 	</table>`
 		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
 		for(const item of list){
-				const productTableItem =
-					
-				`<tr>
-					<th>
-						<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
-							id="flexCheckDefault" name="productCode" value="\${item.productCode}"
-								data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
-					</th>
-					<td>\${item.productCode }</td>
-					<td>\${item.productType }</td>
-					<td>\${item.productName }</td>
-					<td>\${item.size }</td>
-					<td>\${item.weight }</td>
-					<td>\${item.unit }</td>
-					<td>\${item.price }</td>
-					<td>\${item.salePrice }</td>
-					<td>\${item.fromDate}~\${item.endDate}</td>
-				</tr>`
+			const p = item.price
+			let price = p.toLocaleString();
+			const sp = item.salePrice
+			let salePrice = sp.toLocaleString();
+			const productTableItem =
+				
+			`<tr>
+				<th>
+					<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
+						id="productCheckBox-\${item.productCode}" name="productCode" value="\${item.productCode}"
+						data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
+				</th>
+				<td>\${item.productCode }</td>
+				<td>\${item.productType }</td>
+				<td>\${item.productName }</td>
+				<td>\${item.size }</td>
+				<td>\${item.weight }</td>
+				<td>\${item.unit }</td>
+				<td>\${price}</td>
+				<td>\${salePrice }</td>
+				<td>\${item.fromDate}~\${item.endDate}</td>
+			</tr>`
 				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
 					}
 		})
@@ -759,25 +771,28 @@
 	</table>`
 		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
 		for(const item of list){
-				const productTableItem =
-					
-				`<tr>
-					<th>
-						<input class="form-radio-input" type="checkbox"
-						style="width : 20px; height : 20px;"
-							id="flexCheckDefault" name="productCode" value="\${item.productCode}"
-								data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
-					</th>
-					<td>\${item.productCode }</td>
-					<td>\${item.productType }</td>
-					<td>\${item.productName }</td>
-					<td>\${item.size }</td>
-					<td>\${item.weight }</td>
-					<td>\${item.unit }</td>
-					<td>\${item.price }</td>
-					<td>\${item.salePrice }</td>
-					<td>\${item.fromDate}~\${item.endDate}</td>
-				</tr>`
+			const p = item.price
+			let price = p.toLocaleString();
+			const sp = item.salePrice
+			let salePrice = sp.toLocaleString();
+			const productTableItem =
+				
+			`<tr>
+				<th>
+					<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
+						id="productCheckBox-\${item.productCode}" name="productCode" value="\${item.productCode}"
+						data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
+				</th>
+				<td>\${item.productCode }</td>
+				<td>\${item.productType }</td>
+				<td>\${item.productName }</td>
+				<td>\${item.size }</td>
+				<td>\${item.weight }</td>
+				<td>\${item.unit }</td>
+				<td>\${price}</td>
+				<td>\${salePrice }</td>
+				<td>\${item.fromDate}~\${item.endDate}</td>
+			</tr>`
 				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
 				}
 		})
@@ -818,6 +833,8 @@
 		.then(res => res.json())
 		.then(data => { 
 			for(const da of data){
+			let op = da.price
+			let orderPrice = op.toLocaleString();
 			const productOrderTable =
             `<tr id="tr\${i}">
               <th scope="row" class="oiNumber" id="oiNumber\${i}" data-order-number=''></th>
@@ -826,7 +843,8 @@
               <td>\${da.productName}</td>
               <td>\${da.size}</td>
               <td>\${da.unit}</td>
-              <td>\${da.price}원</td>
+              <td>\${orderPrice}</td>
+              /* 뭐야 왜안돼? */
               <td>
 	              <input class="form-style" 
 	              type="number" id="finalPrice\${i}" 
