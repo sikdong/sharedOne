@@ -54,8 +54,8 @@ public class YjhOrderController {
 	YjhOrderService service;
 	
 	@GetMapping("orderSheet")
-	@PreAuthorize("isAuthenticated()")
-	public void getOrderSheet(Model model, int orderId) {
+	@PreAuthorize("hasAuthority('팀장') or (authentication.name == #id)")
+	public void getOrderSheet(Model model, int orderId ,String id) {
 		
 		OrderHeaderDto orderHeader = service.getOrderSheetHead(orderId);
 		model.addAttribute("orderHeader", orderHeader);
@@ -106,7 +106,7 @@ public class YjhOrderController {
 	}
 	
 	@GetMapping("companionSheet")
-	@PreAuthorize("hasAuthority('팀장') or (authentication.name == #id)")
+	@PreAuthorize("(authentication.name == #id)")
 	public void getCompanionSheet(Model model,int orderId,String id) {
 		
 		OrderHeaderDto orderHeader = service.getOrderSheetHead(orderId);
@@ -125,7 +125,8 @@ public class YjhOrderController {
 	}
 	
 	@PostMapping("companionSheet")
-	public String setClosing(RedirectAttributes rttr,int orderId, String status) {
+	@PreAuthorize("(authentication.name == #id)")
+	public String setClosing(RedirectAttributes rttr,int orderId, String status, String id) {
 		
 		if(status.equals("종결")) {
 			int closing = service.setClosing(orderId);

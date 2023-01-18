@@ -144,7 +144,6 @@ dt{
         	<li>
         		<input type="hidden" value="${count }" id="countProduct">
         		<input type="hidden" id="lastProductId" value = ${lastProductId }>
-        		<input type="button" id="testBtn" value="test">
         	</li>
             <c:forEach items="${productList }" var="product" varStatus="st">
 				<li>
@@ -169,20 +168,15 @@ dt{
 						</dl>
 					</div>	
 				</li>
-			</c:forEach>
-			<%-- <li>
-				 <div class="loadingImg" style="text-align:center; background-color:none;">
-		        	<img style="width: 100px; height: 100px;"src="${pageContext.request.contextPath}/content/spinner.svg" alt="">
-		        </div>
-			</li>    --%>                                                                  
-        	</ul>                                    
+			</c:forEach>  
+			                                                                
+        	</ul>
+        	                                  
         </div>		
 	</div>
-	<div class="d-flex justify-content-center spinner">
-	  <div class="spinner-border" id="loadingImg" role="status">
-	    <span class="sr-only">Loading...</span>
-	  </div>
-	</div>
+	<div class="loadingImg" style="text-align:center; background-color:whitesmoke;">
+		        	<img style="width: 100px; height: 100px;"src="${pageContext.request.contextPath}/content/spinner.svg" alt="">
+		        </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 </body>
 <script>	
@@ -203,17 +197,19 @@ $(window).on("scroll",function(){
 	
 	if(isBottom){
 		// 만약 마지막 리스트 일 경우
-		if(count <= 0){
+		if(count <= 10){
 			return; // 함수 종료
 		}
 
 		// 로딩바 띄우기
 		$(".loadingImg").show();
-		
 		if(!isLoading)    //실행 가능 상태라면?
         {
 			isLoading = true; //실행 불가능 상태로 변경
-			getList(); 
+		setTimeout(function(){
+			getList();
+			console.log("1초뒤에 실행");
+		}, 500);
         }
 	}
 })
@@ -257,10 +253,10 @@ function getList(){
 							</div>	
 						</li>`;												
 			document.querySelector("#list").insertAdjacentHTML("beforeend", addProduct);
+			}
 			isLoading = false;
 			// 로딩바 숨기기
 			$(".loadingImg").hide();
-		}
 	});
 };
 
