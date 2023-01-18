@@ -547,7 +547,7 @@
 				<th scope="col">제품그룹</th>
 				<th scope="col">제품명</th>
 				<th scope="col">규격(inch)</th>
-				<th scope="col">무게(kg)</th>
+				<th scope="col">무게(lb)</th>
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
 				<th scope="col">판매가</th>
@@ -611,7 +611,7 @@
 				<th scope="col">제품그룹</th>
 				<th scope="col">제품명</th>
 				<th scope="col">규격(inch)</th>
-				<th scope="col">무게(kg)</th>
+				<th scope="col">무게(lb)</th>
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
 				<th scope="col">판매가</th>
@@ -671,7 +671,7 @@
 				<th scope="col">제품그룹</th>
 				<th scope="col">제품명</th>
 				<th scope="col">규격(inch)</th>
-				<th scope="col">무게(kg)</th>
+				<th scope="col">무게(lb)</th>
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
 				<th scope="col">판매가</th>
@@ -732,7 +732,7 @@
 				<th scope="col">제품그룹</th>
 				<th scope="col">제품명</th>
 				<th scope="col">규격(inch)</th>
-				<th scope="col">무게(kg)</th>
+				<th scope="col">무게(lb)</th>
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
 				<th scope="col">판매가</th>
@@ -829,7 +829,7 @@
               onclick = "makeSumforquantity(event)" 
 	          onchange = "makeSumforquantity(event)" 
 	              
-              id="quantity\${i}" class="form-style" type="number" name="quantity" value=""></td>
+              id="quantity\${i}" class="form-style" type="number" name="quantity" value=0></td>
               <td style="width : 180px;"><input type="text" id="sum\${i}" readonly name="sum" class="form-style" /></td>
               <td style="display : flex; justify-content : center;">
               	<button onclick="document.querySelector('#tr\${i}').innerHTML = '', assignNumber(), showToast()" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
