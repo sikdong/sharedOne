@@ -98,13 +98,13 @@
 		)	 	
 	 	
  		<if test="productCode != '' ">
- 		AND productCode = #{productCode }
+ 		AND productCode LIKE #{productCode }
  		</if>
  		<if test="productName != '' ">
- 		AND productName = #{productName }
+ 		AND productName LIKE #{productName }
  		</if>
  		<if test="size != '' ">
- 		AND size = #{size }
+ 		AND size LIKE #{size }
  		</if>
 		
 		ORDER BY productCode

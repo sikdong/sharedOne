@@ -47,6 +47,9 @@ public class lnhBuyerService {
 	public List<BuyerDto> searchBuyerList(String keyword, String buyerCode, String buyerName, String country) {
 		
 		keyword = "%" + keyword + "%";
+		buyerCode = "%" + buyerCode + "%";
+		buyerName = "%" + buyerName + "%";
+		country = "%" + country + "%";
 		
 		return buyerMapper.searchBuyerList(keyword, buyerCode, buyerName, country);
 	}

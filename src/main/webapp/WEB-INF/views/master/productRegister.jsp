@@ -103,7 +103,7 @@
 
 <sec:authorize access="isAuthenticated()">   
     <div class="insert-body mt-5 ">
-    	<form action="" name= "registerfrm" method="post">
+    	<form id ="registerfrm" action="" name= "registerfrm" method="post">
 	        <div class="container-md">
 	            <div class="row">
 	                <div class="col mt-1">
@@ -125,13 +125,13 @@
 	                            </div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
-	                            <label for="inputName" class="col-form-label">규격</label>
+	                            <label for="inputName" class="col-form-label">규격(Inch)</label>
 	                            <div class="col-sm-7 inputDiv">
 	                                <input id="productSize" name="size" type="text" class="form-control" placeholder="규격을 입력하세요."/>
 	                            </div>
 	                        </div>
 	                        <div class="mb-2 row mt-2 rowdiv">
-	                            <label for="inputName" class="col-form-label">무게</label>
+	                            <label for="inputName" class="col-form-label">무게(lb)</label>
 	                            <div class="col-sm-7 inputDiv">
 	                            	<select id="productWeight" name="weight" class="form-control" style="padding-left: 8px;" >
 	                                      <option selected>제품 무게를 선택 하세요.</option>
@@ -173,7 +173,7 @@
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputProductPrice" class="col-form-label">단가</label>
 	                            <div class="col-sm-7 inputDiv">
-	                                <input id="productPrice" name="price" type="text" class="form-control" placeholder="단가를 입력하세요."/>
+	                                <input id="productPrice" name="price" onkeyup="comma(this);" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" type="text" class="form-control" placeholder="단가를 입력하세요."/>
 	                            </div>
 		                        </div>
 	
@@ -199,7 +199,7 @@
 	                    </div>
 	                <hr />
 	                <div>
-	                    <input id="registerBtn" class="btn registerBtn" type="submit" value="등록" onclick="registerCheck()" disabled>
+	                    <input id="registerBtn" class="btn registerBtn" value="등록" onclick="registerCheck()" disabled>
 	                </div>
 	              
 	            </div>
@@ -253,7 +253,16 @@
     	 }
     	 $("#productName").val(productSize + productWeight + productType);
     });
-     
+  
+  //단가 콤마 붙이기
+  function comma(str) {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, ",");
+    }
+ function uncomma(str) {
+     str = String(str);
+     return str.replace(/[^\d]+/g, '');
+ 	} 
     
   //등록버튼 누르면 등록 실행 후 창 닫기
     const ctx = "${pageContext.request.contextPath}";
@@ -261,14 +270,7 @@
     var availableProductCode = false;
     
     var availableProductName = false;
-    
-    function registerCheck() { 
-	document.registerfrm.submit();
-    window.opener.location.reload();
-	setTimeout(function() {
-		window.close();
-        }, 20);  
-    }  
+     
     
     function enableSubmitButton() {
     	const button = document.querySelector("#registerBtn");
@@ -302,23 +304,23 @@
     			// 응답 받아서 메세지 출력
     			document.querySelector("#productNameText1").innerText = data.message;
     			
+    			//제품명 사용가능하면
     			if (data.status == "not exist") {
     				availableProductName = true;
     				
-    			     //제품코드 지정 (2자리까지)
-    			    	 if(productType != '제품 종류를 선택 하세요.') {
-    			             $("#productCode").val(productType +data.lastProductCodeNum);
-    			             document.querySelector("#checkProductCode").style.visibility = 'visible';
-    			             
-    			             //규격, 무게, 제품 종류 수정 disabled
-    			             document.querySelector("#productSize").setAttribute("disabled", "");
-    			             document.querySelector("#productWeight").setAttribute("disabled", "");
-    			             document.querySelector("#productType").setAttribute("disabled", "");
-    			             
-    			    	 }else {
+   			     //제품코드 지정 (2자리까지)
+   			    	 if(productType != '제품 종류를 선택 하세요.') {
+   			             $("#productCode").val(productType +data.lastProductCodeNum);
+   			             document.querySelector("#checkProductCode").style.visibility = 'visible';
+   			             
+   			             //규격, 무게, 제품 종류 수정 disabled
+   			             document.querySelector("#productSize").setAttribute("disabled", "");
+   			             document.querySelector("#productWeight").setAttribute("disabled", "");
+   			             document.querySelector("#productType").setAttribute("disabled", "");
+   			             
+    			    }else {
     			    		 $("#productCode").val('');
-    			    	 }
-    				/* enableSubmitButton(); */
+    				}
     			}
     		}); 
     	
@@ -343,6 +345,71 @@
     		}); 
     	
     });
+    
+    function registerCheck() {
+    	//단가 콤마 제거
+    	var price = document.querySelector("#productPrice").value;
+    	document.querySelector("#productPrice").value = uncomma(price);
+    	
+/*     	var price = document.querySelector("#productPrice").value;
+    	var registerdPrice = price.split(',').join("");
+    	console.log(registerdPrice);
+    	document.querySelector("#productPrice").value = registerdPrice; */
+
+		document.registerfrm.submit();
+		window.opener.location.reload();
+		setTimeout(function() {
+			window.close();
+		       }, 100);  
+    } 
+    
+    //Input 알림창
+    $(function(){
+	$('#registerBtn').click(function(){
+		if($('input[name=productName]').val() =='' ){
+			$('#registerfrm').submit(function(e){
+				e.preventDefault();
+			})
+			alert("제품명이 입력되어야 합니다");
+		}
+		if($('input[name=productCode]').val() =='' ){
+			$('#registerfrm').submit(function(e){
+				e.preventDefault();
+			})
+			alert("제품코드가 입력되어야 합니다");
+		}
+		if($('input[name=price]').val() =='' ){
+			$('#registerfrm').submit(function(e){
+				e.preventDefault();
+			})
+			alert("단가를 입력하세요.");
+		}
+		if($('input[name=size]').val() =='' ){
+			$('#registerfrm').submit(function(e){
+				e.preventDefault();
+			})
+			alert("규격을 입력하세요.");
+		}
+		if($('input[name=weight]').val() =='' ){
+			$('#registerfrm').submit(function(e){
+				e.preventDefault();
+			})
+			alert("무게를 선택 하세요.");
+		}
+		if($('input[name=unit]').val() =='' ){
+			$('#registerfrm').submit(function(e){
+				e.preventDefault();
+			})
+			alert("단위를 입력하세요.");
+		}
+		if($('input[name=productType]').val() =='' ){
+			$('#registerfrm').submit(function(e){
+				e.preventDefault();
+			})
+			alert("제품종류를 선택 하세요.");
+		}
+	})
+})
     
     </script>
 

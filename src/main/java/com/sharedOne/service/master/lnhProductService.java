@@ -24,6 +24,9 @@ public class lnhProductService {
 	public List<ProductDto> searchProductList(String keyword, String productCode, String productName, String size) {
 		
 		keyword = "%" + keyword + "%";
+		productCode = "%" + productCode + "%";
+		productName = "%" + productName + "%";
+		size = "%" + size + "%";
 
 		return productMapper.searchProductList(keyword, productCode, productName, size);
 	}
