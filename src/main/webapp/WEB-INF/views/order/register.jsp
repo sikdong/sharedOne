@@ -590,7 +590,7 @@
 				<th scope="col">제품그룹</th>
 				<th scope="col">제품명</th>
 				<th scope="col">규격(inch)</th>
-				<th scope="col">무게(kg)</th>
+				<th scope="col">무게(lb)</th>
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
 				<th scope="col">판매가</th>
@@ -657,7 +657,7 @@
 				<th scope="col">제품그룹</th>
 				<th scope="col">제품명</th>
 				<th scope="col">규격(inch)</th>
-				<th scope="col">무게(kg)</th>
+				<th scope="col">무게(lb)</th>
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
 				<th scope="col">판매가</th>
@@ -717,7 +717,7 @@
 				<th scope="col">제품그룹</th>
 				<th scope="col">제품명</th>
 				<th scope="col">규격(inch)</th>
-				<th scope="col">무게(kg)</th>
+				<th scope="col">무게(lb)</th>
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
 				<th scope="col">판매가</th>
@@ -778,7 +778,7 @@
 				<th scope="col">제품그룹</th>
 				<th scope="col">제품명</th>
 				<th scope="col">규격(inch)</th>
-				<th scope="col">무게(kg)</th>
+				<th scope="col">무게(lb)</th>
 				<th scope="col">단위</th>
 				<th scope="col">단가</th>
 				<th scope="col">판매가</th>
