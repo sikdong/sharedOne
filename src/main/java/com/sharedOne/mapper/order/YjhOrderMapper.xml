@@ -29,20 +29,23 @@
 	<update id="setApproval">
 		UPDATE Order_header
 		SET status = "승인완료",
-			comment = #{comment}
+			comment = #{comment},
+			modified = now()
 		WHERE orderId = #{orderId};
 	</update>
 	
 	<update id="setCompanion">
 		UPDATE Order_header
 		SET status = "요청반려",
-			comment = #{comment}
+			comment = #{comment},
+			modified = now()
 		WHERE orderId = #{orderId};
 	</update>
 	
 	<update id="setClosing">
 		UPDATE Order_header
-		SET status = "거래종결"
+		SET status = "거래종결",
+			modified = now()
 		WHERE orderId = #{orderId};
 	</update>
 	

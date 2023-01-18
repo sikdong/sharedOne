@@ -7,6 +7,7 @@
 <c:url value="${pageContext.request.contextPath}/member/logout" var="logoutLink"/>
 <c:url value="${pageContext.request.contextPath}/member/login" var="loginLink"/>
 <c:url value="${pageContext.request.contextPath}/member/signup" var="signupLink"/>
+<c:url value="${pageContext.request.contextPath}/master/searchProduct" var="productSearchLink"/>
 <html>
 <head>
 <meta charset="utf-8">
@@ -83,7 +84,62 @@
         justify-content: center;
         color: #e3e3e3;
     }
-        </style>
+    #modal.modal-overlay {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(1.5px);
+            -webkit-backdrop-filter: blur(1.5px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        #modal .modal-window {
+            background: rgba( 69, 139, 197, 0.70 );
+            box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+            backdrop-filter: blur( 13.5px );
+            -webkit-backdrop-filter: blur( 13.5px );
+            border-radius: 10px;
+            border: 1px solid rgba( 255, 255, 255, 0.18 );
+            width: 400px;
+            height: 500px;
+            position: relative;
+            top: -100px;
+            padding: 10px;
+        }
+        #modal .title {
+            padding-left: 10px;
+            display: inline;
+            text-shadow: 1px 1px 2px gray;
+            color: white;
+            
+        }
+        #modal .title h2 {
+            display: inline;
+        }
+        #modal .close-area {
+            display: inline;
+            float: right;
+            padding-right: 10px;
+            cursor: pointer;
+            text-shadow: 1px 1px 2px gray;
+            color: white;
+        }
+        
+        #modal .content {
+            margin-top: 20px;
+            padding: 0px 10px;
+            text-shadow: 1px 1px 2px gray;
+            color: white;
+        }
+</style>
 <body>
     <div class="row">
     <div class="sideDiv">
@@ -142,7 +198,6 @@
                 </ul>
             </div>
           </li>
-          <sec:authorize access="hasAuthority('팀장')">
           <li class="mb-1">
             <div class="row list-row">
                 <div class="list-head"><i class="fa-brands fa-wpforms"></i>&nbsp; 리포트</div>
@@ -159,7 +214,6 @@
                   </ul>
             </div>
           </li>
-          </sec:authorize>
        </sec:authorize>
           <!-- authorize tag -->
          <sec:authorize access="hasAuthority('팀장')">
@@ -170,6 +224,16 @@
 	            </div>
 	          </li>
          </sec:authorize>
+         <sec:authorize access="isAuthenticated()">
+	          <li class="mb-1">
+	            <div class="row list-row">
+	                <a href="#" type="button" id="searchBtn" class="list-head" style="text-decoration: none;color: #e3e3e3;"><i class="fa-solid fa-magnifying-glass"></i>&nbsp; 제품 검색</a>
+	            </div>
+	          </li>
+	          <li>
+	          	<input id="parentInput" type="text">
+	          </li>
+          </sec:authorize>
           <!-- spring security expressions -->
           <sec:authorize access="not isAuthenticated()">
 	          <li class="mb-1">
@@ -193,6 +257,20 @@
 <script>
 
 
+function searchPopup(){
+
+	  window.open("${pageContext.request.contextPath}/master/productSearch" , '제품등록','toolbar=no,resizable=no,status=no,menubar=no,width=500, height=500, top=200,left=300');
+	}
+
+document.querySelector("#searchBtn").addEventListener("click",function(){
+	searchPopup();
+});
+
+/* function setChildValue(name){
+
+    document.getElementById("parentInput").value = name;
+
+} */
 </script>
 </body>
 </html>
