@@ -98,6 +98,7 @@ public class YdsOrderController {
 		}
 		System.out.println("yod = " + yod);
 		service.insertOrder(yod);
+		rttr.addFlashAttribute("message", "주문 작성이 완료되었습니다.");
 		return "redirect:/order/list";
 	}
 
@@ -112,6 +113,7 @@ public class YdsOrderController {
 		System.out.println("orderId = " + orderId);
 		System.out.println("yod = " + yod);
 		service.updateOrder(yod, orderId);
+		rttr.addFlashAttribute("message", "주문이 수정되었습니다.");
 		return "redirect:/order/list";
 	}
 
