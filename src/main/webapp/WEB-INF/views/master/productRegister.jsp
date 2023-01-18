@@ -304,12 +304,17 @@
     			
     			if (data.status == "not exist") {
     				availableProductName = true;
+    				
     			     //제품코드 지정 (2자리까지)
-    			     
     			    	 if(productType != '제품 종류를 선택 하세요.') {
-
     			             $("#productCode").val(productType +data.lastProductCodeNum);
     			             document.querySelector("#checkProductCode").style.visibility = 'visible';
+    			             
+    			             //규격, 무게, 제품 종류 수정 disabled
+    			             document.querySelector("#productSize").setAttribute("disabled", "");
+    			             document.querySelector("#productWeight").setAttribute("disabled", "");
+    			             document.querySelector("#productType").setAttribute("disabled", "");
+    			             
     			    	 }else {
     			    		 $("#productCode").val('');
     			    	 }

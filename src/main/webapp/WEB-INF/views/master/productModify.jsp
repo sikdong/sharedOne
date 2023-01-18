@@ -138,14 +138,14 @@
 							<label for="inputName" class="col-form-label">무게</label>
 							<div class="col-sm-7 inputDiv">
 								<input id="productName" name="weight" type="text" value="${product.weight }"
-									class="form-control" placeholder="${product.weight }" />
+									class="form-control" placeholder="${product.weight }" disabled/>
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputName" class="col-form-label">규격</label>
 							<div class="col-sm-7 inputDiv">
 								<input id="productName" name="size" type="text" value="${product.size }"
-									class="form-control" placeholder="${product.size }" />
+									class="form-control" placeholder="${product.size }" disabled/>
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
