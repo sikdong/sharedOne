@@ -263,10 +263,10 @@
                         <td>${orderItem.productName }</td>
                         <td>${orderItem.size }</td>
                         <td>${orderItem.unit }</td>
-                        <td><fmt:formatNumber value="${orderItem.price }" type="currency" currencySymbol="￦"/></td>
-                        <td style="width : 150px;"><input type="number" name="finalPrice" onclick="makeSumforfinalPrice(event)" onchange="makeSumforfinalPrice(event)" class="form-style" value="${orderItem.finalPrice }" id="finalPrice${status.index }"/></td>
-                        <td style="width : 100px;"><input type="number" name="quantity" onclick="makeSumforquantity(event)" onchange=" makeSumforquantity(event)" class="form-style" id="quantity${status.index }" value="${orderItem.quantity }"/></td>
-                        <td style="width : 180px;"><input type="number" readonly value="${orderItem.finalPrice * orderItem.quantity}" id="sum${status.index}"name="sum" class="form-style" /></td>
+                        <td><fmt:formatNumber value="${orderItem.price }"/></td>
+                        <td style="width : 150px;"><input type="text" name="finalPrice" value="${orderItem.finalPrice }" onclick="makeSumforfinalPrice(event),makeComma(event)" onchange="makeSumforfinalPrice(event), makeComma(event)" class="form-style" id="finalPrice${status.index }"/></td>
+                        <td style="width : 100px;"><input type="number" name="quantity" onclick="makeSumforquantity(event)" onchange="makeSumforquantity(event)" class="form-style" id="quantity${status.index }" value="${orderItem.quantity }"/></td>
+                        <td style="width : 180px;"><input type="text" readonly id="sum${status.index}"name="sum" class="form-style" /></td>
                         <td style="display : flex; justify-content : center;">
                         	<button type="button" data-product-code = "${orderItem.productCode }" onclick="document.querySelector('#table${status.index}').innerHTML ='', assignNumber(), deleteSavedTempOrder(event)" class="btn button btn-sm" style="margin-left : 2px; background : #1d5c83; color : white;">삭제</button>
                         </td>
@@ -840,15 +840,24 @@
 			}
 			document.querySelector("#productBody").innerHTML = "";
 			assignNumber();
+			makeLoadingComma();
 		})
 	}); 
 	
 	function tempSave(){
 		document.querySelector("#status").value = '임시저장'
-		document.querySelector("#orderForm").submit()
+		let sum = document.querySelectorAll('input[name="sum"]');
+		sum.forEach((el) =>{
+			el.value = el.value.split(',').join("");	
+		})
+		document.querySelector("#orderForm").submit() 
 	}
 	function register(){
 		document.querySelector("#status").value = '승인요청'
+		let sum = document.querySelectorAll('input[name="sum"]');
+		sum.forEach((el) =>{
+		el.value = el.value.split(',').join("");	
+		})
 		document.querySelector("#orderForm").submit()
 	}
 	
@@ -860,7 +869,6 @@
 		const oiNumber = document.querySelectorAll(".oiNumber")
 		for(let i = 0; i < oiNumber.length; i++){
 			let a = i;
-			console.log(a);
 			oiNumber[i].innerHTML = ++a;
 			}
 	
@@ -893,6 +901,28 @@
 		 const deleteToast = new bootstrap.Toast(deleteOrderToast);
 		 deleteToast.show();
 	 }
+	 
+	 function makeComma(event){
+		 event.target.value = event.target.value.toLocaleString()
+		 console.log(event.target.value)
+	 }
+	 
+	 function makeLoadingComma(){
+		 if(document.querySelectorAll("input[name='finalPrice']")){
+			 
+		 let finalPrice = document.querySelectorAll("input[name='finalPrice']")
+		 let quantity = document.querySelectorAll('input[name="quantity"]')
+		 let sum = document.querySelectorAll('input[name="sum"]')
+		 for(let i = 0; i < finalPrice.length; i++){
+			let fp = finalPrice[i].value;
+			let qt = quantity[i].value;
+			sum[i].value = (fp*qt).toLocaleString();
+			
+		 	}
+		 }
+	 }
+	 makeLoadingComma()
+	 
 	</script>
 </body>
 </html>
