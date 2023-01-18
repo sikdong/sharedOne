@@ -83,7 +83,8 @@ public class YdsOrderController {
 	}
 
 	@GetMapping("modify")
-	public void modifyOrder(@RequestParam int orderId, Model model) {
+	@PreAuthorize("authentication.name == #id")
+	public void modifyOrder(int orderId,String id, Model model) {
 		OrderHeaderDto ohd = service.modifyOrderHeader(orderId);
 		List<OrderItemDto> oid = service.modifyOrderItem(orderId);
 		model.addAttribute("orderHeader", ohd);
