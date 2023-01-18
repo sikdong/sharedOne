@@ -62,7 +62,6 @@ public class lnhReportController {
 	private HmsReportService hmsService;
 	
 	@GetMapping("monthlyReport")
-	@PreAuthorize("hasAuthority('팀장')")
 	public void getMontlyReport(
 			@RequestParam(name = "orderQ", defaultValue = "") String orderQ,
 			@RequestParam(name="orderCode", defaultValue="") String orderCode,
