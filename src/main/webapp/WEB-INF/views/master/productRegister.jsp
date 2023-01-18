@@ -173,7 +173,7 @@
 	                        <div class="mb-2 row mt-2 rowdiv">
 	                            <label for="inputProductPrice" class="col-form-label">단가</label>
 	                            <div class="col-sm-7 inputDiv">
-	                                <input id="productPrice" name="price" onkeyup="comma(this);" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" type="text" class="form-control" placeholder="단가를 입력하세요."/>
+	                                <input id="productPrice" name="price" onkeyup="inputNumberFormat(this);" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" type="text" class="form-control" placeholder="단가를 입력하세요."/>
 	                            </div>
 		                        </div>
 	
@@ -255,14 +255,19 @@
     });
   
   //단가 콤마 붙이기
-  function comma(str) {
-    str = String(str);
-    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, ",");
-    }
- function uncomma(str) {
-     str = String(str);
-     return str.replace(/[^\d]+/g, '');
- 	} 
+		function comma(str) {
+        str = String(str);
+        return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+        }
+  
+        function uncomma(str) {
+            str = String(str);
+            return str.replace(/[^\d]+/g, '');
+        } 
+        
+        function inputNumberFormat(obj) {
+            obj.value = comma(uncomma(obj.value));
+        }
     
   //등록버튼 누르면 등록 실행 후 창 닫기
     const ctx = "${pageContext.request.contextPath}";
@@ -314,9 +319,12 @@
    			             document.querySelector("#checkProductCode").style.visibility = 'visible';
    			             
    			             //규격, 무게, 제품 종류 수정 disabled
-   			             document.querySelector("#productSize").setAttribute("disabled", "");
-   			             document.querySelector("#productWeight").setAttribute("disabled", "");
-   			             document.querySelector("#productType").setAttribute("disabled", "");
+   			             document.querySelector("#productSize").readOnly = true;
+   			             document.querySelector("#productSize").style.backgroundColor = "#F0F0F0";
+   			             document.querySelector("#productWeight").readOnly = true;
+   			         	 document.querySelector("#productWeight").style.backgroundColor = "#F0F0F0";
+   			             document.querySelector("#productType").readOnly = true;
+   			          	document.querySelector("#productType").style.backgroundColor = "#F0F0F0";
    			             
     			    }else {
     			    		 $("#productCode").val('');
@@ -348,13 +356,14 @@
     
     function registerCheck() {
     	//단가 콤마 제거
-    	var price = document.querySelector("#productPrice").value;
-    	document.querySelector("#productPrice").value = uncomma(price);
-    	
 /*     	var price = document.querySelector("#productPrice").value;
+    	document.querySelector("#productPrice").value = uncomma(price); */
+    	
+		var price = document.querySelector("#productPrice").value;
     	var registerdPrice = price.split(',').join("");
     	console.log(registerdPrice);
-    	document.querySelector("#productPrice").value = registerdPrice; */
+
+    	document.querySelector("#productPrice").value = registerdPrice;
 
 		document.registerfrm.submit();
 		window.opener.location.reload();
