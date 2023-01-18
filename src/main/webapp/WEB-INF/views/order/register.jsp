@@ -844,6 +844,7 @@
               <td>\${da.size}</td>
               <td>\${da.unit}</td>
               <td>\${orderPrice}</td>
+              /* 뭐야 왜안돼? */
               <td>
 	              <input class="form-style" 
 	              type="number" id="finalPrice\${i}" 
