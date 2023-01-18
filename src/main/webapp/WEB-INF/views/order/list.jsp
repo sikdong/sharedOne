@@ -246,7 +246,7 @@
 								<c:when test="${h.status == '임시저장'}">
 									<form action="${pageContext.request.contextPath }/order/modify">
 										<input type="hidden" name="orderId"  value="${h.orderId }">
-										<input type="hidden" name="id"  value="${memberId }">
+										<input type="hidden" name="id"  value="${h.id }">
 										<button type="submit" class="btn btn-warning" style="color: white;">
 											${h.status }
 										</button>
@@ -265,7 +265,7 @@
 								<c:when test="${h.status == '승인요청'}">
 									<c:url value="/order/confirmOrderSheet" var="confirmOrderSheetLink">
 										<c:param name="orderId" value="${h.orderId }"/>
-										<c:param name="id" value="${memberId }"/>
+										<c:param name="id" value="${h.id }"/>
 									</c:url>
 										<button type="submit" class="btn btn-primary" 
 										onclick="window.open('${confirmOrderSheetLink}','주문서','width=800,height=1000,left=500,top=100,location=no,status=no,scrollbars=yes');"
@@ -276,7 +276,7 @@
 								<c:when test="${h.status == '승인완료'}">
 									<c:url value="/order/orderSheet" var="orderSheetLink">
 										<c:param name="orderId" value="${h.orderId }"/>
-										<c:param name="id" value="${memberId }"/>
+										<c:param name="id" value="${h.id }"/>
 									</c:url>							
 									<button type="submit" name="orderId" value="${h.orderId }" class="btn btn-success" 
 									onclick="window.open('${orderSheetLink}','주문서','width=800,height=1000,left=500,top=100,location=no,status=no,scrollbars=yes');"
@@ -287,7 +287,7 @@
 								<c:when test="${h.status == '요청반려'}">									
 									<c:url value="/order/companionSheet" var="companionSheetLink">
 										<c:param name="orderId" value="${h.orderId }"/>
-										<c:param name="id" value="${memberId }"/>
+										<c:param name="id" value="${h.id }"/>
 									</c:url>
 									<button type="submit" class="btn btn-danger" 
 									onclick="window.open('${companionSheetLink}','주문서','width=1400,height=1000,left=500,top=100,location=no,status=no,scrollbars=yes');"
@@ -298,7 +298,7 @@
 								<c:when test="${h.status == '승인취소'}">
 									<c:url value="/order/orderSheet" var="orderSheetLink">
 										<c:param name="orderId" value="${h.orderId }"/>
-										<c:param name="id" value="${memberId }"/>
+										<c:param name="id" value="${h.id }"/>
 									</c:url>			
 									<button type="submit" class="btn btn-secondary"
 									onclick="window.open('${orderSheetLink}','주문서','width=800,height=1000,left=500,top=100,location=no,status=no,scrollbars=yes');" 

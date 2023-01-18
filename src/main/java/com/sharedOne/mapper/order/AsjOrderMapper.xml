@@ -16,6 +16,7 @@
  			h.status,
  			h.message,
  			h.writer, 
+ 			h.memberId id,
  			b.buyerCode,
  			b.buyerName
  			
