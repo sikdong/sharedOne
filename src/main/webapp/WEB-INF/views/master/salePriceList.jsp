@@ -366,11 +366,22 @@ function listAll(){
 	})
 } 
 
+/* 제품검색 시 검색창 띄우기 */
+
+$(function(){
+	if ($('input[name=productCode]').val() =='' ) {
+			
+		$('input[name=productCode]').on('click', function(){
+			window.open("${pageContext.request.contextPath}/master/productSearch" , '제품등록','toolbar=no,resizable=no,status=no,menubar=no,width=500, height=500, top=200,left=300');
+			
+		})
+	}
+});
 
 /* 검색 => ajax 테이블 조회 */
 function search(){
 	$(function(){
-		$('input, #selectedSearchBtn').on('keyup click input' ,function(){
+		$('input, #selectedSearchBtn').on('keyup input' ,function(){
 			/* q, productCode, productName, buyerCode, buyerName, country, priceMin, priceMax */
 			const q = $('input[name=q]').val();
 			const productCode = $('input[name=productCode]').val();
