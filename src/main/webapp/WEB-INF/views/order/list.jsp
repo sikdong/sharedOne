@@ -98,6 +98,8 @@
 
 </head>
 <body>
+<%-- <div id="message">${message }</div>  --%>
+
 <!-- 로그인 아이디 -->
 <sec:authentication property="name" var="memberId"/>
 <!-- 현재 날짜 설정  -->
@@ -416,12 +418,11 @@ function list(){
 							'<td>'+item.productCode+'</td>'+
 							'<td>'+item.productType+'</td>'+
 							'<td>'+item.productName+'</td>'+
-							'<td>'+item.price+'</td>'+
-							'<td>'+item.finalPrice+'</td>'+
-							
+							'<td>'+addComma(String(item.price))+'</td>'+
+							'<td>'+addComma(String(item.finalPrice))+'</td>'+					
 							'<td>'+dc+'%</td>'+
 							'<td>'+item.quantity+item.unit+'</td>'+
-							'<td>'+item.sum+'</td>'+
+							'<td>'+addComma(String(item.sum))+'</td>'+
 						'</tr>'
 						);
 					});
@@ -465,7 +466,13 @@ function removeComma(value){
      value = value.replace(/[^\d]+/g, "");
      return value; 
 }
-
+/* 주문등록완료 메세지 알람  */
+<c:if test = "${not empty message }">
+message();
+function message(){
+	alert("주문 작성이 완료되었습니다.");
+};
+</c:if>
 
 	
 </script>
