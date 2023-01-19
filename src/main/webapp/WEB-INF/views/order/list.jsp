@@ -149,7 +149,7 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="buyerCode" value="${param.buyerCode }" type="text" id="" class="form-control" placeholder="바이어코드">
+							<input name="buyerCode" value="${param.buyerCode }" type="text" id="b1" class="form-control" placeholder="바이어코드">
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>	
 					</div>
@@ -192,6 +192,12 @@
 					<div class="col-sm-4">
 						<div style="text-align: justify;">
 							<button class="btn btn-oneline-primary primaryBtn" type="submit">선택 조건 검색</button>
+						</div>
+					</div>
+					<div class="col-sm-2"></div>
+					<div class="col-sm-2">
+						<div style="text-align: justify;">
+							<button id="resetPage" class="btn btn-outline-secondary" type="button">검색 초기화</button>
 						</div>
 					</div>
 				</div>
@@ -437,6 +443,16 @@ if (${size} < 7) {
 	$('#sbh1').removeClass();
 }
 
+/* 바이어검색 시 검색창 띄우기 */
+$(function(){
+			
+	$('input[name=buyerCode]').on('dblclick', function(){
+		window.open("${pageContext.request.contextPath}/master/buyerSearch" , '바이어검색','toolbar=no,resizable=no,status=no,menubar=no,width=500, height=500, top=200,left=300');
+		
+	})
+	
+});
+
 /* 필터 전체기간 체크 */
 function checkDate(){	
 	$('#checkedAllDate').click(function(){
@@ -488,6 +504,12 @@ function reRegisterMessage(){
 };
 </c:if>
 
+$(function(){
+	$('#resetPage').click(function(){
+		const url = '${ctx}/order/list'
+		$(location).attr('href', url);
+	})
+})
 	
 </script>
 	

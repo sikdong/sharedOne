@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.sharedOne.mapper.master.AsjSearchMapper">
+ 	<select id="countBuyerAll" resultType="int">
+ 		SELECT COUNT(*)	
+ 		FROM Buyer
+ 	</select>
+	<select id="countBuyer" resultType="int">
+ 		SELECT COUNT(*)	
+ 		FROM Buyer	
+		WHERE
+	 	(
+	 	<trim prefixOverrides="OR">
+			<if test="keyword != '' or buyerCode != ''">
+			OR buyerCode LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or buyerName != ''">
+			OR buyerName LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or manager != ''">
+			OR manager LIKE #{keyword}
+			</if>
+		</trim>
+		)
+ 	</select>
+ 	
+ 	<select id="searchBuyerList" resultType="com.sharedOne.domain.master.SearchBuyerDto">
+		SELECT 
+			buyerCode,
+			buyerName,
+			manager,
+			buyerId
+		FROM 
+			Buyer			
+		WHERE
+	 	(
+	 	<trim prefixOverrides="OR">
+			<if test="keyword != '' or buyerCode != ''">
+			OR buyerCode LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or buyerName != ''">
+			OR buyerName LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or manager != ''">
+			OR manager LIKE #{keyword}
+			</if>
+		</trim>
+		)	 	
+		ORDER BY buyerId DESC LIMIT 10;
+ 	</select>
+ 	
+ 	<select id="addBuyerList" resultType="com.sharedOne.domain.master.SearchBuyerDto">
+
+		SELECT 
+			buyerCode,
+			buyerName,
+			manager,
+			buyerId
+		FROM 
+			Buyer			
+		WHERE
+		buyerId &lt; #{lastId} AND
+	 	(
+	 	<trim prefixOverrides="OR">
+			<if test="keyword != '' or buyerCode != ''">
+			OR buyerCode LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or buyerName != ''">
+			OR buyerName LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or manager != ''">
+			OR manager LIKE #{keyword}
+			</if>
+		</trim>
+		)	 	
+		ORDER BY buyerId DESC LIMIT 10;
+ 	</select>
+ </mapper>
