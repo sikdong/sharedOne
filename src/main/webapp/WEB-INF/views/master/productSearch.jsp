@@ -52,7 +52,7 @@ button, input, optgroup, select, textarea {
     outline: none;
 }
 .productInfo{
-	border-bottom: 1px solid black;
+	border-bottom: 1px solid #1d5c83;
 	font-size: 12px;
 	padding: 10px;
 	font-size: large;
@@ -74,13 +74,14 @@ li{
 }
 .productType{
 	font-weight:bold;
-	color: red;
+	color: #1d5c83;
 }
 dt{
-	border: 1px solid black;
+	border: 1px solid #1d5c83;
 	border-radius:5px;
 	width: fit-content;
 	float: left;
+	color: #1d5c83;
 }
 .ptName{
 	padding : 0px 3px;
@@ -91,14 +92,17 @@ dt{
 .ptDiv{
 	margin-bottom: 5px;
 }
-.chooseBtn{
-	float: right;
-	border-radius: 5px;
+.chooseBtn {
+ 		background-color: white !important;
+ 		border-color: #1d5c83 !important;
+ 		color: #1d5c83 !important;
+ 		float: right;
 }
-.chooseBtn:hover{
-	background-color:lightblue;
-	color:white;
-}
+ 	
+.chooseBtn:hover {
+ 	background-color: #1d5c83 !important;
+ 	color: white !important;
+ }
 .spinner{
 	width:100%;
 	position:relative;
@@ -117,7 +121,7 @@ dt{
 		<div class="searchBar" style="height: 47px; overflow: visible;" >
 			<h1 class="screen_out">제품 검색</h1>
 			<form action="" id="searchForm" class="form_search">
-				<fieldset class="fld_inside" style="border: 0;border-bottom: 1px solid gray;">
+				<fieldset class="fld_inside" style="border: 0;border-bottom: 1px solid #1d5c83;">
 			        <legend class="screen_out">제품 검색 입력폼</legend>
 			        <div class="product_search">
 			            
@@ -127,7 +131,7 @@ dt{
 			                	   style="font-size: 25px; inline-size: -webkit-fill-available; border:none;border-right:0px; border-top:0px; border-left:0px; border-bottom:0px;">			            	
 			            </div>			            
 			            <button type="button" class="btn_clear" style="display: none;"><span class="img_post">취소</span></button>
-			            <button type="submit" class="btn_search"><i class="fa-solid fa-magnifying-glass"></i></button>        
+			            <button type="submit" class="btn_search" style="color:#1d5c83; "><i class="fa-solid fa-magnifying-glass"></i></button>        
 			        </div>
 			    </fieldset>			
 			</form>
@@ -144,14 +148,13 @@ dt{
         	<li>
         		<input type="hidden" value="${count }" id="countProduct">
         		<input type="hidden" id="lastProductId" value = ${lastProductId }>
-        		<input type="button" id="testBtn" value="test">
         	</li>
             <c:forEach items="${productList }" var="product" varStatus="st">
 				<li>
 					<div class="productInfo">
 						<div class="ptDiv">
 							<span class="productType">${product.productType }</span>
-							<button class="chooseBtn" value="${product.productCode }">선택</button>
+							<button class="chooseBtn btn btn-outline-secondary" value="${product.productCode }">선택</button>
 						</div>
 						<dl>
 							<dt>
@@ -169,20 +172,16 @@ dt{
 						</dl>
 					</div>	
 				</li>
-			</c:forEach>
-			<%-- <li>
-				 <div class="loadingImg" style="text-align:center; background-color:none;">
-		        	<img style="width: 100px; height: 100px;"src="${pageContext.request.contextPath}/content/spinner.svg" alt="">
-		        </div>
-			</li>    --%>                                                                  
-        	</ul>                                    
+			</c:forEach>  
+			                                                                
+        	</ul>
+        	                                  
         </div>		
 	</div>
-	<div class="d-flex justify-content-center spinner">
-	  <div class="spinner-border" id="loadingImg" role="status">
-	    <span class="sr-only">Loading...</span>
-	  </div>
-	</div>
+	<div class="loadingImg" style="text-align:center; background-color:whitesmoke;">
+		        	<img style="width: 100px; height: 100px;"src="${pageContext.request.contextPath}/content/spinner.svg" alt="">
+		        </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -191,7 +190,7 @@ const ctx = "${pageContext.request.contextPath}";
 var lastId = document.querySelector("#lastProductId").value; 
 var count = document.querySelector("#countProduct").value;
 var isLoading = false;
-
+$(".loadingImg").hide();
 $(window).on("scroll",function(){
 	// 위로 스크롤 길이
 	var scrollTop=$(window).scrollTop();
@@ -204,17 +203,19 @@ $(window).on("scroll",function(){
 	
 	if(isBottom){
 		// 만약 마지막 리스트 일 경우
-		if(count <= 0){
+		if(count <= 10){
 			return; // 함수 종료
 		}
 
 		// 로딩바 띄우기
 		$(".loadingImg").show();
-		
 		if(!isLoading)    //실행 가능 상태라면?
         {
 			isLoading = true; //실행 불가능 상태로 변경
-			getList(); 
+		setTimeout(function(){
+			getList();
+			console.log("1초뒤에 실행");
+		}, 500);
         }
 	}
 })
@@ -239,7 +240,7 @@ function getList(){
 							<div class="productInfo">
 								<div class="ptDiv">
 									<span class="productType">\${listAdd.productType }</span>
-									<button class="chooseBtn" value="\${listAdd.productCode }">선택</button>
+									<button class="chooseBtn btn btn-outline-secondary" value="\${listAdd.productCode }">&nbsp<i class="fa-solid fa-check"></i>&nbsp</button>
 								</div>
 								<dl>
 									<dt>
@@ -258,10 +259,10 @@ function getList(){
 							</div>	
 						</li>`;												
 			document.querySelector("#list").insertAdjacentHTML("beforeend", addProduct);
+			}
 			isLoading = false;
 			// 로딩바 숨기기
 			$(".loadingImg").hide();
-		}
 	});
 };
 
