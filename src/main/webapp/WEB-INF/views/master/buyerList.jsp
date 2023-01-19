@@ -36,6 +36,11 @@
 
 
 <style type="text/css">
+	.form-control {
+		border-radius: 5px !important;
+    	
+	}
+	
 	.filterText {
 		text-align: center;
 		
@@ -121,13 +126,13 @@
 				<div class="row d-flex">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >
-							<input name="buyerCode" value="${param.buyerCode }"" type="text" id="" class="form-control" list="datalistOptions1" placeholder="바이어코드">
+							<input name="buyerCode" value="${param.buyerCode }" type="text" id="" class="form-control" list="datalistOptions1" placeholder="바이어코드">
 							<datalist id="datalistOptions1">
 								<c:forEach items="${buyer }" var="buyer">
-									<option value="${buyer.buyerCode }">${buyer.buyerCode }</option>
+									<%-- <option value="${buyer.buyerCode }">${buyer.buyerCode }</option> --%>
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<!-- <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button> -->
 						</div>
 					</div>
 					<div class="col-sm-3">
@@ -135,10 +140,10 @@
 							<input name="buyerName" value="${param.buyerName }" type="text" id="" class="form-control" list="datalistOptions2" placeholder="바이어명">
 							<datalist id="datalistOptions2">
 								<c:forEach items="${buyer }" var="buyer">
-									<option value="${buyer.buyerName }">${buyer.buyerName }</option>
+									<%-- <option value="${buyer.buyerName }">${buyer.buyerName }</option> --%>
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<!-- <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button> -->
 						</div>	
 					</div>
 					<div class="col-sm-3">
@@ -146,10 +151,10 @@
 							<input name="country" value="${param.country }" type="text" id="" class="form-control" list="datalistOptions3" placeholder="국가">
 							<datalist id="datalistOptions3">
 								<c:forEach items="${country }" var="country">
-									<option value="${country }">${country }</option>
+									<%-- <option value="${country }">${country }</option> --%>
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<!-- <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button> -->
 						</div>
 					</div>
 					<div class="col-sm-2">

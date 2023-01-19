@@ -11,56 +11,56 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sharedOne.domain.master.SearchProductDto;
-import com.sharedOne.service.master.YjhSearchService;
+import com.sharedOne.domain.master.SearchBuyerDto;
+import com.sharedOne.service.master.AsjSearchService;
 @Controller
 @RequestMapping("master")
-public class YjhSearchController {
+public class AsjSearchController {
 	
 	@Autowired
-	private YjhSearchService searchService;
+	private AsjSearchService searchService;
 	
 	// 처음 검색창 열었을때 실행
-	@RequestMapping("productSearch")
+	@RequestMapping("buyerSearch")
 	@PreAuthorize("isAuthenticated()")
-	public void productList(
+	public void buyerList(
 			@RequestParam(name = "keyword", defaultValue = "") String keyword ,Model model){		
 		
-		int countProduct = 0;
+		System.out.println("###########"+keyword);
+		int countBuyer = 0;
 		
 		if(keyword.equals("")) {
 			
-			countProduct = searchService.countProductAll();
+			countBuyer = searchService.countBuyerAll();
 			
 		} else {
-			System.out.println(searchService.countProduct(keyword));
 			
-			countProduct = searchService.countProduct(keyword);
+			countBuyer = searchService.countBuyer(keyword);
 		}
 		
 		
-		List <SearchProductDto> searchResult = searchService.searchProductList(keyword);
+		List <SearchBuyerDto> searchResult = searchService.searchBuyerList(keyword);
 		
 		if(searchResult.size()>0) {
 			
 			int resultSize = searchResult.size()-1;
 			
-			int lastProductId = searchResult.get(resultSize).getProductId();
+			int lastBuyerId = searchResult.get(resultSize).getBuyerId();
 			
-			model.addAttribute("lastProductId",lastProductId);
+			model.addAttribute("lastBuyerId",lastBuyerId);
 		}
 		
-		model.addAttribute("count", countProduct);
+		model.addAttribute("count", countBuyer);
 		
-		model.addAttribute("productList", searchResult);
+		model.addAttribute("buyerList", searchResult);
 
 	}
 	
 	// 10개씩 검색 리스트 추가
-		@GetMapping("addProductList")
+		@GetMapping("addBuyerList")
 		@PreAuthorize("isAuthenticated()")
 		@ResponseBody
-		public List <SearchProductDto> addList(
+		public List <SearchBuyerDto> addList(
 				@RequestParam(name = "keyword", defaultValue = "") String keyword ,
 				@RequestParam(name = "lastId", defaultValue = "") int lastId,
 				Model model){
@@ -75,7 +75,7 @@ public class YjhSearchController {
 			 * model.addAttribute("lastProductId",lastProductId); }
 			 */
 			System.out.println(lastId);
-			return searchService.addProductList(keyword,lastId);
+			return searchService.addBuyerList(keyword,lastId);
 
 		}
 }

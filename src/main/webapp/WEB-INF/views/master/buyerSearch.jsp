@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 <!DOCTYPE html>
@@ -14,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-<title>제품 검색</title>
+<title>바이어 검색</title>
 </head>
 <style>
  .screen_out{
@@ -25,13 +24,13 @@
     line-height: 0;
     text-indent: -9999px;
  }
- .form_search .product_search {
+ .form_search .buyer_search {
     height: 46px;
     padding: 0 65px 0 15px;
     background-color: #fff;
     position: relative;
 }
-.product_search .btn_search{
+.buyer_search .btn_search{
     font-size: x-large;
     position: absolute;
     right: 0;
@@ -48,18 +47,16 @@ button, input, optgroup, select, textarea {
     font-size: inherit;
     line-height: inherit;
 }
-.product_name:focus{
+.buyer_name:focus{
     outline: none;
 }
-.productInfo{
-	border-bottom: 1px solid #1d5c83;
+.buyerInfo{
+	border-bottom: 1px solid black;
 	font-size: 12px;
 	padding: 10px;
 	font-size: large;
 }
-/* .productInfo:hover{
-	background-color:lightgray;
-} */
+
 ul{
 	margin-left:0;
 	padding-left:0;
@@ -72,37 +69,32 @@ li{
 	padding-bottom: 10px;
 	font-size: x-large;
 }
-.productType{
+.buyerCode{
 	font-weight:bold;
-	color: #1d5c83;
+	color: red;
+	padding : 1px;
 }
 dt{
-	border: 1px solid #1d5c83;
+	border: 1px solid black;
 	border-radius:5px;
 	width: fit-content;
 	float: left;
-	color: #1d5c83;
 }
-.ptName{
+.bName{
 	padding : 0px 3px;
 }
-.productType{
-	padding : 1px;
-}
-.ptDiv{
+
+.bDiv{
 	margin-bottom: 5px;
 }
-.chooseBtn {
- 		background-color: white !important;
- 		border-color: #1d5c83 !important;
- 		color: #1d5c83 !important;
- 		float: right;
+.chooseBtn{
+	float: right;
+	border-radius: 5px;
 }
- 	
-.chooseBtn:hover {
- 	background-color: #1d5c83 !important;
- 	color: white !important;
- }
+.chooseBtn:hover{
+	background-color:lightblue;
+	color:white;
+}
 .spinner{
 	width:100%;
 	position:relative;
@@ -119,19 +111,19 @@ dt{
 <body style="margin: 0px; padding: 0px; height: 100%; width: 100%; overflow: auto; background-color: lightgray;">
 	<div class="searchBody" style="background-color: whitesmoke; font-size: 14px; line-height: 1.5; color: #222;" >
 		<div class="searchBar" style="height: 47px; overflow: visible;" >
-			<h1 class="screen_out">제품 검색</h1>
+			<h1 class="screen_out">바이어 검색</h1>
 			<form action="" id="searchForm" class="form_search">
-				<fieldset class="fld_inside" style="border: 0;border-bottom: 1px solid #1d5c83;">
-			        <legend class="screen_out">제품 검색 입력폼</legend>
-			        <div class="product_search">
+				<fieldset class="fld_inside" style="border: 0;border-bottom: 1px solid gray;">
+			        <legend class="screen_out">바이어 검색 입력폼</legend>
+			        <div class="buyer_search">
 			            
 			            <div class="wrap_tf_keyword">
-			                <input placeholder="검색할 제품을 입력, 예시) GA0001, GA, 0010" name="keyword" id="keywordInput" value="${param.keyword }" 
-			                	   class="product_name" type="text" autocomplete="off"
+			                <input placeholder="검색할 바이어 입력, 예시) KVV, 한국밸브" name="keyword" id="keywordInput" value="${param.keyword }" 
+			                	   class="buyer_name" type="text" autocomplete="off"
 			                	   style="font-size: 25px; inline-size: -webkit-fill-available; border:none;border-right:0px; border-top:0px; border-left:0px; border-bottom:0px;">			            	
 			            </div>			            
 			            <button type="button" class="btn_clear" style="display: none;"><span class="img_post">취소</span></button>
-			            <button type="submit" class="btn_search" style="color:#1d5c83; "><i class="fa-solid fa-magnifying-glass"></i></button>        
+			            <button type="submit" class="btn_search"><i class="fa-solid fa-magnifying-glass"></i></button>        
 			        </div>
 			    </fieldset>			
 			</form>
@@ -139,58 +131,63 @@ dt{
             <label for="focusContent" class="screen_out">의 검색 결과 입니다. 아래쪽으로 스크롤하세요.</label>
 		</div>	
         <div class="result_body mt-3 pb-2">
-        <c:if test="${empty productList}">
+        <c:if test="${empty buyerList}">
         	<div class="notResult">
 	        	<span>"${param.keyword }"에 대한 검색 결과가 없습니다.</span>
         	</div>
         </c:if>
         	<ul id="list">
         	<li>
-        		<input type="hidden" value="${count }" id="countProduct">
-        		<input type="hidden" id="lastProductId" value = ${lastProductId }>
+        		<input type="hidden" value="${count }" id="countBuyer">
+        		<input type="hidden" id="lastBuyerId" value = ${lastBuyerId }>
+        		<input type="button" id="testBtn" value="test">
         	</li>
-            <c:forEach items="${productList }" var="product" varStatus="st">
+            <c:forEach items="${buyerList }" var="buyer" varStatus="st">
 				<li>
-					<div class="productInfo">
-						<div class="ptDiv">
-							<span class="productType">${product.productType }</span>
-							<button class="chooseBtn btn btn-outline-secondary" value="${product.productCode }">선택</button>
+					<div class="buyerInfo">
+						<div class="bDiv">
+							<span class="buyerName">${buyer.buyerName }</span>
+							<button class="chooseBtn" value="${buyer.buyerCode }">선택</button>
 						</div>
 						<dl>
 							<dt>
-								제품코드
+								바이어코드
 							</dt>
 							<dd>
-								<span class="productCode" id="productCode+${product.productId}">&nbsp&nbsp${product.productCode }</span>
+								<span class="buyerCode" id="buyerCode+${buyer.buyerId}">&nbsp&nbsp${buyer.buyerCode }</span>
 							</dd>
-							<dt class="ptName">
-								제&nbsp품&nbsp명
+							<dt class="bName">
+								바&nbsp이&nbsp어&nbsp명
 							</dt>
 							<dd>
-								<span class="productName">&nbsp&nbsp${product.productName }</span>
+								<span class="manager">&nbsp&nbsp${buyer.manager }</span>
 							</dd>
 						</dl>
 					</div>	
 				</li>
-			</c:forEach>  
-			                                                                
-        	</ul>
-        	                                  
-        </div>		
-	</div>
-	<div class="loadingImg" style="text-align:center; background-color:whitesmoke;">
+			</c:forEach>
+			<%-- <li>
+				 <div class="loadingImg" style="text-align:center; background-color:none;">
 		        	<img style="width: 100px; height: 100px;"src="${pageContext.request.contextPath}/content/spinner.svg" alt="">
 		        </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+			</li>    --%>                                                                  
+        	</ul>                                    
+        </div>		
+	</div>
+	<div class="d-flex justify-content-center spinner">
+	  <div class="spinner-border" id="loadingImg" role="status">
+	    <span class="sr-only">Loading...</span>
+	  </div>
+	</div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>	
 const ctx = "${pageContext.request.contextPath}";	
-var lastId = document.querySelector("#lastProductId").value; 
-var count = document.querySelector("#countProduct").value;
+var lastId = document.querySelector("#lastBuyerId").value; 
+var count = document.querySelector("#countBuyer").value;
 var isLoading = false;
-$(".loadingImg").hide();
+
 $(window).on("scroll",function(){
 	// 위로 스크롤 길이
 	var scrollTop=$(window).scrollTop();
@@ -203,19 +200,17 @@ $(window).on("scroll",function(){
 	
 	if(isBottom){
 		// 만약 마지막 리스트 일 경우
-		if(count <= 10){
+		if(count <= 0){
 			return; // 함수 종료
 		}
 
 		// 로딩바 띄우기
 		$(".loadingImg").show();
+		
 		if(!isLoading)    //실행 가능 상태라면?
         {
 			isLoading = true; //실행 불가능 상태로 변경
-		setTimeout(function(){
-			getList();
-			console.log("1초뒤에 실행");
-		}, 500);
+			getList(); 
         }
 	}
 })
@@ -229,40 +224,40 @@ function getList(){
 	if(keyword == null){
 		keyword = "";
 	}
-	fetch(`\${ctx}/master/addProductList?keyword=\${keyword}&&lastId=\${lastId}`)
+	fetch(`\${ctx}/master/addBuyerList?keyword=\${keyword}&&lastId=\${lastId}`)
 	.then(res => res.json())
 	.then(list => {
 		const searchList = document.querySelector("#list");
 		for(const listAdd of list){
-			lastId = `\${listAdd.productId}`;
-			const addProduct = `
+			lastId = `\${listAdd.buyerId}`;
+			const addBuyer = `
 						<li>
-							<div class="productInfo">
-								<div class="ptDiv">
-									<span class="productType">\${listAdd.productType }</span>
-									<button class="chooseBtn btn btn-outline-secondary" value="\${listAdd.productCode }">&nbsp<i class="fa-solid fa-check"></i>&nbsp</button>
+							<div class="buyerInfo">
+								<div class="bDiv">
+									<span class="buyerName">\${listAdd.buyerName }</span>
+									<button class="chooseBtn" value="\${listAdd.buyerCode }">선택</button>
 								</div>
 								<dl>
 									<dt>
-										제품코드
+										바이어코드
 									</dt>
 									<dd>
-										<span class="productCode" id="productCode+\${listAdd.productId}">&nbsp&nbsp\${listAdd.productCode }</span>
+										<span class="buyerCode" id="buyerCode+\${listAdd.buyerId}">&nbsp&nbsp\${listAdd.buyerCode }</span>
 									</dd>
-									<dt class="ptName">
-										제&nbsp품&nbsp명
+									<dt class="bName">
+										바&nbsp이&nbsp어&nbsp명
 									</dt>
 									<dd>
-										<span class="productName">&nbsp&nbsp\${listAdd.productName }</span>
+										<span class="manager">&nbsp&nbsp\${listAdd.manager }</span>
 									</dd>
 								</dl>
 							</div>	
 						</li>`;												
-			document.querySelector("#list").insertAdjacentHTML("beforeend", addProduct);
-			}
+			document.querySelector("#list").insertAdjacentHTML("beforeend", addBuyer);
 			isLoading = false;
 			// 로딩바 숨기기
 			$(".loadingImg").hide();
+		}
 	});
 };
 
@@ -270,7 +265,7 @@ $(document).on('click','.chooseBtn', (e)=>{
 	
 	  var result = e.target.value;	  
 	  
-	  window.opener.document.getElementById("parentInput").value = result;
+	  window.opener.document.getElementById("b1").value = result;
 
 	  window.close();
 	})
@@ -278,11 +273,13 @@ $(document).on('click','.chooseBtn', (e)=>{
 /* salePriceList.jsp_서정 : 인풋값 입력하면, 부모창에 검색 시키기  */
 $(function(){
 	$('.chooseBtn').click(function(){
-		const productCode = $(this).val();
-		console.log("this:"+productCode);
-		$("#p1", parent.opener.document).val(productCode);
+		const buyerCode = $(this).val();
+		/* console.log("this:"+buyerCode); */
+		
+		$("#b1", parent.opener.document).val(buyerCode);
 		$(opener.document).find("#selectedSearchBtn").click();		
 	})
 });
+	
 </script>
 </html>

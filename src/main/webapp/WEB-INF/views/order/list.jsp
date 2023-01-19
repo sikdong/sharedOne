@@ -98,6 +98,8 @@
 
 </head>
 <body>
+<%-- <div id="message">${message }</div>  --%>
+
 <!-- 로그인 아이디 -->
 <sec:authentication property="name" var="memberId"/>
 <!-- 현재 날짜 설정  -->
@@ -147,7 +149,7 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="buyerCode" value="${param.buyerCode }" type="text" id="" class="form-control" placeholder="바이어코드">
+							<input name="buyerCode" value="${param.buyerCode }" type="text" id="b1" class="form-control" placeholder="바이어코드">
 							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>	
 					</div>
@@ -190,6 +192,12 @@
 					<div class="col-sm-4">
 						<div style="text-align: justify;">
 							<button class="btn btn-oneline-primary primaryBtn" type="submit">선택 조건 검색</button>
+						</div>
+					</div>
+					<div class="col-sm-2"></div>
+					<div class="col-sm-2">
+						<div style="text-align: justify;">
+							<button id="resetPage" class="btn btn-outline-secondary" type="button">검색 초기화</button>
 						</div>
 					</div>
 				</div>
@@ -416,12 +424,11 @@ function list(){
 							'<td>'+item.productCode+'</td>'+
 							'<td>'+item.productType+'</td>'+
 							'<td>'+item.productName+'</td>'+
-							'<td>'+item.price+'</td>'+
-							'<td>'+item.finalPrice+'</td>'+
-							
+							'<td>'+addComma(String(item.price))+'</td>'+
+							'<td>'+addComma(String(item.finalPrice))+'</td>'+					
 							'<td>'+dc+'%</td>'+
 							'<td>'+item.quantity+item.unit+'</td>'+
-							'<td>'+item.sum+'</td>'+
+							'<td>'+addComma(String(item.sum))+'</td>'+
 						'</tr>'
 						);
 					});
@@ -435,6 +442,16 @@ function list(){
 if (${size} < 7) {
 	$('#sbh1').removeClass();
 }
+
+/* 바이어검색 시 검색창 띄우기 */
+$(function(){
+			
+	$('input[name=buyerCode]').on('dblclick', function(){
+		window.open("${pageContext.request.contextPath}/master/buyerSearch" , '바이어검색','toolbar=no,resizable=no,status=no,menubar=no,width=500, height=500, top=200,left=300');
+		
+	})
+	
+});
 
 /* 필터 전체기간 체크 */
 function checkDate(){	
@@ -465,8 +482,34 @@ function removeComma(value){
      value = value.replace(/[^\d]+/g, "");
      return value; 
 }
+/* 주문등록완료 메세지 알람  */
+<c:if test = "${not empty orderMessage }">
+orderMessage();
+function orderMessage(){
+	alert("주문 작성이 완료되었습니다.");
+};
+</c:if>
+/* 주문 임시저정 메세지 알람  */
+<c:if test = "${not empty tempSaveMessage }">
+tempSaveMessage();
+function tempSaveMessage(){
+	alert("임시저장이 되었습니다.");
+};
+</c:if>
+/* 주문 임시저정 메세지 알람  */
+<c:if test = "${not empty reRegisterMessage }">
+reRegisterMessage();
+function reRegisterMessage(){
+	alert("주문 작성이 완료되었습니다.");
+};
+</c:if>
 
-
+$(function(){
+	$('#resetPage').click(function(){
+		const url = '${ctx}/order/list'
+		$(location).attr('href', url);
+	})
+})
 	
 </script>
 	

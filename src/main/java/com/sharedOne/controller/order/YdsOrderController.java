@@ -78,6 +78,8 @@ public class YdsOrderController {
 	@ResponseBody
 	public List<ProductDto> searchAllProductInfo(@PathVariable String allProductInfo,
 			@PathVariable String tableBuyerCode, @PathVariable String deliveryDate) {
+		System.out.println(allProductInfo);
+		System.out.println(service.searchProduct(allProductInfo, tableBuyerCode, deliveryDate));
 		return service.searchProduct(allProductInfo, tableBuyerCode, deliveryDate);
 
 	}
@@ -98,6 +100,13 @@ public class YdsOrderController {
 		}
 		System.out.println("yod = " + yod);
 		service.insertOrder(yod);
+		if(yod.getStatus().equals("임시저장")) {
+			rttr.addFlashAttribute("tempSaveMessage", "임시저장 되었습니다.");
+		}
+		if(yod.getStatus().equals("승인요청")){
+			
+			rttr.addFlashAttribute("orderMessage", "주문 작성이 완료되었습니다.");
+		}
 		return "redirect:/order/list";
 	}
 
@@ -112,6 +121,13 @@ public class YdsOrderController {
 		System.out.println("orderId = " + orderId);
 		System.out.println("yod = " + yod);
 		service.updateOrder(yod, orderId);
+		if(yod.getStatus().equals("임시저장")) {
+			rttr.addFlashAttribute("tempSaveMessage", "임시저장 되었습니다.");
+		}
+		if(yod.getStatus().equals("승인요청")){
+			
+			rttr.addFlashAttribute("reRegisterMessage", "주문 작성이 완료되었습니다.");
+		}
 		return "redirect:/order/list";
 	}
 

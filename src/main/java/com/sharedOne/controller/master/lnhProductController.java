@@ -72,9 +72,9 @@ public class lnhProductController {
 	
 	@PostMapping("productRegister")
 	@PreAuthorize("isAuthenticated()")
-	public void register(ProductDto product) {
+	public String register(ProductDto product) {
 		productService.register(product);
-		
+		return "redirect:/master/registerConfirm"; 
 	}
 	
 	//새 창으로 띄우는 경우 
@@ -117,7 +117,6 @@ public class lnhProductController {
 
 		ProductDto product = productService.getByProductCode(productCode);
 		System.out.println("제품코드 확인"+product);
-		
 		if (product == null) {
 			map.put("status", "not exist");
 			map.put("message", "사용 가능한 제품코드입니다.");
@@ -161,10 +160,11 @@ public class lnhProductController {
 	
 	@PostMapping("productRemove")
 	@PreAuthorize("isAuthenticated()")
-	public void remove(
+	public String remove(
 			@RequestParam(name = "code") String productCode) {
 		productService.remove(productCode);
-		/* return "redirect:/master/removeConfirm"; */
+		return "redirect:/master/removeConfirm";
 	}
+	
 	
 }

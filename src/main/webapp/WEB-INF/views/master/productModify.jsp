@@ -162,8 +162,8 @@
 								<input id="productPrice" name="price"
 									type="text" class="form-control"
 									value="<fmt:formatNumber value="${product.price }"/>"
-									placeholder="<fmt:formatNumber value="${product.price }"/>" 
-									/>
+									onkeyup="inputNumberFormat(this);" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+									
 							</div>
 						</div>
 
@@ -197,7 +197,7 @@
 
 				<!-- 수정버튼 -->
 
-				<input id="modifyBtn" class="btn" type="submit" value="수정" onclick="modifyCheck()">
+				<input id="modifyBtn" class="btn" value="수정" onclick="modifyCheck()">
 			</form>
 
 			<form action="/master/productRemove" name="removefrm" method="post">
@@ -210,6 +210,22 @@
 </sec:authorize>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <script>
+    
+    //단가 콤마 붙이기
+	function comma(str) {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+    }
+
+    function uncomma(str) {
+        str = String(str);
+        return str.replace(/[^\d]+/g, '');
+    } 
+    
+    function inputNumberFormat(obj) {
+        obj.value = comma(uncomma(obj.value));
+    }
+    
     //삭제확인 버튼 클릭하면 삭제 form 전송
     function removeCheck() {
 	  
@@ -218,44 +234,33 @@
 	 		window.opener.location.reload();    //부모창 reload
 	 		setTimeout(function() {   
 	             window.close();
-	          }, 500);
+	          }, 50);
 	 	} else{
-	     return false;
-	     }
+	 		alert("삭제 되지 않았습니다. ");
+	     	return false;
+	    }
 
 	}
     
     //수정 버튼 클릭하면 수정 form 전송
     function modifyCheck() { 
-    	document.modifyfrm.submit();
-        window.opener.location.reload();
-    	setTimeout(function() {
-    		window.close();
-            }, 10);  
-        }
-    
-/*         function comma(str) {
-        str = String(str);
-        return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-        }
+    	if (confirm("정말 수정하시겠습니까?") == true) { 
+    		var price = document.querySelector("#productPrice").value;
+        	var modifiedPrice = price.split(',').join("");
 
-        function uncomma(str) {
-            str = String(str);
-            return str.replace(/[^\d]+/g, '');
-        } 
-        
-        function inputNumberFormat(obj) {
-            obj.value = comma(uncomma(obj.value));
-        }
-        
-        function inputOnlyNumberFormat(obj) {
-            obj.value = onlynumber(uncomma(obj.value));
-        }
-        
-        function onlynumber(str) {
-            str = String(str);
-            return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1');
-        } */
+        	document.querySelector("#productPrice").value = modifiedPrice;
+	    	document.modifyfrm.submit();
+	        window.opener.location.reload();
+	    	setTimeout(function() {
+	    		window.close();
+	            }, 20);  
+    		
+    	}else{
+	 		alert("수정 되지 않았습니다. ");
+	     	return false;
+	    }
+   }
+    
     </script>
 
 </body>
