@@ -467,10 +467,17 @@ function removeComma(value){
      return value; 
 }
 /* 주문등록완료 메세지 알람  */
-<c:if test = "${not empty message }">
-message();
-function message(){
+<c:if test = "${not empty orderMessage }">
+orderMessage();
+function orderMessage(){
 	alert("주문 작성이 완료되었습니다.");
+};
+</c:if>
+/* 주문 임시저정 메세지 알람  */
+<c:if test = "${not empty reRegisterMessage }">
+reRegisterMessage();
+function reRegisterMessage(){
+	alert("임시저장이 되었습니다.");
 };
 </c:if>
 
