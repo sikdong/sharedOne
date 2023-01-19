@@ -126,16 +126,14 @@ public class YjhOrderController {
 	
 	@PostMapping("companionSheet")
 	@PreAuthorize("(authentication.name == #id)")
-	public String setClosing(RedirectAttributes rttr,int orderId, String status, String id) {
+	public void setClosing(RedirectAttributes rttr,int orderId, String status, String id) {
 		
 		if(status.equals("종결")) {
 			
 			int closing = service.setClosing(orderId);
 			
-			return "redirect:/order/closing";
 		}
 		
-		return "redirect:/order/closing";
 	}
 	
 	@RequestMapping("closing")

@@ -240,7 +240,7 @@ function getList(){
 							<div class="productInfo">
 								<div class="ptDiv">
 									<span class="productType">\${listAdd.productType }</span>
-									<button class="chooseBtn btn btn-outline-secondary" value="\${listAdd.productCode }">&nbsp<i class="fa-solid fa-check"></i>&nbsp</button>
+									<button class="chooseBtn btn btn-outline-secondary" value="\${listAdd.productCode }">선택</button>
 								</div>
 								<dl>
 									<dt>
@@ -271,8 +271,12 @@ $(document).on('click','.chooseBtn', (e)=>{
 	  var result = e.target.value;	  
 	  
 	  window.opener.document.getElementById("parentInput").value = result;
-
-	  window.close();
+		
+	  setTimeout(function(){
+		  window.close();
+		  console.log("1초뒤에 실행");
+		}, 100);
+	  
 	})
 	
 /* salePriceList.jsp_서정 : 인풋값 입력하면, 부모창에 검색 시키기  */
