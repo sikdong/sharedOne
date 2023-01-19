@@ -156,16 +156,16 @@
             <div class="collapse" id="master-collapse" style="">
               <ul>
                 <li>
-                    <div class="li-div">
-                        <a href="/master/buyerList" class="rounded" style="color: #e3e3e3;">바이어 관리</a>
-                    </div>
-                </li>
-                <li>
                 	<c:url value="/master/productList" var="productListLink">
                 		<c:param name="" value=""></c:param>
                 	</c:url>
                     <div class="li-div">
                         <a href="${productListLink }" class="rounded" style="color: #e3e3e3;">제품 관리</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="li-div">
+                        <a href="/master/buyerList" class="rounded" style="color: #e3e3e3;">바이어 관리</a>
                     </div>
                 </li>
                 <li>
@@ -224,16 +224,11 @@
 	            </div>
 	          </li>
          </sec:authorize>
-         <sec:authorize access="isAuthenticated()">
-	          <li class="mb-1">
+         <%-- <li class="mb-1">
 	            <div class="row list-row">
 	                <a href="#" type="button" id="searchBtn" class="list-head" style="text-decoration: none;color: #e3e3e3;"><i class="fa-solid fa-magnifying-glass"></i>&nbsp; 제품 검색</a>
 	            </div>
-	          </li>
-	          <li>
-	          	<input id="parentInput" type="text">
-	          </li>
-          </sec:authorize>
+	          </li> --%>
           <!-- spring security expressions -->
           <sec:authorize access="not isAuthenticated()">
 	          <li class="mb-1">

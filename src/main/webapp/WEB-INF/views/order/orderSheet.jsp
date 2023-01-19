@@ -203,7 +203,12 @@ function content_print(){
     window.onafterprint = function(){
         document.body.innerHTML = initBody;
     }
-    window.print();    
+    window.print();
+    
+    window.opener.location.reload();
+	setTimeout(function() {
+		window.close();
+        }, 100);
 }           
 </script>
 </body>

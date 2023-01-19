@@ -68,8 +68,8 @@ public class lnhReportController {
 			@RequestParam(name="productCode", defaultValue="") String productCode,
 			@RequestParam(name="writer", defaultValue="") String writer,
 			@RequestParam(name="status", defaultValue="") String status,
-			@RequestParam(name="fromDate", defaultValue="") String fromDate,
-			@RequestParam(name="endDate", defaultValue="") String endDate,
+			@RequestParam(name="fromDate", defaultValue="0001-01-01") String fromDate,
+			@RequestParam(name="endDate", defaultValue="9999-12-31") String endDate,
 			Model model) {
 		
 		//검색 결과 리스트
@@ -137,8 +137,8 @@ public class lnhReportController {
 			@RequestParam(name="productCode", defaultValue="") String productCode,
 			@RequestParam(name="writer", defaultValue="") String writer,
 			@RequestParam(name="status", defaultValue="") String status,
-			@RequestParam(name="fromDate", defaultValue="") String fromDate,
-			@RequestParam(name="endDate", defaultValue="") String endDate) throws IOException {
+			@RequestParam(name="fromDate", defaultValue="0001-01-01") String fromDate,
+			@RequestParam(name="endDate", defaultValue="9999-12-31") String endDate) throws IOException {
 		
 		
 		try (Workbook workbook = new XSSFWorkbook()) {

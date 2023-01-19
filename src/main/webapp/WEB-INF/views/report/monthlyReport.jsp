@@ -102,6 +102,11 @@ function drawWriterChart() {
 </script>
 
 <style type="text/css">
+	.form-control {
+		border-radius: 5px !important;
+    	
+	}
+
 	.filterText {
 		text-align: center;
 		
@@ -206,21 +211,22 @@ div.right {
 							<input name="orderCode" value="${param.orderCode }"  type="text" id="" class="form-control" list="datalistOptions1" placeholder="주문서 ID">
 							<datalist id="datalistOptions1">
 								<c:forEach items="${orderList }" var="order">
-									<option value="${order.orderCode}">${order.orderCode}</option>
+									<%-- <option value="${order.orderCode}">${order.orderCode}</option> --%>
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<!-- <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button> -->
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="productCode" value="${param.productCode }" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품코드">
+							<input name="productCode" value="${param.productCode }" type="text" id="parentInput" class="form-control" list="datalistOptions2" placeholder="제품코드">
 							<datalist id="datalistOptions2">
 								<c:forEach items="${productList }" var="product">
-									<option value="${product.productCode}">${product.productCode }</option>
+									<%-- <option value="${product.productCode}">${product.productCode }</option> --%>
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<button class="btn btn-outline-secondary" onclick="window.open('${pageContext.request.contextPath}/master/productSearch' , '제품등록','toolbar=no,resizable=no,status=no,menubar=no,width=500, height=500, top=200,left=300');">
+							제품 검색</button>
 						</div>	
 					</div>
 					<div class="col-sm-3">
@@ -228,10 +234,10 @@ div.right {
 							<input name="writer" value="${param.writer }" type="text" id="" class="form-control" list="datalistOptions3" placeholder="담당자">
 							<datalist id="datalistOptions3">
 								<c:forEach items="${writers }" var="writer">
-									<option value="${writer }">${writer }</option>
+									<%-- <option value="${writer }">${writer }</option> --%>
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<!-- <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button> -->
 						</div>
 					</div>
 					<div class="col-sm-3">
@@ -242,7 +248,7 @@ div.right {
 									<option value="${status }">${status }</option>
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<!-- <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button> -->
 						</div>
 					</div>
 				</div><!-- 2nd row 끝 -->

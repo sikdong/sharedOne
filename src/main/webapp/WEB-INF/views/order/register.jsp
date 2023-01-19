@@ -114,7 +114,7 @@
 						<div class="col-sm-6 mb-4">
 							<div class="input-group">
 								<input name="buyerInfo" id="allBuyerInfoInput"
-									class="form-control" type="Search" placeholder="전체검색"
+									class="form-control" type="Search" placeholder="바이어 관련 정보를 입력 ex) ATX, 한국"
 									aria-label="Search">
 								<button type="button" class="btn btn-outline-secondary"
 									id="allBuyerInfoBtn" onclick=>
@@ -354,23 +354,20 @@
 	
 	const path = "${pageContext.request.contextPath}"
 	
-	function clearInput(event){
-		docum
-	}
 	
 	
 	function makeSumforfinalPrice(event){
-		const quantity = event.target.parentElement.nextElementSibling.firstElementChild
-		const finalPrice = event.target
-		let preSum = finalPrice.value*quantity.value;
+		let quantity = event.target.parentElement.nextElementSibling.firstElementChild
+		let finalPrice = event.target.value.split(',').join("");
+		let preSum = finalPrice*quantity.value;
 		let sum = preSum.toLocaleString();
 		event.target.parentElement.nextElementSibling.nextElementSibling.firstElementChild.value= sum;
   	}
 
 	function makeSumforquantity(event){
-		const quantity = event.target
-		const finalPrice = quantity.parentElement.previousElementSibling.firstElementChild
-		let preSum = finalPrice.value*quantity.value;
+		let quantity = event.target
+		let finalPrice = quantity.parentElement.previousElementSibling.firstElementChild.value.split(',').join("");
+		let preSum = finalPrice*quantity.value;
 		let sum = preSum.toLocaleString();
 		quantity.parentElement.nextElementSibling.firstElementChild.value= sum
 	}
@@ -636,10 +633,7 @@
 			
 		})
 		} else {
-			const toastLiveExample = document.getElementById('liveToast')
-			const toast = new bootstrap.Toast(toastLiveExample)
-
-		    toast.show()
+			alert("납기 요청일을 입력해주세요.")
 		}
 	})
 	
@@ -700,7 +694,7 @@
 					}
 		})
 		} else {
-			alert("납기 요청일을 입력해주세요")
+			alert("납기 요청일을 입력해주세요.")
 		}
 	})
 	<%--제품코드로 검색 --%>
@@ -760,7 +754,7 @@
 					}
 		})
 		} else {
-			alert("납기 요청일을 입력해주세요")
+			alert("납기 요청일을 입력해주세요.")
 		}
 	})
 	
@@ -829,8 +823,22 @@
 	document.querySelector("#addOrder").addEventListener("click", function() {
 		
 		const buyerCode = document.querySelector('input[name="buyerCode"]:checked').value;
-		const productCode = document.querySelectorAll('input[name="productCode"]:checked');
-			
+		let productCode = document.querySelectorAll('input[name="productCode"]:checked');
+		let doubleCheck = document.querySelectorAll('#tempOrderTable input[name="productCode"]')
+		let a = true;
+		console.log(doubleCheck.length);
+		console.log(productCode.length);
+		for(let j = 0; j < doubleCheck.length; j++){
+			for(let i = 0; i < productCode.length; i++){
+				if(productCode[i].value === doubleCheck[j].value){
+					alert("중복되는 제품이 있습니다. 다시 선택해주세요")
+				 	i = productCode.length;
+				 	j = doubleCheck.length;
+				 	a = false;
+				}
+			}
+		}
+		if(a){
 		let productCodes = [];
 		let fromDates = [];
 		let endDates = [];
@@ -859,6 +867,8 @@
 			for(const da of data){
 			let op = da.price
 			let orderPrice = op.toLocaleString();
+			let sp = da.salePrice
+			let salePrice = sp.toLocaleString();
 			const productOrderTable =
             `<tr id="tr\${i}">
               <th scope="row" class="oiNumber" id="oiNumber\${i}" data-order-number=''></th>
@@ -871,17 +881,17 @@
               <td>\${orderPrice}</td>
               <td>
 	              <input class="form-style" 
-	              type="number" id="finalPrice\${i}" 
+	              type="text" id="finalPrice\${i}" 
 	              onclick = "makeSumforfinalPrice(event)"
 	              onchange = "makeSumforfinalPrice(event)"
-	              name="finalPrice" value="\${da.salePrice}">
+	              name="finalPrice" value="\${salePrice}">
               </td>
               <td><input 
               onclick = "makeSumforquantity(event)" 
 	          onchange = "makeSumforquantity(event)"
 	              
-              id="quantity\${i}" class="form-style" type="number" name="quantity" value=""></td>
-              <td><input readonly type="text" id="sum\${i}" name="sum" class="form-style" /></td>
+              id="quantity\${i}" class="form-style" type="number" name="quantity" value="0"></td>
+              <td><input readonly type="text" id="sum\${i}" name="sum" class="form-style" value="0" /></td>
               <td style="display : flex; justify-content : center;">
                   <button onclick="document.querySelector('#tr\${i}').innerHTML = '', assignNumber(), showToast();" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
               </td>
@@ -891,11 +901,9 @@
 			}
 			document.querySelector("#productBody").innerHTML = "";
 	            const oiNumber = document.querySelectorAll(".oiNumber")
-	            console.log(oiNumber)
 				for(let i = 0; i < oiNumber.length; i++){
 					if(i == 0){
 						let zeroNum = document.querySelector("#firstNum").value
-						console.log(zeroNum);
 						let firstNum = parseInt(zeroNum, 10);
 						oiNumber[i].innerHTML = ++firstNum;
 						
@@ -904,12 +912,18 @@
 						oiNumber[i].innerHTML = ++previousNum;
 					}
 				}
-		})
+			})
+		}	
 	}); 
 	
 	function tempSave(){
 		document.querySelector("#status").value = '임시저장'
 		let sum = document.querySelectorAll('input[name="sum"]');
+		let finalPrice = document.querySelectorAll('input[name="finalPrice"]')
+		
+		finalPrice.forEach((el) =>{
+		el.value = el.value.split(',').join("");	
+		})
 		sum.forEach((el) =>{
 			el.value = el.value.split(',').join("");	
 		})
@@ -918,6 +932,11 @@
 	function register(){
 		document.querySelector("#status").value = '승인요청'
 		let sum = document.querySelectorAll('input[name="sum"]');
+		let finalPrice = document.querySelectorAll('input[name="finalPrice"]')
+		
+		finalPrice.forEach((el) =>{
+		el.value = el.value.split(',').join("");	
+		})
 		sum.forEach((el) =>{
 		el.value = el.value.split(',').join("");	
 		})
