@@ -1,5 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,14 +89,14 @@
                       </div>
                       <div class="mb-2 row mt-2 rowdiv">
                         <label for="" class="col-3 col-form-label">단가</label>
-                        <div class="col-sm-5">
+                        <div class="col-sm-5">              	
 			    			<input id="price" value="${sale.price }" type="text" class="form-control" placeholder="단가" readonly disabled>					     
                         </div>
                       </div>
                       <div class="mb-2 row mt-2 rowdiv">
                           <label for="" class="col-3 col-form-label">판매가</label>
                           <div class="col-sm-5">
-                              <input name="salePrice" value="${sale.salePrice }" type="number" class="form-control" placeholder="판매가격을 입력하세요."/>
+                              <input name="salePrice" value="${sale.salePrice }" type="text" class="form-control" placeholder="판매가격을 입력하세요."/>
                           </div>
                       </div>
                       <div class="mb-2 row mt-2 rowdiv">
@@ -137,7 +140,6 @@ const ctx = "${pageComtext.request.contextPath}";
 
 dateCheck();
 
-
 /* 저장된 인풋값을 => 부모창에 검색 시키기  */
  $(function(){
 	const buyerCode = $('input[name=buyerCode]').val();
@@ -148,11 +150,34 @@ dateCheck();
 	$(opener.document).find("#selectedSearchBtn").click();		
 	
 })
+/* 단가& 판매가 콤마 넣기 */
+$(function(){
+	let price = $('#price').val();
+	price = addComma(price);
+	$('#price').prop('value', price);
+	
+	let salePrice = $('input[name=salePrice]').val();
+	salePrice = addComma(salePrice);	
+	$('input[name=salePrice]').prop('value', salePrice);
+});
+
+/* 판매가 keyup 할때 콤마 넣기  */
+$(function(){	 
+	$('input[name=salePrice]').on('keyup', function(){
+		
+		$(this).val(function(index, value) {
+		    return value
+		    .replace(/\D/g, "")
+		    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+		    ;
+		});
+	});
+ })
 
 /* 자동으로 할인율 넣기  */
 $('input[name=salePrice]').keyup(function(){
-	let sp = $('input[name=salePrice]').val();
-	let pr = $('#price').val();
+	let sp = $('input[name=salePrice]').val().replace(/\D/g, "");
+	let pr = $('#price').val().replace(/\D/g, "");
 	/* console.log(pr); */
 	/* console.log(sp); */
 	
@@ -221,7 +246,11 @@ $(function() {
 	   		const priceId = $('input[name=priceId]').val();
 			const productCode = $('input[name=productCode]').val();
 			const buyerCode = $('input[name=buyerCode]').val();
-			const salePrice = $('input[name=salePrice]').val();
+			
+			/* 와... 콤마제거 -> 스트링 -> int 형변환  */
+			const stringSalePrice = $('input[name=salePrice]').val();
+			const salePrice = parseInt(stringSalePrice.replace(',', ''), 10 ); 
+			
 			const discountRate = $('input[name=discountRate]').val().slice(0, -1);
 			const fromDate = $('input[name=fromDate]').val();
 			const endDate = $('input[name=endDate]').val();

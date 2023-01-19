@@ -191,8 +191,12 @@ $(function() {
     $("#registerBtn").click( function() {			
 		const buyerCode = $('input[name=buyerCode]').val();
 		const productCode = $('input[name=productCode]').val();
-		const price = $('input[name=price]').val();
-		const salePrice = $('input[name=salePrice]').val();
+		const price = $('input[name=price]').val();		
+		
+		/* 와... 콤마제거 -> 스트링 -> int 형변환  */
+		const stringSalePrice = $('input[name=salePrice]').val();
+		const salePrice = parseInt(stringSalePrice.replace(',', ''), 10 ); 
+		
 		const discountRate = $('input[name=discountRate]').val().slice(0, -1);
 		const fromDate = $('input[name=fromDate]').val();
 		const endDate = $('input[name=endDate]').val();
@@ -230,17 +234,30 @@ $(function(){
 				dataType : "json"
 			})
 			.done(function(price){
+				price = addComma(String(price));
 				$('#price').attr('value', price);
 			})
 		}
 		</c:forEach>
 	})
 })
-
+/* 판매가 입력시 콤마(int->String 형변환으로 ) */
+$(function(){	 
+	$('input[name=salePrice]').on('keyup', function(){
+		
+		$(this).val(function(index, value) {
+		    return value
+		    .replace(/\D/g, "")
+		    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+		    ;
+		});
+	});
+ })
 /* 자동으로 할인율 넣기  */
 $('input[name=salePrice]').keyup(function(){
-	let sp = $('input[name=salePrice]').val();
-	let pr = $('#price').val();
+	let sp = $('input[name=salePrice]').val().replace(/\D/g, "");
+	let pr = $('#price').val().replace(/\D/g, "");
+	
 	/* console.log(pr); */
 	/* console.log(sp); */
 	
@@ -347,11 +364,15 @@ function addComma(value){
      value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
      return value; 
 }
+
+
 /*천단위 remove콤마 펑션*/
+ /* 
 function removeComma(value){
-     value = value.replace(/[^\d]+/g, "");
+     value = value.replace(/\D/g, ""); 
      return value; 
 }
+ */
 
 
     
