@@ -270,23 +270,25 @@ $(document).on('click','.chooseBtn', (e)=>{
 	
 	  var result = e.target.value;	  
 	  
-	  window.opener.document.getElementById("parentInput").value = result;
+
+	  window.opener.document.getElementById("parentInput1P").value = result;
 		
 	  setTimeout(function(){
 		  window.close();
 		  console.log("1초뒤에 실행");
 		}, 100);
 	  
+
 	})
 	
 /* salePriceList.jsp_서정 : 인풋값 입력하면, 부모창에 검색 시키기  */
-$(function(){
+/* $(function(){
 	$('.chooseBtn').click(function(){
 		const productCode = $(this).val();
-		console.log("this:"+productCode);
+		
 		$("#p1", parent.opener.document).val(productCode);
 		$(opener.document).find("#selectedSearchBtn").click();		
 	})
-});
+}); */
 </script>
 </html>
