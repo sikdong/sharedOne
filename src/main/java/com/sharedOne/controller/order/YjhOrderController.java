@@ -93,16 +93,16 @@ public class YjhOrderController {
 		if(status.equals("승인")) {
 			int approval = service.setApproval(comment, orderId);
 			
-			return "redirect:/order/orderSheet/?orderId=" + orderId;
+			return "redirect:/order/confirmOk";
 		}
 		
 		if(status.equals("반려")) {
 			int companion = service.setCompanion(comment, orderId);
 			
-			return "redirect:/order/orderSheet/?orderId=" + orderId;
+			return "redirect:/order/companionOk";
 		}
 		
-		return "redirect:/order/orderSheet/?orderId=" + orderId;
+		return "redirect:/order/confirmOk";
 	}
 	
 	@GetMapping("companionSheet")
@@ -129,12 +129,31 @@ public class YjhOrderController {
 	public String setClosing(RedirectAttributes rttr,int orderId, String status, String id) {
 		
 		if(status.equals("종결")) {
+			
 			int closing = service.setClosing(orderId);
 			
-			return "redirect:/order/companionSheet/?orderId=" + orderId;
+			return "redirect:/order/closing";
 		}
 		
-		return "redirect:/order/companionSheet/?orderId=" + orderId;
+		return "redirect:/order/closing";
+	}
+	
+	@RequestMapping("closing")
+	@PreAuthorize("isAuthenticated()")
+	public void closing() {
+		
+	}
+	
+	@RequestMapping("companionOk")
+	@PreAuthorize("isAuthenticated()")
+	public void companionOK() {
+		
+	}
+	
+	@RequestMapping("confirmOk")
+	@PreAuthorize("isAuthenticated()")
+	public void confirmOK() {
+		
 	}
 	
 	

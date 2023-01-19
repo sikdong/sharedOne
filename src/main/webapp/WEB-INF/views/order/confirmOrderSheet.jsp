@@ -203,7 +203,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-            <button type="button" class="btn"  style="background-color: #1d5c83; color: #e3e3e3;"
+            <button type="button" class="btn" id="confirmBtn" style="background-color: #1d5c83; color: #e3e3e3;"
             onclick="document.querySelector('#confirmForm').submit()">승인</button>
           </div>
         </div>
@@ -231,15 +231,37 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-            <button type="button" class="btn" style="background-color: #1d5c83; color: #e3e3e3;"
-            onclick="document.querySelector('#companionForm').submit()">반려</button>
+            <button type="button" class="btn" id="companionBtn" style="background-color: #1d5c83; color: #e3e3e3;<!-- "
+            onclick="document.querySelector('#companionForm').submit()" -->>반려</button>
           </div>
         </div>
       </div>
     </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-<script>         
+<script> 
+/* $(document).on('click','#companionBtn', function(){	  	  
+
+	  window.close();
+	}) */
+/* document.querySelector('#companionBtn').addEventListener("click",function(){
+	
+	document.querySelector('#companionForm').submit();
+	
+	window.close();
+}) */
+
+$(function() {
+
+        $("#companionBtn").click( function() {
+             $('#companionForm').submit();
+             
+             setTimeout(function(){
+            	window.close();
+     			console.log("1초뒤에 실행");
+     		}, 3000);
+          });
+    });
 </script>
 </body>
 </html>

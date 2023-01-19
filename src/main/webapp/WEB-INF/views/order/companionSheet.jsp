@@ -66,7 +66,7 @@
         <div class="row">
             <div class="row mt-5" style="text-align: center;">     
                  <div id="rvbtn_group" style="text-align: right;">                 	
-                    <button type="button" onclick="location.href='${pageContext.request.contextPath }/order/modify?orderId=${orderHeader.orderId}'"class="btn" style="border: gray 2px solid; font-weight: bold;">수정</button>
+                    <button type="button" onclick="location.href='${pageContext.request.contextPath }/order/modify?orderId=${orderHeader.orderId}&id=${orderHeader.memberId }'"class="btn" style="border: gray 2px solid; font-weight: bold;">수정</button>
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#returnModal" style="border: gray 2px solid; font-weight: bold;">종결</button>               
                 </div>
             </div>
@@ -197,6 +197,7 @@
           	<c:url value="/order/companionSheet" var="closingLink"></c:url>
             <form method="post" id="closingForm" action="${closingLink}">
               <div class="mb-3">
+              	<input type="hidden" value="${orderHeader.memberId}" name="id">
                 <input type="hidden"  value="종결" name="status">
                 <input type="hidden" value="${orderHeader.orderId}" name="orderId">
               </div>
