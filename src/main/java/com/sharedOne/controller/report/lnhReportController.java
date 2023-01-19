@@ -129,7 +129,6 @@ public class lnhReportController {
 	
 	//엑셀 다운로드
 	@RequestMapping("excelDown")
-	@PreAuthorize("hasAuthority('팀장')")
 	@ResponseBody
 	public void excelDown(HttpServletResponse response,	
 			@RequestParam(name = "orderQ", defaultValue = "") String orderQ,

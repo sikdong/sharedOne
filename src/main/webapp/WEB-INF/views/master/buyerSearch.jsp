@@ -147,7 +147,7 @@ dt{
 					<div class="buyerInfo">
 						<div class="bDiv">
 							<span class="buyerName">${buyer.buyerName }</span>
-							<button class="chooseBtn" value="${buyer.buyerCode }">선택</button>
+							<button class="chooseBtn" value="${buyer.buyerCode },${buyer.buyerName }">선택</button>
 						</div>
 						<dl>
 							<dt>
@@ -262,10 +262,13 @@ function getList(){
 };
 
 $(document).on('click','.chooseBtn', (e)=>{
-	
-	  var result = e.target.value;	  
+	  data = e.target.value.split(",");
+	  var result1 = data[0];	  
+	  var result2 = data[1];	    
 	  
-	  window.opener.document.getElementById("parentInput1B").value = result;
+	  window.opener.document.getElementById("parentInput1B").value = result1;
+	  window.opener.document.getElementById("parentInput2B").value = result2;
+
 
 	  window.close();
 	})
@@ -276,7 +279,7 @@ $(document).on('click','.chooseBtn', (e)=>{
 		const buyerCode = $(this).val();
 		 console.log("this:"+buyerCode); 
 		
-		$("#b1", parent.opener.document).val(buyerCode);
+/* 		$("#b1", parent.opener.document).val(buyerCode);
 		$(opener.document).find("#selectedSearchBtn").click();		
 	})
 }); */
