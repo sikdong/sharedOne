@@ -224,13 +224,11 @@
 	            </div>
 	          </li>
          </sec:authorize>
-         <sec:authorize access="isAuthenticated()">
-	          <li class="mb-1">
+         <%-- <li class="mb-1">
 	            <div class="row list-row">
 	                <a href="#" type="button" id="searchBtn" class="list-head" style="text-decoration: none;color: #e3e3e3;"><i class="fa-solid fa-magnifying-glass"></i>&nbsp; 제품 검색</a>
 	            </div>
-	          </li>
-          </sec:authorize>
+	          </li> --%>
           <!-- spring security expressions -->
           <sec:authorize access="not isAuthenticated()">
 	          <li class="mb-1">

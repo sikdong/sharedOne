@@ -191,7 +191,7 @@
           </div>
           <div class="modal-body">
           	<c:url value="/order/confirmOrderSheet" var="approvalLink"></c:url>
-            <form method="post" id="confirmForm" action="${approvalLink}">
+            <form method="post" id="confirmForm" action="${approvalLink}" name="approvalF">
               <div class="mb-3">
                 <label for="message-text" class="col-form-label" style="font-weight: bold;">Comment</label>
                 <textarea class="form-control" id="message-text" style="height:300px"  id="comment" name="comment" 
@@ -204,7 +204,7 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
             <button type="button" class="btn" id="confirmBtn" style="background-color: #1d5c83; color: #e3e3e3;"
-            onclick="document.querySelector('#confirmForm').submit()">승인</button>
+            onclick="approvalCheck()">승인</button>
           </div>
         </div>
       </div>
@@ -219,7 +219,7 @@
           </div>
           <div class="modal-body">
           	<c:url value="/order/confirmOrderSheet" var="companionLink"></c:url>
-            <form method="post" id="companionForm" action="${companionLink}">
+            <form method="post" id="companionForm" action="${companionLink}" name="companionF">
               <div class="mb-3">
                 <label for="message-text" class="col-form-label" style="font-weight: bold;">Comment</label>
                 <textarea class="form-control" id="message-text" style="height:300px"  id="comment" name="comment" 
@@ -231,12 +231,12 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-            <button type="button" class="btn" id="companionBtn" style="background-color: #1d5c83; color: #e3e3e3;<!-- "
-            onclick="document.querySelector('#companionForm').submit()" -->>반려</button>
+            <button type="button" class="btn" id="companionBtn" onclick="companionCheck()" style="background-color: #1d5c83; color: #e3e3e3;">반려</button>
           </div>
         </div>
       </div>
     </div>
+    <!-- onclick="document.querySelector('#companionForm').submit()" -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <script> 
@@ -251,17 +251,37 @@
 	window.close();
 }) */
 
-$(function() {
+/* $(function() {
 
         $("#companionBtn").click( function() {
              $('#companionForm').submit();
-             
+             window.opener.location.reload();
              setTimeout(function(){
             	window.close();
      			console.log("1초뒤에 실행");
      		}, 3000);
           });
-    });
+    }); */
+
+ //승인 버튼 클릭하면 승인 form 전송
+    function approvalCheck() { 
+
+        	document.approvalF.submit();
+            window.opener.location.reload();
+        	setTimeout(function() {
+        		window.close();
+                }, 20);  
+    }    
+    
+//반려 버튼 클릭하면 반려 form 전송
+function companionCheck() { 
+
+    	document.companionF.submit();
+        window.opener.location.reload();
+    	setTimeout(function() {
+    		window.close();
+            }, 20);  
+}   
 </script>
 </body>
 </html>
