@@ -830,7 +830,15 @@
 		
 		const buyerCode = document.querySelector('input[name="buyerCode"]:checked').value;
 		const productCode = document.querySelectorAll('input[name="productCode"]:checked');
-			
+		let doubleCheck = document.querySelectorAll('#tempOrderTable input[name="productCode"]')
+		for(let i = 0; i < productCode.length; i++){
+			for(let j = 0; j < doubleCheck.length; j++){
+				
+			if(productCode[i].value === doubleCheck[i].value){
+				 	alert("중복")
+				}
+			}
+		}
 		let productCodes = [];
 		let fromDates = [];
 		let endDates = [];
@@ -891,11 +899,9 @@
 			}
 			document.querySelector("#productBody").innerHTML = "";
 	            const oiNumber = document.querySelectorAll(".oiNumber")
-	            console.log(oiNumber)
 				for(let i = 0; i < oiNumber.length; i++){
 					if(i == 0){
 						let zeroNum = document.querySelector("#firstNum").value
-						console.log(zeroNum);
 						let firstNum = parseInt(zeroNum, 10);
 						oiNumber[i].innerHTML = ++firstNum;
 						
