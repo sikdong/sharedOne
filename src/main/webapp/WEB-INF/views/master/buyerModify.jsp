@@ -287,7 +287,7 @@
         window.opener.location.reload();
     	setTimeout(function() {
     		window.close();
-            }, 10);  
+            }, 20);  
         }  
 
 
