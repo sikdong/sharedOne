@@ -265,21 +265,21 @@ $(document).on('click','.chooseBtn', (e)=>{
 	
 	  var result = e.target.value;	  
 	  
-	  window.opener.document.getElementById("b1").value = result;
+	  window.opener.document.getElementById("parentInput1B").value = result;
 
 	  window.close();
 	})
 	
 /* salePriceList.jsp_서정 : 인풋값 입력하면, 부모창에 검색 시키기  */
-$(function(){
+/* $(function(){
 	$('.chooseBtn').click(function(){
 		const buyerCode = $(this).val();
-		/* console.log("this:"+buyerCode); */
+		 console.log("this:"+buyerCode); 
 		
 		$("#b1", parent.opener.document).val(buyerCode);
 		$(opener.document).find("#selectedSearchBtn").click();		
 	})
-});
+}); */
 	
 </script>
 </html>
