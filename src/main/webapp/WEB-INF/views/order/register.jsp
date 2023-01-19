@@ -829,8 +829,22 @@
 	document.querySelector("#addOrder").addEventListener("click", function() {
 		
 		const buyerCode = document.querySelector('input[name="buyerCode"]:checked').value;
-		const productCode = document.querySelectorAll('input[name="productCode"]:checked');
-			
+		let productCode = document.querySelectorAll('input[name="productCode"]:checked');
+		let doubleCheck = document.querySelectorAll('#tempOrderTable input[name="productCode"]')
+		let a = true;
+		console.log(doubleCheck.length);
+		console.log(productCode.length);
+		for(let j = 0; j < doubleCheck.length; j++){
+			for(let i = 0; i < productCode.length; i++){
+				if(productCode[i].value === doubleCheck[j].value){
+					alert("중복되는 제품이 있습니다")
+				 	i = productCode.length;
+				 	j = doubleCheck.length;
+				 	a = false;
+				}
+			}
+		}
+		if(a){
 		let productCodes = [];
 		let fromDates = [];
 		let endDates = [];
@@ -891,11 +905,9 @@
 			}
 			document.querySelector("#productBody").innerHTML = "";
 	            const oiNumber = document.querySelectorAll(".oiNumber")
-	            console.log(oiNumber)
 				for(let i = 0; i < oiNumber.length; i++){
 					if(i == 0){
 						let zeroNum = document.querySelector("#firstNum").value
-						console.log(zeroNum);
 						let firstNum = parseInt(zeroNum, 10);
 						oiNumber[i].innerHTML = ++firstNum;
 						
@@ -904,7 +916,8 @@
 						oiNumber[i].innerHTML = ++previousNum;
 					}
 				}
-		})
+			})
+		}	
 	}); 
 	
 	function tempSave(){
