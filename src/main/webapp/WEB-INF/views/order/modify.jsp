@@ -316,17 +316,17 @@
 	const path = "${pageContext.request.contextPath}"
 	
 	function makeSumforfinalPrice(event){
-		const quantity = event.target.parentElement.nextElementSibling.firstElementChild
-		const finalPrice = event.target
-		let preSum = finalPrice.value*quantity.value;
+		let quantity = event.target.parentElement.nextElementSibling.firstElementChild
+		let finalPrice = event.target.value.split(',').join("");
+		let preSum = finalPrice*quantity.value;
 		let sum = preSum.toLocaleString();
 		event.target.parentElement.nextElementSibling.nextElementSibling.firstElementChild.value= sum;
   	}
 
 	function makeSumforquantity(event){
-		const quantity = event.target
-		const finalPrice = quantity.parentElement.previousElementSibling.firstElementChild
-		let preSum = finalPrice.value*quantity.value;
+		let quantity = event.target
+		let finalPrice = quantity.parentElement.previousElementSibling.firstElementChild.value.split(',').join("");
+		let preSum = finalPrice*quantity.value;
 		let sum = preSum.toLocaleString();
 		quantity.parentElement.nextElementSibling.firstElementChild.value= sum
 	}
@@ -789,7 +789,7 @@
 		for(let j = 0; j < doubleCheck.length; j++){
 			for(let i = 0; i < productCode.length; i++){
 				if(productCode[i].value === doubleCheck[j].value){
-					alert("중복되는 제품이 있습니다")
+					alert("중복되는 제품이 있습니다. 다시 선택해주세요")
 				 	i = productCode.length;
 				 	j = doubleCheck.length;
 				 	a = false;
@@ -825,6 +825,8 @@
 			for(const da of data){
 				let op = da.price
 				let orderPrice = op.toLocaleString();
+				let sp = da.salePrice
+				let salePrice = sp.toLocaleString();
 			const productOrderTable =
             `<tr id="tr\${i}">
               <th scope="row" class="oiNumber"></th>
@@ -837,17 +839,17 @@
               <td>\${orderPrice}</td>
               <td style="width : 150px;">
 	              <input class="form-style" 
-	              type="number" id="finalPrice\${i}" 
+	              type="text" id="finalPrice\${i}" 
 	              onclick = "makeSumforfinalPrice(event)"
 	              onchange = "makeSumforfinalPrice(event)"
-	              name="finalPrice" value="\${da.salePrice}">
+	              name="finalPrice" value="\${salePrice}">
               </td>
               <td style="width : 100px;"><input 
               onclick = "makeSumforquantity(event)" 
 	          onchange = "makeSumforquantity(event)" 
 	              
               id="quantity\${i}" class="form-style" type="number" name="quantity" value=0></td>
-              <td style="width : 180px;"><input type="text" id="sum\${i}" readonly name="sum" class="form-style" /></td>
+              <td style="width : 180px;"><input type="text" id="sum\${i}" readonly name="sum" value="0" class="form-style" /></td>
               <td style="display : flex; justify-content : center;">
               	<button onclick="document.querySelector('#tr\${i}').innerHTML = '', assignNumber(), showToast()" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
               </td>
@@ -865,6 +867,11 @@
 	function tempSave(){
 		document.querySelector("#status").value = '임시저장'
 		let sum = document.querySelectorAll('input[name="sum"]');
+		let finalPrice = document.querySelectorAll('input[name="finalPrice"]')
+		
+		finalPrice.forEach((el) =>{
+		el.value = el.value.split(',').join("");	
+		})
 		sum.forEach((el) =>{
 			el.value = el.value.split(',').join("");	
 		})
@@ -873,6 +880,11 @@
 	function register(){
 		document.querySelector("#status").value = '승인요청'
 		let sum = document.querySelectorAll('input[name="sum"]');
+		let finalPrice = document.querySelectorAll('input[name="finalPrice"]')
+		
+		finalPrice.forEach((el) =>{
+		el.value = el.value.split(',').join("");	
+		})
 		sum.forEach((el) =>{
 		el.value = el.value.split(',').join("");	
 		})
