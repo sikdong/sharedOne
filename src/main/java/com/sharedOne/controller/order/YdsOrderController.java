@@ -100,7 +100,13 @@ public class YdsOrderController {
 		}
 		System.out.println("yod = " + yod);
 		service.insertOrder(yod);
-		rttr.addFlashAttribute("orderMessage", "주문 작성이 완료되었습니다.");
+		if(yod.getStatus().equals("임시저장")) {
+			rttr.addFlashAttribute("tempSaveMessage", "임시저장 되었습니다.");
+		}
+		if(yod.getStatus().equals("승인요청")){
+			
+			rttr.addFlashAttribute("orderMessage", "주문 작성이 완료되었습니다.");
+		}
 		return "redirect:/order/list";
 	}
 
@@ -115,7 +121,13 @@ public class YdsOrderController {
 		System.out.println("orderId = " + orderId);
 		System.out.println("yod = " + yod);
 		service.updateOrder(yod, orderId);
-		rttr.addFlashAttribute("reRegisterMessage", "주문이 수정되었습니다.");
+		if(yod.getStatus().equals("임시저장")) {
+			rttr.addFlashAttribute("tempSaveMessage", "임시저장 되었습니다.");
+		}
+		if(yod.getStatus().equals("승인요청")){
+			
+			rttr.addFlashAttribute("reRegisterMessage", "주문 작성이 완료되었습니다.");
+		}
 		return "redirect:/order/list";
 	}
 
