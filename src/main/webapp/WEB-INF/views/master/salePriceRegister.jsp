@@ -184,7 +184,7 @@ $(function(){
 		$("#p1", parent.opener.document).val(productCode);
 		$(opener.document).find("#selectedSearchBtn").click();		
 	})
-})
+});
 /* 저장하기  */
 $(function() {
 		
