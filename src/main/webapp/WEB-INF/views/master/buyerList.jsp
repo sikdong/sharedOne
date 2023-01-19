@@ -126,18 +126,20 @@
 				<div class="row d-flex">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >
-							<input name="buyerCode" value="${param.buyerCode }" type="text" id="" class="form-control" list="datalistOptions1" placeholder="바이어코드">
+							<input name="buyerCode" value="${param.buyerCode }" type="text" id="parentInput1B" class="form-control" list="datalistOptions1" placeholder="바이어코드">
 							<datalist id="datalistOptions1">
 								<c:forEach items="${buyer }" var="buyer">
 									<%-- <option value="${buyer.buyerCode }">${buyer.buyerCode }</option> --%>
 								</c:forEach>
 							</datalist>
+							<button class="btn btn-outline-secondary" onclick="window.open('${pageContext.request.contextPath}/master/buyerSearch' , '바이어검색','toolbar=no,resizable=no,status=no,menubar=no,width=500, height=500, top=200,left=300');">
+							바이어 검색</button>
 							<!-- <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button> -->
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="buyerName" value="${param.buyerName }" type="text" id="" class="form-control" list="datalistOptions2" placeholder="바이어명">
+							<input name="buyerName" value="${param.buyerName }" type="text" id="parentInput2B" class="form-control" list="datalistOptions2" placeholder="바이어명">
 							<datalist id="datalistOptions2">
 								<c:forEach items="${buyer }" var="buyer">
 									<%-- <option value="${buyer.buyerName }">${buyer.buyerName }</option> --%>

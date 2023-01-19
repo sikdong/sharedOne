@@ -57,6 +57,9 @@
     	position: relative;
     	margin-bottom: 25px;
     }
+    #productWeight, #productSize {
+    	background-color: #E9ECEF;
+    }
     
     #modifyForm {
  		position: relative;
@@ -75,7 +78,7 @@
 	    border-radius: 5px; 
 	    background: #1d5c83;
 	    position: absolute;
-	    top: 560px;
+	    top: 468px;
 	    right: 85px;
     }
     
@@ -138,21 +141,21 @@
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputName" class="col-form-label">무게(lb)</label>
 							<div class="col-sm-7 inputDiv">
-								<input id="productName" name="weight" type="text" value="${product.weight }"
-									class="form-control" placeholder="${product.weight }" disabled/>
+								<input id="productWeight" name="weight" type="text" value="${product.weight }"
+									class="form-control" placeholder="${product.weight }" readonly/>
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputName" class="col-form-label">규격(Inch)</label>
 							<div class="col-sm-7 inputDiv">
-								<input id="productName" name="size" type="text" value="${product.size }"
-									class="form-control" placeholder="${product.size }" disabled/>
+								<input id="productSize" name="size" type="text" value="${product.size }"
+									class="form-control" placeholder="${product.size }" readonly/>
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputName" class="col-form-label">단위</label>
 							<div class="col-sm-7 inputDiv">
-								<input id="productName" name="unit" type="text"
+								<input id="productUnit" name="unit" type="text"
 									class="form-control" value="${product.unit }" placeholder="${product.unit }" />
 							</div>
 						</div>
@@ -187,7 +190,7 @@
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputName" class="col-form-label">제품 설명</label>
 							<div class="col-sm-7 inputDiv">
-								<input id="productName" name="content" type="text"
+								<input id="productContent" name="content" type="text"
 									class="form-control" placeholder="${product.content }" />
 							</div>
 						</div>
@@ -253,7 +256,7 @@
 	        window.opener.location.reload();
 	    	setTimeout(function() {
 	    		window.close();
-	            }, 20);  
+	            }, 80);  
     		
     	}else{
 	 		alert("수정 되지 않았습니다. ");

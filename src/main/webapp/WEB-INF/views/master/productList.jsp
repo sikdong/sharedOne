@@ -123,10 +123,10 @@
 				<div class="row d-flex">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >
-							<input name="productCode" value="${param.productCode }" type="text" id="parentInput" class="form-control" list="datalistOptions1" placeholder="제품코드">
+							<input name="productCode" value="${param.productCode }" type="text" id="parentInput1P" class="form-control" list="datalistOptions1" placeholder="제품코드">
 							<datalist id="datalistOptions1">
 								<c:forEach items="${product }" var="product">
-									<option value="${product.productCode }">
+									<%-- <option value="${product.productCode }"> --%>
 								</c:forEach>
 							</datalist>
 							<button class="btn btn-outline-secondary" onclick="window.open('${pageContext.request.contextPath}/master/productSearch' , '제품등록','toolbar=no,resizable=no,status=no,menubar=no,width=500, height=500, top=200,left=300');">
@@ -135,10 +135,10 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="productName" value="${param.productName }" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품명">
+							<input name="productName" value="${param.productName }" type="text" id="parentInput2P" class="form-control" list="datalistOptions2" placeholder="제품명">
 							<datalist id="datalistOptions2">
 								<c:forEach items="${product }" var="product">
-									<option value="${product.productName }">
+									<%-- <option value="${product.productName }"> --%>
 								</c:forEach>
 							</datalist>
 							<!-- <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button> -->
@@ -147,10 +147,10 @@
 
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="size" value="${param.size }" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="제품규격 Inch">
+							<input name="size" value="${param.size }" type="text" class="form-control" list="datalistOptions4" id="parentInput3P" placeholder="제품규격 Inch">
 							<datalist id="datalistOptions4">
 								<c:forEach items="${sizes }" var="size">
-									<option value="${size }">
+									<%-- <option value="${size }"> --%>
 								</c:forEach>
 							</datalist>
 							<!-- <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button> -->
