@@ -243,7 +243,7 @@
     	 }else if($("#productType").val() == "GLOBE 밸브") {
     		 productType = ' GLOBE RF'; 
     	 }else if($("#productType").val() == "SWING 밸브") {
-    		 productType = ' S/CHECK RF';
+    		 productType = ' SCHECK RF';
     	 }else if($("#productType").val() == "LUG 밸브") {
     		 productType = ' TAPPED LUG';
     	 }else if($("#productType").val() == "WAFER 밸브") {
@@ -315,16 +315,19 @@
     				
    			     //제품코드 지정 (2자리까지)
    			    	 if(productType != '제품 종류를 선택 하세요.') {
-   			             $("#productCode").val(productType +data.lastProductCodeNum);
+   			    		document.querySelector("#productCode").value = productType +data.lastProductCodeNum ;
+   			            /*  $("#productCode").val(productType +data.lastProductCodeNum); */
    			             document.querySelector("#checkProductCode").style.visibility = 'visible';
    			             
-   			             //규격, 무게, 제품 종류 수정 disabled
+   			             //규격, 무게, 제품 종류 수정 readonly
    			             document.querySelector("#productSize").readOnly = true;
    			             document.querySelector("#productSize").style.backgroundColor = "#F0F0F0";
-   			             document.querySelector("#productWeight").readOnly = true;
+   			          	 document.querySelector("#productWeight").style.removeProperty("-webkit-appearance");
+/*    			             document.querySelector("#productWeight").onFocus = this.initialSelect = this.selectedIndex;
+   			             document.querySelector("#productWeight").onChange = this.selectedIndex = this.initialSelect; */
    			         	 document.querySelector("#productWeight").style.backgroundColor = "#F0F0F0";
-   			             document.querySelector("#productType").readOnly = true;
-   			          	document.querySelector("#productType").style.backgroundColor = "#F0F0F0";
+   			          document.querySelector("#productType").style.removeProperty("-webkit-appearance");
+   			          	 document.querySelector("#productType").style.backgroundColor = "#F0F0F0";
    			             
     			    }else {
     			    		 $("#productCode").val('');
@@ -354,9 +357,9 @@
     	
     });
     
+    //등록
     function registerCheck() {
     	//단가 콤마 제거
-    	
 		var price = document.querySelector("#productPrice").value;
     	var registerdPrice = price.split(',').join("");
     	console.log(registerdPrice);
@@ -365,9 +368,9 @@
 
 		document.registerfrm.submit();
 		window.opener.location.reload();
-		setTimeout(function() {
+ 		setTimeout(function() {
 			window.close();
-		       }, 50);  
+		       }, 50);
     } 
     
     //Input 알림창

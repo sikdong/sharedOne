@@ -247,7 +247,6 @@
     	if (confirm("정말 수정하시겠습니까?") == true) { 
     		var price = document.querySelector("#productPrice").value;
         	var modifiedPrice = price.split(',').join("");
-        	console.log(registerdPrice);
 
         	document.querySelector("#productPrice").value = modifiedPrice;
 	    	document.modifyfrm.submit();
