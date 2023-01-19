@@ -171,7 +171,7 @@
 					<div class="col-sm-6 mb-4">
 						<div class="input-group">
 							<input name="q" value="${param.q }" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
-			        		<button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+			        		<button  class="btn btn-outline-secondary" type="button" ><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
 				</div><!-- 1st row 끝 -->
@@ -179,13 +179,17 @@
 				<div class="row d-flex mb-1">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >			
-							<input name="productCode" value="${param.productCode }" type="text" id="p1" class="form-control" placeholder="제품코드">	
+							<input name="productCode" value="${param.productCode }" type="text" id="p1" class="form-control" placeholder="제품코드"
+							title="더블클릭시 검색창이 열립니다."
+							>	
 							<button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="buyerCode" value="${param.buyerCode }" type="text" id="b1" class="form-control" placeholder="바이어코드">	
+							<input name="buyerCode" value="${param.buyerCode }" type="text" id="b1" class="form-control" placeholder="바이어코드"
+							title="더블클릭시 검색창이 열립니다."
+							>	
 							<button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>			
@@ -263,6 +267,12 @@
 					<div class="col-sm-4">
 						<div style="text-align: justify;">
 							<button id="selectedSearchBtn" class="btn btn-oneline-primary primaryBtn" type="button">선택 조건 검색</button>
+						</div>
+					</div>
+					<div class="col-sm-2"></div>
+					<div class="col-sm-2">
+						<div style="text-align: justify;">
+							<button id="resetPage" class="btn btn-outline-secondary" type="button">검색 초기화</button>
 						</div>
 					</div>
 				</div>
@@ -367,21 +377,27 @@ function listAll(){
 } 
 
 /* 제품검색 시 검색창 띄우기 */
-
 $(function(){
-	if ($('input[name=productCode]').val() =='' ) {
-			
-		$('input[name=productCode]').on('click', function(){
-			window.open("${pageContext.request.contextPath}/master/productSearch" , '제품등록','toolbar=no,resizable=no,status=no,menubar=no,width=500, height=500, top=200,left=300');
-			
-		})
-	}
+		
+	$('input[name=productCode]').on('dblclick', function(){
+		window.open("${pageContext.request.contextPath}/master/productSearch" , '제품검색','toolbar=no,resizable=no,status=no,menubar=no,width=500, height=500, top=200,left=300');
+		
+	});	
+	
 });
-
+/* 바이어검색 시 검색창 띄우기 */
+$(function(){
+		
+	$('input[name=buyerCode]').on('dblclick', function(){
+		window.open("${pageContext.request.contextPath}/master/buyerSearch" , '바이어검색','toolbar=no,resizable=no,status=no,menubar=no,width=500, height=500, top=200,left=300');
+		
+	})
+	
+});
 /* 검색 => ajax 테이블 조회 */
 function search(){
 	$(function(){
-		$('input, #selectedSearchBtn').on('keyup input' ,function(){
+		$('input, #selectedSearchBtn').on('keyup click input' ,function(){
 			/* q, productCode, productName, buyerCode, buyerName, country, priceMin, priceMax */
 			const q = $('input[name=q]').val();
 			const productCode = $('input[name=productCode]').val();
@@ -510,6 +526,11 @@ function removeComma(value){
      return value; 
 }
 
+$(function(){
+	$('#resetPage').click(function(){
+		location.reload();
+	})
+})
 
 </script>
 	
