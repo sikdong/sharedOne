@@ -117,7 +117,7 @@
 									class="form-control" type="Search" placeholder="전체검색"
 									aria-label="Search">
 								<button type="button" class="btn btn-outline-secondary"
-									id="allBuyerInfoBtn">
+									id="allBuyerInfoBtn" onclick=>
 									<i class="fa-solid fa-magnifying-glass"></i>
 								</button>
 							</div>
@@ -138,7 +138,7 @@
 						</div>
 						<div class="col-sm-3">
 							<div class="input-group">
-								<input name="" value="" type="text" id="buyerCode"
+								<input name="" value="" type="search" id="buyerCode"
 									class="form-control" list="datalistOptions2"
 									placeholder="바이어코드">
 								<button type="button" class="btn btn-outline-secondary"
@@ -149,7 +149,7 @@
 						</div>
 						<div class="col-sm-3">
 							<div class="input-group">
-								<input name="" value="" type="text" id="country"
+								<input name="" value="" type="search" id="country"
 									class="form-control" list="datalistOptions3" placeholder="국가">
 								<datalist id="datalistOptions3">
 									<c:forEach items="${types }" var="type">
@@ -210,7 +210,7 @@
 						<div class="col-sm-6 mb-4">
 							<div class="input-group">
 								<input id="allProductInfo" class="form-control"
-									type="Search" placeholder="전체검색" aria-label="Search">
+									type="Search" placeholder="제품 관련 정보를 입력 ex) GA" aria-label="Search">
 								<button type="button" class="btn btn-outline-secondary"
 									style="cursor: pointer" id="allProductInfoBtn">
 									<i class="fa-solid fa-magnifying-glass"></i>
@@ -223,7 +223,7 @@
 					<div class="row d-flex">
 						<div class="col-sm-3 mb-4">
 							<div class="input-group">
-								<input type="text" id="productNameInput" class="form-control"
+								<input type="Search" id="productNameInput" class="form-control"
 									list="datalistOptions1" placeholder="제품명">
 								<button class="btn btn-outline-secondary" type="button"
 									id="productNameBtn">
@@ -233,7 +233,7 @@
 						</div>
 						<div class="col-sm-3">
 							<div class="input-group">
-								<input id="productCodeInput" type="text" class="form-control"
+								<input id="productCodeInput" type="Search" class="form-control"
 									list="datalistOptions2" placeholder="제품코드">
 								<button id="productCodeBtn" class="btn btn-outline-secondary"
 									type="button">
@@ -279,7 +279,7 @@
 				<thead>
 					<tr>
 						<th scope="col">번호</th>
-						<th style="text-align: center;" scope="col" colspan="5">제품정보</th>
+						<th style="text-align: center;" scope="col" colspan="6">제품정보</th>
 						<th style="text-align: center;" scope="col" colspan="4">금액정보</th>
 						<th style="text-align: center; vertical-align: middle;"
 							scope="col" rowspan="2">삭제여부</th>
@@ -290,6 +290,7 @@
 						<th>제품그룹</th>
 						<th>제품명</th>
 						<th>규격(inch)</th>
+						<th>무게(lb)</th>
 						<th>단위</th>
 						<th>단가</th>
 						<th style="width : 120px;">판매가</th>
@@ -352,6 +353,10 @@
 	
 	
 	const path = "${pageContext.request.contextPath}"
+	
+	function clearInput(event){
+		docum
+	}
 	
 	
 	function makeSumforfinalPrice(event){
@@ -761,7 +766,7 @@
 	
 	<%--제품그룹로 검색 --%>
 	document.querySelector("#productTypeBtn").addEventListener("click", function(){
-		const allProductInfo = document.querySelector("#productTypeInput").value;
+		let allProductInfo = document.querySelector("#productTypeInput").value;
 		const tableBuyerCode = document.querySelector("#tableBuyerCode").innerHTML;
 		const deliveryDate = document.querySelector("#deliveryDate").value;
 		if(deliveryDate != ''){
@@ -813,7 +818,7 @@
 				<td>\${item.fromDate}~\${item.endDate}</td>
 			</tr>`
 				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
-				}
+			}
 		})
 		} else {
 			alert("납기 요청일을 입력해주세요")
@@ -861,6 +866,7 @@
               <td>\${da.productType}</td>
               <td>\${da.productName}</td>
               <td>\${da.size}</td>
+              <td>\${da.weight}</td>
               <td>\${da.unit}</td>
               <td>\${orderPrice}</td>
               <td>

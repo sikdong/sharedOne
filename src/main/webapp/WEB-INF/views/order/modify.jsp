@@ -218,8 +218,8 @@
 								<!-- 검색필터 3rd row : 기간 선택 -->
 							</div><!-- 우측 검색 조건 div 끝 -->
 						</div><!-- 좌측 + 우측 전체를 감싸는 d-flex 끝-->
-						<hr />
 					</div><!-- container-sm div 끝-->
+					<hr />
 					<div id="productTable">
 					</div>
 					
@@ -237,7 +237,7 @@
                     <thead>
                       <tr>
                         <th scope="col">번호</th>
-                        <th style="text-align: center;" scope="col" colspan="5">제품정보</th>
+                        <th style="text-align: center;" scope="col" colspan="6">제품정보</th>
                         <th style="text-align: center;" scope="col" colspan="4	">금액정보</th>
                         <th style="text-align: center; vertical-align: middle;" scope="col" rowspan="2">삭제여부</th>
                       </tr>
@@ -247,6 +247,7 @@
                         <th>제품그룹</th>
                         <th>제품명</th>
                         <th>규격(inch)</th>
+                        <th>무게(lb)</th>
                         <th>단위</th>
                         <th>단가</th>
                         <th>판매가</th>
@@ -262,6 +263,7 @@
                         <td>${orderItem.productType }</td>
                         <td>${orderItem.productName }</td>
                         <td>${orderItem.size }</td>
+                        <td>${orderItem.weight }</td>
                         <td>${orderItem.unit }</td>
                         <td><fmt:formatNumber value="${orderItem.price }"/></td>
                         <td style="width : 150px;"><input type="text" name="finalPrice" value="${orderItem.finalPrice }" onclick="makeSumforfinalPrice(event),makeComma(event)" onchange="makeSumforfinalPrice(event), makeComma(event)" class="form-style" id="finalPrice${status.index }"/></td>
@@ -817,6 +819,7 @@
               <td>\${da.productName}</td>
               <td>\${da.size}</td>
               <td>\${da.unit}</td>
+              <td>\${da.weight}</td>
               <td>\${orderPrice}</td>
               <td style="width : 150px;">
 	              <input class="form-style" 

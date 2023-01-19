@@ -31,5 +31,5 @@ public class OrderItemDto {
 	
 	
 	private List <OrderHeaderDto> orderHeader;
-	
+	private int weight;
 }
