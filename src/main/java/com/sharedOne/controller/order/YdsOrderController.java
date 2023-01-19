@@ -78,6 +78,8 @@ public class YdsOrderController {
 	@ResponseBody
 	public List<ProductDto> searchAllProductInfo(@PathVariable String allProductInfo,
 			@PathVariable String tableBuyerCode, @PathVariable String deliveryDate) {
+		System.out.println(allProductInfo);
+		System.out.println(service.searchProduct(allProductInfo, tableBuyerCode, deliveryDate));
 		return service.searchProduct(allProductInfo, tableBuyerCode, deliveryDate);
 
 	}

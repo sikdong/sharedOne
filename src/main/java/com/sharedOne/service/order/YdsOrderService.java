@@ -55,8 +55,8 @@ public class YdsOrderService {
 					&& (endDate.isEqual(parsedDeliveryDate) || endDate.isAfter(parsedDeliveryDate))) {
 
 				pddList = mapper.searchProduct(allProductInfo, tableBuyerCode, fromDate, endDate);
-
-			}
+				System.out.println(allProductInfo + " " + fromDate + " " + endDate);
+			} 
 		}
 		if (pddList.size() != 0) {
 
@@ -187,7 +187,6 @@ public class YdsOrderService {
 		System.out.println(finalPrices);
 		System.out.println(quantities);
 		System.out.println(sums);
-		int i = 0;
 		// 기존 데이터 베이스의 제품코드와 비교하여 update or insert 여부 결정위한 for 문
 		if (compareyod != null && !compareyod.isEmpty()) {
 			for (int a = 0; a < readyProductCodes.size(); a++) {

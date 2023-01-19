@@ -60,7 +60,10 @@
 		WHERE
 				(p.productCode LIKE #{allProductInfo}
 				OR p.productName LIKE #{allProductInfo}
-				OR p.productType LIKE #{allProductInfo})
+				OR p.productType LIKE #{allProductInfo}
+				OR p.weight LIKE #{allProductInfo}
+				OR p.size LIKE #{allProductInfo}
+				)
 		AND (s.fromDate = #{fromDate} AND s.endDate = #{endDate})
 		AND s.buyerCode = #{tableBuyerCode}
 		ORDER BY p.productCode
@@ -72,6 +75,7 @@
 		 	p.productName,
 		 	p.productType,
 		 	p.size,
+		 	p.weight,
 		 	p.unit,
 		 	p.price,
 		 	s.salePrice,
@@ -126,11 +130,17 @@
 	<!-- 판매가 날짜 판별 위한 날짜 데이터 추출 -->
 	<select id="getPriceDate" resultType="com.sharedOne.domain.master.ProductDto">
 	SELECT
-		productCode,
-		fromDate,
-		endDate
-	FROM SalePrice
-	WHERE buyerCode=#{tableBuyerCode} AND productCode LIKE #{allProductInfo} 
+		s.productCode,
+		s.fromDate,
+		s.endDate
+	FROM SalePrice s
+	LEFT JOIN Product p ON s.productCode = p.productCode
+	WHERE buyerCode=#{tableBuyerCode} AND (p.productCode LIKE #{allProductInfo}
+				OR p.productName LIKE #{allProductInfo}
+				OR p.productType LIKE #{allProductInfo}
+				OR p.weight LIKE #{allProductInfo}
+				OR p.size LIKE #{allProductInfo}
+				)
 	
 	</select>
 
@@ -156,6 +166,7 @@
 		p.productName,
 		p.unit,
 		p.size,
+		p.weight,
 		p.price,
 		oi.finalPrice,
 		oi.quantity,
