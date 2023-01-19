@@ -179,18 +179,14 @@
 				<div class="row d-flex mb-1">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >			
-							<input name="productCode" value="${param.productCode }" type="text" id="p1" class="form-control" placeholder="제품코드"
-							title="더블클릭시 검색창이 열립니다."
-							>	
-							<button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<input name="productCode" value="${param.productCode }" type="text" id="parentInput1P" class="form-control" placeholder="제품코드">	
+							<button id="productSearch"  class="btn btn-outline-secondary" type="button">제품 검색</button>
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="buyerCode" value="${param.buyerCode }" type="text" id="b1" class="form-control" placeholder="바이어코드"
-							title="더블클릭시 검색창이 열립니다."
-							>	
-							<button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<input name="buyerCode" value="${param.buyerCode }" type="text" id="parentInput1B" class="form-control" placeholder="바이어코드">	
+							<button id="buyerSearch" class="btn btn-outline-secondary" type="button">바이어 검색</button>
 						</div>
 					</div>			
 				</div><!-- 2nd row 끝 -->
@@ -379,7 +375,7 @@ function listAll(){
 /* 제품검색 시 검색창 띄우기 */
 $(function(){
 		
-	$('input[name=productCode]').on('dblclick', function(){
+	$('#productSearch').on('click', function(){
 		window.open("${pageContext.request.contextPath}/master/productSearch" , '제품검색','toolbar=no,resizable=no,status=no,menubar=no,width=500, height=500, top=200,left=300');
 		
 	});	
@@ -388,7 +384,7 @@ $(function(){
 /* 바이어검색 시 검색창 띄우기 */
 $(function(){
 		
-	$('input[name=buyerCode]').on('dblclick', function(){
+	$('#buyerSearch').on('click', function(){
 		window.open("${pageContext.request.contextPath}/master/buyerSearch" , '바이어검색','toolbar=no,resizable=no,status=no,menubar=no,width=500, height=500, top=200,left=300');
 		
 	})

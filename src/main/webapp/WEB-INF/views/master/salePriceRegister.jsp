@@ -105,24 +105,20 @@
                 <div class="container-sm content-size">
                 	<div class="mb-2 row mt-2 rowdiv">
                         <label for="" class="col-3 col-form-label">바이어 코드</label>
-                        <div class="col-sm-5">
-						    <input name="buyerCode" type="text" id="" class="form-control" list="datalistOptions1" placeholder="바이어코드를 입력하세요.">
-						    <datalist id="datalistOptions1">
-								<c:forEach items="${buyerList }" var="b">
-									<option value="${b.buyerCode }">${b.buyerCode }</option>
-								</c:forEach>
-					    	</datalist> 
+                        <div class="col-sm-5 ">
+     						<div class="input-group">
+							    <input name="buyerCode" type="text" id="parentInput1B" class="form-control"  placeholder="바이어코드를 입력하세요.">
+							    <button id="buyerSearch" class="btn btn-outline-secondary" type="button">검색</button>
+     						</div>
                         </div>
                     </div>
                     <div class="mb-2 row mt-2 rowdiv">
                         <label for="" class="col-3 col-form-label">제품 코드</label>
                         <div class="col-sm-5">
-                            <input id="productCodeId" name="productCode" value="${p.productCode }" type="text" class="form-control" list="datalistOptions2" placeholder="제품코드를 입력하세요."/>
-                            <datalist id="datalistOptions2">
-								<c:forEach items="${productList }" var="p">
-									<option value="${p.productCode }">${p.productCode }</option>
-								</c:forEach>
-					    	</datalist> 
+                        	<div class="input-group">
+                           		<input id="parentInput1P" name="productCode" value="${p.productCode }" type="text" class="form-control" placeholder="제품코드를 입력하세요."/>
+                                <button id="productSearch" class="btn btn-outline-secondary" type="button">검색</button>
+     						</div>
                         </div>
                     </div>
                     <div class="mb-2 row mt-2 rowdiv">
@@ -174,14 +170,33 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
 
+/* 제품검색 시 검색창 띄우기 */
+$(function(){
+		
+	$('#productSearch').on('click', function(){
+		window.open("${pageContext.request.contextPath}/master/productSearch" , '제품검색','toolbar=no,resizable=no,status=no,menubar=no,width=500, height=500, top=200,left=300');
+		
+	});	
+	
+});
+/* 바이어검색 시 검색창 띄우기 */
+$(function(){
+		
+	$('#buyerSearch').on('click', function(){
+		window.open("${pageContext.request.contextPath}/master/buyerSearch" , '바이어검색','toolbar=no,resizable=no,status=no,menubar=no,width=500, height=500, top=200,left=300');
+		
+	})
+	
+});
+
 /* 인풋값 입력하면, 부모창에 검색 시키기  */
 $(function(){
 	$('input[name=buyerCode], input[name=productCode]').on('input', function(){
 		const buyerCode = $('input[name=buyerCode]').val();
 		const productCode = $('input[name=productCode]').val();
 		
-		$("#b1", parent.opener.document).val(buyerCode);
-		$("#p1", parent.opener.document).val(productCode);
+		$("#parentInput1B", parent.opener.document).val(buyerCode);
+		$("#parentInput1P", parent.opener.document).val(productCode);
 		$(opener.document).find("#selectedSearchBtn").click();		
 	})
 });
@@ -211,8 +226,8 @@ $(function() {
     		success : function(){
     			alert("등록 되었습니다.");
     			/* 부모창 */
-    	   		$("#b1", parent.opener.document).val(buyerCode);
-    			$("#p1", parent.opener.document).val(productCode);
+    	   		$("#parentInput1B", parent.opener.document).val(buyerCode);
+    			$("#parentInput1P", parent.opener.document).val(productCode);
     			$(opener.document).find("#selectedSearchBtn").click();
     			self.close();
     		}
@@ -224,7 +239,7 @@ $(function() {
 
 /* 자동으로 단가 넣기  */
 $(function(){
-	$('input[name=productCode]').keyup(function(){
+	$('input[name=productCode]').on('keyup input click',function(){
 		<c:forEach items="${productList}" var="p">
 		if( $('input[name=productCode]').val() !='' && $('input[name=productCode]').val() == '${p.productCode}' ){
 			$.ajax({

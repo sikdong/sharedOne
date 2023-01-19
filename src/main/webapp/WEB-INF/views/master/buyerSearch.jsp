@@ -269,6 +269,7 @@ $(document).on('click','.chooseBtn', (e)=>{
 	  window.opener.document.getElementById("parentInput1B").value = result1;
 	  window.opener.document.getElementById("parentInput2B").value = result2;
 
+
 	  window.close();
 	})
 	
@@ -276,7 +277,7 @@ $(document).on('click','.chooseBtn', (e)=>{
 /* $(function(){
 	$('.chooseBtn').click(function(){
 		const buyerCode = $(this).val();
-		/* console.log("this:"+buyerCode); */
+		 console.log("this:"+buyerCode); 
 		
 /* 		$("#b1", parent.opener.document).val(buyerCode);
 		$(opener.document).find("#selectedSearchBtn").click();		
