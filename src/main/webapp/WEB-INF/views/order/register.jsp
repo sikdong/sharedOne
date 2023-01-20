@@ -582,6 +582,9 @@
 		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode+"/"+deliveryDate)
 		.then(res => res.json())
 		.then(list => {
+			console.log(list)
+			if(list.length != 0){
+				
 			document.querySelector("#productTable").innerHTML = "";
 			const table = 
 				`<table class="table">
@@ -630,7 +633,9 @@
 			document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
 				}
 	
-			
+			}else {
+				alert("해당 요청일에 판매하는 제품이 없습니다. 다시 검색해 주세요")	
+			}
 		})
 		} else {
 			alert("납기 요청일을 입력해주세요.")

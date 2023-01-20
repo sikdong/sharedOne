@@ -62,7 +62,7 @@ public class YdsOrderService {
 
 			return pddList;
 		} else {
-			return null;
+			return new ArrayList<>();
 		}
 	}
 
