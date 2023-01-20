@@ -302,6 +302,27 @@
 			    </div>
 			  </div>
 			</div>
+			
+			<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 	        <br />
             <br />
             <br />
@@ -314,6 +335,13 @@
 		crossorigin="anonymous"></script>
 	<script>
 	const path = "${pageContext.request.contextPath}"
+	document.querySelector("input[name='buyerCode']").addEventListener
+	function confirmBuyer(event){
+		let originalBuyer = document.querySelector("#buyerCodeInput")
+		 if(originalBuyer.value === event.target.value ){
+			 event.target.setAttribute("data-bs-toggle", "");
+		 } 
+	 }
 	
 	function makeSumforfinalPrice(event){
 		let quantity = event.target.parentElement.nextElementSibling.firstElementChild
@@ -362,7 +390,7 @@
 			`<tr>
 				<th> 
 					<input class="form-radio-input" type="radio" style="width : 20px; height : 20px;"
-						name="buyerCode" value="\${item.buyerCode}" onclick="transferValue(event)">
+						name="buyerCode" value="\${item.buyerCode}" onclick="confirmBuyer(event), ltransferValue(event)">
 				</th>
 				<td id="tableBuyerCode">\${item.buyerCode }</td>
 				<td>\${item.buyerName }</td>
@@ -539,56 +567,60 @@
 		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode+"/"+deliveryDate)
 		.then(res => res.json())
 		.then(list => {
-			document.querySelector("#productTable").innerHTML = "";
-			const table = 
-				`<table class="table">
-			<thead>
-			<tr>
-				<th scope="col">선택</th>
-				<th scope="col">제품코드</th>
-				<th scope="col">제품그룹</th>
-				<th scope="col">제품명</th>
-				<th scope="col">규격(inch)</th>
-				<th scope="col">무게(lb)</th>
-				<th scope="col">단위</th>
-				<th scope="col">단가</th>
-				<th scope="col">판매가</th>
-				<th scope="col">판매 기간</th>
-			</tr>
-		</thead>
-		<tbody id="productBody">
-		</tbody>
-		
-	</table>`
-		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
-		for(const item of list){
-			const p = item.price
-			let price = p.toLocaleString();
-			const sp = item.salePrice
-			let salePrice = sp.toLocaleString();
-			const productTableItem =
+			if(list.length != 0){
 				
-			`<tr>
-				<th>
-					<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
-						id="productCheckBox-\${item.productCode}" name="productCode" value="\${item.productCode}"
-						data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
-				</th>
-				<td>\${item.productCode }</td>
-				<td>\${item.productType }</td>
-				<td>\${item.productName }</td>
-				<td>\${item.size }</td>
-				<td>\${item.weight }</td>
-				<td>\${item.unit }</td>
-				<td>\${price}</td>
-				<td>\${salePrice }</td>
-				<td>\${item.fromDate}~\${item.endDate}</td>
-			</tr>`
-			document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
-				}
-	
+				document.querySelector("#productTable").innerHTML = "";
+				const table = 
+					`<table class="table">
+				<thead>
+				<tr>
+					<th scope="col">선택</th>
+					<th scope="col">제품코드</th>
+					<th scope="col">제품그룹</th>
+					<th scope="col">제품명</th>
+					<th scope="col">규격(inch)</th>
+					<th scope="col">무게(lb)</th>
+					<th scope="col">단위</th>
+					<th scope="col">단가</th>
+					<th scope="col">판매가</th>
+					<th scope="col">판매 기간</th>
+				</tr>
+			</thead>
+			<tbody id="productBody">
+			</tbody>
 			
-		})
+		</table>`
+			document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
+			for(const item of list){
+				const p = item.price
+				let price = p.toLocaleString();
+				const sp = item.salePrice
+				let salePrice = sp.toLocaleString();
+				const productTableItem =
+					
+				`<tr>
+					<th>
+						<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
+							id="productCheckBox-\${item.productCode}" name="productCode" value="\${item.productCode}"
+							data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
+					</th>
+					<td>\${item.productCode }</td>
+					<td>\${item.productType }</td>
+					<td>\${item.productName }</td>
+					<td>\${item.size }</td>
+					<td>\${item.weight }</td>
+					<td>\${item.unit }</td>
+					<td>\${price}</td>
+					<td>\${salePrice }</td>
+					<td>\${item.fromDate}~\${item.endDate}</td>
+				</tr>`
+				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
+					}
+		
+				}else {
+					alert("해당 요청일에 판매하는 제품이 없습니다. 다시 검색해 주세요")	
+				}
+			})
 		} else {
 			alert("납기 요청일을 입력해주세요")
 		}
@@ -603,53 +635,60 @@
 		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode+"/"+deliveryDate)
 		.then(res => res.json())
 		.then(list => {
-			document.querySelector("#productTable").innerHTML = "";
-			const table = 
-				`<table class="table">
-			<thead>
-			<tr>
-				<th scope="col">선택</th>
-				<th scope="col">제품코드</th>
-				<th scope="col">제품그룹</th>
-				<th scope="col">제품명</th>
-				<th scope="col">규격(inch)</th>
-				<th scope="col">무게(lb)</th>
-				<th scope="col">단위</th>
-				<th scope="col">단가</th>
-				<th scope="col">판매가</th>
-				<th scope="col">판매 기간</th>
-			</tr>
-		</thead>
-		<tbody id="productBody">
-		</tbody>
-	</table>`
-		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
-		for(const item of list){
-			const p = item.price
-			let price = p.toLocaleString();
-			const sp = item.salePrice
-			let salePrice = sp.toLocaleString();
-			const productTableItem =
+			if(list.length != 0){
 				
-			`<tr>
-				<th>
-					<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
-						id="productCheckBox-\${item.productCode}" name="productCode" value="\${item.productCode}"
-						data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
-				</th>
-				<td>\${item.productCode }</td>
-				<td>\${item.productType }</td>
-				<td>\${item.productName }</td>
-				<td>\${item.size }</td>
-				<td>\${item.weight }</td>
-				<td>\${item.unit }</td>
-				<td>\${price}</td>
-				<td>\${salePrice }</td>
-				<td>\${item.fromDate}~\${item.endDate}</td>
-			</tr>`
+				document.querySelector("#productTable").innerHTML = "";
+				const table = 
+					`<table class="table">
+				<thead>
+				<tr>
+					<th scope="col">선택</th>
+					<th scope="col">제품코드</th>
+					<th scope="col">제품그룹</th>
+					<th scope="col">제품명</th>
+					<th scope="col">규격(inch)</th>
+					<th scope="col">무게(lb)</th>
+					<th scope="col">단위</th>
+					<th scope="col">단가</th>
+					<th scope="col">판매가</th>
+					<th scope="col">판매 기간</th>
+				</tr>
+			</thead>
+			<tbody id="productBody">
+			</tbody>
+			
+		</table>`
+			document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
+			for(const item of list){
+				const p = item.price
+				let price = p.toLocaleString();
+				const sp = item.salePrice
+				let salePrice = sp.toLocaleString();
+				const productTableItem =
+					
+				`<tr>
+					<th>
+						<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
+							id="productCheckBox-\${item.productCode}" name="productCode" value="\${item.productCode}"
+							data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
+					</th>
+					<td>\${item.productCode }</td>
+					<td>\${item.productType }</td>
+					<td>\${item.productName }</td>
+					<td>\${item.size }</td>
+					<td>\${item.weight }</td>
+					<td>\${item.unit }</td>
+					<td>\${price}</td>
+					<td>\${salePrice }</td>
+					<td>\${item.fromDate}~\${item.endDate}</td>
+				</tr>`
 				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
 					}
-		})
+		
+				}else {
+					alert("해당 요청일에 판매하는 제품이 없습니다. 다시 검색해 주세요")	
+				}
+			})
 		} else {
 			alert("납기 요청일을 입력해주세요")
 		}
@@ -663,53 +702,60 @@
 		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode+"/"+deliveryDate)
 		.then(res => res.json())
 		.then(list => {
-			document.querySelector("#productTable").innerHTML = "";
-			const table = 
-				`<table class="table">
-			<thead>
-			<tr>
-				<th scope="col">선택</th>
-				<th scope="col">제품코드</th>
-				<th scope="col">제품그룹</th>
-				<th scope="col">제품명</th>
-				<th scope="col">규격(inch)</th>
-				<th scope="col">무게(lb)</th>
-				<th scope="col">단위</th>
-				<th scope="col">단가</th>
-				<th scope="col">판매가</th>
-				<th scope="col">판매 기간</th>
-			</tr>
-		</thead>
-		<tbody id="productBody">
-		</tbody>
-	</table>`
-		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
-		for(const item of list){
-			const p = item.price
-			let price = p.toLocaleString();
-			const sp = item.salePrice
-			let salePrice = sp.toLocaleString();
-			const productTableItem =
+			if(list.length != 0){
 				
-			`<tr>
-				<th>
-					<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
-						id="productCheckBox-\${item.productCode}" name="productCode" value="\${item.productCode}"
-						data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
-				</th>
-				<td>\${item.productCode }</td>
-				<td>\${item.productType }</td>
-				<td>\${item.productName }</td>
-				<td>\${item.size }</td>
-				<td>\${item.weight }</td>
-				<td>\${item.unit }</td>
-				<td>\${price}</td>
-				<td>\${salePrice }</td>
-				<td>\${item.fromDate}~\${item.endDate}</td>
-			</tr>`
+				document.querySelector("#productTable").innerHTML = "";
+				const table = 
+					`<table class="table">
+				<thead>
+				<tr>
+					<th scope="col">선택</th>
+					<th scope="col">제품코드</th>
+					<th scope="col">제품그룹</th>
+					<th scope="col">제품명</th>
+					<th scope="col">규격(inch)</th>
+					<th scope="col">무게(lb)</th>
+					<th scope="col">단위</th>
+					<th scope="col">단가</th>
+					<th scope="col">판매가</th>
+					<th scope="col">판매 기간</th>
+				</tr>
+			</thead>
+			<tbody id="productBody">
+			</tbody>
+			
+		</table>`
+			document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
+			for(const item of list){
+				const p = item.price
+				let price = p.toLocaleString();
+				const sp = item.salePrice
+				let salePrice = sp.toLocaleString();
+				const productTableItem =
+					
+				`<tr>
+					<th>
+						<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
+							id="productCheckBox-\${item.productCode}" name="productCode" value="\${item.productCode}"
+							data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
+					</th>
+					<td>\${item.productCode }</td>
+					<td>\${item.productType }</td>
+					<td>\${item.productName }</td>
+					<td>\${item.size }</td>
+					<td>\${item.weight }</td>
+					<td>\${item.unit }</td>
+					<td>\${price}</td>
+					<td>\${salePrice }</td>
+					<td>\${item.fromDate}~\${item.endDate}</td>
+				</tr>`
 				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
 					}
-		})
+		
+				}else {
+					alert("해당 요청일에 판매하는 제품이 없습니다. 다시 검색해 주세요")	
+				}
+			})
 		} else {
 			alert("납기 요청일을 입력해주세요")
 		}
@@ -724,53 +770,60 @@
 		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode+"/"+deliveryDate)
 		.then(res => res.json())
 		.then(list => {
-			document.querySelector("#productTable").innerHTML = "";
-			const table = 
-				`<table class="table">
-			<thead>
-			<tr>
-				<th scope="col">선택</th>
-				<th scope="col">제품코드</th>
-				<th scope="col">제품그룹</th>
-				<th scope="col">제품명</th>
-				<th scope="col">규격(inch)</th>
-				<th scope="col">무게(lb)</th>
-				<th scope="col">단위</th>
-				<th scope="col">단가</th>
-				<th scope="col">판매가</th>
-				<th scope="col">판매 기간</th>
-			</tr>
-		</thead>
-		<tbody id="productBody">
-		</tbody>
-	</table>`
-		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
-		for(const item of list){
-			const p = item.price
-			let price = p.toLocaleString();
-			const sp = item.salePrice
-			let salePrice = sp.toLocaleString();
-			const productTableItem =
+			if(list.length != 0){
 				
-			`<tr>
-				<th>
-					<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
-						id="productCheckBox-\${item.productCode}" name="productCode" value="\${item.productCode}"
-						data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
-				</th>
-				<td>\${item.productCode }</td>
-				<td>\${item.productType }</td>
-				<td>\${item.productName }</td>
-				<td>\${item.size }</td>
-				<td>\${item.weight }</td>
-				<td>\${item.unit }</td>
-				<td>\${price}</td>
-				<td>\${salePrice }</td>
-				<td>\${item.fromDate}~\${item.endDate}</td>
-			</tr>`
+				document.querySelector("#productTable").innerHTML = "";
+				const table = 
+					`<table class="table">
+				<thead>
+				<tr>
+					<th scope="col">선택</th>
+					<th scope="col">제품코드</th>
+					<th scope="col">제품그룹</th>
+					<th scope="col">제품명</th>
+					<th scope="col">규격(inch)</th>
+					<th scope="col">무게(lb)</th>
+					<th scope="col">단위</th>
+					<th scope="col">단가</th>
+					<th scope="col">판매가</th>
+					<th scope="col">판매 기간</th>
+				</tr>
+			</thead>
+			<tbody id="productBody">
+			</tbody>
+			
+		</table>`
+			document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
+			for(const item of list){
+				const p = item.price
+				let price = p.toLocaleString();
+				const sp = item.salePrice
+				let salePrice = sp.toLocaleString();
+				const productTableItem =
+					
+				`<tr>
+					<th>
+						<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
+							id="productCheckBox-\${item.productCode}" name="productCode" value="\${item.productCode}"
+							data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
+					</th>
+					<td>\${item.productCode }</td>
+					<td>\${item.productType }</td>
+					<td>\${item.productName }</td>
+					<td>\${item.size }</td>
+					<td>\${item.weight }</td>
+					<td>\${item.unit }</td>
+					<td>\${price}</td>
+					<td>\${salePrice }</td>
+					<td>\${item.fromDate}~\${item.endDate}</td>
+				</tr>`
 				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
+					}
+		
+				}else {
+					alert("해당 요청일에 판매하는 제품이 없습니다. 다시 검색해 주세요")	
 				}
-		})
+			})
 		} else {
 			alert("납기 요청일을 입력해주세요")
 		}
@@ -953,6 +1006,7 @@
 	 }
 	 makeLoadingComma()
 	 
+	
 	</script>
 </body>
 </html>

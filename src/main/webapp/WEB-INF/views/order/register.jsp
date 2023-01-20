@@ -582,6 +582,8 @@
 		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode+"/"+deliveryDate)
 		.then(res => res.json())
 		.then(list => {
+			if(list.length != 0){
+				
 			document.querySelector("#productTable").innerHTML = "";
 			const table = 
 				`<table class="table">
@@ -630,7 +632,9 @@
 			document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
 				}
 	
-			
+			}else {
+				alert("해당 요청일에 판매하는 제품이 없습니다. 다시 검색해 주세요")	
+			}
 		})
 		} else {
 			alert("납기 요청일을 입력해주세요.")
@@ -646,53 +650,60 @@
 		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode+"/"+deliveryDate)
 		.then(res => res.json())
 		.then(list => {
-			document.querySelector("#productTable").innerHTML = "";
-			const table = 
-				`<table class="table">
-			<thead>
-			<tr>
-				<th scope="col">선택</th>
-				<th scope="col">제품코드</th>
-				<th scope="col">제품그룹</th>
-				<th scope="col">제품명</th>
-				<th scope="col">규격(inch)</th>
-				<th scope="col">무게(lb)</th>
-				<th scope="col">단위</th>
-				<th scope="col">단가</th>
-				<th scope="col">판매가</th>
-				<th scope="col">판매 기간</th>
-			</tr>
-		</thead>
-		<tbody id="productBody">
-		</tbody>
-	</table>`
-		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
-		for(const item of list){
-			const p = item.price
-			let price = p.toLocaleString();
-			const sp = item.salePrice
-			let salePrice = sp.toLocaleString();
-			const productTableItem =
+			if(list.length != 0){
 				
-			`<tr>
-				<th>
-					<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
-						id="productCheckBox-\${item.productCode}" name="productCode" value="\${item.productCode}"
-						data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
-				</th>
-				<td>\${item.productCode }</td>
-				<td>\${item.productType }</td>
-				<td>\${item.productName }</td>
-				<td>\${item.size }</td>
-				<td>\${item.weight }</td>
-				<td>\${item.unit }</td>
-				<td>\${price}</td>
-				<td>\${salePrice }</td>
-				<td>\${item.fromDate}~\${item.endDate}</td>
-			</tr>`
+				document.querySelector("#productTable").innerHTML = "";
+				const table = 
+					`<table class="table">
+				<thead>
+				<tr>
+					<th scope="col">선택</th>
+					<th scope="col">제품코드</th>
+					<th scope="col">제품그룹</th>
+					<th scope="col">제품명</th>
+					<th scope="col">규격(inch)</th>
+					<th scope="col">무게(lb)</th>
+					<th scope="col">단위</th>
+					<th scope="col">단가</th>
+					<th scope="col">판매가</th>
+					<th scope="col">판매 기간</th>
+				</tr>
+			</thead>
+			<tbody id="productBody">
+			</tbody>
+			
+		</table>`
+			document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
+			for(const item of list){
+				const p = item.price
+				let price = p.toLocaleString();
+				const sp = item.salePrice
+				let salePrice = sp.toLocaleString();
+				const productTableItem =
+					
+				`<tr>
+					<th>
+						<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
+							id="productCheckBox-\${item.productCode}" name="productCode" value="\${item.productCode}"
+							data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
+					</th>
+					<td>\${item.productCode }</td>
+					<td>\${item.productType }</td>
+					<td>\${item.productName }</td>
+					<td>\${item.size }</td>
+					<td>\${item.weight }</td>
+					<td>\${item.unit }</td>
+					<td>\${price}</td>
+					<td>\${salePrice }</td>
+					<td>\${item.fromDate}~\${item.endDate}</td>
+				</tr>`
 				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
 					}
-		})
+		
+				}else {
+					alert("해당 요청일에 판매하는 제품이 없습니다. 다시 검색해 주세요")	
+				}
+			})
 		} else {
 			alert("납기 요청일을 입력해주세요.")
 		}
@@ -706,53 +717,60 @@
 		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode+"/"+deliveryDate)
 		.then(res => res.json())
 		.then(list => {
-			document.querySelector("#productTable").innerHTML = "";
-			const table = 
-				`<table class="table">
-			<thead>
-			<tr>
-				<th scope="col">선택</th>
-				<th scope="col">제품코드</th>
-				<th scope="col">제품그룹</th>
-				<th scope="col">제품명</th>
-				<th scope="col">규격(inch)</th>
-				<th scope="col">무게(lb)</th>
-				<th scope="col">단위</th>
-				<th scope="col">단가</th>
-				<th scope="col">판매가</th>
-				<th scope="col">판매 기간</th>
-			</tr>
-		</thead>
-		<tbody id="productBody">
-		</tbody>
-	</table>`
-		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
-		for(const item of list){
-			const p = item.price
-			let price = p.toLocaleString();
-			const sp = item.salePrice
-			let salePrice = sp.toLocaleString();
-			const productTableItem =
+			if(list.length != 0){
 				
-			`<tr>
-				<th>
-					<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
-						id="productCheckBox-\${item.productCode}" name="productCode" value="\${item.productCode}"
-						data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
-				</th>
-				<td>\${item.productCode }</td>
-				<td>\${item.productType }</td>
-				<td>\${item.productName }</td>
-				<td>\${item.size }</td>
-				<td>\${item.weight }</td>
-				<td>\${item.unit }</td>
-				<td>\${price}</td>
-				<td>\${salePrice }</td>
-				<td>\${item.fromDate}~\${item.endDate}</td>
-			</tr>`
+				document.querySelector("#productTable").innerHTML = "";
+				const table = 
+					`<table class="table">
+				<thead>
+				<tr>
+					<th scope="col">선택</th>
+					<th scope="col">제품코드</th>
+					<th scope="col">제품그룹</th>
+					<th scope="col">제품명</th>
+					<th scope="col">규격(inch)</th>
+					<th scope="col">무게(lb)</th>
+					<th scope="col">단위</th>
+					<th scope="col">단가</th>
+					<th scope="col">판매가</th>
+					<th scope="col">판매 기간</th>
+				</tr>
+			</thead>
+			<tbody id="productBody">
+			</tbody>
+			
+		</table>`
+			document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
+			for(const item of list){
+				const p = item.price
+				let price = p.toLocaleString();
+				const sp = item.salePrice
+				let salePrice = sp.toLocaleString();
+				const productTableItem =
+					
+				`<tr>
+					<th>
+						<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
+							id="productCheckBox-\${item.productCode}" name="productCode" value="\${item.productCode}"
+							data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
+					</th>
+					<td>\${item.productCode }</td>
+					<td>\${item.productType }</td>
+					<td>\${item.productName }</td>
+					<td>\${item.size }</td>
+					<td>\${item.weight }</td>
+					<td>\${item.unit }</td>
+					<td>\${price}</td>
+					<td>\${salePrice }</td>
+					<td>\${item.fromDate}~\${item.endDate}</td>
+				</tr>`
 				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
 					}
-		})
+		
+				}else {
+					alert("해당 요청일에 판매하는 제품이 없습니다. 다시 검색해 주세요")	
+				}
+			})
 		} else {
 			alert("납기 요청일을 입력해주세요.")
 		}
@@ -767,53 +785,60 @@
 		fetch(path+"/order/searchAllProductInfo/"+allProductInfo+"/"+tableBuyerCode+"/"+deliveryDate)
 		.then(res => res.json())
 		.then(list => {
-			document.querySelector("#productTable").innerHTML = "";
-			const table = 
-				`<table class="table">
-			<thead>
-			<tr>
-				<th scope="col">선택</th>
-				<th scope="col">제품코드</th>
-				<th scope="col">제품그룹</th>
-				<th scope="col">제품명</th>
-				<th scope="col">규격(inch)</th>
-				<th scope="col">무게(lb)</th>
-				<th scope="col">단위</th>
-				<th scope="col">단가</th>
-				<th scope="col">판매가</th>
-				<th scope="col">판매 기간</th>
-			</tr>
-		</thead>
-		<tbody id="productBody">
-		</tbody>
-	</table>`
-		document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
-		for(const item of list){
-			const p = item.price
-			let price = p.toLocaleString();
-			const sp = item.salePrice
-			let salePrice = sp.toLocaleString();
-			const productTableItem =
+			if(list.length != 0){
 				
-			`<tr>
-				<th>
-					<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
-						id="productCheckBox-\${item.productCode}" name="productCode" value="\${item.productCode}"
-						data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
-				</th>
-				<td>\${item.productCode }</td>
-				<td>\${item.productType }</td>
-				<td>\${item.productName }</td>
-				<td>\${item.size }</td>
-				<td>\${item.weight }</td>
-				<td>\${item.unit }</td>
-				<td>\${price}</td>
-				<td>\${salePrice }</td>
-				<td>\${item.fromDate}~\${item.endDate}</td>
-			</tr>`
+				document.querySelector("#productTable").innerHTML = "";
+				const table = 
+					`<table class="table">
+				<thead>
+				<tr>
+					<th scope="col">선택</th>
+					<th scope="col">제품코드</th>
+					<th scope="col">제품그룹</th>
+					<th scope="col">제품명</th>
+					<th scope="col">규격(inch)</th>
+					<th scope="col">무게(lb)</th>
+					<th scope="col">단위</th>
+					<th scope="col">단가</th>
+					<th scope="col">판매가</th>
+					<th scope="col">판매 기간</th>
+				</tr>
+			</thead>
+			<tbody id="productBody">
+			</tbody>
+			
+		</table>`
+			document.querySelector("#productTable").insertAdjacentHTML("afterbegin", table)
+			for(const item of list){
+				const p = item.price
+				let price = p.toLocaleString();
+				const sp = item.salePrice
+				let salePrice = sp.toLocaleString();
+				const productTableItem =
+					
+				`<tr>
+					<th>
+						<input class="form-radio-input" type="checkbox" style="width : 20px; height : 20px;"
+							id="productCheckBox-\${item.productCode}" name="productCode" value="\${item.productCode}"
+							data-from-date = "\${item.fromDate}" data-end-date="\${item.endDate}">
+					</th>
+					<td>\${item.productCode }</td>
+					<td>\${item.productType }</td>
+					<td>\${item.productName }</td>
+					<td>\${item.size }</td>
+					<td>\${item.weight }</td>
+					<td>\${item.unit }</td>
+					<td>\${price}</td>
+					<td>\${salePrice }</td>
+					<td>\${item.fromDate}~\${item.endDate}</td>
+				</tr>`
 				document.querySelector("#productBody").insertAdjacentHTML("beforeend", productTableItem)
-			}
-		})
+					}
+		
+				}else {
+					alert("해당 요청일에 판매하는 제품이 없습니다. 다시 검색해 주세요")	
+				}
+			})
 		} else {
 			alert("납기 요청일을 입력해주세요")
 		}

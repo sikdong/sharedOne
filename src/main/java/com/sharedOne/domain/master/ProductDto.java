@@ -1,6 +1,5 @@
 package com.sharedOne.domain.master;
 
-import java.time.LocalDate;
 
 import lombok.Data;
 
