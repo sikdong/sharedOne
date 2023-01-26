@@ -25,4 +25,8 @@ public interface lnhBuyerMapper {
 
 	List<BuyerDto> searchBuyerList(String keyword, String buyerCode, String buyerName, String country);
 
+	void deleteSalePrice(String buyerCode);
+
+	void deleteOrder(String buyerCode);
+
 }

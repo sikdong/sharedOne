@@ -34,6 +34,10 @@ public class lnhBuyerService {
 	}
 	//삭제
 	public void remove(String buyerCode) {
+		buyerMapper.deleteSalePrice(buyerCode);
+		
+		buyerMapper.deleteOrder(buyerCode);
+		
 		buyerMapper.delete(buyerCode);
 	}
 

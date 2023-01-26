@@ -140,7 +140,6 @@ dt{
         	<li>
         		<input type="hidden" value="${count }" id="countBuyer">
         		<input type="hidden" id="lastBuyerId" value = ${lastBuyerId }>
-        		<input type="button" id="testBtn" value="test">
         	</li>
             <c:forEach items="${buyerList }" var="buyer" varStatus="st">
 				<li>

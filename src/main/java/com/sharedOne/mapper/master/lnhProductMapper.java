@@ -29,4 +29,8 @@ public interface lnhProductMapper {
 
 	String lastProductCodeNum(String productType);
 
+	void deleteSalePrcie(String productCode);
+
+	void deleteOrder(String productCode);
+
 }
