@@ -239,7 +239,7 @@ $(function() {
 
 /* 자동으로 단가 넣기  */
 $(function(){
-	$('input[name=productCode]').on('keyup input click',function(){
+	$('input[name=productCode]').bind('paste keyup input click',function(){
 		<c:forEach items="${productList}" var="p">
 		if( $('input[name=productCode]').val() !='' && $('input[name=productCode]').val() == '${p.productCode}' ){
 			$.ajax({
