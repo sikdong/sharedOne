@@ -390,7 +390,7 @@
 			`<tr>
 				<th> 
 					<input class="form-radio-input" type="radio" style="width : 20px; height : 20px;"
-						name="buyerCode" value="\${item.buyerCode}" onclick="confirmBuyer(event), ltransferValue(event)">
+						name="buyerCode" value="\${item.buyerCode}" onclick="confirmBuyer(event), transferValue(event)">
 				</th>
 				<td id="tableBuyerCode">\${item.buyerCode }</td>
 				<td>\${item.buyerName }</td>
