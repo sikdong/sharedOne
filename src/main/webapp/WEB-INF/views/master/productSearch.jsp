@@ -154,7 +154,7 @@ dt{
 					<div class="productInfo">
 						<div class="ptDiv">
 							<span class="productType">${product.productType }</span>
-							<button class="chooseBtn" value="${product.productCode },${product.productName }">선택</button>
+							<button class="chooseBtn btn btn-outline-secondary" value="${product.productCode }">선택</button>
 
 						</div>
 						<dl>
@@ -215,7 +215,6 @@ $(window).on("scroll",function(){
 			isLoading = true; //실행 불가능 상태로 변경
 		setTimeout(function(){
 			getList();
-			console.log("1초뒤에 실행");
 		}, 500);
         }
 	}
@@ -268,34 +267,15 @@ function getList(){
 };
 
 $(document).on('click','.chooseBtn', (e)=>{
-	  data = e.target.value.split(",");
-	  var result1 = data[0];	  
-	  var result2 = data[1];	  
-	  var result3 = data[1].charAt(0);	  
+	  var result = e.target.value;	    
 	  
-	  window.opener.document.getElementById("parentInput1P").value = result1;
-	  window.opener.document.getElementById("parentInput2P").value = result2;
-	  window.opener.document.getElementById("parentInput3P").value = result3;
-
-
 	  window.opener.document.getElementById("parentInput1P").value = result;
 		
 	  setTimeout(function(){
 		  window.close();
-		  console.log("1초뒤에 실행");
 		}, 100);
 	  
 
 	})
-	
-/* salePriceList.jsp_서정 : 인풋값 입력하면, 부모창에 검색 시키기  */
-/* $(function(){
-	$('.chooseBtn').click(function(){
-		const productCode = $(this).val();
-		
-		$("#p1", parent.opener.document).val(productCode);
-		$(opener.document).find("#selectedSearchBtn").click();		
-	})
-}); */
 </script>
 </html>

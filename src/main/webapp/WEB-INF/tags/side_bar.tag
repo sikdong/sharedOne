@@ -4,10 +4,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%-- c커스텀 태그 사용하기 위해 --%>
 <%@ attribute name="active" required="false" %> <%-- narvar active 초기값 false --%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
-<c:url value="${pageContext.request.contextPath}/member/logout" var="logoutLink"/>
-<c:url value="${pageContext.request.contextPath}/member/login" var="loginLink"/>
-<c:url value="${pageContext.request.contextPath}/member/signup" var="signupLink"/>
-<c:url value="${pageContext.request.contextPath}/master/searchProduct" var="productSearchLink"/>
+<c:url value="/member/logout" var="logoutLink"/>
+<c:url value="/member/login" var="loginLink"/>
+<c:url value="/member/signup" var="signupLink"/>
+<c:url value="/master/searchProduct" var="productSearchLink"/>
 <html>
 <head>
 <meta charset="utf-8">
@@ -219,7 +219,7 @@
          <sec:authorize access="hasAuthority('팀장')">
 	          <li class="mb-1">
 	            <div class="row list-row">
-	                <a href="#" class="list-head" onclick="window.open('/member/signup','사원등록','width=500,height=500,left=400,top=100,bottom=300,location=no,status=no,scrollbars=yes');"
+	                <a href="#" class="list-head" onclick="window.open(' ${pageContext.request.contextPath}/member/signup','사원등록','width=500,height=500,left=400,top=100,bottom=300,location=no,status=no,scrollbars=yes');"
 	                style="text-decoration: none;color: #e3e3e3;"><i class="fa-solid fa-user-plus"></i>&nbsp; 사원등록</a>
 	            </div>
 	          </li>
@@ -251,21 +251,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 <script>
 
-
-function searchPopup(){
-
-	  window.open("${pageContext.request.contextPath}/master/productSearch" , '제품등록','toolbar=no,resizable=no,status=no,menubar=no,width=500, height=500, top=200,left=300');
-	}
-
-document.querySelector("#searchBtn").addEventListener("click",function(){
-	searchPopup();
-});
-
-/* function setChildValue(name){
-
-    document.getElementById("parentInput").value = name;
-
-} */
 </script>
 </body>
 </html>

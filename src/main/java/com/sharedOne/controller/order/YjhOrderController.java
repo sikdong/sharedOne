@@ -396,8 +396,11 @@ public class YjhOrderController {
 				
 				sheet.addMergedRegion(new CellRangeAddress(rowNo-1, rowNo-1, 0, 3)); //첫행, 마지막행, 첫열, 마지막열 병합
 				
+				String fileName = "주문서(" + orderHeader.getOrderCode()+ ").xls";
+		        String outputFileName = new String(fileName.getBytes("KSC5601"), "8859_1");
+				
 				hsr.setContentType("ms-vnd/excel");
-				hsr.setHeader("Content-Disposition", "attachment;filename=orderSheet.xls");
+				hsr.setHeader("Content-Disposition", "attachment; filename=" + outputFileName);
 				
 				workbook.write(hsr.getOutputStream());
 				workbook.close();		
