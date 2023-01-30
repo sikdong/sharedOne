@@ -7,7 +7,6 @@
 <c:url value="/member/logout" var="logoutLink"/>
 <c:url value="/member/login" var="loginLink"/>
 <c:url value="/member/signup" var="signupLink"/>
-<c:url value="/master/searchProduct" var="productSearchLink"/>
 <html>
 <head>
 <meta charset="utf-8">
@@ -224,11 +223,6 @@
 	            </div>
 	          </li>
          </sec:authorize>
-         <%-- <li class="mb-1">
-	            <div class="row list-row">
-	                <a href="#" type="button" id="searchBtn" class="list-head" style="text-decoration: none;color: #e3e3e3;"><i class="fa-solid fa-magnifying-glass"></i>&nbsp; 제품 검색</a>
-	            </div>
-	          </li> --%>
           <!-- spring security expressions -->
           <sec:authorize access="not isAuthenticated()">
 	          <li class="mb-1">
