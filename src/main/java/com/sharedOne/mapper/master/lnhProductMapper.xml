@@ -143,6 +143,16 @@
  	</update>
  	
  	<!-- 제품 삭제 -->
+ 	<delete id="deleteSalePrcie">
+ 	DELETE FROM SalePrice
+ 	WHERE productCode = #{productCode}
+ 	</delete>
+ 	
+ 	<delete id="deleteOrder" >
+	DELETE h, i FROM Order_header h LEFT JOIN Order_item i ON h.orderId = i.orderId
+	WHERE i.productCode = #{productCode}
+ 	</delete>
+ 	
  	<delete id="delete">
  	DELETE FROM Product
  	WHERE productCode = #{productCode}

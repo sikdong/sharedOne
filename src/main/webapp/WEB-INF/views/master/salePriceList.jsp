@@ -179,7 +179,7 @@
 				<div class="row d-flex mb-1">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >			
-							<input name="productCode" value="${param.productCode }" type="text" id="parentInput1P" class="form-control" placeholder="제품코드">	
+							<input name="productCode" value="${param.productCode }" type="text" id="parentInput" class="form-control" placeholder="제품코드">	
 							<button id="productSearch"  class="btn btn-outline-secondary" type="button">제품 검색</button>
 						</div>
 					</div>

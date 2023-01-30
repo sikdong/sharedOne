@@ -113,6 +113,16 @@
  	</update>
  	
  	<!-- 바이어 삭제 -->
+ 	<delete id="deleteOrder" >
+		DELETE h, i FROM Order_header h LEFT JOIN Order_item i ON h.orderId = i.orderId
+		WHERE h.buyerCode = #{buyerCode}
+ 	</delete>
+ 	
+ 	<delete id="deleteSalePrice" >
+		DELETE FROM SalePrice
+		WHERE buyerCode = #{buyerCode}
+ 	</delete>
+ 	
  	<delete id="delete">
 		DELETE FROM Buyer
 		WHERE buyerCode = #{buyerCode}

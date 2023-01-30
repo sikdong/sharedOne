@@ -116,7 +116,7 @@
                         <label for="" class="col-3 col-form-label">제품 코드</label>
                         <div class="col-sm-5">
                         	<div class="input-group">
-                           		<input id="parentInput1P" name="productCode" value="${p.productCode }" type="text" class="form-control" placeholder="제품코드를 입력하세요."/>
+                           		<input id="parentInput" name="productCode" value="${p.productCode }" type="text" class="form-control" placeholder="제품코드를 입력하세요."/>
                                 <button id="productSearch" class="btn btn-outline-secondary" type="button">검색</button>
      						</div>
                         </div>
@@ -239,7 +239,7 @@ $(function() {
 
 /* 자동으로 단가 넣기  */
 $(function(){
-	$('input[name=productCode]').on('keyup input click',function(){
+	$('input[name=productCode]').bind('paste keyup input click',function(){
 		<c:forEach items="${productList}" var="p">
 		if( $('input[name=productCode]').val() !='' && $('input[name=productCode]').val() == '${p.productCode}' ){
 			$.ajax({

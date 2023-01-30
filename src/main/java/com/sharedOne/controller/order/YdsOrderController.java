@@ -78,7 +78,7 @@ public class YdsOrderController {
 	@ResponseBody
 	public List<ProductDto> searchAllProductInfo(@PathVariable String allProductInfo,
 			@PathVariable String tableBuyerCode, @PathVariable String deliveryDate) {
-		System.out.println(allProductInfo);
+		// 잘 들어오는 지 확인
 		System.out.println(service.searchProduct(allProductInfo, tableBuyerCode, deliveryDate));
 		return service.searchProduct(allProductInfo, tableBuyerCode, deliveryDate);
 

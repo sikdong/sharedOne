@@ -123,7 +123,7 @@
 				<div class="row d-flex">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >
-							<input name="productCode" value="${param.productCode }" type="text" id="parentInput1P" class="form-control" list="datalistOptions1" placeholder="제품코드">
+							<input name="productCode" value="${param.productCode }" type="text" id="parentInput" class="form-control" list="datalistOptions1" placeholder="제품코드">
 							<datalist id="datalistOptions1">
 								<c:forEach items="${product }" var="product">
 									<%-- <option value="${product.productCode }"> --%>

@@ -155,7 +155,10 @@ dt{
 						<div class="ptDiv">
 							<span class="productType">${product.productType }</span>
 							<button class="chooseBtn btn btn-outline-secondary" value="${product.productCode }">선택</button>
+<<<<<<< HEAD
 
+=======
+>>>>>>> ad958861c18922a8fa632d3940b78e3d6a856019
 						</div>
 						<dl>
 							<dt>
@@ -267,15 +270,34 @@ function getList(){
 };
 
 $(document).on('click','.chooseBtn', (e)=>{
+<<<<<<< HEAD
 	  var result = e.target.value;	    
 	  
 	  window.opener.document.getElementById("parentInput1P").value = result;
+=======
+	
+	  var result = e.target.value;	  
+	  
+	  window.opener.document.getElementById("parentInput").value = result;
+>>>>>>> ad958861c18922a8fa632d3940b78e3d6a856019
 		
 	  setTimeout(function(){
 		  window.close();
 		}, 100);
 	  
-
 	})
+<<<<<<< HEAD
+=======
+	
+/* salePriceList.jsp_서정 : 인풋값 입력하면, 부모창에 검색 시키기  */
+$(function(){
+	$('.chooseBtn').click(function(){
+		const productCode = $(this).val();
+		console.log("this:"+productCode);
+		$("#p1", parent.opener.document).val(productCode);
+		$(opener.document).find("#selectedSearchBtn").click();		
+	})
+});
+>>>>>>> ad958861c18922a8fa632d3940b78e3d6a856019
 </script>
 </html>

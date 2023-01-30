@@ -48,6 +48,10 @@ public class lnhProductService {
 	
 	//삭제
 	public void remove(String productCode) {
+		productMapper.deleteSalePrcie(productCode);
+		
+		productMapper.deleteOrder(productCode);
+		
 		productMapper.delete(productCode);
 	}
 
