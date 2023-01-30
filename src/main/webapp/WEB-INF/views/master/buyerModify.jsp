@@ -218,7 +218,7 @@
 				</div>
 			</form>
 		</div>
-			<form id="removeForm" name="removefrm" action="/master/buyerRemove" method="post">
+			<form id="removeForm" name="removefrm" action="${pageContext.request.contextPath}/master/buyerRemove" method="post">
 				<input type="hidden" name="code" value="${buyer.buyerCode}">
 		    <input id="removeBtn" class="btn" value="삭제" onclick="removeCheck()">
 			</form>

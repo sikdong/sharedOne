@@ -17,13 +17,6 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<!-- datepicker 는 jquery 1.7.1 이상 bootstrap 2.0.4 이상 버전이 필요함 -->
-<!-- jQuery가 먼저 로드 된 후 datepicker가 로드 되어야함.-->
-<link rel="stylesheet" href="resources/css/plugin/datepicker/bootstrap-datepicker.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="resources/js/plugin/datepicker/bootstrap-datepicker.js"></script>
-<!--한국어 달력 쓰려면 추가 로드-->
-<script src="resources/js/plugin/datepicker/bootstrap-datepicker.ko.min.js"></script>
 <!-- 구글 열차트 -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
@@ -268,7 +261,7 @@ div.right {
 						</div>
 					</div>
 					<div class="col-sm-2">
-							<a class="btn btn-outline-primary primaryBtn" type="submit" href="/report/monthlyReport">검색 조건 초기화</a>
+							<a class="btn btn-outline-primary primaryBtn" href="${pageContext.request.contextPath}/report/monthlyReport">검색 조건 초기화</a>
 					</div>
 
 				</div><!-- 3rd row 끝 -->

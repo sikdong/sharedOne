@@ -159,8 +159,8 @@
 
 						<div class="col-sm-2">
 							<div style="text-align: justify;">
-								<a class="btn btn-outline-primary primaryBtn" type="submit"
-									href="/master/productList">검색 조건 초기화</a>
+								<a class="btn btn-outline-primary primaryBtn"
+									href="${pageContext.request.contextPath}/master/productList">검색 조건 초기화</a>
 							</div>
 						</div>
 					</div><!-- 2nd row 끝 -->
