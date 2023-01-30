@@ -214,7 +214,6 @@ $(window).on("scroll",function(){
 			isLoading = true; //실행 불가능 상태로 변경
 		setTimeout(function(){
 			getList();
-			console.log("1초뒤에 실행");
 		}, 500);
         }
 	}
@@ -267,26 +266,25 @@ function getList(){
 };
 
 $(document).on('click','.chooseBtn', (e)=>{
-	
+
 	  var result = e.target.value;	  
 	  
 	  window.opener.document.getElementById("parentInput").value = result;
 		
 	  setTimeout(function(){
 		  window.close();
-		  console.log("1초뒤에 실행");
 		}, 100);
 	  
 	})
-	
+
 /* salePriceList.jsp_서정 : 인풋값 입력하면, 부모창에 검색 시키기  */
-$(function(){
+/* $(function(){
 	$('.chooseBtn').click(function(){
 		const productCode = $(this).val();
 		console.log("this:"+productCode);
 		$("#p1", parent.opener.document).val(productCode);
 		$(opener.document).find("#selectedSearchBtn").click();		
 	})
-});
+}); */
 </script>
 </html>

@@ -74,7 +74,7 @@ public class YjhSearchController {
 			 * 
 			 * model.addAttribute("lastProductId",lastProductId); }
 			 */
-			System.out.println(lastId);
+
 			return searchService.addProductList(keyword,lastId);
 
 		}

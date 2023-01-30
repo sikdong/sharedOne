@@ -71,30 +71,34 @@ li{
 }
 .buyerCode{
 	font-weight:bold;
-	color: red;
-	padding : 1px;
+	color: #1d5c83;
 }
 dt{
-	border: 1px solid black;
+	border: 1px solid #1d5c83;
 	border-radius:5px;
 	width: fit-content;
 	float: left;
+	color: #1d5c83;
+	padding: 0px 3px;
 }
 .bName{
-	padding : 0px 3px;
+	padding : 0px 5px;
 }
 
 .bDiv{
 	margin-bottom: 5px;
 }
-.chooseBtn{
-	float: right;
-	border-radius: 5px;
+.chooseBtn {
+ 		background-color: white !important;
+ 		border-color: #1d5c83 !important;
+ 		color: #1d5c83 !important;
+ 		float: right;
 }
-.chooseBtn:hover{
-	background-color:lightblue;
-	color:white;
-}
+ 	
+.chooseBtn:hover {
+ 	background-color: #1d5c83 !important;
+ 	color: white !important;
+ }
 .spinner{
 	width:100%;
 	position:relative;
@@ -145,18 +149,18 @@ dt{
 				<li>
 					<div class="buyerInfo">
 						<div class="bDiv">
-							<span class="buyerName">${buyer.buyerName }</span>
-							<button class="chooseBtn" value="${buyer.buyerCode },${buyer.buyerName }">선택</button>
+							<span class="buyerCode" id="buyerCode+${buyer.buyerId}">${buyer.buyerCode }</span>
+							<button class="chooseBtn btn btn-outline-secondary" value="${buyer.buyerCode }">선택</button>
 						</div>
 						<dl>
 							<dt>
-								바이어코드
+								바이어명
 							</dt>
 							<dd>
-								<span class="buyerCode" id="buyerCode+${buyer.buyerId}">&nbsp&nbsp${buyer.buyerCode }</span>
+								<span class="buyerName">&nbsp&nbsp${buyer.buyerName }</span>
 							</dd>
 							<dt class="bName">
-								바&nbsp이&nbsp어&nbsp명
+								대&nbsp표&nbsp자
 							</dt>
 							<dd>
 								<span class="manager">&nbsp&nbsp${buyer.manager }</span>
@@ -233,18 +237,18 @@ function getList(){
 						<li>
 							<div class="buyerInfo">
 								<div class="bDiv">
-									<span class="buyerName">\${listAdd.buyerName }</span>
-									<button class="chooseBtn" value="\${listAdd.buyerCode }">선택</button>
+									<span class="buyerCode" id="buyerCode+\${listAdd.buyerId}">\${listAdd.buyerCode }</span>
+									<button class="chooseBtn btn btn-outline-secondary" value="\${listAdd.buyerCode }">선택</button>
 								</div>
 								<dl>
 									<dt>
-										바이어코드
+										바이어명
 									</dt>
 									<dd>
-										<span class="buyerCode" id="buyerCode+\${listAdd.buyerId}">&nbsp&nbsp\${listAdd.buyerCode }</span>
+										<span class="buyerName">&nbsp&nbsp\${listAdd.buyerName }</span>
 									</dd>
 									<dt class="bName">
-										바&nbsp이&nbsp어&nbsp명
+										대&nbsp표
 									</dt>
 									<dd>
 										<span class="manager">&nbsp&nbsp\${listAdd.manager }</span>
@@ -261,15 +265,13 @@ function getList(){
 };
 
 $(document).on('click','.chooseBtn', (e)=>{
-	  data = e.target.value.split(",");
-	  var result1 = data[0];	  
-	  var result2 = data[1];	    
+	  var result = e.target.value;	    
 	  
-	  window.opener.document.getElementById("parentInput1B").value = result1;
-	  window.opener.document.getElementById("parentInput2B").value = result2;
+	  window.opener.document.getElementById("parentInput1B").value = result;
 
-
-	  window.close();
+	  setTimeout(function(){
+		  window.close();
+		}, 100);
 	})
 	
 /* salePriceList.jsp_서정 : 인풋값 입력하면, 부모창에 검색 시키기  */
