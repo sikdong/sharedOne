@@ -851,8 +851,6 @@
 		let productCode = document.querySelectorAll('input[name="productCode"]:checked');
 		let doubleCheck = document.querySelectorAll('#tempOrderTable input[name="productCode"]')
 		let a = true;
-		console.log(doubleCheck.length);
-		console.log(productCode.length);
 		for(let j = 0; j < doubleCheck.length; j++){
 			for(let i = 0; i < productCode.length; i++){
 				if(productCode[i].value === doubleCheck[j].value){
@@ -918,7 +916,7 @@
               id="quantity\${i}" class="form-style" type="number" name="quantity" value="0"></td>
               <td><input readonly type="text" id="sum\${i}" name="sum" class="form-style" value="0" /></td>
               <td style="display : flex; justify-content : center;">
-                  <button onclick="document.querySelector('#tr\${i}').innerHTML = '', assignNumber(), showToast();" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
+                  <button type="button" onclick="document.querySelector('#tr\${i}').innerHTML = '', assignNumber(), showToast();" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
               </td>
             </tr>`
           	document.querySelector("#tempOrderTable").insertAdjacentHTML("beforeend", productOrderTable);

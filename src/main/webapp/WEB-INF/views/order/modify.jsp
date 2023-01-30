@@ -205,13 +205,13 @@
 									<div class="col-sm-3">
 										<div class="input-group">
 											<input id="productCodeInput" type="text" class="form-control" list="datalistOptions2" placeholder="제품코드">
-											<button type="button" id="productCodeBtn"  class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+											<button type="button" id="productCodeBtn"  class="btn btn-outline-secondary"><i class="fa-solid fa-magnifying-glass"></i></button>
 										</div>	
 									</div>
 									<div class="col-sm-3">
 										<div class="input-group">
 											<input type="text" id="productTypeInput" class="form-control" list="datalistOptions3" placeholder="제품그룹">
-											<button type="button" id="productTypeBtn" class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+											<button type="button" id="productTypeBtn" class="btn btn-outline-secondary"><i class="fa-solid fa-magnifying-glass"></i></button>
 										</div>
 									</div>
 								</div><!-- 2nd row 끝 -->
@@ -837,8 +837,6 @@
 		const productCode = document.querySelectorAll('input[name="productCode"]:checked');
 		let doubleCheck = document.querySelectorAll('#tempOrderTable input[name="productCode"]')
 		let a = true;
-		console.log(doubleCheck.length);
-		console.log(productCode.length);
 		for(let j = 0; j < doubleCheck.length; j++){
 			for(let i = 0; i < productCode.length; i++){
 				if(productCode[i].value === doubleCheck[j].value){
@@ -902,9 +900,9 @@
 	          onchange = "makeSumforquantity(event)" 
 	              
               id="quantity\${i}" class="form-style" type="number" name="quantity" value=0></td>
-              <td style="width : 180px;"><input type="text" id="sum\${i}" readonly name="sum" value="0" class="form-style" /></td>
+              <td style="width : 180px;"><input readonly type="text" id="sum\${i}" name="sum" class="form-style" value="0" /></td>
               <td style="display : flex; justify-content : center;">
-              	<button onclick="document.querySelector('#tr\${i}').innerHTML = '', assignNumber(), showToast()" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
+              	<button type="button" onclick="document.querySelector('#tr\${i}').innerHTML = '', assignNumber(), showToast()" id="button\${i}" class="btn button btn-sm" style="background : #1d5c83; color : white;">삭제</button>
               </td>
             </tr>`
           	document.querySelector("#tempOrderTable").insertAdjacentHTML("beforeend", productOrderTable);
@@ -987,7 +985,6 @@
 	 
 	 function makeComma(event){
 		 event.target.value = event.target.value.toLocaleString()
-		 console.log(event.target.value)
 	 }
 	 
 	 function makeLoadingComma(){
