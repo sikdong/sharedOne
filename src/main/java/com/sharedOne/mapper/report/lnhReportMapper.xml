@@ -51,16 +51,16 @@
 	)
 
 	<if test="orderCode != '' ">
-		AND h.orderCode = #{orderCode }
+		AND h.orderCode LIKE #{orderCode }
 	</if>
 	<if test="productCode != '' ">
-		AND i.productCode = #{productCode }
+		AND i.productCode LIKE #{productCode }
 	</if>
 	<if test="writer != '' ">
-		AND h.writer = #{writer }
+		AND h.writer LIKE #{writer }
 	</if>
 	<if test="status != '' ">
-		AND h.status = #{status }
+		AND h.status LIKE #{status }
 	</if>
 	<if test="fromDate != '' and endDate !='' ">
 		AND h.deliveryDate BETWEEN #{fromDate} AND #{endDate}

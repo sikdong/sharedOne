@@ -203,7 +203,7 @@
 				<input id="modifyBtn" class="btn" value="수정" onclick="modifyCheck()">
 			</form>
 
-			<form action="/master/productRemove" name="removefrm" method="post">
+			<form action="${pageContext.request.contextPath}/master/productRemove" name="removefrm" method="post">
 				<input type="hidden" name="code" value="${product.productCode}">
 				<input id= "removeBtn" class="btn" value="삭제" onclick="removeCheck()">
 			</form>
