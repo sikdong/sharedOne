@@ -198,7 +198,7 @@ function dateCheck(){
 		console.log(productCode);
 		/* 날짜 가져와서. 중복 체크하기   */
 		$.ajax({	
-			url:"/master/salePriceModifyAjax",
+			url:'${ctx}'+"/master/salePriceModifyAjax",
 			method: "GET",
 			data: (data),
 			dataType: "json"
@@ -258,7 +258,7 @@ $(function() {
 			const data = { priceId, productCode, buyerCode, salePrice, discountRate, fromDate, endDate };
 				
 	    	$.ajax({
-	    		url : "/master/salePriceModify",
+	    		url : '${ctx}'+"/master/salePriceModify",
 	    		method : "POST",
 	    		data : (data),
 	    		dataType : "json",
@@ -287,7 +287,7 @@ $(function(){
 		const productCode = $('input[name=productCode]').val();
 		if ( confirm("삭제하시겠습니까?")) {
 			$.ajax({
-				url : "/master/salePriceDelete",
+				url : '${ctx}'+"/master/salePriceDelete",
 				method : "POST",
 				data : ({"priceId" : priceId}),
 				dataType : "json",

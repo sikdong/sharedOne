@@ -169,7 +169,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
-
+const ctx = "${pageContext.request.contextPath}";
 /* 제품검색 시 검색창 띄우기 */
 $(function(){
 		
@@ -219,7 +219,7 @@ $(function() {
 		const data = { buyerCode, productCode, price, salePrice, discountRate, fromDate, endDate };
 		
 		$.ajax({
-    		url : "/master/salePriceRegister",
+    		url : '${ctx}'+"/master/salePriceRegister",
     		method : "POST",
     		data : (data),
     		dataType : "json",
@@ -239,20 +239,23 @@ $(function() {
 
 /* 자동으로 단가 넣기  */
 $(function(){
-	$('input[name=productCode]').bind('paste keyup input click',function(){
+	$('input[name=productCode]').on('change keyup paste input click',function(){
+		
+		
 		<c:forEach items="${productList}" var="p">
-		if( $('input[name=productCode]').val() !='' && $('input[name=productCode]').val() == '${p.productCode}' ){
-			$.ajax({
-				url : "/master/getPrice",
-				method : "GET",
-				data : {productCode : $('input[name=productCode]').val() },
-				dataType : "json"
-			})
-			.done(function(price){
-				price = addComma(String(price));
-				$('#price').attr('value', price);
-			})
-		}
+			if( $('input[name=productCode]').val() !='' && $('input[name=productCode]').val() == '${p.productCode}' ){
+					$.ajax({
+						url : '${ctx}'+"/master/getPrice",
+						method : "GET",
+						data : {productCode : $('input[name=productCode]').val() },
+						dataType : "json",
+						success : function(price){
+							
+							price = addComma(String(price));
+							$('#price').attr('value', price);
+						}
+					})		
+			}
 		</c:forEach>
 	})
 })
@@ -297,7 +300,7 @@ $(function(){
 		const data = {buyerCode, productCode};
 		/* 바이어선택후 제품중복 등록 할때, 날짜 가져와서. 중복 체크하기   */
 		$.ajax({	
-			url:"/master/salePriceRegisterAjax",
+			url:'${ctx}'+"/master/salePriceRegisterAjax",
 			method: "GET",
 			data: (data),
 			dataType: "json"
