@@ -106,7 +106,7 @@
 								<div class="row d-flex">
 									<div class="col-sm-6 mb-4">
 										<div class="input-group">
-											<input name="buyerInfo" id="allBuyerInfoInput" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
+											<input name="buyerInfo" id="allBuyerInfoInput" class="form-control" type="Search" placeholder="바이어 관련 정보를 입력 ex) ATX, 한국" aria-label="Search">
 							        		<button class="btn btn-outline-secondary" type="button" id="allBuyerInfoBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
 										</div>
 									</div>
@@ -189,7 +189,7 @@
 								<div class="row d-flex">
 									<div class="col-sm-6 mb-4">
 										<div class="input-group">
-											<input name="buyerInfo" id="allProductInfo" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
+											<input name="buyerInfo" id="allProductInfo" class="form-control" type="Search" placeholder="제품 관련 정보를 입력 ex) GA" aria-label="Search">
 							        		<button type="button" class="btn btn-outline-secondary" style="cursor : pointer" id="allProductInfoBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
 										</div>
 									</div>
