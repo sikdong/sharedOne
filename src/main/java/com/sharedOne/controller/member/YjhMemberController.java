@@ -33,7 +33,6 @@ public class YjhMemberController {
 	
 	@GetMapping("complete")
 	 public void signComplete(@RequestParam(name="id") String id, Model model) {
-		System.out.println(id);
 		model.addAttribute("id",id);
 	}
 	@GetMapping("denied")

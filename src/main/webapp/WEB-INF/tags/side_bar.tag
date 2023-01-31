@@ -163,8 +163,11 @@
                     </div>
                 </li>
                 <li>
+                	<c:url value="/master/buyerList" var="buyerListLink">
+                		<c:param name="" value=""></c:param>
+                	</c:url>
                     <div class="li-div">
-                        <a href="/master/buyerList" class="rounded" style="color: #e3e3e3;">바이어 관리</a>
+                        <a href="${buyerListLink}" class="rounded" style="color: #e3e3e3;">바이어 관리</a>
                     </div>
                 </li>
                 <li>
@@ -205,8 +208,11 @@
             <div class="collapse" id="report-collapse">
                 <ul>
                     <li>
+                    	<c:url value="/report/monthlyReport" var="reportLink">
+                			<c:param name="" value=""></c:param>
+                		</c:url>
                         <div class="li-div">
-                            <a href="/report/monthlyReport" class="rounded" style="color: #e3e3e3;">리포트</a>
+                            <a href="${reportLink}" class="rounded" style="color: #e3e3e3;">리포트</a>
                         </div>
                     </li>
 
