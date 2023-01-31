@@ -298,7 +298,7 @@
 										<c:param name="id" value="${h.id }"/>
 									</c:url>
 									<button type="submit" class="btn btn-danger" 
-									onclick="window.open('${companionSheetLink}','주문서','width=1400,height=1000,left=500,top=100,location=no,status=no,scrollbars=yes');"
+									onclick="window.open('${companionSheetLink}','주문서','width=800,height=1000,left=500,top=100,location=no,status=no,scrollbars=yes');"
 									>
 										${h.status }
 									</button>
@@ -390,7 +390,7 @@ function list(){
 				$('#tr${h.orderCode}').addClass("selectedRow");
 				
 				$.ajax({
-					url: '${ctx}'+"/order/itemList/${h.orderCode}",
+					url: "itemList/${h.orderCode}",
 					data: {orderCode : "${h.orderCode}"},
 					type: "get",
 					dataType: "json"
