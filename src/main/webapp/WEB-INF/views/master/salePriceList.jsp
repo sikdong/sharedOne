@@ -331,7 +331,7 @@ checkDate();
 function listAll(){
 	/* const priceId = $('input[name=priceId]').val(); */
 	$.ajax({
-		url : '${ctx}'+"/master/salePriceListAjaxList",
+		url : "salePriceListAjaxList",
 		method : "GET",
 		/* data : ("priceId" : priceId), */
 		dataType : "json"
@@ -363,10 +363,12 @@ function listAll(){
 			);
 			
 			/* 수정버튼 누를때, 수정창 열기  */
-			$('#modify'+item.priceId).click(function(){
+			$('#modify'+item.priceId).on('click', function(){
+				
 				/* 자식창 열기 */
-				window.open('${ctx}'+'/master/salePriceModify?priceId='+item.priceId,'가격수정',
+				window.open('salePriceModify?priceId='+item.priceId,'가격수정',
 						'width=500,height=500,left=1500,top=100,bottom=300,location=no,status=no,scrollbars=yes');
+			
 			})	
 		})
 	})
@@ -408,7 +410,7 @@ function search(){
 			
 			const data = {q, productCode, productName, buyerCode, buyerName, country, priceMin, priceMax, fromDate, endDate };
 			$.ajax({
-				url : '${ctx}'+"/master/salePriceListAjax",
+				url : "salePriceListAjax",
 				method : "GET",
 				data : (data),
 				dataType : "json"
@@ -442,7 +444,7 @@ function search(){
 					/* 수정버튼 누를때, 수정창 열기, 백그라운드 주기, 체크하기  */
 					$('#modify'+item.priceId).click(function(){
 						/* 수정창 열기 */
-						window.open('${ctx}'+'/master/salePriceModify?priceId='+item.priceId,'가격수정',
+						window.open('salePriceModify?priceId='+item.priceId,'가격수정',
 								'width=500,height=500,left=1500,top=100,bottom=300,location=no,status=no,scrollbars=yes');
 						/* 선택된 자식 수정창의 priceId == 부모 테이블 속 row priceId => addClass 와 checked 하기 . */
 						/* row 백그라운드 ,체크 해제하기, */

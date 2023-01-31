@@ -21,14 +21,12 @@ import com.sharedOne.service.master.AsjProductService;
 import com.sharedOne.service.master.AsjSalePriceService;
 import com.sharedOne.service.master.lnhBuyerService;
 
-
 @Controller
 @RequestMapping("master")
 public class AsjSalePriceController {
 	
 	@Autowired
 	private AsjSalePriceService asjSalePriceService;
-	
 
 	@Autowired
 	private AsjProductService productService;

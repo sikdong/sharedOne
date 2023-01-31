@@ -219,7 +219,7 @@ $(function() {
 		const data = { buyerCode, productCode, price, salePrice, discountRate, fromDate, endDate };
 		
 		$.ajax({
-    		url : '${ctx}'+"/master/salePriceRegister",
+    		url : "salePriceRegister",
     		method : "POST",
     		data : (data),
     		dataType : "json",
@@ -245,7 +245,7 @@ $(function(){
 		<c:forEach items="${productList}" var="p">
 			if( $('input[name=productCode]').val() !='' && $('input[name=productCode]').val() == '${p.productCode}' ){
 					$.ajax({
-						url : '${ctx}'+"/master/getPrice",
+						url : "getPrice",
 						method : "GET",
 						data : {productCode : $('input[name=productCode]').val() },
 						dataType : "json",
@@ -300,7 +300,7 @@ $(function(){
 		const data = {buyerCode, productCode};
 		/* 바이어선택후 제품중복 등록 할때, 날짜 가져와서. 중복 체크하기   */
 		$.ajax({	
-			url:'${ctx}'+"/master/salePriceRegisterAjax",
+			url: "salePriceRegisterAjax",
 			method: "GET",
 			data: (data),
 			dataType: "json"
