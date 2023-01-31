@@ -12,13 +12,13 @@
 		<if test="orderQ != '' or orderCode != ''">
 			OR h.orderCode LIKE #{orderQ}
 		</if>
-		<if test="orderQ != '' or productCode != ''">
+		<if test="orderQ != ''or productCode != ''">
 			OR i.productCode LIKE #{orderQ}
 		</if>
 		<if test="orderQ != '' or writer != ''">
 			OR h.writer LIKE #{orderQ}
 		</if>
-		<if test="orderQ != '' or status != ''">
+		<if test="orderQ != ''or status != ''">
 			OR h.status LIKE #{orderQ}
 		</if>
 		<if test="orderQ != ''">
@@ -45,21 +45,19 @@
 		<if test="orderQ != ''">
 			OR h.message LIKE #{orderQ}
 		</if>
-
-
 	</trim>
 	)
 
-	<if test="orderCode != '' ">
+	<if test="orderCode != ''">
 		AND h.orderCode LIKE #{orderCode }
 	</if>
-	<if test="productCode != '' ">
+	<if test="productCode != ''">
 		AND i.productCode LIKE #{productCode }
 	</if>
-	<if test="writer != '' ">
+	<if test="writer != ''">
 		AND h.writer LIKE #{writer }
 	</if>
-	<if test="status != '' ">
+	<if test="status != ''">
 		AND h.status LIKE #{status }
 	</if>
 	<if test="fromDate != '' and endDate !='' ">

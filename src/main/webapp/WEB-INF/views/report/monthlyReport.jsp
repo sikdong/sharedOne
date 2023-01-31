@@ -374,8 +374,7 @@ $('#checkedAllDate').click(function(){
 		$('input[name=fromDate]').removeAttr("disabled");
 		$('input[name=endDate]').removeAttr("disabled");
 	}
-}
-
+})
 </script>
 </body>
 </html>
