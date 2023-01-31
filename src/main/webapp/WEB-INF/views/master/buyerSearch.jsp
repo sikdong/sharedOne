@@ -177,11 +177,11 @@ dt{
         	</ul>                                    
         </div>		
 	</div>
-	<div class="d-flex justify-content-center spinner">
+	<!-- <div class="d-flex justify-content-center spinner">
 	  <div class="spinner-border" id="loadingImg" role="status">
 	    <span class="sr-only">Loading...</span>
 	  </div>
-	</div>
+	</div> -->
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
