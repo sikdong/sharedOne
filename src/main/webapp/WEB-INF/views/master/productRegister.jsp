@@ -57,7 +57,7 @@
     
     #productNameExist, #productCodeExist {
         position: absolute;
-    	left: 240px;
+    	left: 307px;
     	line-height: 10px;
     	margin-top: 10px;
 	    font-size: 15px; 

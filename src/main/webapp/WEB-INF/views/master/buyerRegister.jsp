@@ -77,7 +77,7 @@
     }
     #buyerCodeExist, #businessNumberExist {
     	position: absolute;
-    	left: 243px;
+    	left: 307px;
     
     }
     

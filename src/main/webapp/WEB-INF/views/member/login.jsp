@@ -224,7 +224,7 @@ label{
                         <form action="#" id="loginForm" method="post">
                             <div class="form-group">
                                 <label class="control-label" for="userId" id="userId">사원번호</label>
-                                <input type="text" placeholder="사원번호를 입력해주세요." title="사원번호를 입력해주세요." required="" value="" name="username" id="username" class="form-control">
+                                <input type="text" placeholder="사원번호를 입력해주세요." title="사원번호를 입력해주세요." required="" value="" name="username" id="username" class="form-control" autocomplete="off">
                                
                             </div>
                             <div class="form-group">
