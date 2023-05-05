@@ -20,6 +20,9 @@
 <img src="https://user-images.githubusercontent.com/110441578/236383124-06136067-0a28-4016-b3c0-32df0b58ea49.png" width="200" height="200">
 </div>
 
+### 배포주소
+http://13.125.60.211/valves(ID : 윤동석, PW : qwer1234)
+
 ###  기획의도
 > (주)쉐어드원과 연계한 영업부 주문 프로그램 프로젝트 입니다
 <br>
