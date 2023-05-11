@@ -382,7 +382,7 @@ function list(){
 				$('#tr${h.orderCode}').addClass("selectedRow");
 				
 				$.ajax({
-					url: "/order/itemList/${h.orderCode}",
+					url: "/valve/order/itemList/${h.orderCode}",
 					data: {orderCode : "${h.orderCode}"},
 					type: "get",
 					dataType: "json"

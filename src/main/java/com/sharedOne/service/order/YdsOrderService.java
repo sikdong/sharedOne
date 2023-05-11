@@ -55,7 +55,6 @@ public class YdsOrderService {
 					&& (endDate.isEqual(parsedDeliveryDate) || endDate.isAfter(parsedDeliveryDate))) {
 
 				pddList = mapper.searchProduct(allProductInfo, tableBuyerCode, fromDate, endDate);
-				System.out.println(allProductInfo + " " + fromDate + " " + endDate);
 			} 
 		}
 		if (pddList.size() != 0) {
@@ -86,7 +85,9 @@ public class YdsOrderService {
 	}
 
 	@Transactional
-	public void insertOrder(YdsOrderDto yod) {
+	public void insertOrder(OrderHeaderDto oid, OrderItemDto oid) {
+		long startTime = System.currentTimeMillis();
+		System.out.println(startTime); 
 		// 오더 헤더 파라미터 구성
 		OrderHeaderDto ohd = new OrderHeaderDto();
 		ohd.setMemberId(yod.getMemberId());
@@ -115,7 +116,6 @@ public class YdsOrderService {
 		 * mapper.insertOrderItem(generatedId, oid); } else {
 		 */
 		List<Integer> quantities = yod.getQuantity();
-		System.out.println(quantities);
 		List<Integer> finalPrices = yod.getFinalPrice();
 		List<Integer> sums = yod.getSum();
 		List<String> productCodes = yod.getProductCode();
@@ -139,6 +139,10 @@ public class YdsOrderService {
 				}
 			}
 		}
+		long endTime = System.currentTimeMillis();
+		
+		System.out.println(endTime);
+		System.out.println(endTime - startTime);
 	}
 
 	public OrderHeaderDto modifyOrderHeader(int orderId) {
@@ -153,6 +157,8 @@ public class YdsOrderService {
 
 	@Transactional
 	public void updateOrder(YdsOrderDto yod, int orderId) {
+		long startTime = System.currentTimeMillis();
+		System.out.println(startTime); 
 		// 오더 헤더 파라미터 구성
 		OrderHeaderDto ohd = new OrderHeaderDto();
 		ohd.setBuyerCode(yod.getBuyerCode());
@@ -182,11 +188,7 @@ public class YdsOrderService {
 		List<Integer> quantities = yod.getQuantity();
 		List<Integer> finalPrices = yod.getFinalPrice();
 		List<Integer> sums = yod.getSum();
-		System.out.println(compareyod);
-		System.out.println(readyProductCodes);
-		System.out.println(finalPrices);
-		System.out.println(quantities);
-		System.out.println(sums);
+		
 		// 기존 데이터 베이스의 제품코드와 비교하여 update or insert 여부 결정위한 for 문
 		if (compareyod != null && !compareyod.isEmpty()) {
 			for (int a = 0; a < readyProductCodes.size(); a++) {
@@ -200,7 +202,7 @@ public class YdsOrderService {
 							oid.setQuantity(quantities.get(a));
 							oid.setSum(sums.get(a));
 							mapper.updateOrderItem(oid, orderId);
-							System.out.println(oid);
+						
 						} else {
 							// 수량 등록 안된 상태
 							oid.setProductCode(readyProductCodes.get(a));
@@ -209,15 +211,12 @@ public class YdsOrderService {
 							oid.setQuantity(0);
 							oid.setSum(0);
 							mapper.updateOrderItem(oid, orderId);
-							System.out.println("222222222222");
+						
 						}
 					}
 				}
 			}
-			System.out.println(readyProductCodes);
-			System.out.println(finalPrices);
-			System.out.println(quantities);
-			System.out.println(sums);
+			
 			// 기존 주문 아닌 제품 코드들 인식
 			for (int a = 0; a < readyProductCodes.size(); a++) {
 				if (!readyProductCodes.get(a).equals("1")) {
@@ -229,7 +228,7 @@ public class YdsOrderService {
 						oid.setQuantity(quantities.get(a));
 						oid.setSum(sums.get(a));
 						mapper.insertOrderItem(orderId, oid);
-						System.out.println("333333333333");
+						
 					} else {
 						// 수량 등록 안된 상태
 						oid.setProductCode(readyProductCodes.get(a));
@@ -237,7 +236,7 @@ public class YdsOrderService {
 						oid.setQuantity(0);
 						oid.setSum(0);
 						mapper.insertOrderItem(orderId, oid);
-						System.out.println("44444444444");
+						
 					}
 				}
 
@@ -251,7 +250,7 @@ public class YdsOrderService {
 					oid.setQuantity(quantities.get(a));
 					oid.setSum(sums.get(a));
 					mapper.insertOrderItem(orderId, oid);
-					System.out.println("55555555555");
+					
 				} else {
 					// 수량 등록 안된 상태
 					oid.setProductCode(readyProductCodes.get(a));
@@ -259,11 +258,15 @@ public class YdsOrderService {
 					oid.setQuantity(0);
 					oid.setSum(0);
 					mapper.insertOrderItem(orderId, oid);
-					System.out.println("6666666666");
+					
 				}
 			}
 
 		}
+		long endTime = System.currentTimeMillis();
+		
+		System.out.println(endTime);
+		System.out.println(endTime - startTime);
 	}
 
 	public int deleteOrder(Map<String, String> data) {

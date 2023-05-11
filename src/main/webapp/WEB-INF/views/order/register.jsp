@@ -69,7 +69,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
 	integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" type="text/javascript"  integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 </head>
 <body>
 	<c:set value="${pageContext.request.contextPath }" var="path"></c:set>
@@ -114,7 +114,7 @@
 						<div class="col-sm-6 mb-4">
 							<div class="input-group">
 								<input name="buyerInfo" id="allBuyerInfoInput"
-									class="form-control" type="Search" placeholder="바이어 관련 정보를 입력 ex) ATX, 한국"
+									class="form-control" value="mob" type="Search" placeholder="바이어 관련 정보를 입력 ex) ATX, 한국"
 									aria-label="Search">
 								<button type="button" class="btn btn-outline-secondary"
 									id="allBuyerInfoBtn" onclick=>
@@ -168,7 +168,7 @@
 					<div class="row d-flex">
 						<div class="col-sm-5">
 							<div class="input-group" style="margin-top: 15px !important;">
-								<input name="deliveryDate" type="date" id="deliveryDate"
+								<input name="deliveryDate" value=2023-05-11 type="date" id="deliveryDate"
 									class="form-control">
 							</div>
 						</div>
@@ -210,7 +210,7 @@
 						<div class="col-sm-6 mb-4">
 							<div class="input-group">
 								<input id="allProductInfo" class="form-control"
-									type="Search" placeholder="제품 관련 정보를 입력 ex) GA" aria-label="Search">
+									type="Search" value=g placeholder="제품 관련 정보를 입력 ex) GA" aria-label="Search">
 								<button type="button" class="btn btn-outline-secondary"
 									style="cursor: pointer" id="allProductInfoBtn">
 									<i class="fa-solid fa-magnifying-glass"></i>
@@ -304,12 +304,12 @@
 			<div style="width: 77vw;" class="mt-5">
 				<label for="inputPassword" class=" col-form-label">주문 시 특이사항</label>
 				<div class="ml-3">
-					<textarea rows="5" class="form-control" name="message"></textarea>
+					<textarea rows="5" class="form-control message" name="message"></textarea>
 				</div>
 			</div>
 			<button type="button" style="margin-left: 40%; background: #1d5c83; color: white;"
-				class="mt-5 btn" onclick="tempSave()">임시저장</button>
-			<button id="registerBtn" onclick="register()" type="button" style="background: #1d5c83; color: white;" class="mt-5 btn">주문
+				class="mt-5 btn bibutton" onclick="tempSave()">임시저장</button>
+			<button id="registerBtn" onclick="register()" type="button" style="background: #1d5c83; color: white;" class="mt-5 btn bibutton">주문
 				등록</button>
 			<a href="${path }/order/list" type="button" class="mt-5 btn"
 				style="background: #1d5c83; color: white;">닫기</a>
@@ -350,6 +350,7 @@
 		integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
 		crossorigin="anonymous"></script>
 	<script>
+	
 	
 	
 	const path = "${pageContext.request.contextPath}"
@@ -893,7 +894,7 @@
 			let sp = da.salePrice
 			let salePrice = sp.toLocaleString();
 			const productOrderTable =
-            `<tr id="tr\${i}">
+            `<tr class="productList" id="tr\${i}">
               <th scope="row" class="oiNumber" id="oiNumber\${i}" data-order-number=''></th>
               <td>\${da.productCode}<input type="hidden" name="productCode" value="\${da.productCode}"></td>
               <td>\${da.productType}</td>
@@ -937,22 +938,55 @@
 				}
 			})
 		}	
-	}); 
+	});
 	
 	function tempSave(){
-		document.querySelector("#status").value = '임시저장'
-		let sum = document.querySelectorAll('input[name="sum"]');
-		let finalPrice = document.querySelectorAll('input[name="finalPrice"]')
+		const buyerCode = document.querySelector('input[name="buyerCode"]').value;
+		const deliveryDate = document.querySelector('input[name="deliveryDate"]').value;
+		let status = '임시저장'
+		let message = document.querySelector(".message").innerHTML;
+		if(message === null){
+			message = "";
+		}
+		const size = document.querySelectorAll("input[name='productCode']");
+		const productCodes = [];
+		let inputElems = document.querySelectorAll("input[name='productCode']");
+		inputElems.forEach((inputElem) => {
+		  productCodes.push(inputElem.value);
+		});
 		
-		finalPrice.forEach((el) =>{
-		el.value = el.value.split(',').join("");	
+		const sums = [];
+		inputElems = document.querySelectorAll("input[name='sum']");
+		inputElems.forEach((inputElem) => {
+			sums.push(inputElem.value);
+			});
+		
+		const finalPrices = [];
+		inputElems = document.querySelectorAll("input[name='finalPrice']");
+		inputElems.forEach((inputElem) => {
+			finalPrices.push(inputElem.value);
+			});
+         
+		const buyerInfo = {
+			buyerCode,
+			deliveryDate,
+			message,
+			status
+		}
+		const data = {
+			buyerInfo,
+			itemArr
+		}
+		fetch(path+"/order/register", {
+			method : "POST",
+			headers : {
+				"Content-Type" : "application/json"
+			},
+			body : JSON.stringify(data)
 		})
-		sum.forEach((el) =>{
-			el.value = el.value.split(',').join("");	
-		})
-		document.querySelector("#orderForm").submit() 
+		.then(res => res.json())
 	}
-	function register(){
+	 function register(){
 		document.querySelector("#status").value = '승인요청'
 		let sum = document.querySelectorAll('input[name="sum"]');
 		let finalPrice = document.querySelectorAll('input[name="finalPrice"]')
@@ -964,7 +998,7 @@
 		el.value = el.value.split(',').join("");	
 		})
 		document.querySelector("#orderForm").submit()
-	}
+	} 
 	
 	function assignNumber() {
 		if(document.querySelectorAll(".oiNumber")){
@@ -976,9 +1010,7 @@
 			}
 	
 		}
-	}
-	
-	
+	} 
 	</script>
 </body>
 </html>
