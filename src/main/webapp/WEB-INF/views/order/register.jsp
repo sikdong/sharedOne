@@ -949,23 +949,30 @@
 			message = "";
 		}
 		const size = document.querySelectorAll("input[name='productCode']");
-		const productCodes = [];
-		let inputElems = document.querySelectorAll("input[name='productCode']");
+		const itemInfo = [];
+		let inputElems = document.querySelectorAll(".productList");
 		inputElems.forEach((inputElem) => {
-		  productCodes.push(inputElem.value);
+		
+		let productCode = inputElem.querySelector("input[name='productCode']").value;
+		  console.log("productCode", productCode)
+		  let number = inputElem.querySelector("input[name='sum']").value.replace(",", "");
+		  let sum = Number(number);
+		  let quantity = Number(inputElem.querySelector("input[name='quantity']").value);
+		  let fp = inputElem.querySelector("input[name='finalPrice']").value.replace(",", "");
+		 let finalPrice = Number(fp);
+		 const arr ={
+				 productCode,
+				 sum,
+				 quantity,
+				 finalPrice
+				 
+		 }
+		 
+		 itemInfo.push(arr);
 		});
 		
-		const sums = [];
-		inputElems = document.querySelectorAll("input[name='sum']");
-		inputElems.forEach((inputElem) => {
-			sums.push(inputElem.value);
-			});
+		console.log("itemInfo", itemInfo);
 		
-		const finalPrices = [];
-		inputElems = document.querySelectorAll("input[name='finalPrice']");
-		inputElems.forEach((inputElem) => {
-			finalPrices.push(inputElem.value);
-			});
          
 		const buyerInfo = {
 			buyerCode,
@@ -974,8 +981,8 @@
 			status
 		}
 		const data = {
-			buyerInfo,
-			itemArr
+			ohd : buyerInfo,
+			oid : itemInfo
 		}
 		fetch(path+"/order/register", {
 			method : "POST",

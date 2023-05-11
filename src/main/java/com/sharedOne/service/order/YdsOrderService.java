@@ -85,13 +85,11 @@ public class YdsOrderService {
 	}
 
 	@Transactional
-	public void insertOrder(OrderHeaderDto oid, OrderItemDto oid) {
+	public void insertOrder(YdsOrderDto yod) {
 		long startTime = System.currentTimeMillis();
 		System.out.println(startTime); 
 		// 오더 헤더 파라미터 구성
-		OrderHeaderDto ohd = new OrderHeaderDto();
-		ohd.setMemberId(yod.getMemberId());
-		ohd.setBuyerCode(yod.getBuyerCode());
+		OrderHeaderDto ohd = yod.getOhd();
 
 		if (yod.getDeliveryDate().isEmpty()) {
 
