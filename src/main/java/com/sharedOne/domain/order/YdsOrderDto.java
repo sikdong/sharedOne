@@ -9,10 +9,8 @@ public class YdsOrderDto {
 	private String buyerCode;
 	private String deliveryDate;
 	private String message;
-	private List<String> productCode;
-	private List<Integer> finalPrice;
-	private List<Integer> quantity;
-	private List<Integer> sum;
+	private OrderHeaderDto ohd;
+	private List<OrderItemDto> oid;
 	private String writer;
 	private String status;
 	private String inserted;

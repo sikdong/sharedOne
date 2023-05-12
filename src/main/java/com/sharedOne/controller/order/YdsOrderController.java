@@ -79,7 +79,6 @@ public class YdsOrderController {
 	public List<ProductDto> searchAllProductInfo(@PathVariable String allProductInfo,
 			@PathVariable String tableBuyerCode, @PathVariable String deliveryDate) {
 		// 잘 들어오는 지 확인
-		System.out.println(service.searchProduct(allProductInfo, tableBuyerCode, deliveryDate));
 		return service.searchProduct(allProductInfo, tableBuyerCode, deliveryDate);
 
 	}
@@ -94,7 +93,7 @@ public class YdsOrderController {
 	}
 
 	@PostMapping("register")
-	public String insertOrder(YdsOrderDto yod, Authentication at, RedirectAttributes rttr) {
+	public String insertOrder(@RequestBody YdsOrderDto yod, Authentication at, RedirectAttributes rttr) {
 		if (at != null) {
 			yod.setMemberId(at.getName());
 		}

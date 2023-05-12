@@ -47,11 +47,8 @@ public class lnhBuyerController {
 			setManagers.add(buyer.getManager());
 		}
 		
-		List<BuyerDto> searhResult = buyerService.searchBuyerList(keyword, buyerCode, buyerName, country);
-		
-		System.out.println(keyword);
-		System.out.println(searhResult);
-		
+		List<BuyerDto> searchResult = buyerService.searchBuyerList(keyword, buyerCode, buyerName, country);
+				
 		model.addAttribute("country", setCountries);
 		model.addAttribute("manager", setManagers);
 

@@ -6,7 +6,11 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 <c:url value="/member/logout" var="logoutLink"/>
 <c:url value="/member/login" var="loginLink"/>
+<<<<<<< Updated upstream
 <c:url value="/member/signup" var="signupLink"/>
+=======
+<c:url value="${pageContext.request.contextPath}/member/signup" var="signupLink"/>
+>>>>>>> Stashed changes
 <html>
 <head>
 <meta charset="utf-8">
@@ -155,6 +159,14 @@
             <div class="collapse" id="master-collapse" style="">
               <ul>
                 <li>
+<<<<<<< Updated upstream
+=======
+                    <div class="li-div">
+                        <a href="${pageContext.request.contextPath}/master/buyerList" class="rounded" style="color: #e3e3e3;">바이어 관리</a>
+                    </div>
+                </li>
+                <li>
+>>>>>>> Stashed changes
                 	<c:url value="/master/productList" var="productListLink">
                 		<c:param name="" value=""></c:param>
                 	</c:url>
@@ -212,7 +224,11 @@
                 			<c:param name="" value=""></c:param>
                 		</c:url>
                         <div class="li-div">
+<<<<<<< Updated upstream
                             <a href="${reportLink}" class="rounded" style="color: #e3e3e3;">리포트</a>
+=======
+                            <a href="${pageContext.request.contextPath}/report/monthlyReport" class="rounded" style="color: #e3e3e3;">리포트</a>
+>>>>>>> Stashed changes
                         </div>
                     </li>
 
@@ -224,7 +240,11 @@
          <sec:authorize access="hasAuthority('팀장')">
 	          <li class="mb-1">
 	            <div class="row list-row">
+<<<<<<< Updated upstream
 	                <a href="#" class="list-head" onclick="window.open(' ${pageContext.request.contextPath}/member/signup','사원등록','width=500,height=500,left=400,top=100,bottom=300,location=no,status=no,scrollbars=yes');"
+=======
+	                <a href="#" class="list-head" onclick="window.open('/valve/member/signup','사원등록','width=500,height=500,left=400,top=100,bottom=300,location=no,status=no,scrollbars=yes');"
+>>>>>>> Stashed changes
 	                style="text-decoration: none;color: #e3e3e3;"><i class="fa-solid fa-user-plus"></i>&nbsp; 사원등록</a>
 	            </div>
 	          </li>

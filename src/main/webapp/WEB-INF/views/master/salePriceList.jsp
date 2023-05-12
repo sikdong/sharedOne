@@ -331,7 +331,11 @@ checkDate();
 function listAll(){
 	/* const priceId = $('input[name=priceId]').val(); */
 	$.ajax({
+<<<<<<< Updated upstream
 		url : "salePriceListAjaxList",
+=======
+		url : "/valves/master/salePriceListAjaxList",
+>>>>>>> Stashed changes
 		method : "GET",
 		/* data : ("priceId" : priceId), */
 		dataType : "json"
@@ -410,7 +414,11 @@ function search(){
 			
 			const data = {q, productCode, productName, buyerCode, buyerName, country, priceMin, priceMax, fromDate, endDate };
 			$.ajax({
+<<<<<<< Updated upstream
 				url : "salePriceListAjax",
+=======
+				url : "/valves/master/salePriceListAjax",
+>>>>>>> Stashed changes
 				method : "GET",
 				data : (data),
 				dataType : "json"

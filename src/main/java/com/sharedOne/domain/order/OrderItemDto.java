@@ -15,7 +15,7 @@ public class OrderItemDto {
 	private int sum;
 	private String orderCode;
 	
-	private List <ProductDto> product;
+	private List<ProductDto> product;
 	private String productCode;
 	private String productName;
 	private String productType;
@@ -23,8 +23,11 @@ public class OrderItemDto {
 	private String size;
 	private int price;
 	
-	private List <SalePriceDto> salePriceDto;
+	private List<SalePriceDto> salePriceDto;
 	private int finalPrice;
+	private List<Integer> finalPrices;
+	private List<Integer> sums;
+	private List<String> productCodes;
 	private int discountRate;
 	private LocalDate fromDate;
 	private LocalDate endDate;
