@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.sharedOne.mapper.master.YjhSearchMapper">
+ 
+ 	<select id="countProduct" resultType="int">
+ 		SELECT COUNT(*)	
+ 		FROM Product	
+		WHERE
+	 	(
+	 	<trim prefixOverrides="OR">
+			<if test="keyword != '' or productCode != ''">
+			OR productCode LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or productName != ''">
+			OR productName LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or productType != ''">
+			OR productType LIKE #{keyword}
+			</if>
+		</trim>
+		)
+ 	</select>
+ 	
+ 	<select id="countProductAll" resultType="int">
+ 		SELECT COUNT(*)	
+ 		FROM Product
+ 	</select>
+  	
+ 	<select id="searchProductList" resultType="com.sharedOne.domain.master.SearchProductDto">
+ 	<!-- productCode, productName, productType, weight, size, price, unit, content, inserted -->
+		SELECT 
+			productCode,
+			productName,
+			productType,
+			productId
+		FROM 
+			Product			
+		WHERE
+	 	(
+	 	<trim prefixOverrides="OR">
+			<if test="keyword != '' or productCode != ''">
+			OR productCode LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or productName != ''">
+			OR productName LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or productType != ''">
+			OR productType LIKE #{keyword}
+			</if>
+		</trim>
+		)	 	
+		ORDER BY productId DESC LIMIT 10;
+ 	</select>
+ 	
+ 	<select id="addProductList" resultType="com.sharedOne.domain.master.SearchProductDto">
+ 	<!-- productCode, productName, productType, weight, size, price, unit, content, inserted -->
+		SELECT 
+			productCode,
+			productName,
+			productType,
+			productId
+		FROM 
+			Product			
+		WHERE
+		productId &lt; #{lastId} AND
+	 	(
+	 	<trim prefixOverrides="OR">
+			<if test="keyword != '' or productCode != ''">
+			OR productCode LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or productName != ''">
+			OR productName LIKE #{keyword}
+			</if>
+			<if test="keyword != '' or productType != ''">
+			OR productType LIKE #{keyword}
+			</if>
+		</trim>
+		)	 	
+		ORDER BY productId DESC LIMIT 10;
+ 	</select>
+ 	
+  </mapper>

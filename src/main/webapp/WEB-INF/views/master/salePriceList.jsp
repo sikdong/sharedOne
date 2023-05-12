@@ -171,7 +171,7 @@
 					<div class="col-sm-6 mb-4">
 						<div class="input-group">
 							<input name="q" value="${param.q }" class="form-control" type="Search" placeholder="전체검색" aria-label="Search">
-			        		<button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+			        		<button  class="btn btn-outline-secondary" type="button" ><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
 				</div><!-- 1st row 끝 -->
@@ -179,14 +179,14 @@
 				<div class="row d-flex mb-1">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >			
-							<input name="productCode" value="${param.productCode }" type="text" id="p1" class="form-control" placeholder="제품코드">	
-							<button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<input name="productCode" value="${param.productCode }" type="text" id="parentInput" class="form-control" placeholder="제품코드">	
+							<button id="productSearch"  class="btn btn-outline-secondary" type="button">제품 검색</button>
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="buyerCode" value="${param.buyerCode }" type="text" id="b1" class="form-control" placeholder="바이어코드">	
-							<button class="btn btn-outline-secondary" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<input name="buyerCode" value="${param.buyerCode }" type="text" id="parentInput1B" class="form-control" placeholder="바이어코드">	
+							<button id="buyerSearch" class="btn btn-outline-secondary" type="button">바이어 검색</button>
 						</div>
 					</div>			
 				</div><!-- 2nd row 끝 -->
@@ -265,6 +265,12 @@
 							<button id="selectedSearchBtn" class="btn btn-oneline-primary primaryBtn" type="button">선택 조건 검색</button>
 						</div>
 					</div>
+					<div class="col-sm-2"></div>
+					<div class="col-sm-2">
+						<div style="text-align: justify;">
+							<button id="resetPage" class="btn btn-outline-secondary" type="button">검색 초기화</button>
+						</div>
+					</div>
 				</div>
 			</form>	
 		</div><!-- 우측 검색 조건 div 끝 -->
@@ -325,7 +331,11 @@ checkDate();
 function listAll(){
 	/* const priceId = $('input[name=priceId]').val(); */
 	$.ajax({
-		url : "/master/salePriceListAjaxList",
+<<<<<<< Updated upstream
+		url : "salePriceListAjaxList",
+=======
+		url : "/valves/master/salePriceListAjaxList",
+>>>>>>> Stashed changes
 		method : "GET",
 		/* data : ("priceId" : priceId), */
 		dataType : "json"
@@ -357,16 +367,35 @@ function listAll(){
 			);
 			
 			/* 수정버튼 누를때, 수정창 열기  */
-			$('#modify'+item.priceId).click(function(){
+			$('#modify'+item.priceId).on('click', function(){
+				
 				/* 자식창 열기 */
-				window.open('${ctx}'+'/master/salePriceModify?priceId='+item.priceId,'가격수정',
+				window.open('salePriceModify?priceId='+item.priceId,'가격수정',
 						'width=500,height=500,left=1500,top=100,bottom=300,location=no,status=no,scrollbars=yes');
+			
 			})	
 		})
 	})
 } 
 
-
+/* 제품검색 시 검색창 띄우기 */
+$(function(){
+		
+	$('#productSearch').on('click', function(){
+		window.open("${pageContext.request.contextPath}/master/productSearch" , '제품검색','toolbar=no,resizable=no,status=no,menubar=no,width=500, height=500, top=200,left=300');
+		
+	});	
+	
+});
+/* 바이어검색 시 검색창 띄우기 */
+$(function(){
+		
+	$('#buyerSearch').on('click', function(){
+		window.open("${pageContext.request.contextPath}/master/buyerSearch" , '바이어검색','toolbar=no,resizable=no,status=no,menubar=no,width=500, height=500, top=200,left=300');
+		
+	})
+	
+});
 /* 검색 => ajax 테이블 조회 */
 function search(){
 	$(function(){
@@ -385,7 +414,11 @@ function search(){
 			
 			const data = {q, productCode, productName, buyerCode, buyerName, country, priceMin, priceMax, fromDate, endDate };
 			$.ajax({
-				url : "/master/salePriceListAjax",
+<<<<<<< Updated upstream
+				url : "salePriceListAjax",
+=======
+				url : "/valves/master/salePriceListAjax",
+>>>>>>> Stashed changes
 				method : "GET",
 				data : (data),
 				dataType : "json"
@@ -419,7 +452,7 @@ function search(){
 					/* 수정버튼 누를때, 수정창 열기, 백그라운드 주기, 체크하기  */
 					$('#modify'+item.priceId).click(function(){
 						/* 수정창 열기 */
-						window.open('${ctx}'+'/master/salePriceModify?priceId='+item.priceId,'가격수정',
+						window.open('salePriceModify?priceId='+item.priceId,'가격수정',
 								'width=500,height=500,left=1500,top=100,bottom=300,location=no,status=no,scrollbars=yes');
 						/* 선택된 자식 수정창의 priceId == 부모 테이블 속 row priceId => addClass 와 checked 하기 . */
 						/* row 백그라운드 ,체크 해제하기, */
@@ -499,6 +532,11 @@ function removeComma(value){
      return value; 
 }
 
+$(function(){
+	$('#resetPage').click(function(){
+		location.reload();
+	})
+})
 
 </script>
 	

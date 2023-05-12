@@ -24,6 +24,9 @@ public class lnhProductService {
 	public List<ProductDto> searchProductList(String keyword, String productCode, String productName, String size) {
 		
 		keyword = "%" + keyword + "%";
+		productCode = "%" + productCode + "%";
+		productName = "%" + productName + "%";
+		size = "%" + size + "%";
 
 		return productMapper.searchProductList(keyword, productCode, productName, size);
 	}
@@ -45,6 +48,10 @@ public class lnhProductService {
 	
 	//삭제
 	public void remove(String productCode) {
+		productMapper.deleteSalePrcie(productCode);
+		
+		productMapper.deleteOrder(productCode);
+		
 		productMapper.delete(productCode);
 	}
 
@@ -54,6 +61,12 @@ public class lnhProductService {
 
 	public ProductDto getByProductName(String productName) {
 		return productMapper.selectProductName(productName);
+	}
+
+	public String lastProductCodeNum(String productType) { 
+		productType = "%" + productType + "%";
+		System.out.println("service: "+productType);
+		return productMapper.lastProductCodeNum(productType);
 	}
 	
 

@@ -71,7 +71,7 @@
     
     #buyerCodeExist, #businessNumberExist {
     	position: absolute;
-    	left: 233px;
+    	left: 273px;
     
     }
 
@@ -218,7 +218,7 @@
 				</div>
 			</form>
 		</div>
-			<form id="removeForm" name="removefrm" action="/master/buyerRemove" method="post">
+			<form id="removeForm" name="removefrm" action="${pageContext.request.contextPath}/master/buyerRemove" method="post">
 				<input type="hidden" name="code" value="${buyer.buyerCode}">
 		    <input id="removeBtn" class="btn" value="삭제" onclick="removeCheck()">
 			</form>
@@ -275,7 +275,7 @@
 	 		window.opener.location.reload();    //부모창 reload
 	 		setTimeout(function() {   
 	             window.close();
-	          }, 500);
+	          }, 50);
 	 	} else{
 	     return false;
 	     }
@@ -287,7 +287,7 @@
         window.opener.location.reload();
     	setTimeout(function() {
     		window.close();
-            }, 10);  
+            }, 20);  
         }  
 
 

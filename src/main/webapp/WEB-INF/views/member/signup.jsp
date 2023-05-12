@@ -50,7 +50,7 @@
     .col-form-label{
         font-weight: 600;
     }
-    #emailIdCheckBtn,#registerBtn{
+    #registerBtn{
     	line-height: 10px;
     	margin-top: 10px;
     	text-align: inherit;
@@ -65,6 +65,16 @@
  		color: #1d5c83 !important;
     }
     
+    #emailIdCheckBtn{
+    	text-align: inherit;
+	    font-weight: 600; 
+	    color: white; 
+	    border-radius: 5px; 
+	    background-color: white !important;
+ 		border-color: #1d5c83 !important;
+ 		color: #1d5c83 !important;
+    }
+    
     #emailIdCheckBtn:hover, #registerBtn:hover{
  		background-color: #1d5c83 !important;
  		color: white !important;
@@ -72,7 +82,10 @@
  
     .inputDiv{
     position: absolute; 
-    right: 157px;
+
+    }
+    .form-control{
+    	width:350px;
     }
 </style>
 <body>   
@@ -84,7 +97,7 @@
 	                    <div class="mb-4">
 	                        <h1 style="font-size: 24px; font-weight:600">사원 등록</h1>
 	                    </div>					
-	                    <hr class="line" style="border: solid 1px #000" />
+	                    	<hr class="line" style="border: solid 1px #000" />
 	                    </div>
 	                    
 	                    <div class="container-sm content-size">
@@ -115,11 +128,9 @@
 	                        </div>	                        
 	                        <div class="mb-2 row mt-2 rowdiv">                       		
 	                            <label for="inputEmailId" class="col-form-label">이메일ID</label>
-	                            <div class="col-sm-5 inputDiv">
-	                                <input id="inputEmailId" name="email" type="text" class="form-control" placeholder="이메일 ID를 입력해주세요."/>
-	                            </div>
-	                           <div class="col-sm-5 " style="position: absolute; text-align: right; right: 100px; top: 43.5vh;  width: 65px;">	                                
-	                                <button class="btn" type="button" id="emailIdCheckBtn" style="height: 38px;"disabled>확인</button>
+	                            <div class="col-sm-5 inputDiv" style="display: flex; align-items: stretch;">
+	                                <input id="inputEmailId" name="email" type="text" class="form-control" style="border-top-right-radius: 0; border-bottom-right-radius: 0; min-width:262px;" placeholder="이메일 ID를 입력해주세요."/>
+	                                <button class="btn" type="button" id="emailIdCheckBtn" style="margin-left: -1px; border-top-left-radius: 0; border-bottom-left-radius: 0; height: fit-content; min-width: fit-content"disabled>중복확인</button>
 	                            </div>
 	                            <div id="emailIdText" class="form-text" style="text-align: center;"></div>
 	                        </div>

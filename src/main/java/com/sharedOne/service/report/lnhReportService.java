@@ -20,6 +20,10 @@ public class lnhReportService {
 	public List<OrderHeaderDto> orderList(String orderQ, String orderCode, String productCode, String writer, String status, String fromDate, String endDate) { 
 		
 		orderQ = "%" + orderQ + "%";
+		orderCode = "%" + orderCode + "%";
+		productCode = "%" + productCode + "%";
+		writer = "%" + writer + "%";
+		status = "%" + status + "%";
 		
 		return mapper.orderList(orderQ, orderCode, productCode, writer, status, fromDate, endDate);
 	}
@@ -33,6 +37,10 @@ public class lnhReportService {
 											String writer, String status, String fromDate, String endDate, List<String> buyerCodes) {
 		Map<String, Integer> salesByBuyer = new HashMap<>();
 		orderQ = "%" + orderQ + "%";
+		orderCode = "%" + orderCode + "%";
+		productCode = "%" + productCode + "%";
+		writer = "%" + writer + "%";
+		status = "%" + status + "%";
 		//바이어 코드 별 매출
 		for (String buyerCode : buyerCodes ) {
 			Integer BuyerSale = mapper.salesByBuyer(orderQ, orderCode, productCode, writer, status, fromDate, endDate, buyerCode);
@@ -50,6 +58,9 @@ public class lnhReportService {
 												String status, String fromDate, String endDate, List<String> writerList) {
 		Map<String, Integer> salesByWriter = new HashMap<>();
 		orderQ = "%" + orderQ + "%";
+		orderCode = "%" + orderCode + "%";
+		productCode = "%" + productCode + "%";
+		status = "%" + status + "%";
 		//직원 별 매출
 		for (String writer : writerList) {
 			Integer writerSale = mapper.salesByWriter(orderQ, orderCode, productCode, writer, status, fromDate, endDate);

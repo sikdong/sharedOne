@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
-
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Calendar" %>
@@ -19,6 +19,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <style type="text/css">
+
+	.form-control {
+		border-radius: 5px !important;
+    	
+	}
 	.filterText {
 		text-align: center;
 		
@@ -112,48 +117,50 @@
 			        		<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
+					
 				</div><!-- 1st row 끝 -->
 				<!-- 검색필터 2nd row : 조건 검색 ( 각자 페이지의 따라 변경  ) -->
 				<div class="row d-flex">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >
-							<input name="productCode" value="${param.productCode }" type="text" id="" class="form-control" list="datalistOptions1" placeholder="제품코드">
+							<input name="productCode" value="${param.productCode }" type="text" id="parentInput" class="form-control" list="datalistOptions1" placeholder="제품코드">
 							<datalist id="datalistOptions1">
 								<c:forEach items="${product }" var="product">
-									<option value="${product.productCode }">
+									<%-- <option value="${product.productCode }"> --%>
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<button class="btn btn-outline-secondary" onclick="window.open('${pageContext.request.contextPath}/master/productSearch' , '제품등록','toolbar=no,resizable=no,status=no,menubar=no,width=500, height=500, top=200,left=300');">
+							제품 검색</button>
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="productName" value="${param.productName }" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품명">
+							<input name="productName" value="${param.productName }" type="text" id="parentInput2P" class="form-control" list="datalistOptions2" placeholder="제품명">
 							<datalist id="datalistOptions2">
 								<c:forEach items="${product }" var="product">
-									<option value="${product.productName }">
+									<%-- <option value="${product.productName }"> --%>
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<!-- <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button> -->
 						</div>	
 					</div>
 
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="size" value="${param.size }" type="text" class="form-control" list="datalistOptions4" id="exampleDataList4" placeholder="제품규격 Inch">
+							<input name="size" value="${param.size }" type="text" class="form-control" list="datalistOptions4" id="parentInput3P" placeholder="제품규격 Inch">
 							<datalist id="datalistOptions4">
 								<c:forEach items="${sizes }" var="size">
-									<option value="${size }">
+									<%-- <option value="${size }"> --%>
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<!-- <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button> -->
 						</div>
 					</div>
 
 						<div class="col-sm-2">
 							<div style="text-align: justify;">
-								<a class="btn btn-outline-primary primaryBtn" type="submit"
-									href="/master/productList">검색 조건 초기화</a>
+								<a class="btn btn-outline-primary primaryBtn"
+									href="${pageContext.request.contextPath}/master/productList">검색 조건 초기화</a>
 							</div>
 						</div>
 					</div><!-- 2nd row 끝 -->
@@ -188,11 +195,11 @@
 
                   <th style="width: 300px;">제품명</th>
                   <th style="width: 220px;">타입</th>
-                  <th style="width: 130px;">무게(Kg)</th>
+                  <th style="width: 130px;">무게(lb)</th>
                   <th style="width: 130px;">규격(Inch)</th>
                   <th style="width: 100px;">단위</th>
                   <th style="width: 150px;">단가</th>
-                  <th style="width: 300px;">단가기간</th>
+                  <th style="width: 150px;">비고</th>
 
 					 </tr>
 				 </thead>
@@ -201,7 +208,7 @@
 						<c:url value="/master/productModify" var="getLink">
 							<c:param name="code" value="${product.productCode }"></c:param>
 						</c:url>
-					<tr title="${product.productName } 정보 수정하기" onclick="window.open('${getLink}','제품정보','width=600,height=700,left=600,top=100,location=no,status=no,scrollbars=yes');" class="trtr">
+					<tr title="${product.productName } 정보 수정하기" class="trtr">
 
 					<td style="max-width: 500px; word-break:break-all;width: 220px;">${product.productCode }</td>
                      <td style="word-break:break-all;width: 300px;">${product.productName }</td>
@@ -209,8 +216,8 @@
                      <td style="word-break:break-all;width: 130px;">${product.weight }</td>
                      <td style="word-break:break-all;width: 130px;">${product.size }</td>
                      <td style="word-break:break-all;width: 100px;">${product.unit }</td>
-                     <td style="word-break:break-all;width: 150px;">${product.price }</td>
-                     <td style="word-break:break-all;width: 300px;">${product.fromDate } ~ ${product.endDate }</td>
+                     <td style="word-break:break-all;width: 150px;"><fmt:formatNumber value="${product.price }"/>
+                     <td style="width: 150px;"><button id="modifyBtn" type="button" class="btn btn-outline-secondary" onclick="window.open('${getLink}','제품정보','width=600,height=700,left=600,top=100,location=no,status=no,scrollbars=yes');">수정</button></td>
 							
 						</tr>
 					</c:forEach>

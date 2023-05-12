@@ -36,6 +36,11 @@
 
 
 <style type="text/css">
+	.form-control {
+		border-radius: 5px !important;
+    	
+	}
+	
 	.filterText {
 		text-align: center;
 		
@@ -121,24 +126,26 @@
 				<div class="row d-flex">
 					<div class="col-sm-3 mb-4">
 						<div class="input-group" >
-							<input name="buyerCode" value="${param.buyerCode }"" type="text" id="" class="form-control" list="datalistOptions1" placeholder="바이어코드">
+							<input name="buyerCode" value="${param.buyerCode }" type="text" id="parentInput1B" class="form-control" list="datalistOptions1" placeholder="바이어코드">
 							<datalist id="datalistOptions1">
 								<c:forEach items="${buyer }" var="buyer">
-									<option value="${buyer.buyerCode }">${buyer.buyerCode }</option>
+									<%-- <option value="${buyer.buyerCode }">${buyer.buyerCode }</option> --%>
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<button class="btn btn-outline-secondary" onclick="window.open('${pageContext.request.contextPath}/master/buyerSearch' , '바이어검색','toolbar=no,resizable=no,status=no,menubar=no,width=500, height=500, top=200,left=300');">
+							바이어 검색</button>
+							<!-- <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button> -->
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="buyerName" value="${param.buyerName }" type="text" id="" class="form-control" list="datalistOptions2" placeholder="바이어명">
+							<input name="buyerName" value="${param.buyerName }" type="text" id="parentInput2B" class="form-control" list="datalistOptions2" placeholder="바이어명">
 							<datalist id="datalistOptions2">
 								<c:forEach items="${buyer }" var="buyer">
-									<option value="${buyer.buyerName }">${buyer.buyerName }</option>
+									<%-- <option value="${buyer.buyerName }">${buyer.buyerName }</option> --%>
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<!-- <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button> -->
 						</div>	
 					</div>
 					<div class="col-sm-3">
@@ -146,15 +153,15 @@
 							<input name="country" value="${param.country }" type="text" id="" class="form-control" list="datalistOptions3" placeholder="국가">
 							<datalist id="datalistOptions3">
 								<c:forEach items="${country }" var="country">
-									<option value="${country }">${country }</option>
+									<%-- <option value="${country }">${country }</option> --%>
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<!-- <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button> -->
 						</div>
 					</div>
 					<div class="col-sm-2">
 						<div style="text-align: justify;">
-							<a class="btn btn-outline-primary primaryBtn" type="submit" href="/master/buyerList">검색 조건 초기화</a>
+							<a class="btn btn-outline-primary primaryBtn" href="${pageContext.request.contextPath}/master/buyerList">검색 조건 초기화</a>
 						</div>
 					</div>
 				</div><!-- 2nd row 끝 -->
@@ -190,6 +197,7 @@
 				<th>연락처</th>
 				<th>선적비용부담</th>
 				<th>대표</th>
+				<th>비고</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -197,16 +205,17 @@
 			<c:url value="/master/buyerModify" var="getLink">
 					<c:param name="code" value="${buyer.buyerCode }"></c:param>
 				</c:url>
-				<tr title="${buyer.buyerName } 정보 수정하기" onclick="window.open('${getLink}','바이어정보','width=600,height=660,left=700,top=200,resizale=no,location=no,status=no,scrollbars=yes');" class="trtr">
+				<tr title="${buyer.buyerName } 정보 수정하기" class="trtr">
 <%-- 				<tr onclick="location.href='${getLink}'" class="trtr"> --%>
 					<td style="width: 100px;">${buyer.buyerCode }</td>
-					<td style="width: 150px;">${buyer.buyerName }</td>
+					<td style="width: 140px;">${buyer.buyerName }</td>
 					<td style="width: 400px;">${buyer.address }</td>
 					<td>${buyer.country }</td>
-					<td style="width: 150px;">${buyer.businessNumber }</td>
-					<td style="width: 150px;">${buyer.phone }</td>
-					<td style="width: 150px;">${buyer.deliveryCompany }</td>
+					<td style="width: 140px;">${buyer.businessNumber }</td>
+					<td style="width: 140px;">${buyer.phone }</td>
+					<td style="width: 120px;">${buyer.deliveryCompany }</td>
 					<td>${buyer.manager }</td>
+					<td style="width: 100px;"><button id="modifyBtn" type="button" class="btn btn-outline-secondary" onclick="window.open('${getLink}','바이어정보','width=600,height=660,left=700,top=200,resizale=no,location=no,status=no,scrollbars=yes');">수정</button></td>
 				</tr>
 			</c:forEach>
 		</tbody>

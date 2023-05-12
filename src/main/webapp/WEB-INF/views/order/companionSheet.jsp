@@ -66,7 +66,7 @@
         <div class="row">
             <div class="row mt-5" style="text-align: center;">     
                  <div id="rvbtn_group" style="text-align: right;">                 	
-                    <button type="button" onclick="location.href='${pageContext.request.contextPath }/order/modify?orderId=${orderHeader.orderId}'"class="btn" style="border: gray 2px solid; font-weight: bold;">수정</button>
+                    <button type="button" onclick="location.href='${pageContext.request.contextPath }/order/modify?orderId=${orderHeader.orderId}&id=${orderHeader.memberId }'"class="btn" style="border: gray 2px solid; font-weight: bold;">수정</button>
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#returnModal" style="border: gray 2px solid; font-weight: bold;">종결</button>               
                 </div>
             </div>
@@ -195,8 +195,9 @@
           <div class="modal-body">
           	<p>종결하시겠습니까?</p>
           	<c:url value="/order/companionSheet" var="closingLink"></c:url>
-            <form method="post" id="closingForm" action="${closingLink}">
+            <form method="post" id="closingForm" action="${closingLink}" name="closingF">
               <div class="mb-3">
+              	<input type="hidden" value="${orderHeader.memberId}" name="id">
                 <input type="hidden"  value="종결" name="status">
                 <input type="hidden" value="${orderHeader.orderId}" name="orderId">
               </div>
@@ -205,12 +206,22 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
             <button type="button" class="btn" style="background-color: #1d5c83; color: #e3e3e3;"
-            onclick="document.querySelector('#closingForm').submit()">종결</button>
+            onclick="closingCheck()">종결</button>
           </div>
         </div>
       </div>
     </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+<script>
+//종결 버튼 클릭하면 반려 form 전송
+function closingCheck() { 
 
+    	document.closingF.submit();
+        window.opener.location.reload();
+    	setTimeout(function() {
+    		window.close();
+            }, 20);  
+}
+</script>
 </body>
 </html>

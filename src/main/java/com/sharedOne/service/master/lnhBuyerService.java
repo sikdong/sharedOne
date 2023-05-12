@@ -34,6 +34,10 @@ public class lnhBuyerService {
 	}
 	//삭제
 	public void remove(String buyerCode) {
+		buyerMapper.deleteSalePrice(buyerCode);
+		
+		buyerMapper.deleteOrder(buyerCode);
+		
 		buyerMapper.delete(buyerCode);
 	}
 
@@ -47,6 +51,9 @@ public class lnhBuyerService {
 	public List<BuyerDto> searchBuyerList(String keyword, String buyerCode, String buyerName, String country) {
 		
 		keyword = "%" + keyword + "%";
+		buyerCode = "%" + buyerCode + "%";
+		buyerName = "%" + buyerName + "%";
+		country = "%" + country + "%";
 		
 		return buyerMapper.searchBuyerList(keyword, buyerCode, buyerName, country);
 	}

@@ -14,6 +14,16 @@
 		SELECT * FROM Product WHERE productCode = #{productCode}
 	</select>
  
+ <!-- 제품코드 마지막 4글자 가져오기 -->
+ 	<select id="lastProductCodeNum" resultType="String">
+ 		SELECT right(productCode,4) 
+ 		FROM Product 
+ 		WHERE productCode LIKE #{productType}
+ 		ORDER BY productCode DESC
+ 		LIMIT 1
+ 	</select>
+ 
+ 
  	<select id="selectProductList" resultType="com.sharedOne.domain.master.ProductDto">
  	<!-- productCode, productName, productType, weight, size, price, unit, content, inserted -->
 		SELECT 
@@ -88,13 +98,13 @@
 		)	 	
 	 	
  		<if test="productCode != '' ">
- 		AND productCode = #{productCode }
+ 		AND productCode LIKE #{productCode }
  		</if>
  		<if test="productName != '' ">
- 		AND productName = #{productName }
+ 		AND productName LIKE #{productName }
  		</if>
  		<if test="size != '' ">
- 		AND size = #{size }
+ 		AND size LIKE #{size }
  		</if>
 		
 		ORDER BY productCode
@@ -133,6 +143,16 @@
  	</update>
  	
  	<!-- 제품 삭제 -->
+ 	<delete id="deleteSalePrcie">
+ 	DELETE FROM SalePrice
+ 	WHERE productCode = #{productCode}
+ 	</delete>
+ 	
+ 	<delete id="deleteOrder" >
+	DELETE h, i FROM Order_header h LEFT JOIN Order_item i ON h.orderId = i.orderId
+	WHERE i.productCode = #{productCode}
+ 	</delete>
+ 	
  	<delete id="delete">
  	DELETE FROM Product
  	WHERE productCode = #{productCode}

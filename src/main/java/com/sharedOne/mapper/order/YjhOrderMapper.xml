@@ -6,7 +6,7 @@
 <mapper namespace="com.sharedOne.mapper.order.YjhOrderMapper">
 	
 	<select id="selectOrderSheetHead" resultType="com.sharedOne.domain.order.OrderHeaderDto">
-		SELECT oh.orderId orderId, oh.orderCode orderCode, oh.inserted inserted, oh.writer writer, oh.message message, oh.comment comment, oh.deliveryDate deliveryDate
+		SELECT oh.orderId orderId, oh.orderCode orderCode, oh.inserted inserted, oh.writer writer, oh.memberId memberId, oh.message message, oh.comment comment, oh.deliveryDate deliveryDate
 		FROM Order_header oh JOIN Buyer b ON oh.buyerCode = b.buyerCode
 		WHERE oh.orderId = #{orderId};
 	</select>
@@ -29,20 +29,23 @@
 	<update id="setApproval">
 		UPDATE Order_header
 		SET status = "승인완료",
-			comment = #{comment}
+			comment = #{comment},
+			modified = now()
 		WHERE orderId = #{orderId};
 	</update>
 	
 	<update id="setCompanion">
 		UPDATE Order_header
 		SET status = "요청반려",
-			comment = #{comment}
+			comment = #{comment},
+			modified = now()
 		WHERE orderId = #{orderId};
 	</update>
 	
 	<update id="setClosing">
 		UPDATE Order_header
-		SET status = "거래종결"
+		SET status = "거래종결",
+			modified = now()
 		WHERE orderId = #{orderId};
 	</update>
 	

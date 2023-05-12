@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,6 +57,9 @@
     	position: relative;
     	margin-bottom: 25px;
     }
+    #productWeight, #productSize {
+    	background-color: #E9ECEF;
+    }
     
     #modifyForm {
  		position: relative;
@@ -74,7 +78,7 @@
 	    border-radius: 5px; 
 	    background: #1d5c83;
 	    position: absolute;
-	    top: 560px;
+	    top: 468px;
 	    right: 85px;
     }
     
@@ -135,23 +139,23 @@
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
-							<label for="inputName" class="col-form-label">무게</label>
+							<label for="inputName" class="col-form-label">무게(lb)</label>
 							<div class="col-sm-7 inputDiv">
-								<input id="productName" name="weight" type="text" value="${product.weight }"
-									class="form-control" placeholder="${product.weight }" />
+								<input id="productWeight" name="weight" type="text" value="${product.weight }"
+									class="form-control" placeholder="${product.weight }" readonly/>
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
-							<label for="inputName" class="col-form-label">규격</label>
+							<label for="inputName" class="col-form-label">규격(Inch)</label>
 							<div class="col-sm-7 inputDiv">
-								<input id="productName" name="size" type="text" value="${product.size }"
-									class="form-control" placeholder="${product.size }" />
+								<input id="productSize" name="size" type="text" value="${product.size }"
+									class="form-control" placeholder="${product.size }" readonly/>
 							</div>
 						</div>
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputName" class="col-form-label">단위</label>
 							<div class="col-sm-7 inputDiv">
-								<input id="productName" name="unit" type="text"
+								<input id="productUnit" name="unit" type="text"
 									class="form-control" value="${product.unit }" placeholder="${product.unit }" />
 							</div>
 						</div>
@@ -160,13 +164,13 @@
 							<div class="col-sm-7 inputDiv">
 								<input id="productPrice" name="price"
 									type="text" class="form-control"
-									value="${product.price }"
-									placeholder="${product.price }" 
-									/>
+									value="<fmt:formatNumber value="${product.price }"/>"
+									onkeyup="inputNumberFormat(this);" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+									
 							</div>
 						</div>
 
-						<div class="mb-2 row mt-2 rowdiv">
+<%-- 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputPriceStartDate" class="col-form-label">단가
 								시작일</label>
 							<div class="col-sm-7 inputDiv">
@@ -181,12 +185,12 @@
 								<input id="productEndDate" name="endDate" type="date"
 									class="form-control" value="${product.endDate }"/>
 							</div>
-						</div>
+						</div> --%>
 
 						<div class="mb-2 row mt-2 rowdiv">
 							<label for="inputName" class="col-form-label">제품 설명</label>
 							<div class="col-sm-7 inputDiv">
-								<input id="productName" name="content" type="text"
+								<input id="productContent" name="content" type="text"
 									class="form-control" placeholder="${product.content }" />
 							</div>
 						</div>
@@ -196,10 +200,10 @@
 
 				<!-- 수정버튼 -->
 
-				<input id="modifyBtn" class="btn" type="submit" value="수정" onclick="modifyCheck()">
+				<input id="modifyBtn" class="btn" value="수정" onclick="modifyCheck()">
 			</form>
 
-			<form action="/master/productRemove" name="removefrm" method="post">
+			<form action="${pageContext.request.contextPath}/master/productRemove" name="removefrm" method="post">
 				<input type="hidden" name="code" value="${product.productCode}">
 				<input id= "removeBtn" class="btn" value="삭제" onclick="removeCheck()">
 			</form>
@@ -209,6 +213,22 @@
 </sec:authorize>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <script>
+    
+    //단가 콤마 붙이기
+	function comma(str) {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+    }
+
+    function uncomma(str) {
+        str = String(str);
+        return str.replace(/[^\d]+/g, '');
+    } 
+    
+    function inputNumberFormat(obj) {
+        obj.value = comma(uncomma(obj.value));
+    }
+    
     //삭제확인 버튼 클릭하면 삭제 form 전송
     function removeCheck() {
 	  
@@ -217,44 +237,33 @@
 	 		window.opener.location.reload();    //부모창 reload
 	 		setTimeout(function() {   
 	             window.close();
-	          }, 500);
+	          }, 50);
 	 	} else{
-	     return false;
-	     }
+	 		alert("삭제 되지 않았습니다. ");
+	     	return false;
+	    }
 
 	}
     
     //수정 버튼 클릭하면 수정 form 전송
     function modifyCheck() { 
-    	document.modifyfrm.submit();
-        window.opener.location.reload();
-    	setTimeout(function() {
-    		window.close();
-            }, 10);  
-        }
-    
-/*         function comma(str) {
-        str = String(str);
-        return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-        }
+    	if (confirm("정말 수정하시겠습니까?") == true) { 
+    		var price = document.querySelector("#productPrice").value;
+        	var modifiedPrice = price.split(',').join("");
 
-        function uncomma(str) {
-            str = String(str);
-            return str.replace(/[^\d]+/g, '');
-        } 
-        
-        function inputNumberFormat(obj) {
-            obj.value = comma(uncomma(obj.value));
-        }
-        
-        function inputOnlyNumberFormat(obj) {
-            obj.value = onlynumber(uncomma(obj.value));
-        }
-        
-        function onlynumber(str) {
-            str = String(str);
-            return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1');
-        } */
+        	document.querySelector("#productPrice").value = modifiedPrice;
+	    	document.modifyfrm.submit();
+	        window.opener.location.reload();
+	    	setTimeout(function() {
+	    		window.close();
+	            }, 80);  
+    		
+    	}else{
+	 		alert("수정 되지 않았습니다. ");
+	     	return false;
+	    }
+   }
+    
     </script>
 
 </body>

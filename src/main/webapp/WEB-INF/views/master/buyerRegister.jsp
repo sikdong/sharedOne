@@ -77,7 +77,7 @@
     }
     #buyerCodeExist, #businessNumberExist {
     	position: absolute;
-    	left: 243px;
+    	left: 307px;
     
     }
     
@@ -197,9 +197,9 @@
 	    function registerCheck() { 
     	document.registerfrm.submit();
         window.opener.location.reload();
-    	setTimeout(function() {
+     	setTimeout(function() {
     		window.close();
-            }, 100);  
+            }, 50);
         }   
 	    
 	    const ctx = "${pageContext.request.contextPath}";

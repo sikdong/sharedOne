@@ -17,13 +17,6 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<!-- datepicker 는 jquery 1.7.1 이상 bootstrap 2.0.4 이상 버전이 필요함 -->
-<!-- jQuery가 먼저 로드 된 후 datepicker가 로드 되어야함.-->
-<link rel="stylesheet" href="resources/css/plugin/datepicker/bootstrap-datepicker.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="resources/js/plugin/datepicker/bootstrap-datepicker.js"></script>
-<!--한국어 달력 쓰려면 추가 로드-->
-<script src="resources/js/plugin/datepicker/bootstrap-datepicker.ko.min.js"></script>
 <!-- 구글 열차트 -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
@@ -102,6 +95,11 @@ function drawWriterChart() {
 </script>
 
 <style type="text/css">
+	.form-control {
+		border-radius: 5px !important;
+    	
+	}
+
 	.filterText {
 		text-align: center;
 		
@@ -206,21 +204,22 @@ div.right {
 							<input name="orderCode" value="${param.orderCode }"  type="text" id="" class="form-control" list="datalistOptions1" placeholder="주문서 ID">
 							<datalist id="datalistOptions1">
 								<c:forEach items="${orderList }" var="order">
-									<option value="${order.orderCode}">${order.orderCode}</option>
+									<%-- <option value="${order.orderCode}">${order.orderCode}</option> --%>
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<!-- <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button> -->
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input name="productCode" value="${param.productCode }" type="text" id="" class="form-control" list="datalistOptions2" placeholder="제품코드">
+							<input name="productCode" value="${param.productCode }" type="text" id="parentInput" class="form-control" list="datalistOptions2" placeholder="제품코드">
 							<datalist id="datalistOptions2">
 								<c:forEach items="${productList }" var="product">
-									<option value="${product.productCode}">${product.productCode }</option>
+									<%-- <option value="${product.productCode}">${product.productCode }</option> --%>
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<button class="btn btn-outline-secondary" onclick="window.open('${pageContext.request.contextPath}/master/productSearch' , '제품등록','toolbar=no,resizable=no,status=no,menubar=no,width=500, height=500, top=200,left=300');">
+							제품 검색</button>
 						</div>	
 					</div>
 					<div class="col-sm-3">
@@ -228,10 +227,10 @@ div.right {
 							<input name="writer" value="${param.writer }" type="text" id="" class="form-control" list="datalistOptions3" placeholder="담당자">
 							<datalist id="datalistOptions3">
 								<c:forEach items="${writers }" var="writer">
-									<option value="${writer }">${writer }</option>
+									<%-- <option value="${writer }">${writer }</option> --%>
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<!-- <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button> -->
 						</div>
 					</div>
 					<div class="col-sm-3">
@@ -242,7 +241,7 @@ div.right {
 									<option value="${status }">${status }</option>
 								</c:forEach>
 							</datalist>
-							<button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<!-- <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button> -->
 						</div>
 					</div>
 				</div><!-- 2nd row 끝 -->
@@ -262,7 +261,7 @@ div.right {
 						</div>
 					</div>
 					<div class="col-sm-2">
-							<a class="btn btn-outline-primary primaryBtn" type="submit" href="/report/monthlyReport">검색 조건 초기화</a>
+							<a class="btn btn-outline-primary primaryBtn" href="${pageContext.request.contextPath}/report/monthlyReport">검색 조건 초기화</a>
 					</div>
 
 				</div><!-- 3rd row 끝 -->
@@ -375,8 +374,7 @@ $('#checkedAllDate').click(function(){
 		$('input[name=fromDate]').removeAttr("disabled");
 		$('input[name=endDate]').removeAttr("disabled");
 	}
-}
-
+})
 </script>
 </body>
 </html>

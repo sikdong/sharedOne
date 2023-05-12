@@ -47,11 +47,8 @@ public class lnhBuyerController {
 			setManagers.add(buyer.getManager());
 		}
 		
-		List<BuyerDto> searhResult = buyerService.searchBuyerList(keyword, buyerCode, buyerName, country);
-		
-		System.out.println(keyword);
-		System.out.println(searhResult);
-		
+		List<BuyerDto> searchResult = buyerService.searchBuyerList(keyword, buyerCode, buyerName, country);
+				
 		model.addAttribute("country", setCountries);
 		model.addAttribute("manager", setManagers);
 
@@ -68,8 +65,9 @@ public class lnhBuyerController {
 
 	@PostMapping("buyerRegister")
 	@PreAuthorize("isAuthenticated()")
-	public void register(BuyerDto buyer) {
+	public String register(BuyerDto buyer) {
 		buyerService.register(buyer);
+		return "redirect:/master/registerConfirm"; 
 	}
 
 
@@ -129,8 +127,14 @@ public class lnhBuyerController {
 
 	@PostMapping("buyerRemove")
 	@PreAuthorize("isAuthenticated()")
-	public void remove(@RequestParam(name = "code") String buyerCode) {
+	public String remove(@RequestParam(name = "code") String buyerCode) {
 		buyerService.remove(buyerCode);
-		/* return "redirect:/master/removeConfirm"; */
+		return "redirect:/master/removeConfirm"; 
+	}
+	
+	@GetMapping("registerConfirm")
+	@PreAuthorize("isAuthenticated()")
+	public void registerConfirm() {
+
 	}
 }
