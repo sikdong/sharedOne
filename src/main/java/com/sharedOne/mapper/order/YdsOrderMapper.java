@@ -40,9 +40,9 @@ public interface YdsOrderMapper {
 
 	List<ProductDto> getPriceDate(String allProductInfo, String tableBuyerCode);
 
-	OrderHeaderDto modifyOrderHeader(int orderId);
+	OrderHeaderDto getOrderHeader(int orderId);
 
-	List<OrderItemDto> modifyOrderItem(int orderId);
+	List<OrderItemDto> getOrderItem(int orderId);
 
 	void updateOrderHeader(@Param("ohd") OrderHeaderDto ohd, @Param("orderId") int orderId);
 

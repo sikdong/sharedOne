@@ -308,8 +308,8 @@
 				</div>
 			</div>
 			<button type="button" style="margin-left: 40%; background: #1d5c83; color: white;"
-				class="mt-5 btn bibutton" onclick="tempSave()">임시저장</button>
-			<button id="registerBtn" onclick="register()" type="button" style="background: #1d5c83; color: white;" class="mt-5 btn bibutton">주문
+				class="mt-5 btn bibutton" onclick="register(this)">임시저장</button>
+			<button id="registerBtn" onclick="register(this)" type="button" style="background: #1d5c83; color: white;" class="mt-5 btn bibutton">주문
 				등록</button>
 			<a href="${path }/order/list" type="button" class="mt-5 btn"
 				style="background: #1d5c83; color: white;">닫기</a>
@@ -940,11 +940,11 @@
 		}	
 	});
 	
-	function tempSave(){
+	function register(element){
 		const buyerCode = document.querySelector('input[name="buyerCode"]').value;
 		const deliveryDate = document.querySelector('input[name="deliveryDate"]').value;
-		let status = '임시저장'
-		let message = document.querySelector(".message").innerHTML;
+		let status = element.innerHTML;
+		let message = document.querySelector(".message").value;
 		if(message === null){
 			message = "";
 		}
@@ -954,7 +954,6 @@
 		inputElems.forEach((inputElem) => {
 		
 		let productCode = inputElem.querySelector("input[name='productCode']").value;
-		  console.log("productCode", productCode)
 		  let number = inputElem.querySelector("input[name='sum']").value.replace(",", "");
 		  let sum = Number(number);
 		  let quantity = Number(inputElem.querySelector("input[name='quantity']").value);
@@ -971,8 +970,6 @@
 		 itemInfo.push(arr);
 		});
 		
-		console.log("itemInfo", itemInfo);
-		
          
 		const buyerInfo = {
 			buyerCode,
@@ -984,28 +981,14 @@
 			ohd : buyerInfo,
 			oid : itemInfo
 		}
-		fetch(path+"/order/register", {
+		fetch(path+"/order/purchaseOrder", {
 			method : "POST",
 			headers : {
 				"Content-Type" : "application/json"
 			},
 			body : JSON.stringify(data)
 		})
-		.then(res => res.json())
 	}
-	 function register(){
-		document.querySelector("#status").value = '승인요청'
-		let sum = document.querySelectorAll('input[name="sum"]');
-		let finalPrice = document.querySelectorAll('input[name="finalPrice"]')
-		
-		finalPrice.forEach((el) =>{
-		el.value = el.value.split(',').join("");	
-		})
-		sum.forEach((el) =>{
-		el.value = el.value.split(',').join("");	
-		})
-		document.querySelector("#orderForm").submit()
-	} 
 	
 	function assignNumber() {
 		if(document.querySelectorAll(".oiNumber")){

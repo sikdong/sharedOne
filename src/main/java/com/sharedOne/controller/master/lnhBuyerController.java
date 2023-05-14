@@ -53,7 +53,7 @@ public class lnhBuyerController {
 		model.addAttribute("manager", setManagers);
 
 		model.addAttribute("buyer", buyer1);
-		model.addAttribute("buyerList", searhResult);
+		model.addAttribute("buyerList", searchResult);
 		
 	}
 

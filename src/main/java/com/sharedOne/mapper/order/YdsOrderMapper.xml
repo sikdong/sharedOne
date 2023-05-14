@@ -144,7 +144,7 @@
 	
 	</select>
 
-	<select id="modifyOrderHeader" resultType="com.sharedOne.domain.order.OrderHeaderDto">
+	<select id="getOrderHeader" resultType="com.sharedOne.domain.order.OrderHeaderDto">
 	SELECT
 		b.buyerName,
 		b.buyerCode,
@@ -159,7 +159,7 @@
 	
 	</select>
 	
- 	<select id="modifyOrderItem" resultType="com.sharedOne.domain.order.OrderItemDto">
+ 	<select id="getOrderItem" resultType="com.sharedOne.domain.order.OrderItemDto">
 	SELECT
 		oi.productCode,
 		p.productType,

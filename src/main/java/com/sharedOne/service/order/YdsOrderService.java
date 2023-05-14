@@ -90,15 +90,6 @@ public class YdsOrderService {
 		System.out.println(startTime); 
 		// 오더 헤더 파라미터 구성
 		OrderHeaderDto ohd = yod.getOhd();
-
-		if (yod.getDeliveryDate().isEmpty()) {
-
-			ohd.setDeliveryDate(null);
-		} else {
-			ohd.setDeliveryDate(yod.getDeliveryDate());
-		}
-		ohd.setMessage(yod.getMessage());
-		ohd.setStatus(yod.getStatus());
 		mapper.insertOrderHeader(ohd);
 		int generatedId = ohd.getOrderId();
 		String date = mapper.getDate(generatedId);
@@ -106,51 +97,25 @@ public class YdsOrderService {
 		mapper.createOrderCode(generatedId, year);
 
 		// 오더 아이템 파라미터 구성
-		OrderItemDto oid = new OrderItemDto();
-
-		// 상세 정보에 없는 경우
-		/*
-		 * if (yod.getProductCode() == null) { oid = null;
-		 * mapper.insertOrderItem(generatedId, oid); } else {
-		 */
-		List<Integer> quantities = yod.getQuantity();
-		List<Integer> finalPrices = yod.getFinalPrice();
-		List<Integer> sums = yod.getSum();
-		List<String> productCodes = yod.getProductCode();
-		if (yod.getProductCode() != null) {
-			for (int a = 0; a < yod.getQuantity().size(); a++) {
-				// 수량 등록 된 상태
-				if (yod.getQuantity().get(a) != null) {
-
-					oid.setFinalPrice(finalPrices.get(a));
-					oid.setQuantity(quantities.get(a));
-					oid.setSum(sums.get(a));
-					oid.setProductCode(productCodes.get(a));
-					mapper.insertOrderItem(generatedId, oid);
-				} else {
-					// 수량 등록 안된 상태
-					oid.setProductCode(productCodes.get(a));
-					oid.setFinalPrice(finalPrices.get(a));
-					oid.setQuantity(0);
-					oid.setSum(0);
-					mapper.insertOrderItem(generatedId, oid);
-				}
-			}
+		List<OrderItemDto> oid = yod.getOid();
+		for(OrderItemDto item : oid){
+			mapper.insertOrderItem(generatedId, item);
 		}
+
 		long endTime = System.currentTimeMillis();
 		
 		System.out.println(endTime);
 		System.out.println(endTime - startTime);
 	}
 
-	public OrderHeaderDto modifyOrderHeader(int orderId) {
+	public OrderHeaderDto getOrderHeader(int orderId) {
 		// TODO Auto-generated method stub
-		return mapper.modifyOrderHeader(orderId);
+		return mapper.getOrderHeader(orderId);
 	}
 
-	public List<OrderItemDto> modifyOrderItem(int orderId) {
+	public List<OrderItemDto> getOrderItem(int orderId) {
 		// TODO Auto-generated method stub
-		return mapper.modifyOrderItem(orderId);
+		return mapper.getOrderItem(orderId);
 	}
 
 	@Transactional

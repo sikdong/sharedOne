@@ -40,7 +40,7 @@ public class YdsOrderController {
 
 	private final YdsOrderService service;
 
-	@GetMapping("register")
+	@GetMapping("purchaseOrder")
 	@PreAuthorize("isAuthenticated()")
 	public void searchBuyer(Model model, @RequestParam(required = false) String buyerInfo) {
 		List<BuyerDto> buyers = service.searchBuyer(buyerInfo);
@@ -86,23 +86,23 @@ public class YdsOrderController {
 	@GetMapping("modify")
 	@PreAuthorize("authentication.name == #id")
 	public void modifyOrder(int orderId,String id, Model model) {
-		OrderHeaderDto ohd = service.modifyOrderHeader(orderId);
-		List<OrderItemDto> oid = service.modifyOrderItem(orderId);
+		OrderHeaderDto ohd = service.getOrderHeader(orderId);
+		List<OrderItemDto> oid = service.getOrderItem(orderId);
 		model.addAttribute("orderHeader", ohd);
 		model.addAttribute("orderItems", oid);
 	}
 
-	@PostMapping("register")
+	@PostMapping("purchaseOrder")
 	public String insertOrder(@RequestBody YdsOrderDto yod, Authentication at, RedirectAttributes rttr) {
 		if (at != null) {
-			yod.setMemberId(at.getName());
+			yod.getOhd().setMemberId(at.getName());
 		}
 		System.out.println("yod = " + yod);
 		service.insertOrder(yod);
-		if(yod.getStatus().equals("임시저장")) {
+		if(yod.getOhd().getStatus().equals("임시저장")) {
 			rttr.addFlashAttribute("tempSaveMessage", "임시저장 되었습니다.");
 		}
-		if(yod.getStatus().equals("승인요청")){
+		if(yod.getOhd().getStatus().equals("승인요청")){
 			
 			rttr.addFlashAttribute("orderMessage", "주문 작성이 완료되었습니다.");
 		}

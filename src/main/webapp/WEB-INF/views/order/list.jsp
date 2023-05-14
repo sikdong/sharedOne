@@ -210,7 +210,7 @@
 	<div class="d-flex">
 		<h4>주문 목록</h4>
 		<div class="col-sm-10"></div>
-		<form action="${pageContext.request.contextPath }/order/register" method="get">
+		<form action="${pageContext.request.contextPath }/order/purchaseOrder" method="get">
 			<button id="" class="btn btn-oneline-primary primaryBtn" >주문등록</button>
 		</form>
 	</div>		
