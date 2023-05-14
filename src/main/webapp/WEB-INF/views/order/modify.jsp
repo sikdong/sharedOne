@@ -279,12 +279,12 @@
                   <div style="width : 77vw;" class="mt-5">
 					<label for="inputPassword" class=" col-form-label">주문 시 특이사항</label>
 					<div class="ml-3">
-						<textarea name="message" rows="5" class="form-control" id="inputPassword" >${orderHeader.message }</textarea>
+						<textarea name="message" rows="5" class="form-control message" id="inputPassword" >${orderHeader.message }</textarea>
 					</div>
 				  </div>
 		        <button type="button" style="margin-left: 40%; background: #1d5c83; color: white;"
-				class="mt-5 btn" onclick="tempSave()">임시저장</button>
-			<button id="registerBtn" onclick="register()" type="button" style="background: #1d5c83; color: white;" class="mt-5 btn">주문
+				class="mt-5 btn" onclick="modify(this)">임시저장</button>
+			<button id="registerBtn" onclick="modify(this)" type="button" style="background: #1d5c83; color: white;" class="mt-5 btn">주문
 				수정</button>
 			<a href="${path }/order/list" type="button" class="mt-5 btn"
 				style="background: #1d5c83; color: white;">취소</a>
@@ -915,33 +915,60 @@
 		}
 	}); 
 	
-	function tempSave(){
-		document.querySelector("#status").value = '임시저장'
-		let sum = document.querySelectorAll('input[name="sum"]');
-		let finalPrice = document.querySelectorAll('input[name="finalPrice"]')
+	function modify(element){
+		const buyerCode = document.querySelector('input[name="buyerCode"]').value;
+		const deliveryDate = document.querySelector('input[name="deliveryDate"]').value;
+		let status = element.innerHTML;
+		if(status.search(/\s/) != -1){
+			status = status.split(' ').join('');
+		}
+		let message = document.querySelector(".message").value;
+		let orderId = document.querySelector("#orderId").value;
+		if(message === null){
+			message = "";
+		}
+		const size = document.querySelectorAll("input[name='productCode']");
+		const itemInfo = [];
+		let inputElems = document.querySelectorAll(".productList");
+		inputElems.forEach((inputElem) => {
 		
-		finalPrice.forEach((el) =>{
-		el.value = el.value.split(',').join("");	
-		})
-		sum.forEach((el) =>{
-			el.value = el.value.split(',').join("");	
-		})
-		document.querySelector("#orderForm").submit() 
-	}
-	function register(){
-		document.querySelector("#status").value = '승인요청'
-		let sum = document.querySelectorAll('input[name="sum"]');
-		let finalPrice = document.querySelectorAll('input[name="finalPrice"]')
+		let productCode = inputElem.querySelector("input[name='productCode']").value;
+		  let number = inputElem.querySelector("input[name='sum']").value.replace(",", "");
+		  let sum = Number(number);
+		  let quantity = Number(inputElem.querySelector("input[name='quantity']").value);
+		  let fp = inputElem.querySelector("input[name='finalPrice']").value.replace(",", "");
+		 let finalPrice = Number(fp);
+		 const arr ={
+				 productCode,
+				 sum,
+				 quantity,
+				 finalPrice
+				 
+		 }
+		 
+		 itemInfo.push(arr);
+		});
 		
-		finalPrice.forEach((el) =>{
-		el.value = el.value.split(',').join("");	
+         
+		const buyerInfo = {
+			buyerCode,
+			deliveryDate,
+			message,
+			status,
+			orderId
+		}
+		const data = {
+			ohd : buyerInfo,
+			oid : itemInfo
+		}
+		fetch(path+"/order/purchaseOrder", {
+			method : "POST",
+			headers : {
+				"Content-Type" : "application/json"
+			},
+			body : JSON.stringify(data)
 		})
-		sum.forEach((el) =>{
-		el.value = el.value.split(',').join("");	
-		})
-		document.querySelector("#orderForm").submit()
 	}
-	
 	  document.getElementById('modified').value = new Date().toISOString().substring(0, 10)
 	
 	 function assignNumber() {

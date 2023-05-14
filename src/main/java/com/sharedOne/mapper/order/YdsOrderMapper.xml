@@ -118,6 +118,17 @@
 	VALUES(#{generatedId}, #{oid.productCode}, #{oid.quantity}, #{oid.finalPrice}, #{oid.sum})
 	
 	</insert>
+	<insert id="insertNewOrderItem">
+	INSERT INTO Order_item(
+		orderId,
+		productCode,
+		quantity,
+		finalPrice,
+		sum
+	)
+	VALUES(#{orderId}, #{oid.productCode}, #{oid.quantity}, #{oid.finalPrice}, #{oid.sum})
+	
+	</insert>
 	
 	<select id="getDate" resultType="string">
 	SELECT 
@@ -201,6 +212,12 @@
 	<delete id="deleteOrderItem">
 	DELETE FROM Order_item
 	WHERE productCode = #{productCode} AND orderId= #{orderId}
+	</delete>
+	
+	
+	<delete id="deleteOrder">
+	DELETE FROM Order_item
+	WHERE orderId= #{orderId}
 	
 	</delete>
 	

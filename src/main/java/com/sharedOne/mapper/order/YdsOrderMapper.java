@@ -52,4 +52,8 @@ public interface YdsOrderMapper {
 
 	List<String> selectProductCodes(int orderId);
 
+	void deleteOrder(int orderId);
+
+	void insertNewOrderItem(int orderId, OrderItemDto item);
+
 }

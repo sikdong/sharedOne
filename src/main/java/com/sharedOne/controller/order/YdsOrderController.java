@@ -102,7 +102,7 @@ public class YdsOrderController {
 		if(yod.getOhd().getStatus().equals("임시저장")) {
 			rttr.addFlashAttribute("tempSaveMessage", "임시저장 되었습니다.");
 		}
-		if(yod.getOhd().getStatus().equals("승인요청")){
+		if(yod.getOhd().getStatus().equals("주문 등록")){
 			
 			rttr.addFlashAttribute("orderMessage", "주문 작성이 완료되었습니다.");
 		}
@@ -116,14 +116,12 @@ public class YdsOrderController {
 	}
 
 	@PostMapping("modify")
-	public String updateOrder(YdsOrderDto yod, @RequestParam int orderId, RedirectAttributes rttr) {
-		System.out.println("orderId = " + orderId);
-		System.out.println("yod = " + yod);
-		service.updateOrder(yod, orderId);
-		if(yod.getStatus().equals("임시저장")) {
+	public String updateOrder(YdsOrderDto yod, RedirectAttributes rttr) {
+		service.updateOrder(yod, yod.getOhd().getOrderId());
+		if(yod.getOhd().getStatus().equals("임시저장")) {
 			rttr.addFlashAttribute("tempSaveMessage", "임시저장 되었습니다.");
 		}
-		if(yod.getStatus().equals("승인요청")){
+		if(yod.getOhd().getStatus().equals("주문수정")){
 			
 			rttr.addFlashAttribute("reRegisterMessage", "주문 작성이 완료되었습니다.");
 		}
