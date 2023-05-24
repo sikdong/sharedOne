@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sharedOne.domain.master.SearchBuyerDto;
 import com.sharedOne.service.master.AsjSearchService;
+
+import io.swagger.annotations.Api;
+import springfox.documentation.annotations.ApiIgnore;
 @Controller
 @RequestMapping("master")
+@ApiIgnore
 public class AsjSearchController {
 	
 	@Autowired

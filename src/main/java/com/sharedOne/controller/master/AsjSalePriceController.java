@@ -21,8 +21,13 @@ import com.sharedOne.service.master.AsjProductService;
 import com.sharedOne.service.master.AsjSalePriceService;
 import com.sharedOne.service.master.lnhBuyerService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
+
 @Controller
 @RequestMapping("master")
+@ApiIgnore
 public class AsjSalePriceController {
 	
 	@Autowired
@@ -37,6 +42,7 @@ public class AsjSalePriceController {
 	/* 목록 리셋  */
 	@GetMapping("salePriceListAjaxList")
 	@ResponseBody
+	@ApiIgnore
 	public List<SalePriceDto> salePriceRegisterAjaxList() {
 		/* ajax SalePrice 의 처음 또는 리셋 리스트 */
 		List<SalePriceDto> salePriceListAll = asjSalePriceService.selectSalePriceListAll();
@@ -46,6 +52,7 @@ public class AsjSalePriceController {
 	
 	@GetMapping("salePriceListAjax")
 	@ResponseBody
+	@ApiOperation(value="가격 목록 조회")
 	public List <SalePriceDto> salePriceListAjax(
 			Model model, 
 			String q,

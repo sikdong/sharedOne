@@ -1,0 +1,16 @@
+version: "1"
+services:
+  backend:
+    build:
+      dockerfile: Dockerfile
+      context: ./backend
+    container_name: sharedOne_backend
+  database:
+    build: ./database
+    container_name: sharedOne_database
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT: root
+      MYSQL_PASSWORD: l1A87VgsZOB6
+      MYSQL_DATABASE: valve 

@@ -46,8 +46,13 @@ import com.sharedOne.domain.order.YjhOrderItemDto;
 import com.sharedOne.domain.order.sumValueDto;
 import com.sharedOne.service.order.YjhOrderService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
+
 @Controller
 @RequestMapping("order")
+@Api(tags="주문 승인 API")
 public class YjhOrderController {
 	
 	@Autowired
@@ -55,6 +60,7 @@ public class YjhOrderController {
 	
 	@GetMapping("orderSheet")
 	@PreAuthorize("hasAuthority('팀장') or (authentication.name == #id)")
+	@ApiOperation(value="주문 승인 상세 조회")
 	public void getOrderSheet(Model model, int orderId ,String id) {
 		
 		OrderHeaderDto orderHeader = service.getOrderSheetHead(orderId);
@@ -71,6 +77,7 @@ public class YjhOrderController {
 	}
 	@GetMapping("confirmOrderSheet")
 	@PreAuthorize("hasAuthority('팀장')")
+	@ApiOperation(value="주문 승인 확인")
 	public void getConfirmOrderSheet(Model model, int orderId) {
 		
 		OrderHeaderDto orderHeader = service.getOrderSheetHead(orderId);
@@ -88,6 +95,7 @@ public class YjhOrderController {
 	
 	@PostMapping("confirmOrderSheet")
 	@PreAuthorize("hasAuthority('팀장')")
+	@ApiOperation(value="주문 승인 결정")
 	public String setApproval(RedirectAttributes rttr,String comment,int orderId, String status) {
 		
 		if(status.equals("승인")) {
@@ -107,6 +115,7 @@ public class YjhOrderController {
 	
 	@GetMapping("companionSheet")
 	@PreAuthorize("(authentication.name == #id)")
+	@ApiIgnore
 	public void getCompanionSheet(Model model,int orderId,String id) {
 		
 		OrderHeaderDto orderHeader = service.getOrderSheetHead(orderId);
@@ -126,6 +135,7 @@ public class YjhOrderController {
 	
 	@PostMapping("companionSheet")
 	@PreAuthorize("(authentication.name == #id)")
+	@ApiOperation(value="주문 상태 종결 확인")
 	public void setClosing(RedirectAttributes rttr,int orderId, String status, String id) {
 		
 		if(status.equals("종결")) {
@@ -138,18 +148,21 @@ public class YjhOrderController {
 	
 	@RequestMapping("closing")
 	@PreAuthorize("isAuthenticated()")
+	@ApiIgnore
 	public void closing() {
 		
 	}
 	
 	@RequestMapping("companionOk")
 	@PreAuthorize("isAuthenticated()")
+	@ApiIgnore
 	public void companionOK() {
 		
 	}
 	
 	@RequestMapping("confirmOk")
 	@PreAuthorize("isAuthenticated()")
+	@ApiIgnore
 	public void confirmOK() {
 		
 	}
@@ -157,6 +170,7 @@ public class YjhOrderController {
 	
 	  @RequestMapping("excelConvert")
 	  @ResponseBody
+	  @ApiOperation(value="주문 승인서 액셀 변환")
 	  public void excelConvert(HttpServletResponse hsr, @RequestParam(name="orderId", defaultValue = "") int orderId) throws IOException {
 		  	OrderHeaderDto orderHeader = service.getOrderSheetHead(orderId);			
 

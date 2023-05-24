@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.sharedOne.domain.master.ProductDto;
 import com.sharedOne.service.master.AsjProductService;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 @Controller
 @RequestMapping("master")
+@ApiIgnore
 public class AsjProductController {
-
+	
 	@Autowired
 	private AsjProductService asjProductService;
 	

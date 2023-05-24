@@ -18,14 +18,19 @@ import com.sharedOne.domain.order.OrderHeaderDto;
 import com.sharedOne.domain.order.OrderItemDto;
 import com.sharedOne.service.order.AsjOrderService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @Controller
 @RequestMapping("order")
+@Api(tags="주문 API")
 public class AsjOrderController {
 	
 	@Autowired
 	private AsjOrderService orderService;
 	
 	@GetMapping("list")
+	@ApiOperation(value="주문 목록 조회")
 	public void orderList(Model model,
 			@RequestParam(name="q", defaultValue="") String keyword ,
 			@RequestParam(name="buyerCode", defaultValue="") String buyerCode,
@@ -36,13 +41,10 @@ public class AsjOrderController {
 			@RequestParam(name="d2", defaultValue="") String d2
 			) {
 		
-		//System.out.println(keyword + buyerCode + orderCode + writer + status);
 		
 		List<OrderHeaderDto> headerList = orderService.selectOrderHeaderList(keyword,buyerCode,orderCode,writer,status,d1,d2); 	
 		model.addAttribute("headerList", headerList); 		
-		
-//		List<OrderItemDto> itemListByOrderCode = orderService.selectOrderItemListByOrderCode(orderCode);
-//		model.addAttribute("itemList", itemListByOrderCode);
+	
 		
 		int size = headerList.size();
 		//System.out.println("size:"+size);
@@ -73,11 +75,10 @@ public class AsjOrderController {
 	
 	@GetMapping("itemList/{orderCode}")
 	@ResponseBody
+	@ApiOperation(value="주문 상세 조회")
 	public List<OrderItemDto> itemList(Model model, @PathVariable String orderCode) {
 		
 		List<OrderItemDto> itemListByOrderCode = orderService.selectOrderItemListByOrderCode(orderCode);
-		
-		System.out.println("***"+itemListByOrderCode);
 		
 		return itemListByOrderCode;
 		
